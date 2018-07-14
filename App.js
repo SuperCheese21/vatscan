@@ -1,6 +1,8 @@
 import React from 'react';
 import { MapView } from 'expo';
 
+import mapStyle from './src/config/map-styles/style_blue_essence.json';
+
 export default class App extends React.Component {
   render() {
     return (
@@ -12,6 +14,7 @@ export default class App extends React.Component {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
+        customMapStyle={mapStyle}
       />
     );
   }
