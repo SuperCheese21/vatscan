@@ -1,21 +1,15 @@
-import React from 'react';
-import { MapView } from 'expo';
+import React, { Component } from 'react';
+import { View } from 'react-native';
+import Map from './src/components/Map';
+import Footer from './src/components/Footer';
 
-import mapStyle from './src/config/map-styles/style_blue_essence.json';
-
-export default class App extends React.Component {
-  render() {
-    return (
-      <MapView
-        style={{ flex: 1 }}
-        initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
-        customMapStyle={mapStyle}
-      />
-    );
-  }
+export default class App extends Component {
+    render() {
+        return (
+            <View style={{flex: 1}}>
+                <Map />
+                <Footer />
+            </View>
+        );
+    }
 }
