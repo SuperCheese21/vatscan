@@ -2,8 +2,13 @@ import React from 'react';
 import { MapView } from 'expo';
 
 import mapStyle from '../config/map-styles/style_blue_essence.json';
+import getJsonData from '../lib/getData';
 
 export default class Map extends React.Component {
+    componentDidMount() {
+        getJsonData('https://map.vatsim.net/api/pilotGeoJSON');
+    }
+
     render() {
         return (
             <MapView style = {{ flex: 1 }}
