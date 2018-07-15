@@ -25,7 +25,6 @@ export default class Map extends React.Component {
     updateData() {
         fetchPilotData()
             .then(data => {
-                console.log(data);
                 this.setState({
                     pilotData: data
                 });

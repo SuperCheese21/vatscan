@@ -1,15 +1,15 @@
-import airportData from '../data/airports.json';
+//import airportData from '../data/airports.json';
 
 /**
  * Selects a random element in an array and returns it
- * @param  {String} array Array of strings (or any data type) to select from
- * @return {String}       Random array element
+ * @param  {String} arr Array of strings (or any data type) to select from
+ * @return {String}     Random array element
  */
-export function getRandomElement(array) {
-    const len = array.length;
+export function getRandomElement(arr) {
+    const len = arr.length;
     const rand = Math.floor(Math.random() * len);
 
-    return array[rand];
+    return arr[rand];
 }
 
 /**

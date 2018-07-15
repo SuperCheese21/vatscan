@@ -6,7 +6,7 @@ import constants from '../config/constants.json';
  * @return {String} VATSIM server data
  */
 export default async function fetchPilotData() {
-    const url = util.getRandomElement(constants.SERVER_URLS);
+    const url = getRandomElement(constants.SERVER_URLS);
     try {
         let res = await fetch(url);
         let text = await res.text();
@@ -48,7 +48,7 @@ function formatPilotData(arr) {
         'callsign': arr[0],
         'cid': arr[1],
         'realname': arr[2],
-        'location': util.formatLatLng(arr[5], arr[6]),
+        'location': formatLatLng(arr[5], arr[6]),
         'altitude': arr[7],
         'groundspeed': arr[8],
         'flightplan': formatFlightPlan(arr),

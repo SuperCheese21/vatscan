@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
+
 import Map from './src/components/Map';
 import Footer from './src/components/Footer';
 
