@@ -1,11 +1,11 @@
-const airports = require('../data/airports.json');
+import airportData from '../data/airports.json';
 
 /**
  * Selects a random element in an array and returns it
  * @param  {String} array Array of strings (or any data type) to select from
  * @return {String}       Random array element
  */
-function getRandomElement(array) {
+export function getRandomElement(array) {
     const len = array.length;
     const rand = Math.floor(Math.random() * len);
 
@@ -18,7 +18,7 @@ function getRandomElement(array) {
  * @param  {String} lon Longitude
  * @return {Object}     LatLng object
  */
-function formatLatLng(lat, lon) {
+export function formatLatLng(lat, lon) {
     return {
         'latitude': Number(lat),
         'longitude': Number(lon)
@@ -30,15 +30,9 @@ function formatLatLng(lat, lon) {
  * @param  {String} icao ICAO code of airport
  * @return {Object}      LatLng object
  */
-function getAirportCoords(icao) {
+export function getAirportCoords(icao) {
     const airport = airportData[icao];
     if (airport) {
         return formatLatLng(airport.latitude_deg, airport.longitude_deg);
     }
 }
-
-module.exports = {
-    getRandomElement: getRandomElement,
-    formatLatLng: formatLatLng,
-    getAirportCoords: getAirportCoords
-};

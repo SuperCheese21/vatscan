@@ -1,11 +1,11 @@
-const util = require('./util');
-const constants = require('../config/constants');
+import { getRandomElement, formatLatLng } from './util';
+import constants from '../config/constants.json';
 
 /**
  * async/await function that requests data from a random VATSIM data server URL
  * @return {String} VATSIM server data
  */
-async function fetchPilotData() {
+export default async function fetchPilotData() {
     const url = util.getRandomElement(constants.SERVER_URLS);
     try {
         let res = await fetch(url);
@@ -75,5 +75,3 @@ function formatFlightPlan(arr) {
         'route': arr[30]
     };
 }
-
-module.exports = fetchPilotData;

@@ -2,7 +2,6 @@ import React from 'react';
 import { MapView } from 'expo';
 import { Marker } from 'react-native-maps';
 
-import constants from '../config/constants';
 import fetchPilotData from '../lib/fetch';
 import mapStyle from '../config/map-styles/style_blue_essence.json';
 
@@ -19,7 +18,7 @@ export default class Map extends React.Component {
         this.state = {
             updateInterval: setInterval(() => {
                 this.updateData();
-            }, constants.UPDATE_INTERVAL)
+            }, 10000)
         }
     }
 
