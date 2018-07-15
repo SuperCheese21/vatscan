@@ -1,4 +1,4 @@
-const fs = require('fs');
+const airports = require('../data/airports.json');
 
 /**
  * Selects a random element in an array and returns it
@@ -13,19 +13,32 @@ function getRandomElement(array) {
 }
 
 /**
- * Writes the specified content to a file at a specified path
- * @param  {String} content File contents
- * @param  {[type]} path    Path of file + file name
- * @return {[type]}         None
+ * Builds a LatLng object given a latitude and longitude
+ * @param  {String} lat Latitude
+ * @param  {String} lon Longitude
+ * @return {Object}     LatLng object
  */
-function writeFile(content, path) {
-    fs.writeFile(path, content, (err) => {
-        if (err) return console.log(err);
-        console.log('Data written to ' + path);
-    });
+function formatLatLng(lat, lon) {
+    return {
+        'latitude': Number(lat),
+        'longitude': Number(lon)
+    };
+}
+
+/**
+ * Gets the coordinates of an airport
+ * @param  {String} icao ICAO code of airport
+ * @return {Object}      LatLng object
+ */
+function getAirportCoords(icao) {
+    const airport = airportData[icao];
+    if (airport) {
+        return formatLatLng(airport.latitude_deg, airport.longitude_deg);
+    }
 }
 
 module.exports = {
     getRandomElement: getRandomElement,
-    writeFile: writeFile
+    formatLatLng: formatLatLng,
+    getAirportCoords: getAirportCoords
 };
