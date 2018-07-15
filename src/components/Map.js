@@ -3,6 +3,7 @@ import { MapView } from 'expo';
 import { Marker } from 'react-native-maps';
 
 import mapStyle from '../config/map-styles/style_blue_essence.json';
+import getData from '../lib/getData';
 
 export default class Map extends React.Component {
     constructor(props) {
@@ -21,22 +22,10 @@ export default class Map extends React.Component {
                     isLoading: false,
                     pilotData: json.features,
                 });
-                console.log(JSON.stringify(this.state.pilotData))
             })
-            .catch((err) =>{
+            .catch(err =>{
                 console.error(err);
             });
-    }
-
-    async getData(url) {
-        try {
-            let response = await fetch(url);
-            let responseJson = await response.json();
-            console.log(JSON.stringify(responseJson));
-            return responseJson;
-        } catch (err) {
-            console.error(err);
-        }
     }
 
     render() {
