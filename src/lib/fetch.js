@@ -1,3 +1,4 @@
+const util = require('./util');
 const URLS = [
     'http://vatsim-data.hardern.net/vatsim-data.txt',
     'http://wazzup.flightoperationssystem.com/vatsim/vatsim-data.txt',
@@ -10,7 +11,7 @@ const URLS = [
  * @return {String} VATSIM server data
  */
 async function fetchPilotData() {
-    const url = getRandomElement(URLS);
+    const url = util.getRandomElement(URLS);
     try {
         let res = await fetch(url);
         let text = await res.text();
@@ -22,36 +23,24 @@ async function fetchPilotData() {
 
 /**
  * Parses the raw data into a javascript object for easier data access
- * @param  {String} data Raw data from random server URL
+ * @param  {String} data Raw text data from random server URL
  * @return {object}      Client data formatted in javascript object
  */
-function parseData(data) {
-    let raw = data.split('!CLIENTS:\r\n').pop().split(';').shift();
+function parseData(text) {
+    let raw = text.split('!CLIENTS:\r\n').pop().split(';').shift();
     let rawArr = raw.split('\r\n');
     let pilots = [];
 
     rawArr.forEach(client => {
         const arr = client.split(':');
         if (arr[3] == 'PILOT') {
-            pilots.push(parsePilotData(arr));
+            pilots.push(formatPilotData(arr));
         }
     });
 
-    console.log(JSON.stringify(pilots));
+    console.log(JSON.stringify(pilots, null, '\t'));
 
     return pilots;
-}
-
-/**
- * Selects a random element in an array and returns it
- * @param  {String} array Array of strings (or any data type) to select from
- * @return {String}       Random array element
- */
-function getRandomElement(array) {
-    const len = array.length;
-    const rand = Math.floor(Math.random() * len);
-
-    return array[rand];
 }
 
 /**
@@ -59,15 +48,15 @@ function getRandomElement(array) {
  * @param  {String} arr Pilot data array
  * @return {Object}     Pilot data object
  */
-function parsePilotData(arr) {
+function formatPilotData(arr) {
     return {
         'callsign': arr[0],
         'cid': arr[1],
         'realname': arr[2],
-        'location': parseLocation(arr[5], arr[6]),
+        'location': formatLatLng(arr[5], arr[6]),
         'altitude': arr[7],
         'groundspeed': arr[8],
-        'flightplan': parseFlightPlan(arr),
+        'flightplan': formatFlightPlan(arr),
         'transponder': arr[17],
         'heading': arr[38]
     };
@@ -79,7 +68,7 @@ function parsePilotData(arr) {
  * @param  {String} lon Longitude
  * @return {Object}     LatLng object
  */
-function parseLocation(lat, lon) {
+function formatLatLng(lat, lon) {
     return {
         'latitude': lat,
         'longitude': lon
@@ -91,7 +80,7 @@ function parseLocation(lat, lon) {
  * @param  {String} arr Pilot data array
  * @return {Object}     Formatted flightplan object
  */
-function parseFlightPlan(arr) {
+function formatFlightPlan(arr) {
     return {
         'aircraft': arr[9],
         'depairport': arr[11],
@@ -101,15 +90,7 @@ function parseFlightPlan(arr) {
         'actdeptime': arr[23],
         'altairport': arr[28],
         'remarks': arr[29],
-        'route': arr[30],
-        'depairport_location': {
-            'latitude': arr[31],
-            'longitude': arr[32]
-        },
-        'destairport_location': {
-            'latitude': arr[33],
-            'longitude': arr[34]
-        }
+        'route': arr[30]
     };
 }
 
