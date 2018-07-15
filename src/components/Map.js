@@ -3,7 +3,7 @@ import { MapView } from 'expo';
 import { Marker } from 'react-native-maps';
 
 import mapStyle from '../config/map-styles/style_blue_essence.json';
-import getData from '../lib/getData';
+import fetchPilotData from '../lib/fetch';
 
 export default class Map extends React.Component {
     constructor(props) {
