@@ -33,8 +33,6 @@ function parseData(text) {
         }
     });
 
-    console.log(JSON.stringify(pilots, null, '\t'));
-
     return pilots;
 }
 

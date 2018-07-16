@@ -2,6 +2,7 @@ import React from 'react';
 import { MapView } from 'expo';
 import { Marker } from 'react-native-maps';
 
+import constants from '../config/constants.json';
 import fetchPilotData from '../lib/fetch';
 import mapStyle from '../config/map-styles/style_blue_essence.json';
 
@@ -18,16 +19,14 @@ export default class Map extends React.Component {
         this.state = {
             updateInterval: setInterval(() => {
                 this.updateData();
-            }, 10000)
+            }, constants.UPDATE_INTERVAL)
         }
     }
 
     updateData() {
         fetchPilotData()
             .then(data => {
-                this.setState({
-                    pilotData: data
-                });
+                this.setState({ pilotData: data });
             })
             .catch(e => {
                 console.error(e);
@@ -47,6 +46,7 @@ export default class Map extends React.Component {
 
                 {this.state.pilotData.map(pilot => (
                     <Marker
+                        key={pilot.cid}
                         coordinate={pilot.location}
                         title={pilot.callsign}
                         description={pilot.realname}
