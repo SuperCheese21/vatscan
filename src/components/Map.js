@@ -10,7 +10,7 @@ export default class Map extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoading: true,
+            loading: true,
             pilotData: []
         };
     }
@@ -24,9 +24,11 @@ export default class Map extends React.Component {
     }
 
     updateData() {
+        this.props.showLoader();
         fetchPilotData()
             .then(data => {
                 this.setState({ pilotData: data });
+                this.props.hideLoader();
             })
             .catch(e => {
                 console.error(e);

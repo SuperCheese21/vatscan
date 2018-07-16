@@ -22,7 +22,7 @@ export default async function fetchPilotData() {
  * @return {object}      Client data formatted in javascript object
  */
 function parseData(text) {
-    let raw = text.split('!CLIENTS:\r\n').pop().split(';').shift();
+    let raw = text.split('!CLIENTS:\r\n').pop().split('\r\n;\r\n;').shift();
     let rawArr = raw.split('\r\n');
     let pilots = [];
 
