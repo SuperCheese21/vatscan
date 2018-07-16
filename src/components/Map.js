@@ -55,7 +55,6 @@ export default class Map extends React.Component {
 
                 {this.state.pilotData.map(pilot => {
                     let icon, type = getAircraftType(pilot.flightplan.aircraft);
-                    console.log(pilot.flightplan.aircraft + '\n');
 
                     if (type === 2) {
                         icon = WIDEBODY_ICON;

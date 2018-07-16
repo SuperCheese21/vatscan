@@ -1,8 +1,24 @@
 {
-  "expo": {
-    "sdkVersion": "27.0.0",
-    "androidStatusBar": {
-      "backgroundColor": "#111111"
+    "expo": {
+        "name": "VATSCAN",
+        "version": "0.6.0",
+        "sdkVersion": "27.0.0",
+        "ios": {
+            "bundleIdentifier": "com.stratospherelabs.vatscan",
+            "config": {
+                "googleMapsApiKey": "AIzaSyDTYczc4NXP-wktSRpKO9C5Uo7M0KM8420"
+            }
+        },
+        "android": {
+            "package": "com.stratospherelabs.vatscan",
+            "config": {
+                "googleMaps": {
+                    "apiKey": "AIzaSyDTYczc4NXP-wktSRpKO9C5Uo7M0KM8420"
+                }
+            }
+        },
+        "androidStatusBar": {
+            "backgroundColor": "#111111"
+        }
     }
-  }
 }
