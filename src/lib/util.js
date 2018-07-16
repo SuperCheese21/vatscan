@@ -1,5 +1,10 @@
 import constants from '../config/constants.json';
 
+const NARROWBODY_ICON = require('../assets/icons/narrowbody.png');
+const WIDEBODY_ICON = require('../assets/icons/widebody.png');
+const GA_ICON = require('../assets/icons/ga.png');
+const SEEKBAR_ICON = require('../assets/icons/seekbar.png');
+
 /**
  * Selects a random element in an array and returns it
  * @param  {String} arr Array of strings (or any data type) to select from
@@ -26,11 +31,27 @@ export function formatLatLng(lat, lon) {
 }
 
 /**
+ * Returns the correct icon based on the aircraft type
+ * @param  {String} aircraft ICAO aircraft designator
+ * @return {Image}           Icon to render on map
+ */
+export function getIcon(aircraft) {
+    let icon, type = getAircraftType(aircraft);
+
+    if (type === 2) {
+        return WIDEBODY_ICON;
+    } else if (type === 1) {
+        return NARROWBODY_ICON;
+    }
+    return GA_ICON;
+}
+
+/**
  * Returns the path to the correct aircraft icon based on ICAO code
  * @param  {String} aircraft Aircraft ICAO type designator
  * @return {int}             Aircraft type (0 - GA, 1 - Narrowbody, 2 - Widebody)
  */
-export function getAircraftType(icao) {
+function getAircraftType(icao) {
     const widebody = constants.aircraft.WIDEBODY;
     const narrowbody = constants.aircraft.NARROWBODY;
 

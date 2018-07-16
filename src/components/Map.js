@@ -5,12 +5,8 @@ import { Marker } from 'react-native-maps';
 import constants from '../config/constants.json';
 import fetchPilotData from '../lib/fetch';
 import mapStyle from '../config/map-styles/style_blue_essence.json';
-import { getAircraftType } from '../lib/util';
+import { getIcon } from '../lib/util';
 
-const NARROWBODY_ICON = require('../assets/icons/narrowbody.png');
-const WIDEBODY_ICON = require('../assets/icons/widebody.png');
-const GA_ICON = require('../assets/icons/ga.png');
-const SEEKBAR_ICON = require('../assets/icons/seekbar.png');
 
 export default class Map extends React.Component {
     constructor(props) {
@@ -22,6 +18,7 @@ export default class Map extends React.Component {
     }
 
     componentDidMount() {
+        this.updateData();
         this.state = {
             updateInterval: setInterval(() => {
                 this.updateData();
@@ -52,30 +49,17 @@ export default class Map extends React.Component {
                 }}
                 customMapStyle = {mapStyle}>
 
-
-                {this.state.pilotData.map(pilot => {
-                    let icon, type = getAircraftType(pilot.flightplan.aircraft);
-
-                    if (type === 2) {
-                        icon = WIDEBODY_ICON;
-                    } else if (type === 1) {
-                        icon = NARROWBODY_ICON;
-                    } else {
-                        icon = GA_ICON;
-                    }
-
-                    return (
-                        <Marker
-                            key={pilot.cid}
-                            image={icon}
-                            rotation={Number(pilot.heading)}
-                            anchor={{ x: 0.5, y: 0.5 }}
-                            coordinate={pilot.location}
-                            title={pilot.callsign}
-                            description={pilot.realname}
-                        />
-                    )
-                })}
+                {this.state.pilotData.map(pilot => (
+                    <Marker
+                        key={pilot.cid}
+                        image={getIcon(pilot.flightplan.aircraft)}
+                        rotation={pilot.heading}
+                        anchor={{ x: 0.5, y: 0.5 }}
+                        coordinate={pilot.location}
+                        title={pilot.callsign}
+                        description={pilot.realname}
+                    />
+                ))}
             </MapView>
         );
     }

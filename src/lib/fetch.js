@@ -51,7 +51,7 @@ function formatPilotData(arr) {
         'groundspeed': arr[8],
         'flightplan': formatFlightPlan(arr),
         'transponder': arr[17],
-        'heading': arr[38]
+        'heading': Number(arr[38])
     };
 }
 
