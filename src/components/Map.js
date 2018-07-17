@@ -1,6 +1,6 @@
 import React from 'react';
 import { MapView } from 'expo';
-import { Marker, Polygon } from 'react-native-maps';
+import { Circle, Marker, Polygon } from 'react-native-maps';
 
 import constants from '../config/constants.json';
 import colors from '../config/colors.json';
@@ -15,7 +15,11 @@ export default class Map extends React.Component {
         this.state = {
             loading: true,
             pilotData: [],
-            atcData: []
+            atcData: {
+                tower: [],
+                approach: [],
+                center: []
+            }
         };
     }
 
@@ -34,7 +38,7 @@ export default class Map extends React.Component {
             .then(data => {
                 this.setState({
                     pilotData: parsePilotData(data[0]),
-                    atcData: parseATCData(data[1])
+                    atcData: parseATCData(data[0], data[1])
                 });
                 this.props.hideLoader();
             })
@@ -54,7 +58,7 @@ export default class Map extends React.Component {
                 }}
                 customMapStyle = {mapStyle}>
 
-                {this.state.atcData.map(controller => (
+                {this.state.atcData.center.map(controller => (
                     <Polygon
                         key={controller.id}
                         coordinates={controller.polygon}
@@ -65,15 +69,37 @@ export default class Map extends React.Component {
                     />
                 ))}
 
-                {this.state.pilotData.map(pilot => (
+                {this.state.atcData.approach.map(c => (
+                    <Circle
+                        key={c.cid}
+                        center={c.location}
+                        radius={50000}
+                        strokeWidth={1}
+                        strokeColor={'rgba(255, 0, 0, 0.8)'}
+                        fillColor={'rgba(255, 0, 0, 0.5)'}
+                    />
+                ))}
+
+                {this.state.atcData.tower.map(c => (
+                    <Circle
+                        key={c.cid}
+                        center={c.location}
+                        radius={20000}
+                        strokeWidth={1}
+                        strokeColor={'rgba(255, 165, 0, 0.8)'}
+                        fillColor={'rgba(255, 165, 0, 0.5)'}
+                    />
+                ))}
+
+                {this.state.pilotData.map(p => (
                     <Marker
-                        key={pilot.cid}
-                        image={getIcon(pilot.flightplan.aircraft)}
-                        rotation={pilot.heading}
+                        key={p.cid}
+                        image={getIcon(p.flightplan.aircraft)}
+                        rotation={p.heading}
                         anchor={{ x: 0.5, y: 0.5 }}
-                        coordinate={pilot.location}
-                        title={pilot.callsign}
-                        description={pilot.realname}
+                        coordinate={p.location}
+                        title={p.callsign}
+                        description={p.realname}
                     />
                 ))}
             </MapView>

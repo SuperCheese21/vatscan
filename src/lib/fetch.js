@@ -6,12 +6,12 @@ import constants from '../config/constants.json';
  * @return {Promise} VATSIM server data promise object
  */
 export async function fetchData() {
-    const pilotsUrl = getRandomElement(constants.SERVER_URLS);
-    const atcUrl = 'https://map.vatsim.net/api/atcGeoJSON';
+    const clientsUrl = getRandomElement(constants.SERVER_URLS);
+    const CenterUrl = 'https://map.vatsim.net/api/atcGeoJSON';
     try {
         const data = await Promise.all([
-            fetch(pilotsUrl).then(data => data.text()),
-            fetch(atcUrl).then(data => data.json())
+            fetch(clientsUrl).then(data => data.text()),
+            fetch(CenterUrl).then(data => data.json())
         ]);
         return data;
     } catch (e) {
@@ -38,20 +38,43 @@ export function parsePilotData(text) {
 
     return pilots;
 }
+
+export function parseATCData(text, json) {
+    let raw = text.split('!CLIENTS:\r\n').pop().split('\r\n;\r\n;').shift();
+    let rawArr = raw.split('\r\n');
+    let approachData = [], towerData = [];
+    let centerData = parseCenterData(json);
+
+    rawArr.forEach(client => {
+        const arr = client.split(':');
+        if (arr[0].includes('_APP') || arr[0].includes('_DEP')) {
+            approachData.push(formatATCData(arr));
+        } else if (arr[0].includes('_TWR')) {
+            towerData.push(formatATCData(arr));
+        }
+    });
+
+    return {
+        'approach': approachData,
+        'tower': towerData,
+        'center': centerData
+    };
+}
+
 /**
  * Parses GeoJSON ATC data into custom JSON format
  * @param  {Object} json GeoJSON ATC data
  * @return {Array}       Array of controllers in custom format
  */
-export function parseATCData(json) {
-    let controllers = [];
+function parseCenterData(json) {
+    let CenterData = [];
     json.features.forEach(c => {
         const coords = c.geometry.coordinates[0];
         const polygon = coords.map(c => ({
             latitude: c[1],
             longitude: c[0]
         }));
-        controllers.push({
+        CenterData.push({
             id: c.id,
             name: c.properties.name,
             callsign: c.properties.callsign,
@@ -59,7 +82,7 @@ export function parseATCData(json) {
             polygon: polygon
         });
     });
-    return controllers;
+    return CenterData;
 }
 
 /**
@@ -97,5 +120,15 @@ function formatFlightPlan(arr) {
         'altairport': arr[28],
         'remarks': arr[29],
         'route': arr[30]
+    };
+}
+
+function formatATCData(arr) {
+    return {
+        'callsign': arr[0],
+        'cid': arr[1],
+        'realname': arr[2],
+        'frequency': arr[4],
+        'location': formatLatLng(arr[5], arr[6])
     };
 }
