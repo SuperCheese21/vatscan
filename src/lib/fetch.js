@@ -2,15 +2,18 @@ import { getRandomElement, formatLatLng } from './util';
 import constants from '../config/constants.json';
 
 /**
- * async/await function that requests data from a random VATSIM data server URL
- * @return {String} VATSIM server data
+ * async/await function that requests pilot and ATC data from separate servers
+ * @return {Promise} VATSIM server data promise object
  */
-export default async function fetchPilotData() {
-    const url = getRandomElement(constants.SERVER_URLS);
+export async function fetchData() {
+    const pilotsUrl = getRandomElement(constants.SERVER_URLS);
+    const atcUrl = 'https://map.vatsim.net/api/atcGeoJSON';
     try {
-        let res = await fetch(url);
-        let text = await res.text();
-        return parseData(text);
+        const data = await Promise.all([
+            fetch(pilotsUrl).then(data => data.text()),
+            fetch(atcUrl).then(data => data.json())
+        ]);
+        return data;
     } catch (e) {
         console.error(e);
     }
@@ -21,7 +24,7 @@ export default async function fetchPilotData() {
  * @param  {String} text Raw text data from random server URL
  * @return {object}      Client data formatted in javascript object
  */
-function parseData(text) {
+export function parsePilotData(text) {
     let raw = text.split('!CLIENTS:\r\n').pop().split('\r\n;\r\n;').shift();
     let rawArr = raw.split('\r\n');
     let pilots = [];
@@ -34,6 +37,29 @@ function parseData(text) {
     });
 
     return pilots;
+}
+/**
+ * Parses GeoJSON ATC data into custom JSON format
+ * @param  {Object} json GeoJSON ATC data
+ * @return {Array}       Array of controllers in custom format
+ */
+export function parseATCData(json) {
+    let controllers = [];
+    json.features.forEach(c => {
+        const coords = c.geometry.coordinates[0];
+        const polygon = coords.map(c => ({
+            latitude: c[1],
+            longitude: c[0]
+        }));
+        controllers.push({
+            id: c.id,
+            name: c.properties.name,
+            callsign: c.properties.callsign,
+            frequency: c.properties.frequency,
+            polygon: polygon
+        });
+    });
+    return controllers;
 }
 
 /**

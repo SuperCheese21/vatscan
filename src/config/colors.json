@@ -2,5 +2,7 @@
     "primary": "#1b252b",
     "primaryDark": "#111111",
     "primaryMedium": "#161b1e",
-    "accent": "#74b320"
+    "accent": "#74b320",
+    "polygonFill": "rgba(0, 0, 255, 0.5)",
+    "polygonStroke": "rgba(0, 0, 255, 0.8)"
 }
