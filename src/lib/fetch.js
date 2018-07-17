@@ -54,7 +54,7 @@ export function parsePilotData(text) {
 export function parseATCData(text, json) {
     let raw = text.split('!CLIENTS:\r\n').pop().split('\r\n;\r\n;').shift();
     let rawArr = raw.split('\r\n');
-    let approachData = [], towerData = [];
+    let approachData = [], towerData = [], groundData = [];
     let centerData = parseCenterData(json);
 
     rawArr.forEach(client => {
@@ -63,13 +63,16 @@ export function parseATCData(text, json) {
             approachData.push(formatATCData(arr));
         } else if (arr[0].includes('_TWR')) {
             towerData.push(formatATCData(arr));
+        } else if (arr[0].includes('_GND')) {
+            groundData.push(formatATCData(arr));
         }
     });
 
     return {
         'approach': approachData,
         'tower': towerData,
-        'center': centerData
+        'center': centerData,
+        'ground': groundData
     };
 }
 

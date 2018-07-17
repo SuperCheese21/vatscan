@@ -16,6 +16,7 @@ export default class Map extends React.Component {
             loading: true,
             pilotData: [],
             atcData: {
+                ground: [],
                 tower: [],
                 approach: [],
                 center: []
@@ -69,6 +70,7 @@ export default class Map extends React.Component {
                         fillColor={colors.mapOverlays.artccFill}
                         strokeColor={colors.mapOverlays.artccStroke}
                         tappable={true}
+                        zIndex={0}
                     />
                 ))}
 
@@ -80,6 +82,7 @@ export default class Map extends React.Component {
                         strokeWidth={1}
                         fillColor={colors.mapOverlays.approachFill}
                         strokeColor={colors.mapOverlays.approachStroke}
+                        zIndex={1}
                     />
                 ))}
 
@@ -87,10 +90,23 @@ export default class Map extends React.Component {
                     <Circle
                         key={c.id}
                         center={c.location}
-                        radius={18520}
+                        radius={15000}
                         strokeWidth={1}
                         fillColor={colors.mapOverlays.towerFill}
                         strokeColor={colors.mapOverlays.towerStroke}
+                        zIndex={2}
+                    />
+                ))}
+
+                {this.state.atcData.ground.map(c => (
+                    <Circle
+                        key={c.id}
+                        center={c.location}
+                        radius={2000}
+                        strokeWidth={1}
+                        fillColor={colors.mapOverlays.groundFill}
+                        strokeColor={colors.mapOverlays.groundStroke}
+                        zIndex={3}
                     />
                 ))}
 
