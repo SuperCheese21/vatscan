@@ -2,7 +2,8 @@ import {
     getRandomElement,
     formatLatLng,
     formatPilotData,
-    formatATCData
+    formatATCData,
+    checkID
 } from './util';
 import constants from '../config/constants.json';
 
@@ -80,18 +81,20 @@ export function parseATCData(text, json) {
 function parseCenterData(json) {
     let centerData = [];
     json.features.forEach(c => {
-        const coords = c.geometry.coordinates[0];
-        const polygon = coords.map(c => ({
-            latitude: c[1],
-            longitude: c[0]
-        }));
-        centerData.push({
-            id: c.id,
-            name: c.properties.name,
-            callsign: c.properties.callsign,
-            frequency: c.properties.frequency,
-            polygon: polygon
-        });
+        if (!checkID(centerData, c.id)) {
+            const coords = c.geometry.coordinates[0];
+            const polygon = coords.map(c => ({
+                latitude: c[1],
+                longitude: c[0]
+            }));
+            centerData.push({
+                'callsign': c.properties.callsign,
+                'id': c.id,
+                'name': c.properties.name,
+                'frequency': c.properties.frequency,
+                'polygon': polygon
+            });
+        }
     });
     return centerData;
 }

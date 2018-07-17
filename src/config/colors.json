@@ -4,7 +4,7 @@
     "primaryMedium": "#161b1e",
     "accent": "#74b320",
     "mapOverlays": {
-        "artccFill": "rgba(0, 0, 255, 0.5)",
+        "artccFill": "rgba(0, 0, 255, 0.3)",
         "artccStroke": "rgba(0, 0, 255, 0.8)",
         "approachFill": "rgba(255, 0, 0, 0.5)",
         "approachStroke": "rgba(255, 0, 0, 0.8)",

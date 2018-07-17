@@ -38,8 +38,8 @@ export function formatLatLng(lat, lon) {
 export function formatPilotData(arr) {
     return {
         'callsign': arr[0],
-        'cid': arr[1],
-        'realname': arr[2],
+        'id': arr[1],
+        'name': arr[2],
         'location': formatLatLng(arr[5], arr[6]),
         'altitude': arr[7],
         'groundspeed': arr[8],
@@ -67,8 +67,8 @@ export function formatPilotData(arr) {
 export function formatATCData(arr) {
     return {
         'callsign': arr[0],
-        'cid': arr[1],
-        'realname': arr[2],
+        'id': arr[1],
+        'name': arr[2],
         'frequency': arr[4],
         'location': formatLatLng(arr[5], arr[6])
     };
@@ -88,6 +88,21 @@ export function getAircraftIcon(aircraft) {
         return NARROWBODY_ICON;
     }
     return GA_ICON;
+}
+
+/**
+ * Checks for duplicate ID in data array before adding new entry
+ * @param  {Array} data Data array of pilot or controller objects
+ * @param  {String} id  VATSIM CID to check
+ * @return {Boolean}    True if id is already in array, false if it isn't
+ */
+export function checkID(data, id) {
+    for (let i = 0; i < data.length; i++) {
+        if (data[i].id == id) {
+            return true;
+        }
+    }
+    return false;
 }
 
 /**

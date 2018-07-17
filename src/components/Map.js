@@ -47,19 +47,24 @@ export default class Map extends React.Component {
 
     render() {
         return (
-            <MapView style = {{ flex: 1 }}
-                initialRegion = {{
+            <MapView style={{ flex: 1 }}
+                initialRegion={{
                     latitude: 38,
                     longitude: -97,
                     latitudeDelta: 60,
                     longitudeDelta: 30
                 }}
-                customMapStyle = {mapStyle}>
+                customMapStyle={mapStyle}
+                moveOnMarkerPress={false}
+                toolbarEnabled={false}
+                pitchEnabled={false}
+                rotateEnabled={false}
+                showsIndoors={false}>
 
-                {this.state.atcData.center.map(controller => (
+                {this.state.atcData.center.map(c => (
                     <Polygon
-                        key={controller.id}
-                        coordinates={controller.polygon}
+                        key={c.id}
+                        coordinates={c.polygon}
                         strokeWidth={2}
                         fillColor={colors.mapOverlays.artccFill}
                         strokeColor={colors.mapOverlays.artccStroke}
@@ -69,9 +74,9 @@ export default class Map extends React.Component {
 
                 {this.state.atcData.approach.map(c => (
                     <Circle
-                        key={c.cid}
+                        key={c.id}
                         center={c.location}
-                        radius={50000}
+                        radius={55560}
                         strokeWidth={1}
                         fillColor={colors.mapOverlays.approachFill}
                         strokeColor={colors.mapOverlays.approachStroke}
@@ -80,9 +85,9 @@ export default class Map extends React.Component {
 
                 {this.state.atcData.tower.map(c => (
                     <Circle
-                        key={c.cid}
+                        key={c.id}
                         center={c.location}
-                        radius={20000}
+                        radius={18520}
                         strokeWidth={1}
                         fillColor={colors.mapOverlays.towerFill}
                         strokeColor={colors.mapOverlays.towerStroke}
@@ -91,13 +96,13 @@ export default class Map extends React.Component {
 
                 {this.state.pilotData.map(p => (
                     <Marker
-                        key={p.cid}
+                        key={p.id}
                         image={getAircraftIcon(p.flightplan.aircraft)}
                         rotation={p.heading}
                         anchor={{ x: 0.5, y: 0.5 }}
                         coordinate={p.location}
                         title={p.callsign}
-                        description={p.realname}
+                        description={p.name}
                     />
                 ))}
             </MapView>
