@@ -3,6 +3,12 @@
     "primaryDark": "#111111",
     "primaryMedium": "#161b1e",
     "accent": "#74b320",
-    "polygonFill": "rgba(0, 0, 255, 0.5)",
-    "polygonStroke": "rgba(0, 0, 255, 0.8)"
+    "mapOverlays": {
+        "artccFill": "rgba(0, 0, 255, 0.5)",
+        "artccStroke": "rgba(0, 0, 255, 0.8)",
+        "approachFill": "rgba(255, 0, 0, 0.5)",
+        "approachStroke": "rgba(255, 0, 0, 0.8)",
+        "towerFill": "rgba(255, 165, 0, 0.5)",
+        "towerStroke": "rgba(255, 165, 0, 0.8)"
+    }
 }

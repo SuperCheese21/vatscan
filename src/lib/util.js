@@ -31,11 +31,55 @@ export function formatLatLng(lat, lon) {
 }
 
 /**
+ * Builds a javascript object from the pilot data array
+ * @param  {Array} arr Pilot data array
+ * @return {Object}    Pilot data object
+ */
+export function formatPilotData(arr) {
+    return {
+        'callsign': arr[0],
+        'cid': arr[1],
+        'realname': arr[2],
+        'location': formatLatLng(arr[5], arr[6]),
+        'altitude': arr[7],
+        'groundspeed': arr[8],
+        'flightplan': {
+            'aircraft': arr[9],
+            'depairport': arr[11],
+            'altitude': arr[12],
+            'destairport': arr[13],
+            'flighttype': arr[21],
+            'actdeptime': arr[23],
+            'altairport': arr[28],
+            'remarks': arr[29],
+            'route': arr[30]
+        },
+        'transponder': arr[17],
+        'heading': Number(arr[38])
+    };
+}
+
+/**
+ * Builds a custom javascript object for tower and approach controller data
+ * @param  {Array} arr Controller data array
+ * @return {Object}    Controller data object
+ */
+export function formatATCData(arr) {
+    return {
+        'callsign': arr[0],
+        'cid': arr[1],
+        'realname': arr[2],
+        'frequency': arr[4],
+        'location': formatLatLng(arr[5], arr[6])
+    };
+}
+
+/**
  * Returns the correct icon based on the aircraft type
  * @param  {String} aircraft ICAO aircraft designator
  * @return {Image}           Icon to render on map
  */
-export function getIcon(aircraft) {
+export function getAircraftIcon(aircraft) {
     let icon, type = getAircraftType(aircraft);
 
     if (type === 2) {
@@ -47,7 +91,7 @@ export function getIcon(aircraft) {
 }
 
 /**
- * Returns the path to the correct aircraft icon based on ICAO code
+ * Returns the type of aircraft based on ICAO code
  * @param  {String} aircraft Aircraft ICAO type designator
  * @return {int}             Aircraft type (0 - GA, 1 - Narrowbody, 2 - Widebody)
  */
@@ -55,9 +99,9 @@ function getAircraftType(icao) {
     const widebody = constants.aircraft.WIDEBODY;
     const narrowbody = constants.aircraft.NARROWBODY;
 
-    if (checkType(widebody, icao)) {
+    if (checkAircraftType(widebody, icao)) {
         return 2;
-    } else if (checkType(narrowbody, icao)) {
+    } else if (checkAircraftType(narrowbody, icao)) {
         return 1;
     }
     return 0;
@@ -69,7 +113,7 @@ function getAircraftType(icao) {
  * @param  {String} icao ICAO aircraft type designator
  * @return {boolean}     ICAO includes at least one valid substring
  */
-function checkType(list, icao) {
+function checkAircraftType(list, icao) {
     for (let i = 0; i < list.length; i++) {
         const aircraft = list[i];
         if (icao.includes(aircraft)) {

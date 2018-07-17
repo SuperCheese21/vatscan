@@ -6,7 +6,7 @@ import constants from '../config/constants.json';
 import colors from '../config/colors.json';
 import mapStyle from '../config/map-styles/style_blue_essence.json';
 import { fetchData, parsePilotData, parseATCData } from '../lib/fetch';
-import { getIcon } from '../lib/util';
+import { getAircraftIcon } from '../lib/util';
 
 
 export default class Map extends React.Component {
@@ -25,11 +25,9 @@ export default class Map extends React.Component {
 
     componentDidMount() {
         this.updateData();
-        this.state = {
-            updateInterval: setInterval(() => {
-                this.updateData();
-            }, constants.UPDATE_INTERVAL)
-        }
+        setInterval(() => {
+            this.updateData();
+        }, constants.UPDATE_INTERVAL);
     }
 
     updateData() {
@@ -62,9 +60,9 @@ export default class Map extends React.Component {
                     <Polygon
                         key={controller.id}
                         coordinates={controller.polygon}
-                        fillColor={colors.polygonFill}
-                        strokeColor={colors.polygonStroke}
                         strokeWidth={2}
+                        fillColor={colors.mapOverlays.artccFill}
+                        strokeColor={colors.mapOverlays.artccStroke}
                         tappable={true}
                     />
                 ))}
@@ -75,8 +73,8 @@ export default class Map extends React.Component {
                         center={c.location}
                         radius={50000}
                         strokeWidth={1}
-                        strokeColor={'rgba(255, 0, 0, 0.8)'}
-                        fillColor={'rgba(255, 0, 0, 0.5)'}
+                        fillColor={colors.mapOverlays.approachFill}
+                        strokeColor={colors.mapOverlays.approachStroke}
                     />
                 ))}
 
@@ -86,15 +84,15 @@ export default class Map extends React.Component {
                         center={c.location}
                         radius={20000}
                         strokeWidth={1}
-                        strokeColor={'rgba(255, 165, 0, 0.8)'}
-                        fillColor={'rgba(255, 165, 0, 0.5)'}
+                        fillColor={colors.mapOverlays.towerFill}
+                        strokeColor={colors.mapOverlays.towerStroke}
                     />
                 ))}
 
                 {this.state.pilotData.map(p => (
                     <Marker
                         key={p.cid}
-                        image={getIcon(p.flightplan.aircraft)}
+                        image={getAircraftIcon(p.flightplan.aircraft)}
                         rotation={p.heading}
                         anchor={{ x: 0.5, y: 0.5 }}
                         coordinate={p.location}

@@ -1,4 +1,9 @@
-import { getRandomElement, formatLatLng } from './util';
+import {
+    getRandomElement,
+    formatLatLng,
+    formatPilotData,
+    formatATCData
+} from './util';
 import constants from '../config/constants.json';
 
 /**
@@ -20,7 +25,7 @@ export async function fetchData() {
 }
 
 /**
- * Parses the raw data into a javascript object for easier data access
+ * Parses the raw server data from text to a custon javascript object
  * @param  {String} text Raw text data from random server URL
  * @return {object}      Client data formatted in javascript object
  */
@@ -39,6 +44,12 @@ export function parsePilotData(text) {
     return pilots;
 }
 
+/**
+ * Parses the raw server data from text and json to a custom javascript object
+ * @param  {String} text Raw VATSIM server data
+ * @param  {Object} json Raw ARTCC controller data from map.vatsim.net
+ * @return {Object}      Controller data formatted as a javascript object
+ */
 export function parseATCData(text, json) {
     let raw = text.split('!CLIENTS:\r\n').pop().split('\r\n;\r\n;').shift();
     let rawArr = raw.split('\r\n');
@@ -67,14 +78,14 @@ export function parseATCData(text, json) {
  * @return {Array}       Array of controllers in custom format
  */
 function parseCenterData(json) {
-    let CenterData = [];
+    let centerData = [];
     json.features.forEach(c => {
         const coords = c.geometry.coordinates[0];
         const polygon = coords.map(c => ({
             latitude: c[1],
             longitude: c[0]
         }));
-        CenterData.push({
+        centerData.push({
             id: c.id,
             name: c.properties.name,
             callsign: c.properties.callsign,
@@ -82,53 +93,5 @@ function parseCenterData(json) {
             polygon: polygon
         });
     });
-    return CenterData;
-}
-
-/**
- * Builds a javascript object from the pilot data array
- * @param  {String} arr Pilot data array
- * @return {Object}     Pilot data object
- */
-function formatPilotData(arr) {
-    return {
-        'callsign': arr[0],
-        'cid': arr[1],
-        'realname': arr[2],
-        'location': formatLatLng(arr[5], arr[6]),
-        'altitude': arr[7],
-        'groundspeed': arr[8],
-        'flightplan': formatFlightPlan(arr),
-        'transponder': arr[17],
-        'heading': Number(arr[38])
-    };
-}
-
-/**
- * Builds a flightplan javascript object from the pilot data array
- * @param  {String} arr Pilot data array
- * @return {Object}     Formatted flightplan object
- */
-function formatFlightPlan(arr) {
-    return {
-        'aircraft': arr[9],
-        'depairport': arr[11],
-        'altitude': arr[12],
-        'destairport': arr[13],
-        'flighttype': arr[21],
-        'actdeptime': arr[23],
-        'altairport': arr[28],
-        'remarks': arr[29],
-        'route': arr[30]
-    };
-}
-
-function formatATCData(arr) {
-    return {
-        'callsign': arr[0],
-        'cid': arr[1],
-        'realname': arr[2],
-        'frequency': arr[4],
-        'location': formatLatLng(arr[5], arr[6])
-    };
+    return centerData;
 }
