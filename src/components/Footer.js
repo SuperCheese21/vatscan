@@ -9,7 +9,7 @@ export default class Footer extends Component {
     render() {
         return (
             <View style={styles.footerContainer}>
-                <Text style={styles.callsignText}>ASA386</Text>
+                <Text style={styles.callsignText}>{this.props.callsign}</Text>
                 <View style={styles.sliderContainer}>
                     <Slider
                         style={{ flex: 1 }}

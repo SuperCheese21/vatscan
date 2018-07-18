@@ -60,7 +60,10 @@ export default class Map extends React.Component {
                 toolbarEnabled={false}
                 pitchEnabled={false}
                 rotateEnabled={false}
-                showsIndoors={false}>
+                showsIndoors={false}
+                onPress={() => {
+                    this.props.setFocusedClient(72);
+                }}>
 
                 {this.state.atcData.center.map(c => (
                     <Polygon
@@ -117,8 +120,10 @@ export default class Map extends React.Component {
                         rotation={p.heading}
                         anchor={{ x: 0.5, y: 0.5 }}
                         coordinate={p.location}
-                        title={p.callsign}
-                        description={p.name}
+                        onPress={() => {
+                            this.props.setFocusedClient(p);
+                            this.props.showPanel(156);
+                        }}
                     />
                 ))}
             </MapView>
