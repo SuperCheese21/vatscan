@@ -102,7 +102,7 @@ export default class Map extends React.Component {
                     <Circle
                         key={c.id}
                         center={c.location}
-                        radius={2000}
+                        radius={2500}
                         strokeWidth={1}
                         fillColor={colors.mapOverlays.groundFill}
                         strokeColor={colors.mapOverlays.groundStroke}

@@ -11,9 +11,7 @@ const SEEKBAR_ICON = require('../assets/icons/seekbar.png');
  * @return {String}     Random array element
  */
 export function getRandomElement(arr) {
-    const len = arr.length;
-    const rand = Math.floor(Math.random() * len);
-
+    const rand = Math.floor(Math.random() * arr.length);
     return arr[rand];
 }
 
@@ -98,9 +96,7 @@ export function getAircraftIcon(aircraft) {
  */
 export function checkID(data, id) {
     for (let i = 0; i < data.length; i++) {
-        if (data[i].id == id) {
-            return true;
-        }
+        return data[i].id == id;
     }
     return false;
 }
@@ -116,7 +112,7 @@ function getAircraftType(icao) {
 
     if (checkAircraftType(widebody, icao)) {
         return 2;
-    } else if (checkAircraftType(narrowbody, icao)) {
+    } else if (checkAircraftType(narrowbody, icao) || !icao) {
         return 1;
     }
     return 0;
