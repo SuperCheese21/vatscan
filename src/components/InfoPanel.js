@@ -21,7 +21,7 @@ export default class InfoPanel extends Component {
     setPanelPosition = position => {
         this.infoPanel.current.transitionTo({
             toValue: position,
-            duration: 100
+            duration: 200
         });
         this.setState({
             currentPanelState: position

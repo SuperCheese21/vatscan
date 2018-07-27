@@ -42,8 +42,8 @@ export default class App extends Component {
             basicData: {
                 id: c.id,
                 name: c.name,
-                departureIcao: c.flightplan.depairport,
-                arrivalIcao: c.flightplan.destairport
+                departureIcao: c.flightplan.depairport || '????',
+                arrivalIcao: c.flightplan.destairport || '????'
             },
             detailData: {
                 aircraft: ' ' + c.flightplan.aircraft,
