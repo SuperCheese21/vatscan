@@ -7,14 +7,15 @@ import colors from '../config/colors.json';
 
 export default class Footer extends Component {
     render() {
+        const data = this.props.data;
         return (
             <View style={styles.footerContainer}>
-                <Text style={styles.callsignText}>{this.props.callsign}</Text>
+                <Text style={styles.callsignText}>{data.callsign}</Text>
                 <View style={styles.sliderContainer}>
                     <Slider
                         style={{ flex: 1 }}
                         disabled={true}
-                        value={0.5}
+                        value={data.progress}
                         minimumTrackTintColor={colors.accent}
                         maximumTrackTintColor={colors.sliderMaximum}
                         thumbStyle={{ opacity: 0 }}

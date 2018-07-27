@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { Image, Text, View } from 'react-native';
-import Icon from '@expo/vector-icons/MaterialIcons';
+import { View } from 'react-native';
 import SlidingUpPanel from 'rn-sliding-up-panel';
+
+import BasicData from './BasicData';
+import DetailData from './DetailData';
 
 import colors from '../config/colors.json';
 import constants from '../config/constants.json';
@@ -10,6 +12,9 @@ import styles from '../config/styles';
 export default class InfoPanel extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            currentPanelState: constants.panelStates.COLLAPSED
+        };
         this.infoPanel = React.createRef();
     }
 
@@ -18,30 +23,31 @@ export default class InfoPanel extends Component {
             toValue: position,
             duration: 100
         });
+        this.setState({
+            currentPanelState: position
+        });
     }
 
-    // adjustPosition = position => {
-    //     const prevState = this.state.currentPanelState;
-    //     const states = constants.panelStates;
-    //
-    //     if (prevState === states.EXPANDED) {
-    //         const threshold = (states.HALF_EXPANDED - states.COLLAPSED) / 2;
-    //         if (position > threshold) {
-    //             this.movePanel(states.HALF_EXPANDED);
-    //         } else {
-    //             this.movePanel(states.COLLAPSED);
-    //         }
-    //     } else if (prevState === states.HALF_EXPANDED) {
-    //         if (position > states.HALF_EXPANDED) {
-    //             this.movePanel(states.EXPANDED);
-    //         } else {
-    //             this.movePanel(states.COLLAPSED);
-    //         }
-    //     }
-    // }
+    adjustPosition = position => {
+        const prevState = this.state.currentPanelState;
+        const { COLLAPSED, EXPANDED, HALF_EXPANDED } = constants.panelStates;
+
+        if (prevState === EXPANDED) {
+            if (position > HALF_EXPANDED) {
+                this.setPanelPosition(HALF_EXPANDED);
+            } else {
+                this.setPanelPosition(COLLAPSED);
+            }
+        } else if (prevState === HALF_EXPANDED) {
+            if (position > HALF_EXPANDED) {
+                this.setPanelPosition(EXPANDED);
+            } else {
+                this.setPanelPosition(COLLAPSED);
+            }
+        }
+    }
 
     render() {
-        const c = this.props.data;
         const top = constants.panelStates.EXPANDED;
         const bottom = constants.panelStates.COLLAPSED;
         return(
@@ -57,76 +63,19 @@ export default class InfoPanel extends Component {
                 }}
                 onDragEnd={position => {
                     console.log('onDragEnd()');
-                    //this.adjustPosition(position);
+                    this.adjustPosition(position);
                 }}
                 onRequestClose={() => {
                     console.log('onRequestClose()');
                 }}
                 height={top - bottom}
             >
+
                 <View style={{ flex: 1 }}>
-                    <View style={styles.infoContainerBasic}>
-                        <View style={styles.infoRow}>
-                            <Text style={[
-                                styles.icaoText,
-                                { marginRight: 6, textAlign: 'right' }
-                            ]}>
-                                {c.departureIcao}
-                            </Text>
-                            <Image
-                                style={styles.fromToIcon}
-                                source={require('../assets/icons/narrowbody.png')}
-                            />
-                            <Text style={[
-                                styles.icaoText,
-                                { marginLeft: 6 }
-                            ]}>
-                                {c.arrivalIcao}
-                            </Text>
-                        </View>
-
-                        <View style={{ flexDirection: 'row', height: 20 }}>
-                            <View style={{ flex: 1 }}>
-                                <Text style={styles.nameText}>{c.name}</Text>
-                            </View>
-
-                            <View style={{ flex: 1 }}>
-                                <Text style={styles.cidText}>{c.id}</Text>
-                            </View>
-                        </View>
-                    </View>
-
-                    <View style={styles.infoContainerDetail}>
-                        <View style={styles.infoRow}>
-                            <View style={styles.infoRow}>
-                                <Icon name='flight' size={24} color={colors.accent} />
-                                <Text style={styles.infoText}>{' ' + c.aircraft}</Text>
-                            </View>
-                            <View style={styles.infoRow}>
-                                <Text style={styles.infoLabel}>Flown</Text>
-                                <Text style={styles.infoText}></Text>
-                            </View>
-                            <View style={styles.infoRow}>
-                                <Text style={styles.infoLabel}>Remaining</Text>
-                                <Text style={styles.infoText}></Text>
-                            </View>
-                        </View>
-                        <View style={styles.infoRow}>
-                            <View style={styles.infoRow}>
-                                <Icon name='unfold-more' size={24} color={colors.accent} />
-                                <Text style={styles.infoText}>{' ' + c.altitude + ' ft'}</Text>
-                            </View>
-                            <View style={styles.infoRow}>
-                                <Icon name='navigation' size={24} color={colors.accent} />
-                                <Text style={styles.infoText}>{' ' + c.heading + '°'}</Text>
-                            </View>
-                            <View style={styles.infoRow}>
-                                <Icon name='send' size={24} color={colors.accent} />
-                                <Text style={styles.infoText}>{' ' + c.speed + ' kts'}</Text>
-                            </View>
-                        </View>
-                    </View>
+                    <BasicData data={this.props.basicData} />
+                    <DetailData data={this.props.detailData} />
                 </View>
+
             </SlidingUpPanel>
         )
     }

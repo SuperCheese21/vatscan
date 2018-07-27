@@ -12,32 +12,42 @@ export default class App extends Component {
         this.infoPanel = React.createRef();
         this.state = {
             loading: true,
-            focusedClient: {
-                callsign: '',
+            basicData: {
                 id: '',
                 name: '',
                 departureIcao: '',
-                arrivalIcao: '',
+                arrivalIcao: ''
+            },
+            detailData: {
                 aircraft: '',
                 altitude: '',
                 heading: '',
                 speed: ''
+            },
+            footerData: {
+                callsign: '',
+                progress: 0.5
             }
         };
     }
 
     setFocusedClient = c => {
         this.setState({
-            focusedClient: {
-                callsign: c.callsign,
+            basicData: {
                 id: c.id,
                 name: c.name,
                 departureIcao: c.flightplan.depairport,
-                arrivalIcao: c.flightplan.destairport,
-                aircraft: c.flightplan.aircraft,
-                altitude: c.altitude,
-                heading: c.heading,
-                speed: c.groundspeed
+                arrivalIcao: c.flightplan.destairport
+            },
+            detailData: {
+                aircraft: ' ' + c.flightplan.aircraft,
+                altitude: ' ' + c.altitude + ' ft',
+                heading: ' ' + c.heading + '°',
+                speed: ' ' + c.groundspeed + ' kts'
+            },
+            footerData: {
+                callsign: c.callsign,
+                progress: 0.5
             }
         });
     }
@@ -71,9 +81,10 @@ export default class App extends Component {
                 />
                 <InfoPanel
                     ref={this.infoPanel}
-                    data={this.state.focusedClient}
+                    basicData={this.state.basicData}
+                    detailData={this.state.detailData}
                 />
-                <Footer callsign={c.callsign} />
+                <Footer data={this.state.footerData} />
             </View>
         );
     }
