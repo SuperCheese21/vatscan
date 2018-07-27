@@ -27,6 +27,9 @@ const styles = StyleSheet.create({
             rotate: '90deg'
         }]
     },
+    hidden: {
+        opacity: 0
+    },
     icaoText: {
         color: 'white',
         fontFamily: 'sans-serif-condensed',
@@ -35,11 +38,11 @@ const styles = StyleSheet.create({
     },
     infoContainerBasic: {
         flex: 1,
-        backgroundColor: colors.primary
+        backgroundColor: colors.primaryMedium
     },
     infoContainerDetail: {
         flex: 1,
-        backgroundColor: colors.primaryMedium
+        backgroundColor: colors.primary
     },
     infoLabel: {
         color: 'white',

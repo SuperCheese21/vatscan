@@ -18,7 +18,7 @@ export class PilotMarkers extends Component {
                         coordinate={p.location}
                         onPress={() => {
                             this.props.setFocusedClient(p);
-                            this.props.setPanelPosition(constants.panelStates.EXPANDED);
+                            this.props.setPanelPosition(constants.panelStates.HALF_EXPANDED);
                         }}
                     />
                 ))}

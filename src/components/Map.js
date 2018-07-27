@@ -65,6 +65,10 @@ export default class Map extends Component {
                 pitchEnabled={false}
                 rotateEnabled={false}
                 showsIndoors={false}
+                onPress={() => {
+                    this.props.setPanelPosition(constants.panelStates.COLLAPSED);
+                    this.props.removeFocusedClient();
+                }}
             >
 
                 <CenterMarkers data={this.state.atcData.center} />

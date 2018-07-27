@@ -11,7 +11,10 @@ export default class Footer extends Component {
         return (
             <View style={styles.footerContainer}>
                 <Text style={styles.callsignText}>{data.callsign}</Text>
-                <View style={styles.sliderContainer}>
+                <View style={[
+                    styles.sliderContainer,
+                    !this.props.progressBar && styles.hidden
+                ]}>
                     <Slider
                         style={{ flex: 1 }}
                         disabled={true}

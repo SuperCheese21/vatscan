@@ -10,8 +10,13 @@ export default class App extends Component {
     constructor(props) {
         super(props);
         this.infoPanel = React.createRef();
-        this.state = {
+        this.state = this.getInitialState();
+    }
+
+    getInitialState = () => {
+        return {
             loading: true,
+            progressBar: false,
             basicData: {
                 id: '',
                 name: '',
@@ -33,6 +38,7 @@ export default class App extends Component {
 
     setFocusedClient = c => {
         this.setState({
+            progressBar: true,
             basicData: {
                 id: c.id,
                 name: c.name,
@@ -50,6 +56,10 @@ export default class App extends Component {
                 progress: 0.5
             }
         });
+    }
+
+    removeFocusedClient = () => {
+        this.setState(this.getInitialState());
     }
 
     setPanelPosition = position => {
@@ -77,14 +87,16 @@ export default class App extends Component {
                     showLoader={this.showLoader}
                     hideLoader={this.hideLoader}
                     setFocusedClient={this.setFocusedClient}
+                    removeFocusedClient={this.removeFocusedClient}
                     setPanelPosition={this.setPanelPosition}
                 />
                 <InfoPanel
                     ref={this.infoPanel}
                     basicData={this.state.basicData}
                     detailData={this.state.detailData}
+                    removeFocusedClient={this.removeFocusedClient}
                 />
-                <Footer data={this.state.footerData} />
+                <Footer data={this.state.footerData} progressBar={this.state.progressBar} />
             </View>
         );
     }

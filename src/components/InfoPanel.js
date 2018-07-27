@@ -62,11 +62,10 @@ export default class InfoPanel extends Component {
                     bottom: bottom
                 }}
                 onDragEnd={position => {
-                    console.log('onDragEnd()');
                     this.adjustPosition(position);
                 }}
                 onRequestClose={() => {
-                    console.log('onRequestClose()');
+                    this.props.removeFocusedClient();
                 }}
                 height={top - bottom}
             >
