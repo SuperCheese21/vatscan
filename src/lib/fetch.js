@@ -13,11 +13,11 @@ import constants from '../config/constants.json';
  */
 export async function fetchData() {
     const clientsUrl = getRandomElement(constants.SERVER_URLS);
-    const centerUrl = 'https://map.vatsim.net/api/atcGeoJSON';
+    const artccUrl = constants.ARTCC_URL;
     try {
         const data = await Promise.all([
             fetch(clientsUrl).then(data => data.text()),
-            fetch(centerUrl).then(data => data.json())
+            fetch(artccUrl).then(data => data.json())
         ]);
         return data;
     } catch (e) {

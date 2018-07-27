@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { MapView } from 'expo';
-import { Circle, Marker, Polygon } from 'react-native-maps';
 
 import constants from '../config/constants.json';
-import colors from '../config/colors.json';
 import mapStyle from '../config/map-styles/style_blue_essence.json';
+
 import { fetchData, parsePilotData, parseATCData } from '../lib/fetch';
-import { getAircraftIcon } from '../lib/util';
+import {
+    PilotMarkers,
+    CenterMarkers,
+    ApproachMarkers,
+    TowerMarkers,
+    GroundMarkers
+} from './MapMarkers';
 
-
-export default class Map extends React.Component {
+export default class Map extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -61,71 +65,22 @@ export default class Map extends React.Component {
                 pitchEnabled={false}
                 rotateEnabled={false}
                 showsIndoors={false}
-                onPress={() => {
-                    this.props.setFocusedClient(72);
-                }}>
+            >
 
-                {this.state.atcData.center.map(c => (
-                    <Polygon
-                        key={c.id}
-                        coordinates={c.polygon}
-                        strokeWidth={2}
-                        fillColor={colors.mapOverlays.artccFill}
-                        strokeColor={colors.mapOverlays.artccStroke}
-                        tappable={true}
-                        zIndex={0}
-                    />
-                ))}
+                <CenterMarkers data={this.state.atcData.center} />
 
-                {this.state.atcData.approach.map(c => (
-                    <Circle
-                        key={c.id}
-                        center={c.location}
-                        radius={55560}
-                        strokeWidth={1}
-                        fillColor={colors.mapOverlays.approachFill}
-                        strokeColor={colors.mapOverlays.approachStroke}
-                        zIndex={1}
-                    />
-                ))}
+                <ApproachMarkers data={this.state.atcData.approach} />
 
-                {this.state.atcData.tower.map(c => (
-                    <Circle
-                        key={c.id}
-                        center={c.location}
-                        radius={15000}
-                        strokeWidth={1}
-                        fillColor={colors.mapOverlays.towerFill}
-                        strokeColor={colors.mapOverlays.towerStroke}
-                        zIndex={2}
-                    />
-                ))}
+                <TowerMarkers data={this.state.atcData.tower} />
 
-                {this.state.atcData.ground.map(c => (
-                    <Circle
-                        key={c.id}
-                        center={c.location}
-                        radius={2500}
-                        strokeWidth={1}
-                        fillColor={colors.mapOverlays.groundFill}
-                        strokeColor={colors.mapOverlays.groundStroke}
-                        zIndex={3}
-                    />
-                ))}
+                <GroundMarkers data={this.state.atcData.ground} />
 
-                {this.state.pilotData.map(p => (
-                    <Marker
-                        key={p.id}
-                        image={getAircraftIcon(p.flightplan.aircraft)}
-                        rotation={p.heading}
-                        anchor={{ x: 0.5, y: 0.5 }}
-                        coordinate={p.location}
-                        onPress={() => {
-                            this.props.setFocusedClient(p);
-                            this.props.showPanel(156);
-                        }}
-                    />
-                ))}
+                <PilotMarkers
+                    data={this.state.pilotData}
+                    setFocusedClient={this.props.setFocusedClient}
+                    setPanelPosition={this.props.setPanelPosition}
+                />
+
             </MapView>
         );
     }
