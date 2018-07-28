@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Image, Text, View } from 'react-native';
 
-import colors from '../config/colors.json';
 import styles from '../config/styles';
 
 export default class BasicData extends Component {

@@ -5,9 +5,7 @@ import SlidingUpPanel from 'rn-sliding-up-panel';
 import BasicData from './BasicData';
 import DetailData from './DetailData';
 
-import colors from '../config/colors.json';
 import constants from '../config/constants.json';
-import styles from '../config/styles';
 
 export default class InfoPanel extends Component {
     constructor(props) {
