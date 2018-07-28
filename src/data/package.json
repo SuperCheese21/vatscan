@@ -1,0 +1,16 @@
+{
+  "name": "fetch-airports",
+  "version": "1.0.0",
+  "description": "Fetches airport csv data and parses it to json",
+  "main": "updateAirports.js",
+  "scripts": {
+    "start": "node ./updateAirports.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ethan Shields",
+  "license": "ISC",
+  "dependencies": {
+    "request": "^2.87.0",
+    "request-promise": "^4.2.2"
+  }
+}

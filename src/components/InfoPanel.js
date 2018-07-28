@@ -21,7 +21,7 @@ export default class InfoPanel extends Component {
     setPanelPosition = position => {
         this.infoPanel.current.transitionTo({
             toValue: position,
-            duration: 200
+            duration: 250
         });
         this.setState({
             currentPanelState: position
@@ -61,12 +61,8 @@ export default class InfoPanel extends Component {
                     top: top,
                     bottom: bottom
                 }}
-                onDragEnd={position => {
-                    this.adjustPosition(position);
-                }}
-                onRequestClose={() => {
-                    this.props.removeFocusedClient();
-                }}
+                onDragEnd={position => this.adjustPosition(position)}
+                onRequestClose={() => this.props.removeFocusedClient()}
                 height={top - bottom}
             >
 
