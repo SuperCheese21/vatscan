@@ -27,9 +27,6 @@ const styles = StyleSheet.create({
             rotate: '90deg'
         }]
     },
-    hidden: {
-        opacity: 0
-    },
     icaoText: {
         color: 'white',
         fontFamily: 'sans-serif-condensed',
