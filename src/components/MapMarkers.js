@@ -118,7 +118,7 @@ export class FlightPath extends Component {
         const destCoords = this.props.data.destCoords;
 
         // Render polylines only if airport coords are present
-        if (depCoords && destCoords) {
+        if (depCoords && location && destCoords) {
             return (
                 <Fragment>
                     <Polyline

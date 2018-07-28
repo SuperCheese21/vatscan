@@ -96,7 +96,9 @@ export function getAircraftIcon(aircraft) {
  */
 export function checkID(data, id) {
     for (let i = 0; i < data.length; i++) {
-        return data[i].id == id;
+        if (data[i].id == id) {
+            return true;
+        }
     }
     return false;
 }
