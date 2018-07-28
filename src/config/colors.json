@@ -5,13 +5,15 @@
     "accent": "#74b320",
     "mapOverlays": {
         "artccFill": "rgba(0, 0, 255, 0.1)",
-        "artccStroke": "rgba(0, 0, 255, 0.7)",
+        "artccStroke": "rgba(0, 0, 255, 0.5)",
         "approachFill": "rgba(255, 0, 0, 0.2)",
-        "approachStroke": "rgba(255, 0, 0, 0.7)",
+        "approachStroke": "rgba(255, 0, 0, 0.6)",
         "towerFill": "rgba(255, 165, 0, 0.35)",
         "towerStroke": "rgba(255, 165, 0, 0.7)",
         "groundFill": "rgba(0, 255, 0, 0.5)",
-        "groundStroke": "rgba(0, 255, 0, 0.7)"
+        "groundStroke": "rgba(0, 255, 0, 0.8)",
+        "lineFlown": "#00FF00",
+        "lineRemaining": "#FF0000"
     },
     "sliderMaximum": "#A9A9A9"
 }

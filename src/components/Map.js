@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 import { MapView } from 'expo';
 
-import constants from '../config/constants.json';
-import mapStyle from '../config/map-styles/style_blue_essence.json';
-
-import { fetchData, parsePilotData, parseATCData } from '../lib/fetch';
 import {
-    PilotMarkers,
     CenterMarkers,
     ApproachMarkers,
     TowerMarkers,
-    GroundMarkers,
-    FlightPath
-} from './MapMarkers';
+    GroundMarkers
+} from './ControllerMarkers';
+import { PilotMarkers, FlightPath } from './PilotMarkers';
+
+import { fetchData, parsePilotData, parseATCData } from '../lib/fetch';
+import constants from '../config/constants.json';
+import mapStyle from '../config/map-styles/style_blue_essence.json';
 
 export default class Map extends Component {
     constructor(props) {
@@ -83,6 +82,7 @@ export default class Map extends Component {
                 <PilotMarkers
                     data={this.state.pilotData}
                     setFocusedClient={this.props.setFocusedClient}
+                    focusedMarkerIndex={this.props.focusedMarkerIndex}
                     setPanelPosition={this.props.setPanelPosition}
                 />
 

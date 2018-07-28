@@ -19,6 +19,7 @@ export default class App extends Component {
         return {
             loading: true,
             progressBar: false,
+            focusedMarkerIndex: -1,
             flightPathData: {},
             basicData: {},
             detailData: {},
@@ -26,32 +27,33 @@ export default class App extends Component {
         };
     }
 
-    setFocusedClient = c => {
-        const distFlown = getGCDistance(c.flightplan.depCoords, c.location);
-        const distRemaining = getGCDistance(c.location, c.flightplan.arrCoords);
+    setFocusedClient = (client, index) => {
+        const distFlown = getGCDistance(client.flightplan.depCoords, client.location);
+        const distRemaining = getGCDistance(client.location, client.flightplan.arrCoords);
         this.setState({
             progressBar: true,
+            focusedMarkerIndex: index,
             flightPathData: {
-                depCoords: c.flightplan.depCoords,
-                location: c.location,
-                arrCoords: c.flightplan.arrCoords
+                depCoords: client.flightplan.depCoords,
+                location: client.location,
+                arrCoords: client.flightplan.arrCoords
             },
             basicData: {
-                id: c.id,
-                name: c.name,
-                departureIcao: c.flightplan.depAirport || '????',
-                arrivalIcao: c.flightplan.arrAirport || '????'
+                id: client.id,
+                name: client.name,
+                departureIcao: client.flightplan.depAirport || '????',
+                arrivalIcao: client.flightplan.arrAirport || '????'
             },
             detailData: {
-                aircraft: ' ' + c.flightplan.aircraft,
+                aircraft: ' ' + client.flightplan.aircraft,
                 distFlown: ' ' + Math.round(distFlown) + ' nm',
                 distRemaining: ' ' + Math.round(distRemaining) + ' nm',
-                altitude: ' ' + c.altitude + ' ft',
-                heading: ' ' + c.heading + '°',
-                speed: ' ' + c.groundSpeed + ' kts'
+                altitude: ' ' + client.altitude + ' ft',
+                heading: ' ' + client.heading + '°',
+                speed: ' ' + client.groundSpeed + ' kts'
             },
             footerData: {
-                callsign: c.callsign,
+                callsign: client.callsign,
                 progress: distFlown / (distFlown + distRemaining)
             }
         });
@@ -78,7 +80,6 @@ export default class App extends Component {
     }
 
     render() {
-        const c = this.state.focusedClient;
         return (
             <View style={{flex: 1}}>
                 <Header loading={this.state.loading} />
@@ -87,6 +88,7 @@ export default class App extends Component {
                     showLoader={this.showLoader}
                     hideLoader={this.hideLoader}
                     setFocusedClient={this.setFocusedClient}
+                    focusedMarkerIndex={this.state.focusedMarkerIndex}
                     removeFocusedClient={this.removeFocusedClient}
                     setPanelPosition={this.setPanelPosition}
                 />
