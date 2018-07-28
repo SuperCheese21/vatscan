@@ -10,7 +10,8 @@ import {
     CenterMarkers,
     ApproachMarkers,
     TowerMarkers,
-    GroundMarkers
+    GroundMarkers,
+    FlightPath
 } from './MapMarkers';
 
 export default class Map extends Component {
@@ -84,6 +85,8 @@ export default class Map extends Component {
                     setFocusedClient={this.props.setFocusedClient}
                     setPanelPosition={this.props.setPanelPosition}
                 />
+
+                <FlightPath data={this.props.flightPathData} />
 
             </MapView>
         );

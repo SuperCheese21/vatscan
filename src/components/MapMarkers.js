@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Circle, Marker, Polygon } from 'react-native-maps';
+import { Circle, Marker, Polygon, Polyline } from 'react-native-maps';
 
 import { getAircraftIcon } from '../lib/util';
 import colors from '../config/colors.json';
@@ -18,9 +18,9 @@ export class PilotMarkers extends Component {
                         coordinate={p.location}
                         onPress={() => {
                             this.props.setFocusedClient(p);
-                            // TODO: change to HALF_EXPANDED for final release
                             this.props.setPanelPosition(constants.panelStates.HALF_EXPANDED);
                         }}
+                        zIndex={10}
                     />
                 ))}
             </Fragment>
@@ -108,5 +108,38 @@ export class GroundMarkers extends Component {
                 ))}
             </Fragment>
         )
+    }
+}
+
+export class FlightPath extends Component {
+    render() {
+        const depCoords = this.props.data.depCoords;
+        const location = this.props.data.location;
+        const destCoords = this.props.data.destCoords;
+
+        // Render polylines only if airport coords are present
+        if (depCoords && destCoords) {
+            return (
+                <Fragment>
+                    <Polyline
+                        coordinates={[depCoords, location]}
+                        strokeWidth={1.5}
+                        strokeColor={'#00ff00'}
+                        geodesic={true}
+                        zIndex={5}
+                    />
+                    <Polyline
+                        coordinates={[location, destCoords]}
+                        strokeWidth={1.5}
+                        strokeColor={'#ff0000'}
+                        geodesic={true}
+                        zIndex={5}
+                    />
+                </Fragment>
+            );
+        }
+
+        // Render nothing if polylines can't be rendered
+        return null;
     }
 }

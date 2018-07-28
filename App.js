@@ -6,6 +6,8 @@ import Map from './src/components/Map';
 import InfoPanel from './src/components/InfoPanel';
 import Footer from './src/components/Footer';
 
+import airportData from './src/data/airports.json';
+
 export default class App extends Component {
     constructor(props) {
         super(props);
@@ -17,28 +19,21 @@ export default class App extends Component {
         return {
             loading: true,
             progressBar: false,
-            basicData: {
-                id: '',
-                name: '',
-                departureIcao: '',
-                arrivalIcao: ''
-            },
-            detailData: {
-                aircraft: '',
-                altitude: '',
-                heading: '',
-                speed: ''
-            },
-            footerData: {
-                callsign: '',
-                progress: 0.5
-            }
+            flightPathData: {},
+            basicData: {},
+            detailData: {},
+            footerData: {}
         };
     }
 
     setFocusedClient = c => {
         this.setState({
             progressBar: true,
+            flightPathData: {
+                depCoords: airportData[c.flightplan.depairport],
+                location: c.location,
+                destCoords: airportData[c.flightplan.destairport]
+            },
             basicData: {
                 id: c.id,
                 name: c.name,
@@ -84,6 +79,7 @@ export default class App extends Component {
             <View style={{flex: 1}}>
                 <Header loading={this.state.loading} />
                 <Map
+                    flightPathData={this.state.flightPathData}
                     showLoader={this.showLoader}
                     hideLoader={this.hideLoader}
                     setFocusedClient={this.setFocusedClient}

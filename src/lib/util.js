@@ -133,15 +133,3 @@ function checkAircraftType(list, icao) {
     }
     return false;
 }
-
-/**
- * Gets the coordinates of an airport
- * @param  {String} icao ICAO code of airport
- * @return {Object}      LatLng object
- */
-// export function getAirportCoords(icao) {
-//     const airport = airportData[icao];
-//     if (airport) {
-//         return formatLatLng(airport.latitude_deg, airport.longitude_deg);
-//     }
-// }
