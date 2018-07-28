@@ -1,3 +1,4 @@
+import airportData from '../data/airports.json';
 import constants from '../config/constants.json';
 
 const NARROWBODY_ICON = require('../assets/icons/narrowbody.png');
@@ -33,27 +34,22 @@ export function formatLatLng(lat, lon) {
  * @param  {Array} arr Pilot data array
  * @return {Object}    Pilot data object
  */
-export function formatPilotData(arr) {
+export function formatPilotData(p) {
     return {
-        'callsign': arr[0],
-        'id': arr[1],
-        'name': arr[2],
-        'location': formatLatLng(arr[5], arr[6]),
-        'altitude': arr[7],
-        'groundspeed': arr[8],
+        'callsign': p[0],
+        'id': p[1],
+        'name': p[2],
+        'location': formatLatLng(p[5], p[6]),
+        'altitude': p[7],
+        'groundSpeed': p[8],
         'flightplan': {
-            'aircraft': arr[9],
-            'depairport': arr[11],
-            'altitude': arr[12],
-            'destairport': arr[13],
-            'flighttype': arr[21],
-            'actdeptime': arr[23],
-            'altairport': arr[28],
-            'remarks': arr[29],
-            'route': arr[30]
+            'aircraft': p[9],
+            'depAirport': p[11],
+            'depCoords': airportData[p[11]],
+            'arrAirport': p[13],
+            'arrCoords': airportData[p[13]]
         },
-        'transponder': arr[17],
-        'heading': Number(arr[38])
+        'heading': Number(p[38])
     };
 }
 
@@ -104,6 +100,27 @@ export function checkID(data, id) {
 }
 
 /**
+ * Gets the great circle distance between two points on earth
+ * @param  {LatLng} lat1 Coordinates of location 1
+ * @param  {LatLng} lat2 Coordinates of location 2
+ * @return {double}      Great Circle distance between locations in nautical miles
+ */
+export function getGCDistance(loc1, loc2) {
+    const lat1 = toRadians(loc1.latitude);
+    const lat2 = toRadians(loc2.latitude);
+
+    const deltaLat = toRadians(loc2.latitude - loc1.latitude);
+    const deltaLon = toRadians(loc2.longitude - loc1.longitude);
+
+    var a = Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
+            Math.cos(lat1) * Math.cos(lat2) *
+            Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    return c * constants.EARTH_RADIUS_NM;
+}
+
+/**
  * Returns the type of aircraft based on ICAO code
  * @param  {String} aircraft Aircraft ICAO type designator
  * @return {int}             Aircraft type (0 - GA, 1 - Narrowbody, 2 - Widebody)
@@ -134,4 +151,13 @@ function checkAircraftType(list, icao) {
         }
     }
     return false;
+}
+
+/**
+ * Converts degrees to radians
+ * @param  {double} deg Degrees value
+ * @return {double}     Radians value
+ */
+function toRadians(deg) {
+    return deg * Math.PI / 180;
 }

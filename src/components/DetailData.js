@@ -17,11 +17,11 @@ export default class DetailData extends Component {
                     </View>
                     <View style={styles.infoRow}>
                         <Text style={styles.infoLabel}>Flown</Text>
-                        <Text style={styles.infoText}></Text>
+                        <Text style={styles.infoText}>{data.distFlown}</Text>
                     </View>
                     <View style={styles.infoRow}>
                         <Text style={styles.infoLabel}>Remaining</Text>
-                        <Text style={styles.infoText}></Text>
+                        <Text style={styles.infoText}>{data.distRemaining}</Text>
                     </View>
                 </View>
                 <View style={styles.infoRow}>

@@ -20,7 +20,6 @@ export class PilotMarkers extends Component {
                             this.props.setFocusedClient(p);
                             this.props.setPanelPosition(constants.panelStates.HALF_EXPANDED);
                         }}
-                        zIndex={10}
                     />
                 ))}
             </Fragment>
@@ -115,10 +114,10 @@ export class FlightPath extends Component {
     render() {
         const depCoords = this.props.data.depCoords;
         const location = this.props.data.location;
-        const destCoords = this.props.data.destCoords;
+        const arrCoords = this.props.data.arrCoords;
 
         // Render polylines only if airport coords are present
-        if (depCoords && location && destCoords) {
+        if (depCoords && location && arrCoords) {
             return (
                 <Fragment>
                     <Polyline
@@ -129,7 +128,7 @@ export class FlightPath extends Component {
                         zIndex={5}
                     />
                     <Polyline
-                        coordinates={[location, destCoords]}
+                        coordinates={[location, arrCoords]}
                         strokeWidth={1.5}
                         strokeColor={'#ff0000'}
                         geodesic={true}

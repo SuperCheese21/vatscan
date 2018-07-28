@@ -6,7 +6,7 @@ import Map from './src/components/Map';
 import InfoPanel from './src/components/InfoPanel';
 import Footer from './src/components/Footer';
 
-import airportData from './src/data/airports.json';
+import { getGCDistance } from './src/lib/util';
 
 export default class App extends Component {
     constructor(props) {
@@ -27,28 +27,32 @@ export default class App extends Component {
     }
 
     setFocusedClient = c => {
+        const distFlown = getGCDistance(c.flightplan.depCoords, c.location);
+        const distRemaining = getGCDistance(c.location, c.flightplan.arrCoords);
         this.setState({
             progressBar: true,
             flightPathData: {
-                depCoords: airportData[c.flightplan.depairport],
+                depCoords: c.flightplan.depCoords,
                 location: c.location,
-                destCoords: airportData[c.flightplan.destairport]
+                arrCoords: c.flightplan.arrCoords
             },
             basicData: {
                 id: c.id,
                 name: c.name,
-                departureIcao: c.flightplan.depairport || '????',
-                arrivalIcao: c.flightplan.destairport || '????'
+                departureIcao: c.flightplan.depAirport || '????',
+                arrivalIcao: c.flightplan.arrAirport || '????'
             },
             detailData: {
                 aircraft: ' ' + c.flightplan.aircraft,
+                distFlown: ' ' + Math.round(distFlown) + ' nm',
+                distRemaining: ' ' + Math.round(distRemaining) + ' nm',
                 altitude: ' ' + c.altitude + ' ft',
                 heading: ' ' + c.heading + '°',
-                speed: ' ' + c.groundspeed + ' kts'
+                speed: ' ' + c.groundSpeed + ' kts'
             },
             footerData: {
                 callsign: c.callsign,
-                progress: 0.5
+                progress: distFlown / (distFlown + distRemaining)
             }
         });
     }
