@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Circle, Marker, Polygon } from 'react-native-maps';
 
 import constants from '../config/constants.json';
-import { getAircraftIcon, getGCDistance } from '../lib/util';
+import { getAircraftIcon } from '../lib/util';
 
 export default class MapOverlays extends Component {
     onMarkerPress = (client, index) => {

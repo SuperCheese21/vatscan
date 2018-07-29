@@ -1,6 +1,5 @@
 import {
     getRandomElement,
-    formatLatLng,
     formatPilotData,
     formatControllerData,
     checkID

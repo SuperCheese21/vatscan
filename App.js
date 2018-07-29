@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image } from 'react-native';
+import { View } from 'react-native';
 
 import Header from './src/components/Header';
 import Map from './src/components/Map';
@@ -28,14 +28,13 @@ export default class App extends Component {
     }
 
     setFocusedClient = (client, index) => {
-        this.setState({
-            focusedMarkerIndex: index
-        });
+        this.removeFocusedClient();
         if (client.type === 'PILOT') {
             const distFlown = getGCDistance(client.depCoords, client.location);
             const distRemaining = getGCDistance(client.location, client.arrCoords);
             this.setState({
                 progressBar: true,
+                focusedMarkerIndex: index,
                 flightPathData: {
                     depCoords: client.depCoords,
                     location: client.location,
@@ -58,6 +57,17 @@ export default class App extends Component {
                 footerData: {
                     callsign: client.callsign,
                     progress: distFlown / (distFlown + distRemaining)
+                }
+            });
+        } else {
+            this.setState({
+                focusedMarkerIndex: index,
+                basicData: {
+                    id: client.id,
+                    name: client.name
+                },
+                footerData: {
+                    callsign: client.callsign
                 }
             });
         }
