@@ -6,7 +6,7 @@
         "http://info.vroute.net/vatsim-data.txt"
     ],
     "ARTCC_URL": "https://map.vatsim.net/api/atcGeoJSON",
-    "UPDATE_INTERVAL": 30000,
+    "UPDATE_INTERVAL": 60000,
     "EARTH_RADIUS_NM": 3440.06,
     "aircraft": {
         "WIDEBODY": [

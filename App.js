@@ -48,8 +48,8 @@ export default class App extends Component {
                 },
                 detailData: {
                     aircraft: ' ' + client.aircraft,
-                    distFlown: distFlown ? (' ' + distFlown + ' nm') : 'N/A',
-                    distRemaining: distRemaining ? (' ' + distRemaining + ' nm') : 'N/A',
+                    distFlown: distFlown ? (' ' + distFlown + ' nm') : ' N/A',
+                    distRemaining: distRemaining ? (' ' + distRemaining + ' nm') : ' N/A',
                     altitude: ' ' + client.altitude + ' ft',
                     heading: ' ' + client.heading + '°',
                     groundSpeed: ' ' + client.groundSpeed + ' kts'

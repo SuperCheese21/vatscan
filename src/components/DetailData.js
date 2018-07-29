@@ -35,7 +35,7 @@ export default class DetailData extends Component {
                     </View>
                     <View style={styles.infoRow}>
                         <Icon name='send' size={24} color={colors.accent} />
-                        <Text style={styles.infoText}>{data.speed}</Text>
+                        <Text style={styles.infoText}>{data.groundSpeed}</Text>
                     </View>
                 </View>
             </View>
