@@ -28,35 +28,39 @@ export default class App extends Component {
     }
 
     setFocusedClient = (client, index) => {
-        const distFlown = getGCDistance(client.flightplan.depCoords, client.location);
-        const distRemaining = getGCDistance(client.location, client.flightplan.arrCoords);
         this.setState({
-            progressBar: true,
-            focusedMarkerIndex: index,
-            flightPathData: {
-                depCoords: client.flightplan.depCoords,
-                location: client.location,
-                arrCoords: client.flightplan.arrCoords
-            },
-            basicData: {
-                id: client.id,
-                name: client.name,
-                departureIcao: client.flightplan.depAirport || '????',
-                arrivalIcao: client.flightplan.arrAirport || '????'
-            },
-            detailData: {
-                aircraft: ' ' + client.flightplan.aircraft,
-                distFlown: ' ' + Math.round(distFlown) + ' nm',
-                distRemaining: ' ' + Math.round(distRemaining) + ' nm',
-                altitude: ' ' + client.altitude + ' ft',
-                heading: ' ' + client.heading + '°',
-                speed: ' ' + client.groundSpeed + ' kts'
-            },
-            footerData: {
-                callsign: client.callsign,
-                progress: distFlown / (distFlown + distRemaining)
-            }
+            focusedMarkerIndex: index
         });
+        if (client.type === 'PILOT') {
+            const distFlown = getGCDistance(client.depCoords, client.location);
+            const distRemaining = getGCDistance(client.location, client.arrCoords);
+            this.setState({
+                progressBar: true,
+                flightPathData: {
+                    depCoords: client.depCoords,
+                    location: client.location,
+                    arrCoords: client.arrCoords
+                },
+                basicData: {
+                    id: client.id,
+                    name: client.name,
+                    depAirport: client.depAirport || '????',
+                    arrAirport: client.arrAirport || '????'
+                },
+                detailData: {
+                    aircraft: ' ' + client.aircraft,
+                    distFlown: ' ' + Math.round(distFlown) + ' nm',
+                    distRemaining: ' ' + Math.round(distRemaining) + ' nm',
+                    altitude: ' ' + client.altitude + ' ft',
+                    heading: ' ' + client.heading + '°',
+                    groundSpeed: ' ' + client.groundSpeed + ' kts'
+                },
+                footerData: {
+                    callsign: client.callsign,
+                    progress: distFlown / (distFlown + distRemaining)
+                }
+            });
+        }
     }
 
     removeFocusedClient = () => {
@@ -68,15 +72,11 @@ export default class App extends Component {
     }
 
     showLoader = () => {
-        this.setState({
-            loading: true
-        });
+        this.setState({ loading: true });
     }
 
     hideLoader = () => {
-        this.setState({
-            loading: false
-        });
+        this.setState({ loading: false });
     }
 
     render() {

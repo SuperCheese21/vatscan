@@ -13,7 +13,7 @@ export default class BasicData extends Component {
                         styles.icaoText,
                         { marginRight: 6, textAlign: 'right' }
                     ]}>
-                        {data.departureIcao}
+                        {data.depAirport}
                     </Text>
                     <Image
                         style={styles.fromToIcon}
@@ -23,7 +23,7 @@ export default class BasicData extends Component {
                         styles.icaoText,
                         { marginLeft: 6 }
                     ]}>
-                        {data.arrivalIcao}
+                        {data.arrAirport}
                     </Text>
                 </View>
 

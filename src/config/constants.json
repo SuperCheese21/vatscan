@@ -42,9 +42,21 @@
         "EXPANDED": 240,
         "HALF_EXPANDED": 156
     },
-    "atcRegions": {
-        "GROUND": 2500,
-        "TOWER": 15000,
-        "APPROACH": 55560
+    "mapOverlays": {
+        "CTR": {
+            "zIndex": 0
+        },
+        "APP": {
+            "radius": 55560,
+            "zIndex": 1
+        },
+        "TWR": {
+            "radius": 15000,
+            "zIndex": 2
+        },
+        "GND": {
+            "radius": 2500,
+            "zIndex": 3
+        }
     }
 }

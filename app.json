@@ -1,7 +1,7 @@
 {
     "expo": {
         "name": "VATSCAN",
-        "version": "0.6.0",
+        "version": "0.6.1",
         "sdkVersion": "27.0.0",
         "ios": {
             "bundleIdentifier": "com.stratospherelabs.vatscan",

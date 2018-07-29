@@ -4,14 +4,26 @@
     "primaryMedium": "#161b1e",
     "accent": "#74b320",
     "mapOverlays": {
-        "artccFill": "rgba(0, 0, 255, 0.1)",
-        "artccStroke": "rgba(0, 0, 255, 0.5)",
-        "approachFill": "rgba(255, 0, 0, 0.2)",
-        "approachStroke": "rgba(255, 0, 0, 0.6)",
-        "towerFill": "rgba(255, 165, 0, 0.35)",
-        "towerStroke": "rgba(255, 165, 0, 0.7)",
-        "groundFill": "rgba(0, 255, 0, 0.5)",
-        "groundStroke": "rgba(0, 255, 0, 0.8)",
+        "CTR": {
+            "fill": "rgba(0, 0, 255, 0.2)",
+            "fillSelected": "rgba(127, 127, 255, 0.2)",
+            "stroke": "rgba(0, 0, 255, 0.5)"
+        },
+        "APP": {
+            "fill": "rgba(255, 0, 0, 0.3)",
+            "fillSelected": "rgba(255, 127, 127, 0.3)",
+            "stroke": "rgba(255, 0, 0, 0.6)"
+        },
+        "TWR": {
+            "fill": "rgba(255, 165, 0, 0.4)",
+            "fillSelected": "rgba(255, 210, 127, 0.4)",
+            "stroke": "rgba(255, 165, 0, 0.7)"
+        },
+        "GND": {
+            "fill": "rgba(0, 255, 0, 0.5)",
+            "fillSelected": "rgba(127, 255, 127, 0.5)",
+            "stroke": "rgba(0, 255, 0, 0.8)"
+        },
         "lineFlown": "#00FF00",
         "lineRemaining": "#FF0000"
     },

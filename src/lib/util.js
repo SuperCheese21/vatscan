@@ -1,5 +1,6 @@
 import airportData from '../data/airports.json';
 import constants from '../config/constants.json';
+import colors from '../config/colors.json';
 
 const NARROWBODY_ICON = require('../assets/icons/narrowbody.png');
 const WIDEBODY_ICON = require('../assets/icons/widebody.png');
@@ -39,17 +40,16 @@ export function formatPilotData(p) {
         'callsign': p[0],
         'id': p[1],
         'name': p[2],
+        'type': 'PILOT',
+        'aircraft': p[9],
         'location': formatLatLng(p[5], p[6]),
         'altitude': p[7],
+        'heading': Number(p[38]),
         'groundSpeed': p[8],
-        'flightplan': {
-            'aircraft': p[9],
-            'depAirport': p[11],
-            'depCoords': airportData[p[11]],
-            'arrAirport': p[13],
-            'arrCoords': airportData[p[13]]
-        },
-        'heading': Number(p[38])
+        'depAirport': p[11],
+        'depCoords': airportData[p[11]],
+        'arrAirport': p[13],
+        'arrCoords': airportData[p[13]]
     };
 }
 
@@ -58,13 +58,19 @@ export function formatPilotData(p) {
  * @param  {Array} arr Controller data array
  * @return {Object}    Controller data object
  */
-export function formatATCData(arr) {
+export function formatControllerData(arr, type) {
     return {
         'callsign': arr[0],
         'id': arr[1],
         'name': arr[2],
+        'type': type,
         'frequency': arr[4],
-        'location': formatLatLng(arr[5], arr[6])
+        'location': formatLatLng(arr[5], arr[6]),
+        'radius': constants.mapOverlays[type].radius,
+        'strokeColor': colors.mapOverlays[type].stroke,
+        'fillColor': colors.mapOverlays[type].fill,
+        'fillColorSelected': colors.mapOverlays[type].fillSelected,
+        'zIndex': constants.mapOverlays[type].zIndex
     };
 }
 

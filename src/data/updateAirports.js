@@ -16,7 +16,7 @@ function parseData(csv) {
         const airport = line.split(',').map(item => item.replace(/"/g, ''));
         if (!airport[1] || !airport[13] || !index) return;
 
-        console.log(' Parsing ' + airport[1]);
+        console.error(' Parsing ' + airport[1]);
 
         json[airport[1]] = {
             latitude: Number(airport[4]),

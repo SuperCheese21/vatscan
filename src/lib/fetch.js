@@ -2,9 +2,10 @@ import {
     getRandomElement,
     formatLatLng,
     formatPilotData,
-    formatATCData,
+    formatControllerData,
     checkID
 } from './util';
+import colors from '../config/colors.json';
 import constants from '../config/constants.json';
 
 /**
@@ -26,54 +27,28 @@ export async function fetchData() {
 }
 
 /**
- * Parses the raw server data from text to a custon javascript object
- * @param  {String} text Raw text data from random server URL
- * @return {object}      Client data formatted in javascript object
- */
-export function parsePilotData(text) {
-    let raw = text.split('!CLIENTS:\r\n').pop().split('\r\n;\r\n;').shift();
-    let rawArr = raw.split('\r\n');
-    let pilots = [];
-
-    rawArr.forEach(client => {
-        const arr = client.split(':');
-        if (arr[3] == 'PILOT') {
-            pilots.push(formatPilotData(arr));
-        }
-    });
-
-    return pilots;
-}
-
-/**
  * Parses the raw server data from text and json to a custom javascript object
  * @param  {String} text Raw VATSIM server data
- * @param  {Object} json Raw ARTCC controller data from map.vatsim.net
- * @return {Object}      Controller data formatted as a javascript object
+ * @param  {Object} json Raw client dat
+ * @return {Object}      Client data formatted as a javascript object
  */
-export function parseATCData(text, json) {
-    let raw = text.split('!CLIENTS:\r\n').pop().split('\r\n;\r\n;').shift();
-    let rawArr = raw.split('\r\n');
-    let approachData = [], towerData = [], groundData = [];
-    let centerData = parseCenterData(json);
+export function parseClientData(data) {
+    let rawData = data[0].split('!CLIENTS:\r\n').pop().split('\r\n;\r\n;').shift().split('\r\n');
+    let clientData = parseCenterData(data[1]);
 
-    rawArr.forEach(client => {
+    rawData.forEach(client => {
         const arr = client.split(':');
-        if (arr[0].includes('_APP') || arr[0].includes('_DEP')) {
-            approachData.push(formatATCData(arr));
+        if (arr[3] === 'PILOT') {
+            clientData.push(formatPilotData(arr));
+        } else if (arr[0].includes('_APP') || arr[0].includes('_DEP')) {
+            clientData.push(formatControllerData(arr, 'APP'));
         } else if (arr[0].includes('_TWR')) {
-            towerData.push(formatATCData(arr));
+            clientData.push(formatControllerData(arr, 'TWR'));
         } else if (arr[0].includes('_GND')) {
-            groundData.push(formatATCData(arr));
+            clientData.push(formatControllerData(arr, 'GND'));
         }
     });
-
-    return {
-        'approach': approachData,
-        'tower': towerData,
-        'center': centerData,
-        'ground': groundData
-    };
+    return clientData;
 }
 
 /**
@@ -83,19 +58,25 @@ export function parseATCData(text, json) {
  */
 function parseCenterData(json) {
     let centerData = [];
-    json.features.forEach(c => {
-        if (!checkID(centerData, c.id)) {
-            const coords = c.geometry.coordinates[0];
-            const polygon = coords.map(c => ({
-                latitude: c[1],
-                longitude: c[0]
+    json.features.forEach(controller => {
+        if (!checkID(centerData, controller.id)) {
+            const coords = controller.geometry.coordinates[0];
+            const polygon = coords.map(coord => ({
+                latitude: coord[1],
+                longitude: coord[0]
             }));
             centerData.push({
-                'callsign': c.properties.callsign,
-                'id': c.id,
-                'name': c.properties.name,
-                'frequency': c.properties.frequency,
-                'polygon': polygon
+                'callsign': controller.properties.callsign,
+                'id': controller.id,
+                'name': controller.properties.name,
+                'type': 'CTR',
+                'frequency': controller.properties.frequency,
+                'polygon': polygon,
+                'strokeWidth': constants.mapOverlays['CTR'].strokeWidth,
+                'strokeColor': colors.mapOverlays['CTR'].stroke,
+                'fillColor': colors.mapOverlays['CTR'].fill,
+                'fillColorSelected': colors.mapOverlays['CTR'].fillSelected,
+                'zIndex': constants.mapOverlays['CTR'].zIndex
             });
         }
     });

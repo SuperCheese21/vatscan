@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
 import { MapView } from 'expo';
 
-import {
-    CenterMarkers,
-    ApproachMarkers,
-    TowerMarkers,
-    GroundMarkers
-} from './ControllerMarkers';
-import { PilotMarkers, FlightPath } from './PilotMarkers';
+import FlightPath from './FlightPath';
+import MapOverlays from './MapOverlays';
 
-import { fetchData, parsePilotData, parseATCData } from '../lib/fetch';
+import { fetchData, parseClientData } from '../lib/fetch';
 import constants from '../config/constants.json';
 import mapStyle from '../config/map-styles/style_blue_essence.json';
 
@@ -18,13 +13,7 @@ export default class Map extends Component {
         super(props);
         this.state = {
             loading: true,
-            pilotData: [],
-            atcData: {
-                ground: [],
-                tower: [],
-                approach: [],
-                center: []
-            }
+            clientData: []
         };
     }
 
@@ -40,8 +29,7 @@ export default class Map extends Component {
         fetchData()
             .then(data => {
                 this.setState({
-                    pilotData: parsePilotData(data[0]),
-                    atcData: parseATCData(data[0], data[1])
+                    clientData: parseClientData(data)
                 });
                 this.props.hideLoader();
             })
@@ -71,16 +59,8 @@ export default class Map extends Component {
                 }}
             >
 
-                <CenterMarkers data={this.state.atcData.center} />
-
-                <ApproachMarkers data={this.state.atcData.approach} />
-
-                <TowerMarkers data={this.state.atcData.tower} />
-
-                <GroundMarkers data={this.state.atcData.ground} />
-
-                <PilotMarkers
-                    data={this.state.pilotData}
+                <MapOverlays
+                    data={this.state.clientData}
                     setFocusedClient={this.props.setFocusedClient}
                     focusedMarkerIndex={this.props.focusedMarkerIndex}
                     setPanelPosition={this.props.setPanelPosition}
