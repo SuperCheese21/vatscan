@@ -112,18 +112,20 @@ export function checkID(data, id) {
  * @return {double}      Great Circle distance between locations in nautical miles
  */
 export function getGCDistance(loc1, loc2) {
-    const lat1 = toRadians(loc1.latitude);
-    const lat2 = toRadians(loc2.latitude);
+    if (loc1 && loc2) {
+        const lat1 = toRadians(loc1.latitude);
+        const lat2 = toRadians(loc2.latitude);
 
-    const deltaLat = toRadians(loc2.latitude - loc1.latitude);
-    const deltaLon = toRadians(loc2.longitude - loc1.longitude);
+        const deltaLat = toRadians(loc2.latitude - loc1.latitude);
+        const deltaLon = toRadians(loc2.longitude - loc1.longitude);
 
-    var a = Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
-            Math.cos(lat1) * Math.cos(lat2) *
-            Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
-    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        var a = Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
+                Math.cos(lat1) * Math.cos(lat2) *
+                Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-    return c * constants.EARTH_RADIUS_NM;
+        return Math.round(c * constants.EARTH_RADIUS_NM);
+    }
 }
 
 /**

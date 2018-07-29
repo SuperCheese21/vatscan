@@ -11,8 +11,8 @@ import { getGCDistance } from './src/lib/util';
 export default class App extends Component {
     constructor(props) {
         super(props);
-        this.infoPanel = React.createRef();
         this.state = this.getInitialState();
+        this.infoPanel = React.createRef();
     }
 
     getInitialState = () => {
@@ -48,8 +48,8 @@ export default class App extends Component {
                 },
                 detailData: {
                     aircraft: ' ' + client.aircraft,
-                    distFlown: ' ' + Math.round(distFlown) + ' nm',
-                    distRemaining: ' ' + Math.round(distRemaining) + ' nm',
+                    distFlown: distFlown ? (' ' + distFlown + ' nm') : 'N/A',
+                    distRemaining: distRemaining ? (' ' + distRemaining + ' nm') : 'N/A',
                     altitude: ' ' + client.altitude + ' ft',
                     heading: ' ' + client.heading + '°',
                     groundSpeed: ' ' + client.groundSpeed + ' kts'
