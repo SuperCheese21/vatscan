@@ -23,6 +23,9 @@
         },
         "icon": "./src/assets/icons/app_icon.png",
         "orientation": "portrait",
-        "primaryColor": "#1b252b"
+        "primaryColor": "#1b252b",
+        "splash": {
+            "image": "./src/assets/icons/splash_screen.png"
+        }
     }
 }
