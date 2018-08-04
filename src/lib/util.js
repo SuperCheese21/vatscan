@@ -126,6 +126,7 @@ export function getGCDistance(loc1, loc2) {
 
         return Math.round(c * constants.EARTH_RADIUS_NM);
     }
+    return -1;
 }
 
 /**

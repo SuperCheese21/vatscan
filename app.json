@@ -1,6 +1,7 @@
 {
     "expo": {
         "name": "VATSCAN",
+        "description": "The premier, next generation live VATSIM map for mobile",
         "version": "0.6.1",
         "sdkVersion": "27.0.0",
         "ios": {
@@ -19,6 +20,9 @@
         },
         "androidStatusBar": {
             "backgroundColor": "#111111"
-        }
+        },
+        "icon": "./src/assets/icons/app_icon.png",
+        "orientation": "portrait",
+        "primaryColor": "#1b252b"
     }
 }

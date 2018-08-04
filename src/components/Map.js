@@ -63,6 +63,7 @@ export default class Map extends Component {
                     data={this.state.clientData}
                     setFocusedClient={this.props.setFocusedClient}
                     focusedMarkerIndex={this.props.focusedMarkerIndex}
+                    getPanelPosition={this.props.getPanelPosition}
                     setPanelPosition={this.props.setPanelPosition}
                 />
 

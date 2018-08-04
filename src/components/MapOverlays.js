@@ -6,12 +6,10 @@ import { getAircraftIcon } from '../lib/util';
 
 export default class MapOverlays extends Component {
     onMarkerPress = (client, index) => {
-        this.props.setFocusedClient(client, index);
-        if (client.type === 'PILOT') {
-            this.props.setPanelPosition(constants.panelStates.EXPANDED);
-        } else {
+        if (this.props.getPanelPosition() === constants.panelStates.COLLAPSED) {
             this.props.setPanelPosition(constants.panelStates.HALF_EXPANDED);
         }
+        this.props.setFocusedClient(client, index);
     }
 
     render() {

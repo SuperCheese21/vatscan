@@ -17,7 +17,7 @@ export default class App extends Component {
 
     getInitialState = () => {
         return {
-            loading: true,
+            loading: false,
             progressBar: false,
             focusedMarkerIndex: -1,
             flightPathData: {},
@@ -48,8 +48,8 @@ export default class App extends Component {
                 },
                 detailData: {
                     aircraft: ' ' + client.aircraft,
-                    distFlown: distFlown ? (' ' + distFlown + ' nm') : ' N/A',
-                    distRemaining: distRemaining ? (' ' + distRemaining + ' nm') : ' N/A',
+                    distFlown: distFlown >= 0 ? (' ' + distFlown + ' nm') : ' N/A',
+                    distRemaining: distRemaining >= 0 ? (' ' + distRemaining + ' nm') : ' N/A',
                     altitude: ' ' + client.altitude + ' ft',
                     heading: ' ' + client.heading + '°',
                     groundSpeed: ' ' + client.groundSpeed + ' kts'
@@ -77,16 +77,20 @@ export default class App extends Component {
         this.setState(this.getInitialState());
     }
 
-    setPanelPosition = position => {
-        this.infoPanel.current.setPanelPosition(position);
-    }
-
     showLoader = () => {
         this.setState({ loading: true });
     }
 
     hideLoader = () => {
         this.setState({ loading: false });
+    }
+
+    getPanelPosition = () => {
+        return this.infoPanel.current.getPanelPosition();
+    }
+
+    setPanelPosition = position => {
+        this.infoPanel.current.setPanelPosition(position);
     }
 
     render() {
@@ -100,6 +104,7 @@ export default class App extends Component {
                     setFocusedClient={this.setFocusedClient}
                     focusedMarkerIndex={this.state.focusedMarkerIndex}
                     removeFocusedClient={this.removeFocusedClient}
+                    getPanelPosition={this.getPanelPosition}
                     setPanelPosition={this.setPanelPosition}
                 />
                 <InfoPanel
