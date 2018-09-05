@@ -6,7 +6,7 @@ import styles from '../config/styles';
 export default class BasicData extends Component {
     render() {
         const data = this.props.data;
-        return(
+        return (
             <View style={styles.infoContainerBasic}>
                 <View style={styles.infoRow}>
                     <Text style={[

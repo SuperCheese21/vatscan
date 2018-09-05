@@ -8,7 +8,7 @@ import styles from '../config/styles';
 export default class DetailData extends Component {
     render() {
         const data = this.props.data;
-        return(
+        return (
             <View style={styles.infoContainerDetail}>
                 <View style={styles.infoRow}>
                     <View style={styles.infoRow}>

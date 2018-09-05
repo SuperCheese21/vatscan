@@ -2,8 +2,8 @@
     "expo": {
         "name": "VATSCAN",
         "description": "The premier, next generation live VATSIM map for mobile",
-        "version": "0.6.1",
-        "sdkVersion": "27.0.0",
+        "version": "0.6.2",
+        "sdkVersion": "29.0.0",
         "ios": {
             "bundleIdentifier": "com.stratospherelabs.vatscan",
             "config": {

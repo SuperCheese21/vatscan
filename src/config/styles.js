@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     },
     icaoText: {
         color: 'white',
-        fontFamily: 'sans-serif-condensed',
+        fontFamily: 'Roboto_Condensed_Regular',
         flex: 1,
         fontSize: 55
     },
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     },
     infoLabel: {
         color: 'white',
-        fontFamily: 'sans-serif-condensed',
+        fontFamily: 'Roboto_Condensed_Regular',
         fontStyle: 'italic'
     },
     infoRow: {
