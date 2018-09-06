@@ -4,7 +4,7 @@ import { MapView } from 'expo';
 import FlightPath from './FlightPath';
 import MapOverlays from './MapOverlays';
 
-import { fetchData, parseClientData } from '../lib/fetch';
+import { fetchData, parseClientData } from '../lib/util/fetch';
 import constants from '../config/constants.json';
 import mapStyle from '../config/map-styles/style_blue_essence.json';
 
@@ -33,8 +33,8 @@ export default class Map extends Component {
                 });
                 this.props.hideLoader();
             })
-            .catch(e => {
-                console.error(e);
+            .catch(err => {
+                console.error(err);
             });
     }
 

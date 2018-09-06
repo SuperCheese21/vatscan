@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Circle, Marker, Polygon } from 'react-native-maps';
 
 import constants from '../config/constants.json';
-import { getAircraftIcon } from '../lib/util';
+import { getAircraftIcon } from '../lib/util/calc';
 
 export default class MapOverlays extends Component {
     onMarkerPress = (client, index) => {
@@ -16,10 +16,10 @@ export default class MapOverlays extends Component {
         return (
             <Fragment>
                 {this.props.data.map((client, index) => {
-                    if (client.type == 'PILOT') {
+                    if (client.clienttype == 'PILOT') {
                         return <Marker
-                            key={client.id}
-                            image={getAircraftIcon(client.aircraft)}
+                            key={client.cid}
+                            image={client.aircraftIcon}
                             rotation={client.heading}
                             anchor={{ x: 0.5, y: 0.5 }}
                             coordinate={client.location}
@@ -28,9 +28,9 @@ export default class MapOverlays extends Component {
                             }}
                             opacity={this.props.focusedMarkerIndex === index ? 2 : 1.1}
                         />
-                    } else if (client.type == 'CTR') {
+                    } else if (client.controllertype == 'CTR') {
                         return <Polygon
-                            key={client.id}
+                            key={client.cid}
                             coordinates={client.polygon}
                             strokeWidth={this.props.focusedMarkerIndex === index ? 2 : 1}
                             strokeColor={client.strokeColor}
@@ -45,9 +45,9 @@ export default class MapOverlays extends Component {
                             }}
                             zIndex={client.zIndex}
                         />
-                    } else {
+                    } else if (client.clienttype == 'ATC') {
                         return <Circle
-                            key={client.id}
+                            key={client.cid}
                             center={client.location}
                             radius={client.radius}
                             strokeWidth={1}

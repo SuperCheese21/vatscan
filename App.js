@@ -7,8 +7,6 @@ import Map from './src/components/Map';
 import InfoPanel from './src/components/InfoPanel';
 import Footer from './src/components/Footer';
 
-import { getGCDistance } from './src/lib/util';
-
 export default class App extends Component {
     constructor(props) {
         super(props);
@@ -39,9 +37,7 @@ export default class App extends Component {
 
     setFocusedClient = (client, index) => {
         this.removeFocusedClient();
-        if (client.type === 'PILOT') {
-            const distFlown = getGCDistance(client.depCoords, client.location);
-            const distRemaining = getGCDistance(client.location, client.arrCoords);
+        if (client.clienttype === 'PILOT') {
             this.setState({
                 progressBar: true,
                 focusedMarkerIndex: index,
@@ -51,30 +47,30 @@ export default class App extends Component {
                     arrCoords: client.arrCoords
                 },
                 basicData: {
-                    id: client.id,
-                    name: client.name,
-                    depAirport: client.depAirport || '????',
-                    arrAirport: client.arrAirport || '????'
+                    id: client.cid,
+                    name: client.realname,
+                    depAirport: client.planned_depairport || '????',
+                    arrAirport: client.planned_destairport || '????'
                 },
                 detailData: {
-                    aircraft: ' ' + client.aircraft,
-                    distFlown: distFlown >= 0 ? (' ' + distFlown + ' nm') : ' N/A',
-                    distRemaining: distRemaining >= 0 ? (' ' + distRemaining + ' nm') : ' N/A',
+                    aircraft: ' ' + client.planned_aircraft,
+                    distFlown: client.distFlown >= 0 ? (' ' + client.distFlown + ' nm') : ' N/A',
+                    distRemaining: client.distRemaining >= 0 ? (' ' + client.distRemaining + ' nm') : ' N/A',
                     altitude: ' ' + client.altitude + ' ft',
                     heading: ' ' + client.heading + '°',
-                    groundSpeed: ' ' + client.groundSpeed + ' kts'
+                    groundSpeed: ' ' + client.groundspeed + ' kts'
                 },
                 footerData: {
                     callsign: client.callsign,
-                    progress: distFlown / (distFlown + distRemaining)
+                    progress: client.progress
                 }
             });
         } else {
             this.setState({
                 focusedMarkerIndex: index,
                 basicData: {
-                    id: client.id,
-                    name: client.name
+                    id: client.cid,
+                    name: client.realname
                 },
                 footerData: {
                     callsign: client.callsign
