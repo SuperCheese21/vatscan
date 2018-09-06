@@ -26,7 +26,6 @@ export default class App extends Component {
         return {
             loading: false,
             fontLoaded: false,
-            progressBar: false,
             focusedMarkerIndex: -1,
             flightPathData: {},
             basicData: {},
@@ -37,9 +36,8 @@ export default class App extends Component {
 
     setFocusedClient = (client, index) => {
         this.removeFocusedClient();
-        if (client.clienttype === 'PILOT') {
+        if (client.type === 'PILOT') {
             this.setState({
-                progressBar: true,
                 focusedMarkerIndex: index,
                 flightPathData: {
                     depCoords: client.depCoords,
@@ -47,18 +45,18 @@ export default class App extends Component {
                     arrCoords: client.arrCoords
                 },
                 basicData: {
-                    id: client.cid,
-                    name: client.realname,
-                    depAirport: client.planned_depairport || '????',
-                    arrAirport: client.planned_destairport || '????'
+                    id: client.id,
+                    name: client.name,
+                    depAirport: client.depAirport || '????',
+                    arrAirport: client.arrAirport || '????'
                 },
                 detailData: {
-                    aircraft: ' ' + client.planned_aircraft,
+                    aircraft: ' ' + client.aircraft,
                     distFlown: client.distFlown >= 0 ? (' ' + client.distFlown + ' nm') : ' N/A',
                     distRemaining: client.distRemaining >= 0 ? (' ' + client.distRemaining + ' nm') : ' N/A',
                     altitude: ' ' + client.altitude + ' ft',
                     heading: ' ' + client.heading + '°',
-                    groundSpeed: ' ' + client.groundspeed + ' kts'
+                    groundSpeed: ' ' + client.groundSpeed + ' kts'
                 },
                 footerData: {
                     callsign: client.callsign,
@@ -69,8 +67,8 @@ export default class App extends Component {
             this.setState({
                 focusedMarkerIndex: index,
                 basicData: {
-                    id: client.cid,
-                    name: client.realname
+                    id: client.id,
+                    name: client.name
                 },
                 footerData: {
                     callsign: client.callsign
@@ -123,7 +121,7 @@ export default class App extends Component {
                     detailData={this.state.detailData}
                     removeFocusedClient={this.removeFocusedClient}
                 />
-                <Footer data={this.state.footerData} progressBar={this.state.progressBar} />
+                <Footer data={this.state.footerData} />
             </View>
         );
     }

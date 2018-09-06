@@ -16,9 +16,9 @@ export default class MapOverlays extends Component {
         return (
             <Fragment>
                 {this.props.data.map((client, index) => {
-                    if (client.clienttype == 'PILOT') {
+                    if (client.type == 'PILOT') {
                         return <Marker
-                            key={client.cid}
+                            key={client.id}
                             image={client.aircraftIcon}
                             rotation={client.heading}
                             anchor={{ x: 0.5, y: 0.5 }}
@@ -30,7 +30,7 @@ export default class MapOverlays extends Component {
                         />
                     } else if (client.controllertype == 'CTR') {
                         return <Polygon
-                            key={client.cid}
+                            key={client.id}
                             coordinates={client.polygon}
                             strokeWidth={this.props.focusedMarkerIndex === index ? 2 : 1}
                             strokeColor={client.strokeColor}
@@ -45,11 +45,11 @@ export default class MapOverlays extends Component {
                             }}
                             zIndex={client.zIndex}
                         />
-                    } else if (client.clienttype == 'ATC') {
+                    } else if (client.type == 'ATC') {
                         return <Circle
-                            key={client.cid}
+                            key={client.id}
                             center={client.location}
-                            radius={client.radius}
+                            radius={client.visualrange}
                             strokeWidth={1}
                             strokeColor={client.strokeColor}
                             fillColor={client.fillColor}

@@ -1,9 +1,9 @@
 export default class Client {
     constructor(data) {
         this._callsign = data[0];
-        this._cid = data[1];
-        this._realname = data[2];
-        this._clienttype = data[3];
+        this._id = data[1];
+        this._name = data[2];
+        this._type = data[3];
         this._latitude = parseFloat(data[5]);
         this._longitude = parseFloat(data[6]);
         this._time_logon = data[37];
@@ -24,28 +24,28 @@ export default class Client {
         this._callsign = callsign;
     }
 
-    get cid() {
-        return this._cid;
+    get id() {
+        return this._id;
     }
 
-    set cid(cid) {
-        this._cid = cid;
+    set id(id) {
+        this._id = id;
     }
 
-    get realname() {
-        return this._realname;
+    get name() {
+        return this._name;
     }
 
-    set realname(realname) {
-        this._realname = realname;
+    set name(name) {
+        this._name = name;
     }
 
-    get clienttype() {
-        return this._clienttype;
+    get type() {
+        return this._type;
     }
 
-    set clienttype(clienttype) {
-        this._clienttype = clienttype;
+    set type(type) {
+        this._type = type;
     }
 
     get latitude() {

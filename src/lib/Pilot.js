@@ -13,13 +13,13 @@ export default class Pilot extends Client {
     constructor(data) {
         super(data);
         this._altitude = data[7];
-        this._groundspeed = data[8];
-        this._planned_aircraft = data[9];
-        this._planned_depairport = data[11];
-        this._planned_destairport = data[13];
+        this._groundSpeed = data[8];
+        this._aircraft = data[9];
+        this._depAirport = data[11];
+        this._arrAirport = data[13];
         this._transponder = data[17];
-        this._planned_flighttype = data[21];
-        this._planned_route = data[30];
+        this._flightType = data[21];
+        this._route = data[30];
         this._heading = parseFloat(data[38]);
     }
 
@@ -60,7 +60,7 @@ export default class Pilot extends Client {
 
         if (this._checkAircraftType(widebody)) {
             return 2;
-        } else if (this._checkAircraftType(narrowbody) || !this._planned_aircraft) {
+        } else if (this._checkAircraftType(narrowbody) || !this._aircraft) {
             return 1;
         }
         return 0;
@@ -69,7 +69,7 @@ export default class Pilot extends Client {
     _checkAircraftType(list) {
         for (let i = 0; i < list.length; i++) {
             const aircraft = list[i];
-            if (this._planned_aircraft.includes(aircraft)) {
+            if (this._aircraft.includes(aircraft)) {
                 return true;
             }
         }
@@ -84,36 +84,36 @@ export default class Pilot extends Client {
         this._altitude = altitude;
     }
 
-    get groundspeed() {
-        return this._groundspeed;
+    get groundSpeed() {
+        return this._groundSpeed;
     }
 
-    set groundspeed(groundspeed) {
-        this._groundspeed = groundspeed;
+    set groundSpeed(groundSpeed) {
+        this._groundSpeed = groundSpeed;
     }
 
-    get planned_aircraft() {
-        return this._planned_aircraft;
+    get aircraft() {
+        return this._aircraft;
     }
 
-    set planned_aircraft(planned_aircraft) {
-        this._planned_aircraft = planned_aircraft;
+    set aircraft(aircraft) {
+        this._aircraft = aircraft;
     }
 
-    get planned_depairport() {
-        return this._planned_depairport;
+    get depAirport() {
+        return this._depAirport;
     }
 
-    set planned_depairport(planned_depairport) {
-        this._planned_depairport = planned_depairport;
+    set depAirport(depAirport) {
+        this._depAirport = depAirport;
     }
 
-    get planned_destairport() {
-        return this._planned_destairport;
+    get arrAirport() {
+        return this._arrAirport;
     }
 
-    set planned_destairport(planned_destairport) {
-        this._planned_destairport = planned_destairport;
+    set arrAirport(arrAirport) {
+        this._arrAirport = arrAirport;
     }
 
     get transponder() {
@@ -124,20 +124,20 @@ export default class Pilot extends Client {
         this._transponder = transponder;
     }
 
-    get planned_flighttype() {
-        return this._planned_flighttype;
+    get flightType() {
+        return this._flightType;
     }
 
-    set planned_flighttype(planned_flighttype) {
-        this._planned_flighttype = planned_flighttype;
+    set flightType(flightType) {
+        this._flightType = flightType;
     }
 
-    get planned_route() {
-        return this._planned_route;
+    get route() {
+        return this._route;
     }
 
-    set planned_route(planned_route) {
-        this._planned_route = planned_route;
+    set route(route) {
+        this._route = route;
     }
 
     get heading() {
