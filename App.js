@@ -10,7 +10,7 @@ import Footer from './src/components/Footer';
 export default class App extends Component {
     constructor(props) {
         super(props);
-        this.state = this.getInitialState();
+        this.state = this.getInitialState(true);
         this.infoPanel = React.createRef();
     }
 
@@ -22,10 +22,10 @@ export default class App extends Component {
         this.setState({ fontLoaded: true });
     }
 
-    getInitialState = () => {
+    getInitialState = initialLoad => {
         return {
             loading: false,
-            fontLoaded: false,
+            fontLoaded: initialLoad ? false : true,
             focusedMarkerIndex: -1,
             flightPathData: {},
             basicData: {},
@@ -78,7 +78,7 @@ export default class App extends Component {
     }
 
     removeFocusedClient = () => {
-        this.setState(this.getInitialState());
+        this.setState(this.getInitialState(false));
     }
 
     showLoader = () => {
@@ -103,7 +103,7 @@ export default class App extends Component {
         }
 
         return (
-            <View style={{flex: 1}}>
+            <View style={{ flex: 1 }}>
                 <Header loading={this.state.loading} />
                 <Map
                     flightPathData={this.state.flightPathData}

@@ -23,12 +23,10 @@ export default class MapOverlays extends Component {
                             rotation={client.heading}
                             anchor={{ x: 0.5, y: 0.5 }}
                             coordinate={client.location}
-                            onPress={() => {
-                                this.onMarkerPress(client, index);
-                            }}
+                            onPress={() => this.onMarkerPress(client, index)}
                             opacity={this.props.focusedMarkerIndex === index ? 2 : 1.1}
                         />
-                    } else if (client.controllertype == 'CTR') {
+                    } else if (client.controllerType == 'CTR') {
                         return <Polygon
                             key={client.id}
                             coordinates={client.polygon}
@@ -40,16 +38,14 @@ export default class MapOverlays extends Component {
                                 client.fillColor
                             }
                             tappable={true}
-                            onPress={() => {
-                                this.onMarkerPress(client, index);
-                            }}
+                            onPress={() => this.onMarkerPress(client, index)}
                             zIndex={client.zIndex}
                         />
                     } else if (client.type == 'ATC') {
                         return <Circle
                             key={client.id}
                             center={client.location}
-                            radius={client.visualrange}
+                            radius={client.radius}
                             strokeWidth={1}
                             strokeColor={client.strokeColor}
                             fillColor={client.fillColor}

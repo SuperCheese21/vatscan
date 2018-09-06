@@ -47,13 +47,13 @@ export function parseClientData(data) {
 
         if (clientType === 'PILOT') {
             clientData.push(new Pilot(arr));
-        } else if (callsign.includes('_CTR')) {
+        } else if (clientType === 'ATC') {
             const centerClient = findInCenterData(rawCenterData, cid);
             if (centerClient) {
                 clientData.push(new Center(arr, centerClient));
+            } else {
+                clientData.push(new Controller(arr));
             }
-        } else if (clientType === 'ATC') {
-            clientData.push(new Controller(arr));
         }
     });
 

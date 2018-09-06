@@ -1,18 +1,20 @@
 import { StyleSheet } from 'react-native';
 
-import colors from './colors.json';
+import colors from '../config/colors.json';
 
 const styles = StyleSheet.create({
     callsignText: {
         flex: 1,
-        color: 'white',
         fontSize: 28,
         marginLeft: 10
     },
     cidText: {
-        color: 'white',
         textAlign: 'left',
         marginLeft: 30
+    },
+    clientInfoView: {
+        flexDirection: 'row',
+        height: 20
     },
     footerContainer: {
         backgroundColor: colors.primaryDark,
@@ -28,9 +30,8 @@ const styles = StyleSheet.create({
         }]
     },
     icaoText: {
-        color: 'white',
-        fontFamily: 'Roboto_Condensed_Regular',
         flex: 1,
+        fontFamily: 'Roboto_Condensed_Regular',
         fontSize: 55
     },
     infoContainerBasic: {
@@ -41,8 +42,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: colors.primary
     },
-    infoLabel: {
-        color: 'white',
+    infoLabelText: {
         fontFamily: 'Roboto_Condensed_Regular',
         fontStyle: 'italic'
     },
@@ -52,16 +52,18 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     infoText: {
-        color: 'white',
         fontSize: 16
     },
     nameText: {
-        color: 'white',
         textAlign: 'right'
     },
     sliderContainer: {
         flex: 1.5,
         marginRight: 10
+    },
+    text: {
+        fontFamily: 'Roboto_Regular',
+        color: 'white'
     }
 });
 

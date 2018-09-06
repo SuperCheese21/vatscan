@@ -1,17 +1,16 @@
 import Client from './Client';
 
-import colors from '../config/colors.json';
-import constants from '../config/constants.json';
+import { mapOverlays as colors } from '../config/colors.json';
+import { mapOverlays as constants } from '../config/constants.json';
 
 export default class Controller extends Client {
     constructor(data) {
         super(data);
         this._frequency = data[4];
         this._rating = data[16];
-        this._visualrange = data[19];
     }
 
-    get controllertype() {
+    get controllerType() {
         if (this.callsign.includes('_CTR')) {
             return 'CTR';
         } else if (this.callsign.includes('_TWR')) {
@@ -23,23 +22,23 @@ export default class Controller extends Client {
     }
 
     get radius() {
-        return constants.mapOverlays[this.controllertype].radius;
+        return constants[this.controllerType].radius;
     }
 
     get strokeColor() {
-        return colors.mapOverlays[this.controllertype].strokeColor;
+        return colors[this.controllerType].stroke;
     }
 
     get fillColor() {
-        return colors.mapOverlays[this.controllertype].fillColor;
+        return colors[this.controllerType].fill;
     }
 
     get fillColorSelected() {
-        return colors.mapOverlays[this.controllertype].fillColorSelected;
+        return colors[this.controllerType].fillSelected;
     }
 
     get zIndex() {
-        return constants.mapOverlays[this.controllertype].zIndex;
+        return constants[this.controllerType].zIndex;
     }
 
     get frequency() {
@@ -56,13 +55,5 @@ export default class Controller extends Client {
 
     set rating(rating) {
         this._rating = rating;
-    }
-
-    get visualrange() {
-        return this._visualrange;
-    }
-
-    set visualrange(visualrange) {
-        this._visualrange = visualrange;
     }
 }

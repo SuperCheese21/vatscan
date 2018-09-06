@@ -3,11 +3,11 @@ import { Text, View } from 'react-native';
 
 import ProgressBar from './ProgressBar';
 
-import styles from '../config/styles';
+import styles from './styles';
 
 const Footer = props => (
     <View style={styles.footerContainer}>
-        <Text style={styles.callsignText}>{props.data.callsign}</Text>
+        <Text style={[styles.text, styles.callsignText]}>{props.data.callsign}</Text>
         <View style={[styles.sliderContainer]}>
             <ProgressBar
                 progress={props.data.progress}
