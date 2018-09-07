@@ -3,11 +3,8 @@ import Controller from '../Controller';
 import Pilot from '../Pilot';
 import {
     getRandomElement,
-    formatPilotData,
-    formatControllerData,
     checkID
 } from './calc';
-import colors from '../../config/colors.json';
 import constants from '../../config/constants.json';
 
 /**

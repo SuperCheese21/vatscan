@@ -1,5 +1,3 @@
-import airportData from '../../data/airports.json';
-import colors from '../../config/colors.json';
 import constants from '../../config/constants.json';
 
 /**

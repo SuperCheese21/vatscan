@@ -27,9 +27,6 @@ export default class MapContainer extends Component {
     setFocusedClient = (client, index) => {
         this.removeFocusedClient();
         if (client.type === 'PILOT') {
-            console.log('depCoords: ' + client.depCoords);
-            console.log('location: ' + client.location);
-            console.log('arrCoords: ' + client.arrCoords);
             this.setState({
                 focusedMarkerIndex: index,
                 flightPathData: {

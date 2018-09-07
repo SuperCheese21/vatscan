@@ -7,7 +7,6 @@ import { getGCDistance } from './util/calc';
 const NARROWBODY_ICON = require('../assets/icons/narrowbody.png');
 const WIDEBODY_ICON = require('../assets/icons/widebody.png');
 const GA_ICON = require('../assets/icons/ga.png');
-const SEEKBAR_ICON = require('../assets/icons/seekbar.png');
 
 export default class Pilot extends Client {
     constructor(data) {
