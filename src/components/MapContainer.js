@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
+import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 
-import Header from './Header';
 import Map from './Map';
 import InfoPanel from './InfoPanel';
 import Footer from './Footer';
@@ -11,6 +11,11 @@ export default class MapContainer extends Component {
         super(props);
         this.state = this.getInitialState();
         this.infoPanel = React.createRef();
+    }
+
+    static navigationOptions = {
+        title: 'Map',
+        tabBarIcon: <Icon name='google-maps' color='white' size={20} />
     }
 
     getInitialState = () => {
@@ -90,7 +95,6 @@ export default class MapContainer extends Component {
     render() {
         return (
             <View style={{ flex: 1 }}>
-                <Header loading={this.state.loading} />
                 <Map
                     flightPathData={this.state.flightPathData}
                     showLoader={this.showLoader}
@@ -107,8 +111,9 @@ export default class MapContainer extends Component {
                     detailData={this.state.detailData}
                     removeFocusedClient={this.removeFocusedClient}
                 />
-                <Footer data={this.state.footerData} />
             </View>
         );
     }
 }
+
+//<Footer data={this.state.footerData} />

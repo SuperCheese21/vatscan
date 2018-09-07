@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
-import { createMaterialTopTabNavigator } from 'react-navigation';
+import { Text, View } from 'react-native';
+import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import { AppLoading, Font } from 'expo';
+import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 
 import MapContainer from './src/components/MapContainer';
+
+import colors from './src/config/colors.json';
 
 export default class App extends Component {
     constructor(props) {
@@ -24,6 +28,30 @@ export default class App extends Component {
         if (!this.state.fontLoaded) {
             return ( <AppLoading /> );
         }
-        return ( <MapContainer /> );
+        return ( <Navigator /> );
     }
 }
+
+class List extends Component {
+    static navigationOptions = {
+        title: 'List',
+        tabBarIcon: <Icon name='format-list-bulleted' color='white' size={20} />
+    }
+
+    render() {
+        return (
+            <View style={{ flex: 1 }}>
+                <Text>List</Text>
+            </View>
+        )
+    }
+}
+
+const Navigator = createMaterialBottomTabNavigator({
+    Map: MapContainer,
+    List: List
+}, {
+    barStyle: {
+        backgroundColor: colors.primaryDark
+    }
+});
