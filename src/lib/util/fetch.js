@@ -23,8 +23,8 @@ export async function fetchData() {
             fetch(artccUrl).then(data => data.json())
         ]);
         return data;
-    } catch (e) {
-        console.error(e);
+    } catch (err) {
+        console.error(err);
     }
 }
 
@@ -66,8 +66,6 @@ export function parseClientData(rawData) {
             }
         }
     });
-
-    console.log(JSON.stringify(clientData));
 
     return clientData;
 }

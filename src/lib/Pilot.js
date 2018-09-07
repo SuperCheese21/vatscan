@@ -35,11 +35,11 @@ export default class Pilot extends Client {
     }
 
     get depCoords() {
-        return airportData[this.planned_depairport];
+        return airportData[this.depAirport];
     }
 
     get arrCoords() {
-        return airportData[this.planned_destairport];
+        return airportData[this.arrAirport];
     }
 
     get distFlown() {

@@ -11,7 +11,7 @@ const Footer = props => (
         <View style={[styles.sliderContainer]}>
             <ProgressBar
                 progress={props.data.progress}
-                visible={props.data.progress ? true : false}
+                visible={props.data.progress >= 0 ? true : false}
             />
         </View>
     </View>
