@@ -13,11 +13,11 @@ const DetailData = props => (
                 <Text style={[styles.text, styles.infoText]}>{props.data.aircraft}</Text>
             </View>
             <View style={styles.infoRow}>
-                <Text style={[styles.text, styles.infoLabel]}>Flown</Text>
+                <Text style={[styles.text, styles.infoLabelText]}>Flown</Text>
                 <Text style={[styles.text, styles.infoText]}>{props.data.distFlown}</Text>
             </View>
             <View style={styles.infoRow}>
-                <Text style={[styles.text, styles.infoLabel]}>Remaining</Text>
+                <Text style={[styles.text, styles.infoLabelText]}>Remaining</Text>
                 <Text style={[styles.text, styles.infoText]}>{props.data.distRemaining}</Text>
             </View>
         </View>
