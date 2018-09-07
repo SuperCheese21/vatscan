@@ -4,21 +4,11 @@ import { mapOverlays as colors } from '../config/colors.json';
 import { mapOverlays as constants } from '../config/constants.json';
 
 export default class Controller extends Client {
-    constructor(data) {
+    constructor(data, controllerType) {
         super(data);
         this._frequency = data[4];
         this._rating = data[16];
-    }
-
-    get controllerType() {
-        if (this.callsign.includes('_CTR')) {
-            return 'CTR';
-        } else if (this.callsign.includes('_TWR')) {
-            return 'TWR';
-        } else if (this.callsign.includes('_GND')) {
-            return 'GND';
-        }
-        return 'APP';
+        this._controllerType = controllerType;
     }
 
     get radius() {
@@ -55,5 +45,13 @@ export default class Controller extends Client {
 
     set rating(rating) {
         this._rating = rating;
+    }
+
+    get controllerType() {
+        return this._controllerType;
+    }
+
+    set controllerType(controllerType) {
+        this._controllerType = controllerType;
     }
 }

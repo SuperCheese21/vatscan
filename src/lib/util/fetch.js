@@ -34,28 +34,40 @@ export async function fetchData() {
  * @param  {Object} json Raw client dat
  * @return {Object}      Client data formatted as a javascript object
  */
-export function parseClientData(data) {
-    let rawData = data[0].split('!CLIENTS:\r\n').pop().split('\r\n;\r\n;').shift().split('\r\n');
-    let rawCenterData = data[1].features;
-    let clientData = [];
+export function parseClientData(rawData) {
+    let data = rawData[0].split('!CLIENTS:\r\n').pop().split('\r\n;\r\n;').shift().split('\r\n');
+    let centerData = rawData[1].features;
+    let clientData = [];    // Data array of connected VATSIM clients
 
-    rawData.forEach(client => {
-        const arr = client.split(':');
-        const callsign = arr[0];
-        const cid = arr[1];
-        const clientType = arr[3];
+    // Iterate through each client in raw data array
+    data.forEach(client => {
+        const dataArray = client.split(':');
+        const clientType = dataArray[3];
 
+        // If client is a pilot
         if (clientType === 'PILOT') {
-            clientData.push(new Pilot(arr));
-        } else if (clientType === 'ATC') {
-            const centerClient = findInCenterData(rawCenterData, cid);
-            if (centerClient) {
-                clientData.push(new Center(arr, centerClient));
-            } else {
-                clientData.push(new Controller(arr));
+            clientData.push(new Pilot(dataArray));
+        }
+
+        // If client is an ATC
+        else if (clientType === 'ATC') {
+            const id = dataArray[1];
+            const controllerType = dataArray[0].split('_').pop();
+
+            // If id has not already been added to data array
+            // Duplicate ID connections only appear with controllers
+            if (!checkID(clientData, id)) {
+                const center = findInCenterData(centerData, id);
+                if (controllerType === 'CTR' && center) {
+                    clientData.push(new Center(dataArray, center));
+                } else if (['APP','DEP','TWR','GND'].includes(controllerType)) {
+                    clientData.push(new Controller(dataArray, controllerType));
+                }
             }
         }
     });
+
+    console.log(JSON.stringify(clientData));
 
     return clientData;
 }

@@ -44,3 +44,18 @@ export function getGCDistance(loc1, loc2) {
 function toRadians(deg) {
     return deg * Math.PI / 180;
 }
+
+/**
+ * Checks for duplicate ID in data array before adding new entry
+ * @param  {Array} data Data array of pilot or controller objects
+ * @param  {String} id  VATSIM CID to check
+ * @return {Boolean}    True if id is already in array, false if it isn't
+ */
+export function checkID(data, id) {
+    for (let i = 0; i < data.length; i++) {
+        if (data[i].id == id) {
+            return true;
+        }
+    }
+    return false;
+}

@@ -1,9 +1,9 @@
 import Controller from './Controller';
 
 export default class Center extends Controller {
-    constructor(data, centerData) {
-        super(data);
-        this._polygon = centerData.geometry.coordinates[0].map(coords => ({
+    constructor(data, center) {
+        super(data, 'CTR');
+        this._polygon = center.geometry.coordinates[0].map(coords => ({
             latitude: parseFloat(coords[1]),
             longitude: parseFloat(coords[0])
         }));
