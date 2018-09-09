@@ -14,8 +14,7 @@ export default class MapContainer extends Component {
     }
 
     static navigationOptions = {
-        title: 'Map',
-        tabBarIcon: <Icon name='google-maps' color='white' size={20} />
+        title: 'Map'
     }
 
     getInitialState = () => {
