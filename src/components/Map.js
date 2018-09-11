@@ -1,75 +1,43 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { MapView } from 'expo';
 
 import FlightPath from './FlightPath';
 import MapOverlays from './MapOverlays';
 
-import { fetchData, parseClientData } from '../lib/util/fetch';
 import constants from '../config/constants.json';
 import mapStyle from '../config/map-styles/style_blue_essence.json';
 
-export default class Map extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            loading: true,
-            clientData: []
-        };
-    }
+const Map = props => (
+    <MapView style={{ flex: 1 }}
+        initialRegion={{
+            latitude: 38,
+            longitude: -97,
+            latitudeDelta: 60,
+            longitudeDelta: 30
+        }}
+        customMapStyle={mapStyle}
+        moveOnMarkerPress={false}
+        toolbarEnabled={false}
+        pitchEnabled={false}
+        rotateEnabled={false}
+        showsIndoors={false}
+        onPress={() => {
+            props.setPanelPosition(constants.panelStates.COLLAPSED);
+            props.removeFocusedClient();
+        }}
+    >
 
-    componentDidMount() {
-        this.updateData();
-        setInterval(() => {
-            this.updateData();
-        }, constants.UPDATE_INTERVAL);
-    }
+        <MapOverlays
+            data={props.clientData}
+            setFocusedClient={props.setFocusedClient}
+            focusedMarkerIndex={props.focusedMarkerIndex}
+            getPanelPosition={props.getPanelPosition}
+            setPanelPosition={props.setPanelPosition}
+        />
 
-    updateData() {
-        this.props.showLoader();
-        fetchData()
-            .then(data => {
-                this.setState({
-                    clientData: parseClientData(data)
-                });
-                this.props.hideLoader();
-            })
-            .catch(err => {
-                console.error(err);
-            });
-    }
+        <FlightPath data={props.flightPathData} />
 
-    render() {
-        return (
-            <MapView style={{ flex: 1 }}
-                initialRegion={{
-                    latitude: 38,
-                    longitude: -97,
-                    latitudeDelta: 60,
-                    longitudeDelta: 30
-                }}
-                customMapStyle={mapStyle}
-                moveOnMarkerPress={false}
-                toolbarEnabled={false}
-                pitchEnabled={false}
-                rotateEnabled={false}
-                showsIndoors={false}
-                onPress={() => {
-                    this.props.setPanelPosition(constants.panelStates.COLLAPSED);
-                    this.props.removeFocusedClient();
-                }}
-            >
+    </MapView>
+);
 
-                <MapOverlays
-                    data={this.state.clientData}
-                    setFocusedClient={this.props.setFocusedClient}
-                    focusedMarkerIndex={this.props.focusedMarkerIndex}
-                    getPanelPosition={this.props.getPanelPosition}
-                    setPanelPosition={this.props.setPanelPosition}
-                />
-
-                <FlightPath data={this.props.flightPathData} />
-
-            </MapView>
-        );
-    }
-}
+export default Map;

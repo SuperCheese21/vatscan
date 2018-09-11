@@ -13,13 +13,8 @@ export default class MapContainer extends Component {
         this.infoPanel = React.createRef();
     }
 
-    static navigationOptions = {
-        title: 'Map'
-    }
-
     getInitialState = () => {
         return {
-            loading: false,
             focusedMarkerIndex: -1,
             flightPathData: {},
             basicData: {},
@@ -75,14 +70,6 @@ export default class MapContainer extends Component {
         this.setState(this.getInitialState());
     }
 
-    showLoader = () => {
-        this.setState({ loading: true });
-    }
-
-    hideLoader = () => {
-        this.setState({ loading: false });
-    }
-
     getPanelPosition = () => {
         return this.infoPanel.current.getPanelPosition();
     }
@@ -95,9 +82,8 @@ export default class MapContainer extends Component {
         return (
             <View style={{ flex: 1 }}>
                 <Map
+                    clientData={this.props.screenProps.clientData}
                     flightPathData={this.state.flightPathData}
-                    showLoader={this.showLoader}
-                    hideLoader={this.hideLoader}
                     setFocusedClient={this.setFocusedClient}
                     focusedMarkerIndex={this.state.focusedMarkerIndex}
                     removeFocusedClient={this.removeFocusedClient}

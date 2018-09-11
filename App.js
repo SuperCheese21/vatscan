@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { AppLoading, Font } from 'expo';
 
+import constants from './src/config/constants.json';
+import { fetchData, parseClientData } from './src/lib/util/fetch';
 import Header from './src/components/Header';
 import TabNavigator from './src/components/TabNavigator';
 
@@ -9,7 +11,9 @@ export default class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            fontLoaded: false
+            fontLoaded: false,
+            clientData: [],
+            loading: false
         };
     }
 
@@ -18,7 +22,28 @@ export default class App extends Component {
             'Roboto_Regular': require('./src/assets/fonts/Roboto/Roboto-Regular.ttf'),
             'Roboto_Condensed_Regular': require('./src/assets/fonts/Roboto_Condensed/RobotoCondensed-Regular.ttf')
         });
-        this.setState({ fontLoaded: true });
+        this.setState({
+            fontLoaded: true
+        }, () => {
+            this.updateData();
+            setInterval(() => {
+                this.updateData();
+            }, constants.UPDATE_INTERVAL);
+        });
+    }
+
+    updateData() {
+        this.setState({ loading: true });
+        fetchData()
+            .then(data => {
+                this.setState({
+                    clientData: parseClientData(data),
+                    loading: false
+                });
+            })
+            .catch(err => {
+                console.error(err);
+            });
     }
 
     render() {
@@ -27,8 +52,12 @@ export default class App extends Component {
         }
         return (
             <View style={{ flex: 1 }}>
-                <Header />
-                <TabNavigator />
+                <Header loading={this.state.loading} />
+                <TabNavigator
+                    screenProps={{
+                        clientData: this.state.clientData
+                    }}
+                />
             </View>
         );
     }
