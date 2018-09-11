@@ -51,6 +51,10 @@
             "radius": 55560,
             "zIndex": 1
         },
+        "DEP": {
+            "radius": 55560,
+            "zIndex": 1
+        },
         "TWR": {
             "radius": 15000,
             "zIndex": 2
