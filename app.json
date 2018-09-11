@@ -4,8 +4,15 @@
         "description": "The premier, next generation live VATSIM map for mobile",
         "version": "0.6.2",
         "sdkVersion": "29.0.0",
+        "updates": {
+            "fallbackToCacheTimeout": 0
+        },
+        "assetBundlePatterns": [
+            "**/*"
+        ],
         "ios": {
             "bundleIdentifier": "com.stratospherelabs.vatscan",
+            "supportsTablet": true,
             "config": {
                 "googleMapsApiKey": "AIzaSyDTYczc4NXP-wktSRpKO9C5Uo7M0KM8420"
             }

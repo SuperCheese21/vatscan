@@ -1,17 +1,17 @@
 {
   "name": "vatscan-react-native",
-  "version": "0.6.0",
+  "version": "0.6.2",
   "private": true,
+  "main": "node_modules/expo/AppEntry.js",
   "devDependencies": {
     "jest-expo": "^30.0.0",
     "react-test-renderer": "16.3.1"
   },
-  "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
   "scripts": {
-    "start": "exp start",
-    "eject": "exp eject",
-    "android": "exp build:android",
-    "ios": "exp build:ios",
+    "start": "expo start",
+    "eject": "expo eject",
+    "build-android": "expo build:android",
+    "build-ios": "expo build:ios",
     "test": "jest"
   },
   "jest": {
@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^6.3.1",
-    "expo": "^29.0.0",
+    "expo": "^29.0.1",
     "react": "^16.3.1",
     "react-native": "^0.55.4",
     "react-native-slider": "^0.11.0",
