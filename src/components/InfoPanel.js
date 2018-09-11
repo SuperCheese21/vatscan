@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import { View } from 'react-native';
 import SlidingUpPanel from 'rn-sliding-up-panel';
 
@@ -8,13 +8,11 @@ import DetailData from './DetailData';
 import constants from '../config/constants.json';
 
 export default class InfoPanel extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            panelPosition: constants.panelStates.COLLAPSED
-        };
-        this.infoPanel = React.createRef();
+    state = {
+        panelPosition: constants.panelStates.COLLAPSED
     }
+
+    infoPanel = createRef()
 
     getPanelPosition = () => {
         return this.state.panelPosition;
@@ -52,7 +50,7 @@ export default class InfoPanel extends Component {
     render() {
         const top = constants.panelStates.EXPANDED;
         const bottom = constants.panelStates.COLLAPSED;
-        return(
+        return (
             <SlidingUpPanel
                 ref={this.infoPanel}
                 visible={true}
@@ -74,6 +72,6 @@ export default class InfoPanel extends Component {
                 </View>
 
             </SlidingUpPanel>
-        )
+        );
     }
 }

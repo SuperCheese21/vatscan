@@ -1,33 +1,21 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
 
 import colors from '../config/colors.json';
+import styles from './styles';
 
-export default class Header extends Component {
-    render() {
-        return (
-            <View style={{
-                backgroundColor: colors.primary,
-                height: 56,
-                paddingLeft: 13,
-                paddingRight: 5,
-                flexDirection: 'row'
-            }}>
-                <Text style={{
-                    color: '#ffffff',
-                    fontSize: 20,
-                    flex: 1,
-                    textAlignVertical: 'center'
-                }}>
-                    VATSCAN
-                </Text>
+const Header = props => (
+    <View style={styles.header}>
+        <Text style={[styles.text, styles.headerText]}>
+            VATSCAN
+        </Text>
 
-                <ActivityIndicator
-                    animating={this.props.loading}
-                    size="large"
-                    color={colors.accent}
-                />
-            </View>
-        );
-    }
-}
+        <ActivityIndicator
+            animating={props.loading}
+            size="large"
+            color={colors.accent}
+        />
+    </View>
+);
+
+export default Header;

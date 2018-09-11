@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import { View } from 'react-native';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 
@@ -10,7 +10,7 @@ export default class MapContainer extends Component {
     constructor(props) {
         super(props);
         this.state = this.getInitialState();
-        this.infoPanel = React.createRef();
+        this.infoPanel = createRef();
     }
 
     getInitialState = () => {
@@ -84,8 +84,8 @@ export default class MapContainer extends Component {
                 <Map
                     clientData={this.props.screenProps.clientData}
                     flightPathData={this.state.flightPathData}
-                    setFocusedClient={this.setFocusedClient}
                     focusedMarkerIndex={this.state.focusedMarkerIndex}
+                    setFocusedClient={this.setFocusedClient}
                     removeFocusedClient={this.removeFocusedClient}
                     getPanelPosition={this.getPanelPosition}
                     setPanelPosition={this.setPanelPosition}
@@ -100,5 +100,3 @@ export default class MapContainer extends Component {
         );
     }
 }
-
-//<Footer data={this.state.footerData} />

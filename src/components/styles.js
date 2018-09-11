@@ -29,6 +29,18 @@ const styles = StyleSheet.create({
             rotate: '90deg'
         }]
     },
+    header: {
+        backgroundColor: colors.primary,
+        height: 56,
+        paddingLeft: 13,
+        paddingRight: 5,
+        flexDirection: 'row'
+    },
+    headerText: {
+        fontSize: 20,
+        flex: 1,
+        textAlignVertical: 'center'
+    },
     icaoText: {
         flex: 1,
         fontFamily: 'Roboto_Condensed_Regular',

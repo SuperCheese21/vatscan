@@ -8,14 +8,11 @@ import Header from './src/components/Header';
 import TabNavigator from './src/components/TabNavigator';
 
 export default class App extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            fontLoaded: false,
-            clientData: [],
-            loading: false
-        };
-    }
+    state = {
+        fontLoaded: false,
+        clientData: [],
+        loading: false
+    };
 
     async componentDidMount() {
         await Font.loadAsync({
