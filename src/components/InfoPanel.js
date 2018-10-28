@@ -1,4 +1,4 @@
-import React, { Component, createRef } from 'react';
+import React, { Component } from 'react';
 import { View } from 'react-native';
 import SlidingUpPanel from 'rn-sliding-up-panel';
 
@@ -8,17 +8,20 @@ import DetailData from './DetailData';
 import constants from '../config/constants.json';
 
 export default class InfoPanel extends Component {
-    state = {
-        panelPosition: constants.panelStates.COLLAPSED
+    constructor(props) {
+        super(props);
+        this.state = {
+            panelPosition: constants.panelStates.COLLAPSED
+        };
+        this.infoPanel = React.createRef()
     }
-
-    infoPanel = createRef()
 
     getPanelPosition = () => {
         return this.state.panelPosition;
     }
 
     setPanelPosition = position => {
+        console.log('Setting panel position to ' + position);
         this.setState({
             panelPosition: position
         });

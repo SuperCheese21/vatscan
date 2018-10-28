@@ -1,4 +1,4 @@
-import React, { Component, createRef } from 'react';
+import React, { Component } from 'react';
 import { View } from 'react-native';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 
@@ -10,7 +10,7 @@ export default class MapContainer extends Component {
     constructor(props) {
         super(props);
         this.state = this.getInitialState();
-        this.infoPanel = createRef();
+        this.infoPanel = React.createRef();
     }
 
     getInitialState = () => {
@@ -75,6 +75,7 @@ export default class MapContainer extends Component {
     }
 
     setPanelPosition = position => {
+        console.log('setPanelPosition(' + position + ')');
         this.infoPanel.current.setPanelPosition(position);
     }
 

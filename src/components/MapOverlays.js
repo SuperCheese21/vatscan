@@ -1,12 +1,13 @@
 import React, { Component, Fragment } from 'react';
 import { Circle, Marker, Polygon } from 'react-native-maps';
 
-import constants from '../config/constants.json';
+import { panelStates } from '../config/constants.json';
 
 export default class MapOverlays extends Component {
     onMarkerPress = (client, index) => {
-        if (this.props.getPanelPosition() === constants.panelStates.COLLAPSED) {
-            this.props.setPanelPosition(constants.panelStates.HALF_EXPANDED);
+        console.log('Current panel position: ' + this.props.getPanelPosition());
+        if (this.props.getPanelPosition() === panelStates.COLLAPSED) {
+            this.props.setPanelPosition(panelStates.HALF_EXPANDED);
         }
         this.props.setFocusedClient(client, index);
     }

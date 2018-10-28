@@ -14,6 +14,7 @@ import constants from '../../config/constants.json';
 export async function fetchData() {
     const clientsUrl = getRandomElement(constants.SERVER_URLS);
     const artccUrl = constants.ARTCC_URL;
+    
     try {
         const data = await Promise.all([
             fetch(clientsUrl).then(data => data.text()),
