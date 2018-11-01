@@ -1,10 +1,5 @@
 {
     "STATUS_URL": "https://status.vatsim.net/",
-    "SERVER_URLS": [
-        "http://vatsim-data.hardern.net/vatsim-data.txt",
-        "http://vatsim.aircharts.org/vatsim-data.txt",
-        "http://info.vroute.net/vatsim-data.txt"
-    ],
     "ARTCC_URL": "https://map.vatsim.net/api/atcGeoJSON",
     "UPDATE_INTERVAL": 60000,
     "EARTH_RADIUS_NM": 3440.06,

@@ -12,9 +12,11 @@ import constants from '../../config/constants.json';
  * @return {Promise} VATSIM server data promise object
  */
 export async function fetchData() {
-    const clientsUrl = getRandomElement(constants.SERVER_URLS);
+    const urls = await getServerUrls();
+
+    const clientsUrl = getRandomElement(urls);
     const artccUrl = constants.ARTCC_URL;
-    
+
     try {
         const data = await Promise.all([
             fetch(clientsUrl).then(data => data.text()),
@@ -66,6 +68,29 @@ export function parseClientData(rawData) {
     });
 
     return clientData;
+}
+
+/**
+ * [getServerUrls description]
+ * @return {[type]} [description]
+ */
+async function getServerUrls() {
+    try {
+        const res = await fetch('https://status.vatsim.net/');
+        const text = await res.text();
+
+        const urls = [];
+
+        text.split('\n').forEach(line => {
+            if (line.includes('url0=')) {
+                urls.push(line.replace('url0=', ''));
+            }
+        });
+
+        return urls;
+    } catch (err) {
+        console.error(err);
+    }
 }
 
 /**
