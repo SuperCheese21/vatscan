@@ -13,7 +13,7 @@ export default class InfoPanel extends Component {
         this.state = {
             panelPosition: constants.panelStates.COLLAPSED
         };
-        this.infoPanel = React.createRef()
+        this.infoPanel = React.createRef();
     }
 
     getPanelPosition = () => {

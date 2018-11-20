@@ -75,7 +75,6 @@ export default class MapContainer extends Component {
     }
 
     setPanelPosition = position => {
-        console.log('setPanelPosition(' + position + ')');
         this.infoPanel.current.setPanelPosition(position);
     }
 
