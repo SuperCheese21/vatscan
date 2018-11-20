@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 
 import Map from './Map';
 import InfoPanel from './InfoPanel';
