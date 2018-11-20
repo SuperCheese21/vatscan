@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Text, View } from 'react-native';
+import { createAppContainer } from 'react-navigation';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 
@@ -12,7 +13,7 @@ const TabNavigator = createMaterialBottomTabNavigator({
     Map: MapContainer,
     List: ListContainer
 }, {
-    navigationOptions: ({ navigation }) => ({
+    defaultNavigationOptions: ({ navigation }) => ({
         tabBarIcon: ({ focused, tintColor }) => {
             const { routeName } = navigation.state;
             let iconName;
@@ -29,4 +30,6 @@ const TabNavigator = createMaterialBottomTabNavigator({
     }
 });
 
-export default TabNavigator;
+const TabNavigatorContainer = createAppContainer(TabNavigator);
+
+export default TabNavigatorContainer;

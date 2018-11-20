@@ -5,9 +5,10 @@ import { AppLoading, Font } from 'expo';
 import constants from './src/config/constants.json';
 import { fetchData, parseClientData } from './src/lib/util/fetch';
 import Header from './src/components/Header';
-import TabNavigator from './src/components/TabNavigator';
+import TabNavigatorContainer from './src/components/TabNavigator';
 
 export default class App extends Component {
+    // Initialize component state
     state = {
         fontLoaded: false,
         clientData: [],
@@ -15,21 +16,24 @@ export default class App extends Component {
     };
 
     async componentDidMount() {
+        // Load fonts and update font loaded state
         await Font.loadAsync({
             'Roboto_Regular': require('./src/assets/fonts/Roboto/Roboto-Regular.ttf'),
             'Roboto_Condensed_Regular': require('./src/assets/fonts/Roboto_Condensed/RobotoCondensed-Regular.ttf')
         });
-        this.setState({
+        await this.setState({
             fontLoaded: true
-        }, () => {
-            this.updateData();
-            setInterval(() => {
-                this.updateData();
-            }, constants.UPDATE_INTERVAL);
         });
+
+        // Pull data update and set interval for data update
+        this.updateData();
+        setInterval(() => {
+            this.updateData();
+        }, constants.UPDATE_INTERVAL);
     }
 
     updateData() {
+        // Set loading state and call function to fetch data
         this.setState({ loading: true });
         fetchData()
             .then(data => {
@@ -44,13 +48,16 @@ export default class App extends Component {
     }
 
     render() {
+        // Show loading spinner if data is being fetched
         if (!this.state.fontLoaded) {
             return ( <AppLoading /> );
         }
+
+        // Otherwise show top-level view
         return (
             <View style={{ flex: 1 }}>
                 <Header loading={this.state.loading} />
-                <TabNavigator
+                <TabNavigatorContainer
                     screenProps={{
                         clientData: this.state.clientData
                     }}
