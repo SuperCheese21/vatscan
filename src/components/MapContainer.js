@@ -9,7 +9,7 @@ import Footer from './Footer';
 export default class MapContainer extends React.Component {
     constructor(props) {
         super(props);
-        this.state = this.getInitialState();
+        this.state = this.defaultState;
         this.infoPanel = React.createRef();
     }
 
@@ -19,14 +19,12 @@ export default class MapContainer extends React.Component {
         }
     }
 
-    getInitialState = () => {
-        return {
-            focusedMarkerIndex: -1,
-            flightPathData: {},
-            basicData: {},
-            detailData: {},
-            footerData: {}
-        };
+    defaultState = {
+        focusedMarkerIndex: -1,
+        flightPathData: {},
+        basicData: {},
+        detailData: {},
+        footerData: {}
     }
 
     setFocusedClient = (client, index) => {
@@ -73,7 +71,7 @@ export default class MapContainer extends React.Component {
     }
 
     removeFocusedClient = () => {
-        this.setState(this.getInitialState());
+        this.setState(this.defaultState);
     }
 
     getPanelPosition = () => {
