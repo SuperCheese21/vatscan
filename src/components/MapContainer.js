@@ -1,15 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View } from 'react-native';
+import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 
 import Map from './Map';
 import InfoPanel from './InfoPanel';
 import Footer from './Footer';
 
-export default class MapContainer extends Component {
+export default class MapContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = this.getInitialState();
         this.infoPanel = React.createRef();
+    }
+
+    static navigationOptions = {
+        tabBarIcon: ({ tintColor }) => {
+            return <Icon name={'google-maps'} size={20} color={tintColor} />;
+        }
     }
 
     getInitialState = () => {
