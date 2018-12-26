@@ -1,20 +1,19 @@
-import React, { Component, Fragment } from 'react';
+import React from 'react';
 import { Circle, Marker, Polygon } from 'react-native-maps';
 
 import { panelStates } from '../config/constants.json';
 
-export default class MapOverlays extends Component {
+export default class MapOverlays extends React.Component {
     onMarkerPress = (client, index) => {
-        console.log('Current panel position: ' + this.props.getPanelPosition());
         if (this.props.getPanelPosition() === panelStates.COLLAPSED) {
-            this.props.setPanelPosition(panelStates.HALF_EXPANDED);
+            this.props.setPanelPosition(panelStates.EXPANDED);
         }
         this.props.setFocusedClient(client, index);
     }
 
     render() {
         return (
-            <Fragment>
+            <>
                 {this.props.data.map((client, index) => {
                     if (client.type == 'PILOT') {
                         return <Marker
@@ -53,7 +52,7 @@ export default class MapOverlays extends Component {
                         />
                     }
                 })}
-            </Fragment>
+            </>
         )
     }
 }

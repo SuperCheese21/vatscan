@@ -4,7 +4,7 @@ import { MapView } from 'expo';
 import FlightPath from './FlightPath';
 import MapOverlays from './MapOverlays';
 
-import constants from '../config/constants.json';
+import { panelStates } from '../config/constants.json';
 import mapStyle from '../config/map-styles/style_blue_essence.json';
 
 const Map = props => (
@@ -22,7 +22,7 @@ const Map = props => (
         rotateEnabled={false}
         showsIndoors={false}
         onPress={() => {
-            props.setPanelPosition(constants.panelStates.COLLAPSED);
+            props.setPanelPosition(panelStates.COLLAPSED);
             props.removeFocusedClient();
         }}
     >

@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
         fontSize: 55
     },
     infoContainerBasic: {
-        flex: 1,
+        flex: 1.4,
         backgroundColor: colors.primaryMedium
     },
     infoContainerDetail: {

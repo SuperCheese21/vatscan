@@ -33,9 +33,9 @@
         ]
     },
     "panelStates": {
-        "COLLAPSED": 72,
-        "EXPANDED": 500,
-        "HALF_EXPANDED": 156
+        "EXPANDED": 0,
+        "HALF_EXPANDED": -84,
+        "COLLAPSED": -168
     },
     "mapOverlays": {
         "CTR": {
