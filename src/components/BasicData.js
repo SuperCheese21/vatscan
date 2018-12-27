@@ -28,11 +28,11 @@ const BasicData = props => (
 
         <View style={styles.clientInfoView}>
             <View style={{ flex: 1 }}>
-                <Text style={[styles.text, styles.nameText]}>{props.data.name}</Text>
+                <Text style={[styles.text, styles.callsignText]}>{props.data.callsign}</Text>
             </View>
 
             <View style={{ flex: 1 }}>
-                <Text style={[styles.text, styles.cidText]}>{props.data.id}</Text>
+                <Text style={[styles.text, styles.nameText]}>{props.data.name}</Text>
             </View>
         </View>
     </View>

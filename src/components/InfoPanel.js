@@ -33,7 +33,7 @@ export default class InfoPanel extends React.Component {
             <Animated.View
                 style={{
                     width: '100%',
-                    height: 140,
+                    height: 168,
                     position: 'absolute',
                     bottom: this.state.panelPosition
                 }}

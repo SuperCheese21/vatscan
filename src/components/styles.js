@@ -4,23 +4,12 @@ import colors from '../config/colors.json';
 
 const styles = StyleSheet.create({
     callsignText: {
-        flex: 1,
-        fontSize: 28,
-        marginLeft: 10
-    },
-    cidText: {
-        textAlign: 'left',
-        marginLeft: 30
+        textAlign: 'right',
+        marginRight: 30
     },
     clientInfoView: {
         flexDirection: 'row',
         height: 20
-    },
-    footerContainer: {
-        backgroundColor: colors.primaryDark,
-        flexDirection: 'row',
-        alignItems: 'center',
-        height: 50
     },
     fromToIcon: {
         width: 50,
@@ -47,7 +36,7 @@ const styles = StyleSheet.create({
         fontSize: 55
     },
     infoContainerBasic: {
-        flex: 1.4,
+        flex: 1,
         backgroundColor: colors.primaryMedium
     },
     infoContainerDetail: {
@@ -67,11 +56,7 @@ const styles = StyleSheet.create({
         fontSize: 16
     },
     nameText: {
-        textAlign: 'right'
-    },
-    sliderContainer: {
-        flex: 1.5,
-        marginRight: 10
+        textAlign: 'left'
     },
     text: {
         fontFamily: 'Roboto_Regular',

@@ -22,8 +22,7 @@ export default class MapContainer extends React.Component {
         focusedMarkerIndex: -1,
         flightPathData: {},
         basicData: {},
-        detailData: {},
-        footerData: {}
+        detailData: {}
     }
 
     setFocusedClient = (client, index) => {
@@ -37,7 +36,7 @@ export default class MapContainer extends React.Component {
                     arrCoords: client.arrCoords
                 },
                 basicData: {
-                    id: client.id,
+                    callsign: client.callsign,
                     name: client.name,
                     depAirport: client.depAirport || '????',
                     arrAirport: client.arrAirport || '????'
@@ -46,24 +45,19 @@ export default class MapContainer extends React.Component {
                     aircraft: ' ' + client.aircraft,
                     distFlown: client.distFlown >= 0 ? (' ' + client.distFlown + ' nm') : ' N/A',
                     distRemaining: client.distRemaining >= 0 ? (' ' + client.distRemaining + ' nm') : ' N/A',
+                    progress: client.progress,
                     altitude: ' ' + client.altitude + ' ft',
                     heading: ' ' + client.heading + '°',
                     groundSpeed: ' ' + client.groundSpeed + ' kts'
-                },
-                footerData: {
-                    callsign: client.callsign,
-                    progress: client.progress
                 }
             });
         } else {
             this.setState({
                 focusedMarkerIndex: index,
                 basicData: {
+                    callsign: client.callsign,
                     id: client.id,
                     name: client.name
-                },
-                footerData: {
-                    callsign: client.callsign
                 }
             });
         }

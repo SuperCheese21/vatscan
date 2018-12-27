@@ -4,8 +4,8 @@ export default class Client {
         this._id = data[1];
         this._name = data[2];
         this._type = data[3];
-        this._latitude = parseFloat(data[5]);
-        this._longitude = parseFloat(data[6]);
+        this._latitude = parseFloat(data[5]) || 0;
+        this._longitude = parseFloat(data[6]) || 0;
         this._time_logon = data[37];
     }
 
