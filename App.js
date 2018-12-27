@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 import { AppLoading, Font } from 'expo';
 
@@ -7,7 +7,7 @@ import { fetchData, parseClientData } from './src/lib/util/fetch';
 import Header from './src/components/Header';
 import TabNavigatorContainer from './src/components/TabNavigator';
 
-export default class App extends Component {
+export default class App extends React.Component {
     // Initialize component state
     state = {
         fontLoaded: false,

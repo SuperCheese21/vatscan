@@ -4,7 +4,6 @@ import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 
 import Map from './Map';
 import InfoPanel from './InfoPanel';
-import Footer from './Footer';
 
 export default class MapContainer extends React.Component {
     constructor(props) {

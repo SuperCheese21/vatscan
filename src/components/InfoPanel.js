@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated, View } from 'react-native';
+import { Animated } from 'react-native';
 
 import BasicData from './BasicData';
 import DetailData from './DetailData';
