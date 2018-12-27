@@ -4,9 +4,9 @@ import airportData from '../data/airports.json';
 import constants from '../config/constants.json';
 import { getGCDistance } from './util/calc';
 
-const NARROWBODY_ICON = require('../assets/icons/narrowbody.png');
-const WIDEBODY_ICON = require('../assets/icons/widebody.png');
-const GA_ICON = require('../assets/icons/ga.png');
+const NARROWBODY_ICON = require('../../assets/icons/narrowbody.png');
+const WIDEBODY_ICON = require('../../assets/icons/widebody.png');
+const GA_ICON = require('../../assets/icons/ga.png');
 
 export default class Pilot extends Client {
     constructor(data) {

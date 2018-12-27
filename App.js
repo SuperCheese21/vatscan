@@ -18,8 +18,8 @@ export default class App extends Component {
     async componentDidMount() {
         // Load fonts and update font loaded state
         await Font.loadAsync({
-            'Roboto_Regular': require('./src/assets/fonts/Roboto/Roboto-Regular.ttf'),
-            'Roboto_Condensed_Regular': require('./src/assets/fonts/Roboto_Condensed/RobotoCondensed-Regular.ttf')
+            'Roboto_Regular': require('./assets/fonts/Roboto/Roboto-Regular.ttf'),
+            'Roboto_Condensed_Regular': require('./assets/fonts/Roboto_Condensed/RobotoCondensed-Regular.ttf')
         });
         await this.setState({
             fontLoaded: true
@@ -48,7 +48,7 @@ export default class App extends Component {
     }
 
     render() {
-        // Show loading spinner if data is being fetched
+        // Show loading spinner if font is still being loaded
         if (!this.state.fontLoaded) {
             return ( <AppLoading /> );
         }

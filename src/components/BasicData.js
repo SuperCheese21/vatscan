@@ -15,7 +15,7 @@ const BasicData = props => (
             </Text>
             <Image
                 style={styles.fromToIcon}
-                source={require('../assets/icons/narrowbody.png')}
+                source={require('../../assets/icons/narrowbody.png')}
             />
             <Text style={[
                 styles.text,

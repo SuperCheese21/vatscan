@@ -4,7 +4,7 @@ import { Animated, View } from 'react-native';
 import BasicData from './BasicData';
 import DetailData from './DetailData';
 
-import { panelStates } from '../config/constants.json';
+import { panelStates, panelTransitionDuration } from '../config/constants.json';
 
 export default class InfoPanel extends React.Component {
     state = {
@@ -17,12 +17,13 @@ export default class InfoPanel extends React.Component {
     }
 
     setPanelPosition = position => {
+        // Set panel state value and start panel animation
         this.setState({ panelPositionValue: position });
         Animated.timing(
             this.state.panelPosition,
             {
                 toValue: position,
-                duration: 500
+                duration: panelTransitionDuration
             }
         ).start();
     }
