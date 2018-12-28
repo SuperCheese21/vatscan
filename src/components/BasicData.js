@@ -1,6 +1,7 @@
 import React from 'react';
 import { Image, Text, View } from 'react-native';
 
+import FlightProgressBar from './FlightProgressBar';
 import styles from './styles';
 
 const BasicData = props => (
@@ -34,6 +35,10 @@ const BasicData = props => (
             <View style={{ flex: 1 }}>
                 <Text style={[styles.text, styles.nameText]}>{props.data.name}</Text>
             </View>
+        </View>
+
+        <View style={styles.clientInfoView}>
+            <FlightProgressBar progress={props.data.progress} />
         </View>
     </View>
 );

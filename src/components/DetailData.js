@@ -2,15 +2,11 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import Icon from '@expo/vector-icons/MaterialIcons';
 
-import FlightProgressBar from './FlightProgressBar';
 import colors from '../config/colors.json';
 import styles from './styles';
 
 const DetailData = props => (
     <View style={styles.infoContainerDetail}>
-        <View style={styles.infoRow}>
-            <FlightProgressBar progress={props.data.progress} />
-        </View>
         <View style={styles.infoRow}>
             <View style={styles.infoRow}>
                 <Icon name='flight' size={24} color={colors.accent} />

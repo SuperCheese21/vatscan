@@ -39,13 +39,13 @@ export default class MapContainer extends React.Component {
                     callsign: client.callsign,
                     name: client.name,
                     depAirport: client.depAirport || '????',
-                    arrAirport: client.arrAirport || '????'
+                    arrAirport: client.arrAirport || '????',
+                    progress: client.progress
                 },
                 detailData: {
                     aircraft: ' ' + client.aircraft,
                     distFlown: client.distFlown >= 0 ? (' ' + client.distFlown + ' nm') : ' N/A',
                     distRemaining: client.distRemaining >= 0 ? (' ' + client.distRemaining + ' nm') : ' N/A',
-                    progress: client.progress,
                     altitude: ' ' + client.altitude + ' ft',
                     heading: ' ' + client.heading + '°',
                     groundSpeed: ' ' + client.groundSpeed + ' kts'

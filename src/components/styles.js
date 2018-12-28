@@ -36,12 +36,12 @@ const styles = StyleSheet.create({
         fontSize: 55
     },
     infoContainerBasic: {
-        flex: 1,
-        backgroundColor: colors.primaryMedium
+        flex: 5,
+        backgroundColor: colors.primary
     },
     infoContainerDetail: {
-        flex: 1,
-        backgroundColor: colors.primary
+        flex: 3,
+        backgroundColor: colors.primaryMedium
     },
     infoLabelText: {
         fontFamily: 'Roboto_Condensed_Regular',
