@@ -81,6 +81,7 @@ export default class MapContainer extends React.Component {
     collapsePanel = () => {
         this.setPanelPosition(panelStates.COLLAPSED);
         this.removeFocusedClient();
+        return true;
     }
 
     render() {
