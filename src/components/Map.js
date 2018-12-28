@@ -21,18 +21,13 @@ const Map = props => (
         pitchEnabled={false}
         rotateEnabled={false}
         showsIndoors={false}
-        onPress={() => {
-            props.setPanelPosition(panelStates.COLLAPSED);
-            props.removeFocusedClient();
-        }}
+        onPress={props.collapsePanel}
     >
 
         <MapOverlays
             data={props.clientData}
             setFocusedClient={props.setFocusedClient}
             focusedMarkerIndex={props.focusedMarkerIndex}
-            panelPosition={props.panelPosition}
-            setPanelPosition={props.setPanelPosition}
         />
 
         <FlightPath data={props.flightPathData} />

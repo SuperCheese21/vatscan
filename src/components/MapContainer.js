@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated, View } from 'react-native';
+import { Animated, BackHandler, View } from 'react-native';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 
 import Map from './Map';
@@ -10,6 +10,14 @@ export default class MapContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = this.defaultState;
+    }
+
+    componentDidMount() {
+        BackHandler.addEventListener('hardwareBackPress', this.collapsePanel);
+    }
+
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.collapsePanel);
     }
 
     static navigationOptions = {
@@ -52,6 +60,7 @@ export default class MapContainer extends React.Component {
                 groundSpeed: ' ' + client.groundSpeed + ' kts'
             }
         });
+        this.setPanelPosition(panelStates.EXPANDED);
     }
 
     removeFocusedClient = () => {
@@ -69,6 +78,11 @@ export default class MapContainer extends React.Component {
         ).start();
     }
 
+    collapsePanel = () => {
+        this.setPanelPosition(panelStates.COLLAPSED);
+        this.removeFocusedClient();
+    }
+
     render() {
         return (
             <View style={{ flex: 1 }}>
@@ -77,9 +91,7 @@ export default class MapContainer extends React.Component {
                     flightPathData={this.state.flightPathData}
                     focusedMarkerIndex={this.state.focusedMarkerIndex}
                     setFocusedClient={this.setFocusedClient}
-                    removeFocusedClient={this.removeFocusedClient}
-                    panelPosition={this.state.panelPositionValue}
-                    setPanelPosition={this.setPanelPosition}
+                    collapsePanel={this.collapsePanel}
                 />
                 <InfoPanel
                     panelPosition={this.state.panelPosition}
