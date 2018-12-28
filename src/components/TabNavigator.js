@@ -7,6 +7,7 @@ import MapContainer from './MapContainer';
 
 import colors from '../config/colors.json';
 
+// Create tab navigator
 const TabNavigator = createMaterialBottomTabNavigator({
     Map: MapContainer,
     List: ListContainer

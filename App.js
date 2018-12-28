@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { AppLoading, Font } from 'expo';
 
-import constants from './src/config/constants.json';
+import { UPDATE_INTERVAL } from './src/config/constants.json';
 import { fetchData, parseClientData } from './src/lib/util/fetch';
 import Header from './src/components/Header';
 import TabNavigatorContainer from './src/components/TabNavigator';
@@ -11,8 +11,8 @@ export default class App extends React.Component {
     // Initialize component state
     state = {
         fontLoaded: false,
-        clientData: [],
-        loading: false
+        loading: false,
+        clientData: []
     };
 
     async componentDidMount() {
@@ -29,7 +29,7 @@ export default class App extends React.Component {
         this.updateData();
         setInterval(() => {
             this.updateData();
-        }, constants.UPDATE_INTERVAL);
+        }, UPDATE_INTERVAL);
     }
 
     updateData() {
@@ -48,7 +48,7 @@ export default class App extends React.Component {
     }
 
     render() {
-        // Show loading spinner if font is still being loaded
+        // Show app loading screen if font is still being loaded
         if (!this.state.fontLoaded) {
             return ( <AppLoading /> );
         }

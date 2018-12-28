@@ -5,7 +5,7 @@ import { panelStates } from '../config/constants.json';
 
 export default class MapOverlays extends React.Component {
     onMarkerPress = (client, index) => {
-        if (this.props.getPanelPosition() === panelStates.COLLAPSED) {
+        if (this.props.panelPosition === panelStates.COLLAPSED) {
             this.props.setPanelPosition(panelStates.EXPANDED);
         }
         this.props.setFocusedClient(client, index);

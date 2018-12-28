@@ -37,7 +37,7 @@
         "HALF_EXPANDED": -80,
         "COLLAPSED": -160
     },
-    "panelTransitionDuration": 400,
+    "panelTransitionDuration": 350,
     "mapOverlays": {
         "CTR": {
             "radius": null,

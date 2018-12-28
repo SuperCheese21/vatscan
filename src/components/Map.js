@@ -31,7 +31,7 @@ const Map = props => (
             data={props.clientData}
             setFocusedClient={props.setFocusedClient}
             focusedMarkerIndex={props.focusedMarkerIndex}
-            getPanelPosition={props.getPanelPosition}
+            panelPosition={props.panelPosition}
             setPanelPosition={props.setPanelPosition}
         />
 

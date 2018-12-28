@@ -1,15 +1,15 @@
 import React from 'react';
-import { View } from 'react-native';
+import { Animated, View } from 'react-native';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 
 import Map from './Map';
 import InfoPanel from './InfoPanel';
+import { panelStates, panelTransitionDuration } from '../config/constants.json';
 
 export default class MapContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = this.defaultState;
-        this.infoPanel = React.createRef();
     }
 
     static navigationOptions = {
@@ -19,6 +19,8 @@ export default class MapContainer extends React.Component {
     }
 
     defaultState = {
+        panelPosition: new Animated.Value(panelStates.COLLAPSED),
+        panelPositionValue: panelStates.COLLAPSED,
         focusedMarkerIndex: -1,
         flightPathData: {},
         basicData: {},
@@ -27,52 +29,44 @@ export default class MapContainer extends React.Component {
 
     setFocusedClient = (client, index) => {
         this.removeFocusedClient();
-        if (client.type === 'PILOT') {
-            this.setState({
-                focusedMarkerIndex: index,
-                flightPathData: {
-                    depCoords: client.depCoords,
-                    location: client.location,
-                    arrCoords: client.arrCoords
-                },
-                basicData: {
-                    callsign: client.callsign,
-                    name: client.name,
-                    depAirport: client.depAirport || '????',
-                    arrAirport: client.arrAirport || '????',
-                    progress: client.progress
-                },
-                detailData: {
-                    aircraft: ' ' + client.aircraft,
-                    distFlown: client.distFlown >= 0 ? (' ' + client.distFlown + ' nm') : ' N/A',
-                    distRemaining: client.distRemaining >= 0 ? (' ' + client.distRemaining + ' nm') : ' N/A',
-                    altitude: ' ' + client.altitude + ' ft',
-                    heading: ' ' + client.heading + '°',
-                    groundSpeed: ' ' + client.groundSpeed + ' kts'
-                }
-            });
-        } else {
-            this.setState({
-                focusedMarkerIndex: index,
-                basicData: {
-                    callsign: client.callsign,
-                    id: client.id,
-                    name: client.name
-                }
-            });
-        }
+        this.setState({
+            focusedMarkerIndex: index,
+            flightPathData: {
+                depCoords: client.depCoords,
+                location: client.location,
+                arrCoords: client.arrCoords
+            },
+            basicData: {
+                callsign: client.callsign,
+                name: client.name,
+                depAirport: client.depAirport || '????',
+                arrAirport: client.arrAirport || '????',
+                progress: client.progress
+            },
+            detailData: {
+                aircraft: ' ' + client.aircraft,
+                distFlown: client.distFlown >= 0 ? (' ' + client.distFlown + ' nm') : ' N/A',
+                distRemaining: client.distRemaining >= 0 ? (' ' + client.distRemaining + ' nm') : ' N/A',
+                altitude: ' ' + client.altitude + ' ft',
+                heading: ' ' + client.heading + '°',
+                groundSpeed: ' ' + client.groundSpeed + ' kts'
+            }
+        });
     }
 
     removeFocusedClient = () => {
         this.setState(this.defaultState);
     }
 
-    getPanelPosition = () => {
-        return this.infoPanel.current.getPanelPosition();
-    }
-
     setPanelPosition = position => {
-        this.infoPanel.current.setPanelPosition(position);
+        this.setState({ panelPositionValue: position });
+        Animated.timing(
+            this.state.panelPosition,
+            {
+                toValue: position,
+                duration: panelTransitionDuration
+            }
+        ).start();
     }
 
     render() {
@@ -84,14 +78,13 @@ export default class MapContainer extends React.Component {
                     focusedMarkerIndex={this.state.focusedMarkerIndex}
                     setFocusedClient={this.setFocusedClient}
                     removeFocusedClient={this.removeFocusedClient}
-                    getPanelPosition={this.getPanelPosition}
+                    panelPosition={this.state.panelPositionValue}
                     setPanelPosition={this.setPanelPosition}
                 />
                 <InfoPanel
-                    ref={this.infoPanel}
+                    panelPosition={this.state.panelPosition}
                     basicData={this.state.basicData}
                     detailData={this.state.detailData}
-                    removeFocusedClient={this.removeFocusedClient}
                 />
             </View>
         );
