@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, Text, View } from 'react-native';
+import { Alert, FlatList, Text, TouchableOpacity, View } from 'react-native';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import { List, Searchbar } from 'react-native-paper';
 
@@ -20,7 +20,7 @@ export default class ListContainer extends React.Component {
         return (
             <View style={{ flex: 1 }}>
                 <Searchbar
-                    placeholder="Name, Callsign, CID"
+                    placeholder="Name, Callsign, CID, Aircraft"
                     onChangeText={query => {
                         this.setState({ query });
                     }}
@@ -32,25 +32,50 @@ export default class ListContainer extends React.Component {
                         if (
                             client.name.includes(query) ||
                             client.callsign.includes(query) ||
-                            client.id.includes(query)
+                            client.id.includes(query) ||
+                            client.aircraft && client.aircraft.includes(query)
                         ) {
                             return true;
                         }
                         return false;
                     })}
                     keyExtractor={this._keyExtractor}
-                    renderItem={({ item }) =>
-                        <List.Item
-                            title={item.callsign}
-                            description={item.name}
-                            left={props =>
-                                <List.Icon
-                                    {...props}
-                                    icon={item.frequency ? 'rss-feed' : 'airplanemode-active'}
-                                />
-                            }
-                        />
-                    }
+                    renderItem={({ item }) => (
+                        <TouchableOpacity
+                            onPress={() => {
+                                Alert.alert(
+                                    item.callsign,
+                                    item.name + '\n' +
+                                    item.id + '\n\n' +
+                                    'DEP/ARR: ' + item.depAirport + ' - ' + item.arrAirport + '\n' +
+                                    'Location: ' + item.latitude + ', ' + item.longitude + '\n' +
+                                    'Distance Flown: ' + item.distFlown + ' nm\n' +
+                                    'Distance Remaining: ' + item.distRemaining + ' nm\n\n' +
+                                    'Aircraft: ' + item.aircraft + '\n' +
+                                    'Altitude: ' + item.altitude + ' ft\n' +
+                                    'Speed: ' + item.groundSpeed + ' kts\n' +
+                                    'Heading: ' + item.heading + '°\n' +
+                                    'Transponder: ' + item.transponder + '\n' +
+                                    'Route: ' + item.route
+                                );
+                            }}
+                        >
+                            <List.Item
+                                title={item.callsign}
+                                description={item.name + ' (' + item.id + ')'}
+                                left={props => (
+                                    <List.Icon
+                                        {...props}
+                                        icon={
+                                            item.type === 'ATC' ?
+                                            'rss-feed' :
+                                            'airplanemode-active'
+                                        }
+                                    />
+                                )}
+                            />
+                        </TouchableOpacity>
+                    )}
                     ListEmptyComponent={
                         <View style={{ flex: 1 }}>
                             <Text style={{ textAlign: 'center' }}>
