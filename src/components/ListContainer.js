@@ -27,7 +27,17 @@ export default class ListContainer extends React.Component {
                     value={this.state.query}
                 />
                 <FlatList
-                    data={this.props.screenProps.clientData}
+                    data={this.props.screenProps.clientData.filter(client => {
+                        const query = this.state.query;
+                        if (
+                            client.name.includes(query) ||
+                            client.callsign.includes(query) ||
+                            client.id.includes(query)
+                        ) {
+                            return true;
+                        }
+                        return false;
+                    })}
                     keyExtractor={this._keyExtractor}
                     renderItem={({ item }) =>
                         <List.Item
@@ -36,10 +46,17 @@ export default class ListContainer extends React.Component {
                             left={props =>
                                 <List.Icon
                                     {...props}
-                                    icon={item.frequency ? "rss-feed" : "airplanemode-active"}
+                                    icon={item.frequency ? 'rss-feed' : 'airplanemode-active'}
                                 />
                             }
                         />
+                    }
+                    ListEmptyComponent={
+                        <View style={{ flex: 1 }}>
+                            <Text style={{ textAlign: 'center' }}>
+                                No results found
+                            </Text>
+                        </View>
                     }
                 />
             </View>
