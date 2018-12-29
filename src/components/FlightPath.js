@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Polyline } from 'react-native-maps';
 
 import colors from '../config/colors.json';
@@ -11,7 +11,7 @@ const FlightPath = props => {
     // Render polylines only if airport coords are present
     if (depCoords && location && arrCoords) {
         return (
-            <Fragment>
+            <>
                 <Polyline
                     coordinates={[depCoords, location]}
                     strokeWidth={2}
@@ -26,7 +26,7 @@ const FlightPath = props => {
                     geodesic={true}
                     zIndex={5}
                 />
-            </Fragment>
+            </>
         );
     }
 

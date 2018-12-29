@@ -4,7 +4,6 @@ import { MapView } from 'expo';
 import FlightPath from './FlightPath';
 import MapOverlays from './MapOverlays';
 
-import { panelStates } from '../config/constants.json';
 import mapStyle from '../config/map-styles/style_blue_essence.json';
 
 const Map = props => (

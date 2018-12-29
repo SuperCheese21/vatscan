@@ -22,42 +22,52 @@ export default class ListContainer extends React.Component {
                 <Searchbar
                     placeholder="Name, Callsign, CID, Aircraft"
                     onChangeText={query => {
+                        // Update state on input change (for live results)
                         this.setState({ query });
                     }}
                     value={this.state.query}
                 />
                 <FlatList
-                    data={this.props.screenProps.clientData.filter(client => {
-                        const query = this.state.query;
-                        if (
-                            client.name.includes(query) ||
-                            client.callsign.includes(query) ||
-                            client.id.includes(query) ||
-                            client.aircraft && client.aircraft.includes(query)
-                        ) {
-                            return true;
+                    data={
+                        // Use Array.filter to filter clients from data array
+                        this.props.screenProps.clientData.filter(client => {
+                            // Check if name, callsign, id, or aircraft contain query string
+                            const query = this.state.query;
+                            if (
+                                client.name.includes(query) ||
+                                client.callsign.includes(query) ||
+                                client.id.includes(query) ||
+                                client.aircraft && client.aircraft.includes(query)
+                            ) {
+                                return true;
+                            }
+                            return false;
                         }
-                        return false;
-                    })}
+                    )}
                     keyExtractor={this._keyExtractor}
                     renderItem={({ item }) => (
+                        // Wrap list item in touchable ripple for highlight effect
                         <TouchableRipple
                             onPress={() => {
-                                Alert.alert(
-                                    item.callsign,
-                                    item.name + '\n' +
-                                    item.id + '\n\n' +
-                                    'DEP/ARR: ' + item.depAirport + ' - ' + item.arrAirport + '\n' +
-                                    'Location: ' + item.latitude + ', ' + item.longitude + '\n' +
-                                    'Distance Flown: ' + item.distFlown + ' nm\n' +
-                                    'Distance Remaining: ' + item.distRemaining + ' nm\n\n' +
-                                    'Aircraft: ' + item.aircraft + '\n' +
-                                    'Altitude: ' + item.altitude + ' ft\n' +
-                                    'Speed: ' + item.groundSpeed + ' kts\n' +
-                                    'Heading: ' + item.heading + '°\n' +
-                                    'Transponder: ' + item.transponder + '\n' +
-                                    'Route: ' + item.route
-                                );
+                                // Show alert popup with detailed flight info
+                                // TODO: Create dedicated page for this info
+                                if (item.type === 'PILOT') {
+                                    Alert.alert(
+                                        item.callsign,
+                                        item.name + '\n' +
+                                        item.id + '\n\n' +
+                                        'DEP/ARR: ' + item.depAirport + ' - ' + item.arrAirport + '\n' +
+                                        'Location: ' + item.latitude + ', ' + item.longitude + '\n' +
+                                        'Distance Flown: ' + item.distFlown + ' nm\n' +
+                                        'Distance Remaining: ' + item.distRemaining + ' nm\n\n' +
+                                        'Aircraft: ' + item.aircraft + '\n' +
+                                        'Altitude: ' + item.altitude + ' ft\n' +
+                                        'Speed: ' + item.groundSpeed + ' kts\n' +
+                                        'Heading: ' + item.heading + '°\n' +
+                                        'Transponder: ' + item.transponder + '\n' +
+                                        'Route: ' + item.route
+                                    );
+                                }
                             }}
                         >
                             <List.Item

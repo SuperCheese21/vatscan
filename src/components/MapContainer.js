@@ -58,7 +58,7 @@ export default class MapContainer extends React.Component {
 
     setFocusedClient = (client, index) => {
         // Set info panel info to focused client, expand info panel
-        this.removeFocusedClient();
+        this._removeFocusedClient();
         this.setState({
             focusedMarkerIndex: index,
             flightPathData: {

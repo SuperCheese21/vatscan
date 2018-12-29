@@ -1,9 +1,8 @@
 import React from 'react';
 import { Circle, Marker, Polygon } from 'react-native-maps';
 
-import { panelStates } from '../config/constants.json';
-
 const MapOverlays = props => (
+    // Return fragment with client data mapped to map components
     <>
         {props.data.map((client, index) => {
             if (client.type == 'PILOT') {
