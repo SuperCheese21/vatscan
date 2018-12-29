@@ -1,7 +1,7 @@
 import React from 'react';
 import { Alert, FlatList, Text, View } from 'react-native';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
-import { List, Searchbar, TouchableRipple } from 'react-native-paper';
+import { List, Searchbar, Surface, TouchableRipple } from 'react-native-paper';
 
 export default class ListContainer extends React.Component {
     state = {
@@ -18,7 +18,10 @@ export default class ListContainer extends React.Component {
 
     render() {
         return (
-            <View style={{ flex: 1 }}>
+            <View style={{
+                flex: 1,
+                padding: 5
+            }}>
                 <Searchbar
                     placeholder="Name, Callsign, CID, Aircraft"
                     onChangeText={query => {
@@ -70,20 +73,25 @@ export default class ListContainer extends React.Component {
                                 }
                             }}
                         >
-                            <List.Item
-                                title={item.callsign}
-                                description={item.name + ' (' + item.id + ')'}
-                                left={props => (
-                                    <List.Icon
-                                        {...props}
-                                        icon={
-                                            item.type === 'ATC' ?
-                                            'rss-feed' :
-                                            'airplanemode-active'
-                                        }
-                                    />
-                                )}
-                            />
+                            <Surface style={{
+                                elevation: 5,
+                                marginTop: 5
+                            }}>
+                                <List.Item
+                                    title={item.callsign}
+                                    description={item.name + ' (' + item.id + ')'}
+                                    left={props => (
+                                        <List.Icon
+                                            {...props}
+                                            icon={
+                                                item.type === 'ATC' ?
+                                                'rss-feed' :
+                                                'airplanemode-active'
+                                            }
+                                        />
+                                    )}
+                                />
+                            </Surface>
                         </TouchableRipple>
                     )}
                     ListEmptyComponent={
