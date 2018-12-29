@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated, BackHandler, View } from 'react-native';
+import { Animated, BackHandler, Text, View } from 'react-native';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 
 import Map from './Map';
@@ -9,14 +9,18 @@ import { panelStates, panelTransitionDuration } from '../config/constants.json';
 export default class MapContainer extends React.Component {
     constructor(props) {
         super(props);
+
+        // Set default state
         this.state = this.defaultState;
     }
 
     componentDidMount() {
+        // Add listener for Android hardware back button to close info panel
         BackHandler.addEventListener('hardwareBackPress', this.collapsePanel);
     }
 
     componentWillUnmount() {
+        // Remove back button listener before component is unmounted
         BackHandler.removeEventListener('hardwareBackPress', this.collapsePanel);
     }
 
@@ -35,7 +39,25 @@ export default class MapContainer extends React.Component {
         detailData: {}
     }
 
+    _setPanelPosition = position => {
+        // Animate info panel position change
+        this.setState({ panelPositionValue: position });
+        Animated.timing(
+            this.state.panelPosition,
+            {
+                toValue: position,
+                duration: panelTransitionDuration
+            }
+        ).start();
+    }
+
+    _removeFocusedClient = () => {
+        // Resetting state removes focused client info from info panel
+        this.setState(this.defaultState);
+    }
+
     setFocusedClient = (client, index) => {
+        // Set info panel info to focused client, expand info panel
         this.removeFocusedClient();
         this.setState({
             focusedMarkerIndex: index,
@@ -60,27 +82,13 @@ export default class MapContainer extends React.Component {
                 groundSpeed: ' ' + client.groundSpeed + ' kts'
             }
         });
-        this.setPanelPosition(panelStates.EXPANDED);
-    }
-
-    removeFocusedClient = () => {
-        this.setState(this.defaultState);
-    }
-
-    setPanelPosition = position => {
-        this.setState({ panelPositionValue: position });
-        Animated.timing(
-            this.state.panelPosition,
-            {
-                toValue: position,
-                duration: panelTransitionDuration
-            }
-        ).start();
+        this._setPanelPosition(panelStates.EXPANDED);
     }
 
     collapsePanel = () => {
-        this.setPanelPosition(panelStates.COLLAPSED);
-        this.removeFocusedClient();
+        // Collapse panel and remove focused client
+        this._setPanelPosition(panelStates.COLLAPSED);
+        this._removeFocusedClient();
         return true;
     }
 
@@ -94,6 +102,14 @@ export default class MapContainer extends React.Component {
                     setFocusedClient={this.setFocusedClient}
                     collapsePanel={this.collapsePanel}
                 />
+                <Text style={{
+                    position: 'absolute',
+                    fontFamily: 'Roboto_Regular',
+                    right: 5,
+                    top: 2
+                }}>
+                    Clients: {this.props.screenProps.clientData.length}
+                </Text>
                 <InfoPanel
                     panelPosition={this.state.panelPosition}
                     basicData={this.state.basicData}
