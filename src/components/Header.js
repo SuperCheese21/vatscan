@@ -1,7 +1,7 @@
 import React from 'react';
-import { ActivityIndicator, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 
-import colors from '../config/colors.json';
+import RefreshIcon from './RefreshIcon';
 import styles from './styles';
 
 const Header = props => (
@@ -10,10 +10,9 @@ const Header = props => (
             VATSCAN
         </Text>
 
-        <ActivityIndicator
-            animating={props.loading}
-            size="large"
-            color={colors.accent}
+        <RefreshIcon
+            loading={props.loading}
+            refresh={props.refresh}
         />
     </View>
 );

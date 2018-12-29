@@ -25,22 +25,24 @@ export default class App extends React.Component {
             fontLoaded: true
         });
 
-        // Pull data update and set interval for data update
+        // Pull first data update
         this.updateData();
-        setInterval(() => {
-            this.updateData();
-        }, UPDATE_INTERVAL);
     }
 
-    updateData() {
+    updateData = () => {
         // Set loading state and call function to fetch data
         this.setState({ loading: true });
         fetchData()
             .then(data => {
+                // Update state with new data
                 this.setState({
                     clientData: parseClientData(data),
                     loading: false
                 });
+                // Set timeout for next data update
+                setTimeout(() => {
+                    this.updateData();
+                }, UPDATE_INTERVAL);
             })
             .catch(err => {
                 console.error(err);
@@ -56,7 +58,10 @@ export default class App extends React.Component {
         // Otherwise show top-level view
         return (
             <View style={{ flex: 1 }}>
-                <Header loading={this.state.loading} />
+                <Header
+                    loading={this.state.loading}
+                    refresh={this.updateData}
+                />
                 <TabNavigatorContainer
                     screenProps={{
                         clientData: this.state.clientData
