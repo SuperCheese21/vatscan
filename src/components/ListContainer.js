@@ -1,7 +1,7 @@
 import React from 'react';
-import { Alert, FlatList, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, FlatList, Text, View } from 'react-native';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
-import { List, Searchbar } from 'react-native-paper';
+import { List, Searchbar, TouchableRipple } from 'react-native-paper';
 
 export default class ListContainer extends React.Component {
     state = {
@@ -41,7 +41,7 @@ export default class ListContainer extends React.Component {
                     })}
                     keyExtractor={this._keyExtractor}
                     renderItem={({ item }) => (
-                        <TouchableOpacity
+                        <TouchableRipple
                             onPress={() => {
                                 Alert.alert(
                                     item.callsign,
@@ -74,7 +74,7 @@ export default class ListContainer extends React.Component {
                                     />
                                 )}
                             />
-                        </TouchableOpacity>
+                        </TouchableRipple>
                     )}
                     ListEmptyComponent={
                         <View style={{ flex: 1 }}>
