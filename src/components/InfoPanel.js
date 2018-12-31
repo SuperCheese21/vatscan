@@ -8,7 +8,7 @@ const InfoPanel = props => (
     <Animated.View
         style={{
             width: '100%',
-            height: 160,
+            height: 154,
             position: 'absolute',
             bottom: props.panelPosition
         }}

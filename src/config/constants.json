@@ -34,8 +34,8 @@
     },
     "panelStates": {
         "EXPANDED": 0,
-        "HALF_EXPANDED": -80,
-        "COLLAPSED": -160
+        "HALF_EXPANDED": -77,
+        "COLLAPSED": -154
     },
     "panelTransitionDuration": 350,
     "mapOverlays": {

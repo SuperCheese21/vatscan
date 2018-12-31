@@ -5,15 +5,16 @@ import colors from '../config/colors.json';
 const styles = StyleSheet.create({
     callsignText: {
         textAlign: 'right',
-        marginRight: 30
+        marginRight: 30,
+        fontSize: 13
     },
     clientInfoView: {
         flexDirection: 'row',
         height: 20
     },
     fromToIcon: {
-        width: 50,
-        height: 50,
+        width: 45,
+        height: 45,
         transform: [{
             rotate: '90deg'
         }]
@@ -33,19 +34,20 @@ const styles = StyleSheet.create({
     icaoText: {
         flex: 1,
         fontFamily: 'Roboto_Condensed_Regular',
-        fontSize: 55
+        fontSize: 50
     },
     infoContainerBasic: {
-        flex: 5,
+        flex: 8,
         backgroundColor: colors.primary
     },
     infoContainerDetail: {
-        flex: 3,
+        flex: 5,
         backgroundColor: colors.primaryMedium
     },
     infoLabelText: {
         fontFamily: 'Roboto_Condensed_Regular',
-        fontStyle: 'italic'
+        fontStyle: 'italic',
+        fontSize: 12
     },
     infoRow: {
         flex: 1,
@@ -53,10 +55,11 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     infoText: {
-        fontSize: 16
+        fontSize: 14
     },
     nameText: {
-        textAlign: 'left'
+        textAlign: 'left',
+        fontSize: 13
     },
     text: {
         fontFamily: 'Roboto_Regular',
