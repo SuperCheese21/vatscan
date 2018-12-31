@@ -3,7 +3,7 @@ import { Alert, FlatList, Text, View } from 'react-native';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import { List, Searchbar, Surface, TouchableRipple } from 'react-native-paper';
 
-export default class ListContainer extends React.Component {
+export default class ListContainer extends React.PureComponent {
     state = {
         query: ''
     };

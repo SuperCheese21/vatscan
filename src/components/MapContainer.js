@@ -6,7 +6,7 @@ import Map from './Map';
 import InfoPanel from './InfoPanel';
 import { panelStates, panelTransitionDuration } from '../config/constants.json';
 
-export default class MapContainer extends React.Component {
+export default class MapContainer extends React.PureComponent {
     constructor(props) {
         super(props);
 

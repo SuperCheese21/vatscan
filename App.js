@@ -7,7 +7,7 @@ import { fetchData, parseClientData } from './src/lib/util/fetch';
 import Header from './src/components/Header';
 import TabNavigatorContainer from './src/components/TabNavigator';
 
-export default class App extends React.Component {
+export default class App extends React.PureComponent {
     // Initialize component state
     state = {
         fontLoaded: false,
