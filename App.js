@@ -63,9 +63,7 @@ export default class App extends React.PureComponent {
                     refresh={this.updateData}
                 />
                 <TabNavigatorContainer
-                    screenProps={{
-                        clientData: this.state.clientData
-                    }}
+                    screenProps={{ clientData: this.state.clientData }}
                 />
             </View>
         );

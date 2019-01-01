@@ -5,6 +5,7 @@ import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import Map from './Map';
 import InfoPanel from './InfoPanel';
 import { panelStates, panelTransitionDuration } from '../config/constants.json';
+import styles from './styles';
 
 export default class MapContainer extends React.PureComponent {
     constructor(props) {
@@ -102,12 +103,7 @@ export default class MapContainer extends React.PureComponent {
                     setFocusedClient={this.setFocusedClient}
                     collapsePanel={this.collapsePanel}
                 />
-                <Text style={{
-                    position: 'absolute',
-                    fontFamily: 'Roboto_Regular',
-                    right: 5,
-                    top: 2
-                }}>
+                <Text style={styles.clientCountText}>
                     Clients: {this.props.screenProps.clientData.length}
                 </Text>
                 <InfoPanel

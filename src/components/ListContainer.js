@@ -3,6 +3,8 @@ import { Alert, FlatList, Text, View } from 'react-native';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import { List, Searchbar, Surface, TouchableRipple } from 'react-native-paper';
 
+import styles from './styles';
+
 export default class ListContainer extends React.PureComponent {
     state = {
         query: ''
@@ -18,10 +20,7 @@ export default class ListContainer extends React.PureComponent {
 
     render() {
         return (
-            <View style={{
-                flex: 1,
-                padding: 5
-            }}>
+            <View style={styles.listContainer}>
                 <Searchbar
                     placeholder="Name, Callsign, CID, Aircraft"
                     onChangeText={query => {
@@ -73,10 +72,7 @@ export default class ListContainer extends React.PureComponent {
                                 }
                             }}
                         >
-                            <Surface style={{
-                                elevation: 5,
-                                marginTop: 5
-                            }}>
+                            <Surface style={styles.listItem}>
                                 <List.Item
                                     title={item.callsign}
                                     description={item.name + ' (' + item.id + ')'}

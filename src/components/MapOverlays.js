@@ -23,8 +23,8 @@ const MapOverlays = props => (
                     strokeColor={client.strokeColor}
                     fillColor={
                         props.focusedMarkerIndex === index ?
-                        client.fillColorSelected :
-                        client.fillColor
+                            client.fillColorSelected :
+                            client.fillColor
                     }
                     tappable={true}
                     onPress={() => props.setFocusedClient(client, index)}

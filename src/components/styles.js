@@ -8,6 +8,12 @@ const styles = StyleSheet.create({
         marginRight: 30,
         fontSize: 13
     },
+    clientCountText: {
+        position: 'absolute',
+        fontFamily: 'Roboto_Regular',
+        right: 5,
+        top: 2
+    },
     clientInfoView: {
         flexDirection: 'row',
         height: 20
@@ -49,6 +55,11 @@ const styles = StyleSheet.create({
         fontStyle: 'italic',
         fontSize: 12
     },
+    infoPanelContainer: {
+        width: '100%',
+        height: 154,
+        position: 'absolute'
+    },
     infoRow: {
         flex: 1,
         flexDirection: 'row',
@@ -56,6 +67,14 @@ const styles = StyleSheet.create({
     },
     infoText: {
         fontSize: 14
+    },
+    listContainer: {
+        flex: 1,
+        padding: 5
+    },
+    listItem: {
+        elevation: 5,
+        marginTop: 5
     },
     nameText: {
         textAlign: 'left',
