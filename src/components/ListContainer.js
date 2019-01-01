@@ -1,8 +1,9 @@
 import React from 'react';
-import { Alert, FlatList, Text, View } from 'react-native';
+import { FlatList, Text, View } from 'react-native';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
-import { List, Searchbar, Surface, TouchableRipple } from 'react-native-paper';
+import { Searchbar } from 'react-native-paper';
 
+import ClientsListItem from './ClientsListItem';
 import styles from './styles';
 
 export default class ListContainer extends React.PureComponent {
@@ -48,47 +49,7 @@ export default class ListContainer extends React.PureComponent {
                     )}
                     keyExtractor={this._keyExtractor}
                     renderItem={({ item }) => (
-                        // Wrap list item in touchable ripple for highlight effect
-                        <TouchableRipple
-                            onPress={() => {
-                                // Show alert popup with detailed flight info
-                                // TODO: Create dedicated page for this info
-                                if (item.type === 'PILOT') {
-                                    Alert.alert(
-                                        item.callsign,
-                                        item.name + '\n' +
-                                        item.id + '\n\n' +
-                                        'DEP/ARR: ' + item.depAirport + ' - ' + item.arrAirport + '\n' +
-                                        'Location: ' + item.latitude + ', ' + item.longitude + '\n' +
-                                        'Distance Flown: ' + item.distFlown + ' nm\n' +
-                                        'Distance Remaining: ' + item.distRemaining + ' nm\n\n' +
-                                        'Aircraft: ' + item.aircraft + '\n' +
-                                        'Altitude: ' + item.altitude + ' ft\n' +
-                                        'Speed: ' + item.groundSpeed + ' kts\n' +
-                                        'Heading: ' + item.heading + '°\n' +
-                                        'Transponder: ' + item.transponder + '\n' +
-                                        'Route: ' + item.route
-                                    );
-                                }
-                            }}
-                        >
-                            <Surface style={styles.listItem}>
-                                <List.Item
-                                    title={item.callsign}
-                                    description={item.name + ' (' + item.id + ')'}
-                                    left={props => (
-                                        <List.Icon
-                                            {...props}
-                                            icon={
-                                                item.type === 'ATC' ?
-                                                'rss-feed' :
-                                                'airplanemode-active'
-                                            }
-                                        />
-                                    )}
-                                />
-                            </Surface>
-                        </TouchableRipple>
+                        <ClientsListItem item={item} />
                     )}
                     ListEmptyComponent={
                         <View style={{ flex: 1 }}>
