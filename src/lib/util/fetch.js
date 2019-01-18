@@ -1,10 +1,7 @@
 import Center from '../Center';
 import Controller from '../Controller';
 import Pilot from '../Pilot';
-import {
-    getRandomElement,
-    checkID
-} from './calc';
+import { getRandomElement, checkID } from './calc';
 import constants from '../../config/constants.json';
 
 /**

@@ -12,7 +12,7 @@ const BasicData = props => (
                 styles.icaoText,
                 { marginRight: 6, textAlign: 'right' }
             ]}>
-                {props.data.depAirport}
+                {props.data.depAirport || '????'}
             </Text>
             <Image
                 style={styles.fromToIcon}
@@ -23,7 +23,7 @@ const BasicData = props => (
                 styles.icaoText,
                 { marginLeft: 6 }
             ]}>
-                {props.data.arrAirport}
+                {props.data.arrAirport || '????'}
             </Text>
         </View>
 

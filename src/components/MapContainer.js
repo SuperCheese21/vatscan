@@ -34,10 +34,9 @@ export default class MapContainer extends React.PureComponent {
     defaultState = {
         panelPosition: new Animated.Value(panelStates.COLLAPSED),
         panelPositionValue: panelStates.COLLAPSED,
+        focusedClient: {},
         focusedMarkerIndex: -1,
-        flightPathData: {},
-        basicData: {},
-        detailData: {}
+        flightPathData: {}
     }
 
     _setPanelPosition = position => {
@@ -58,32 +57,24 @@ export default class MapContainer extends React.PureComponent {
     }
 
     setFocusedClient = (client, index) => {
-        // Set info panel info to focused client, expand info panel
+        // Set info panel info to focused client
         this._removeFocusedClient();
         this.setState({
+            focusedClient: client,
             focusedMarkerIndex: index,
             flightPathData: {
                 depCoords: client.depCoords,
                 location: client.location,
                 arrCoords: client.arrCoords
-            },
-            basicData: {
-                callsign: client.callsign,
-                name: client.name,
-                depAirport: client.depAirport || '????',
-                arrAirport: client.arrAirport || '????',
-                progress: client.progress
-            },
-            detailData: {
-                aircraft: ' ' + client.aircraft,
-                distFlown: client.distFlown >= 0 ? (' ' + client.distFlown + ' nm') : ' N/A',
-                distRemaining: client.distRemaining >= 0 ? (' ' + client.distRemaining + ' nm') : ' N/A',
-                altitude: ' ' + client.altitude + ' ft',
-                heading: ' ' + client.heading + '°',
-                groundSpeed: ' ' + client.groundSpeed + ' kts'
             }
         });
-        this._setPanelPosition(panelStates.EXPANDED);
+
+        // Expand info panel to correct height based on client type
+        if (client.type === 'PILOT') {
+            this._setPanelPosition(panelStates.EXPANDED_PILOT);
+        } else if (client.type === 'ATC') {
+            this._setPanelPosition(panelStates.EXPANDED_ATC);
+        }
     }
 
     collapsePanel = () => {
@@ -108,8 +99,7 @@ export default class MapContainer extends React.PureComponent {
                 </Text>
                 <InfoPanel
                     panelPosition={this.state.panelPosition}
-                    basicData={this.state.basicData}
-                    detailData={this.state.detailData}
+                    focusedClient={this.state.focusedClient}
                 />
             </View>
         );

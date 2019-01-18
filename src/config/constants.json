@@ -39,8 +39,8 @@
         "longitudeDelta": 30
     },
     "panelStates": {
-        "EXPANDED": 0,
-        "HALF_EXPANDED": -77,
+        "EXPANDED_PILOT": 0,
+        "EXPANDED_ATC": -77,
         "COLLAPSED": -154
     },
     "panelTransitionDuration": 350,

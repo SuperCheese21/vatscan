@@ -12,9 +12,21 @@ const InfoPanel = props => (
             { bottom: props.panelPosition }
         ]}
     >
-        <BasicData data={props.basicData} />
-        <DetailData data={props.detailData} />
+        <Data focusedClient={props.focusedClient} />
     </Animated.View>
 );
+
+const Data = props => {
+    if (props.focusedClient.type === 'PILOT') {
+        return (
+            <>
+                <BasicData data={props.focusedClient} />
+                <DetailData data={props.focusedClient} />
+            </>
+        );
+    } else if (props.focusedClient.type === 'ATC') {
+        return null;
+    }
+}
 
 export default InfoPanel;
