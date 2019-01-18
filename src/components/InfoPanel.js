@@ -2,6 +2,7 @@ import React from 'react';
 import { Animated } from 'react-native';
 
 import BasicData from './BasicData';
+import ControllerData from './ControllerData';
 import DetailData from './DetailData';
 import styles from './styles';
 
@@ -25,8 +26,11 @@ const Data = props => {
             </>
         );
     } else if (props.focusedClient.type === 'ATC') {
-        return null;
+        return (
+            <ControllerData data={props.focusedClient} />
+        );
     }
+    return null;
 }
 
 export default InfoPanel;
