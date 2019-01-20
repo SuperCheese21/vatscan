@@ -27,7 +27,7 @@ const BasicData = props => (
             </Text>
         </View>
 
-        <View style={styles.clientInfoView}>
+        <View style={styles.pilotInfoView}>
             <View style={{ flex: 1 }}>
                 <Text style={[styles.text, styles.callsignText]}>{props.data.callsign}</Text>
             </View>
@@ -37,7 +37,7 @@ const BasicData = props => (
             </View>
         </View>
 
-        <View style={styles.clientInfoView}>
+        <View style={styles.pilotInfoView}>
             <FlightProgressBar progress={props.data.progress} />
         </View>
     </View>

@@ -14,9 +14,16 @@ const styles = StyleSheet.create({
         right: 5,
         top: 2
     },
-    clientInfoView: {
+    controllerCallsignText: {
+        textAlign: 'center',
+        marginLeft: 10,
+        color: 'white',
+        fontFamily: 'Roboto_Condensed_Regular',
+        fontSize: 45
+    },
+    controllerInfoView: {
         flexDirection: 'row',
-        height: 20
+        height: 25
     },
     fromToIcon: {
         width: 45,
@@ -47,8 +54,8 @@ const styles = StyleSheet.create({
     },
     infoContainerController: {
         width: '100%',
-        height: 94,
-        backgroundColor: colors.primaryMedium
+        height: 85,
+        backgroundColor: colors.primary
     },
     infoContainerDetail: {
         flex: 5,
@@ -68,6 +75,7 @@ const styles = StyleSheet.create({
     infoRow: {
         flex: 1,
         flexDirection: 'row',
+        justifyContent: 'center',
         alignItems: 'center'
     },
     infoText: {
@@ -84,6 +92,10 @@ const styles = StyleSheet.create({
     nameText: {
         textAlign: 'left',
         fontSize: 13
+    },
+    pilotInfoView: {
+        flexDirection: 'row',
+        height: 20
     },
     text: {
         fontFamily: 'Roboto_Regular',
