@@ -43,8 +43,12 @@ const styles = StyleSheet.create({
         fontSize: 50
     },
     infoContainerBasic: {
-        flex: 8,
-        backgroundColor: colors.primary
+        flex: 8
+    },
+    infoContainerController: {
+        width: '100%',
+        height: 94,
+        backgroundColor: colors.primaryMedium
     },
     infoContainerDetail: {
         flex: 5,
@@ -58,7 +62,8 @@ const styles = StyleSheet.create({
     infoPanelContainer: {
         width: '100%',
         height: 154,
-        position: 'absolute'
+        position: 'absolute',
+        backgroundColor: colors.primary
     },
     infoRow: {
         flex: 1,

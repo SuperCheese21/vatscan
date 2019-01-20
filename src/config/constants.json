@@ -40,7 +40,7 @@
     },
     "panelStates": {
         "EXPANDED_PILOT": 0,
-        "EXPANDED_ATC": -77,
+        "EXPANDED_ATC": -60,
         "COLLAPSED": -154
     },
     "panelTransitionDuration": 350,

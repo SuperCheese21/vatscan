@@ -1,11 +1,11 @@
 import React from 'react';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 
 import styles from './styles';
 
 const ControllerData = props => (
-    <View style={{ flex: 1 }}>
-
+    <View style={styles.infoContainerController}>
+        <Text>Test</Text>
     </View>
 );
 
