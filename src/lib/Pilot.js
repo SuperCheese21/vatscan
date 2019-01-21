@@ -1,6 +1,6 @@
 import Client from './Client';
 
-import airportData from '../data/airports.json';
+import airportCoords from '../data/airportCoords.json';
 import constants from '../config/constants.json';
 import { getGCDistance } from './util/calc';
 
@@ -34,11 +34,11 @@ export default class Pilot extends Client {
     }
 
     get depCoords() {
-        return airportData[this.depAirport];
+        return airportCoords[this.depAirport];
     }
 
     get arrCoords() {
-        return airportData[this.arrAirport];
+        return airportCoords[this.arrAirport];
     }
 
     get distFlown() {

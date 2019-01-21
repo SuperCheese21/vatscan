@@ -9,7 +9,7 @@ rp(URL)
     .catch(err => console.log(err.message));
 
 function parseData(csv) {
-    let airports = csv.split('\n'), json = {};
+    let airports = csv.split('\n'), airportCoords = {}, airportNames = {};
     let headers = airports[0].split(',').map(item => item.replace(/"/g, ''));
 
     airports.forEach((line, index) => {
@@ -18,13 +18,20 @@ function parseData(csv) {
 
         console.error(' Parsing ' + airport[1]);
 
-        json[airport[1]] = {
+        airportCoords[airport[1]] = {
             latitude: Number(airport[4]),
             longitude: Number(airport[5])
         };
+
+        airportNames[airport[1]] = {
+            airport: airport[3],
+            city: airport[10],
+            country: airport[8]
+        };
     });
 
-    writeJson(JSON.stringify(json), './airports.json');
+    writeJson(JSON.stringify(airportCoords), './airportCoords.json');
+    writeJson(JSON.stringify(airportNames), './airportNames.json');
 }
 
 function writeJson(json, path) {
