@@ -1,10 +1,10 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 
-import RefreshIcon from './RefreshIcon';
-import styles from './styles';
+import RefreshIcon from '../RefreshIcon';
+import styles from '../styles';
 
-const Header = props => (
+const HeaderContainer = props => (
     <View style={styles.header}>
         <Text style={[styles.text, styles.headerText]}>
             VATSCAN
@@ -17,4 +17,4 @@ const Header = props => (
     </View>
 );
 
-export default Header;
+export default HeaderContainer;

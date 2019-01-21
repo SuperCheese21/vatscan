@@ -1,10 +1,10 @@
 import React from 'react';
 import { Image, Text, View } from 'react-native';
 
-import FlightProgressBar from './FlightProgressBar';
-import styles from './styles';
+import FlightProgressBar from '../FlightProgressBar';
+import styles from '../styles';
 
-const BasicData = props => (
+const BasicDataContainer = props => (
     <View style={styles.infoContainerBasic}>
         <View style={styles.infoRow}>
             <Text style={[
@@ -16,7 +16,7 @@ const BasicData = props => (
             </Text>
             <Image
                 style={styles.fromToIcon}
-                source={require('../../assets/icons/narrowbody.png')}
+                source={require('../../../assets/icons/narrowbody.png')}
             />
             <Text style={[
                 styles.text,
@@ -43,4 +43,4 @@ const BasicData = props => (
     </View>
 );
 
-export default BasicData;
+export default BasicDataContainer;

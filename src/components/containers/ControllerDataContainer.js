@@ -2,10 +2,10 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 
-import colors from '../config/colors.json';
-import styles from './styles';
+import colors from '../../config/colors.json';
+import styles from '../styles';
 
-const ControllerData = props => (
+const ControllerDataContainer = props => (
     <View style={styles.infoContainerController}>
         <View style={styles.infoRow}>
             <Icon name='satellite-uplink' size={42} color={colors.accent}></Icon>
@@ -25,4 +25,4 @@ const ControllerData = props => (
     </View>
 );
 
-export default ControllerData;
+export default ControllerDataContainer;

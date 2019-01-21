@@ -4,8 +4,8 @@ import { AppLoading, Font } from 'expo';
 
 import { UPDATE_INTERVAL } from './src/config/constants.json';
 import { fetchData, parseClientData } from './src/lib/util/fetch';
-import Header from './src/components/Header';
-import TabNavigatorContainer from './src/components/TabNavigator';
+import HeaderContainer from './src/components/containers/HeaderContainer';
+import TabNavigatorContainer from './src/components/navigation/TabNavigator';
 
 export default class App extends React.PureComponent {
     // Initialize component state
@@ -58,7 +58,7 @@ export default class App extends React.PureComponent {
         // Otherwise show top-level view
         return (
             <View style={{ flex: 1 }}>
-                <Header
+                <HeaderContainer
                     loading={this.state.loading}
                     refresh={this.updateData}
                 />

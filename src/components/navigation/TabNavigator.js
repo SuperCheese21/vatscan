@@ -2,15 +2,15 @@ import React from 'react';
 import { createAppContainer } from 'react-navigation';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 
-import ListContainer from './ListContainer';
-import MapContainer from './MapContainer';
+import ListScreen from '../screens/ListScreen';
+import MapScreen from '../screens/MapScreen';
 
-import colors from '../config/colors.json';
+import colors from '../../config/colors.json';
 
 // Create tab navigator
 const TabNavigator = createMaterialBottomTabNavigator({
-    Map: MapContainer,
-    List: ListContainer
+    Map: MapScreen,
+    List: ListScreen
 }, {
     barStyle: {
         backgroundColor: colors.primaryDark

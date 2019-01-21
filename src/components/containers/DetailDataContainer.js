@@ -2,10 +2,10 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import Icon from '@expo/vector-icons/MaterialIcons';
 
-import colors from '../config/colors.json';
-import styles from './styles';
+import colors from '../../config/colors.json';
+import styles from '../styles';
 
-const DetailData = props => (
+const DetailDataContainer = props => (
     <View style={styles.infoContainerDetail}>
         <View style={styles.infoRow}>
             <View style={styles.infoRow}>
@@ -50,4 +50,4 @@ const DetailData = props => (
     </View>
 );
 
-export default DetailData;
+export default DetailDataContainer;

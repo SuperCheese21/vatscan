@@ -1,12 +1,12 @@
 import React from 'react';
 import { Animated } from 'react-native';
 
-import BasicData from './BasicData';
-import ControllerData from './ControllerData';
-import DetailData from './DetailData';
-import styles from './styles';
+import BasicData from './BasicDataContainer';
+import ControllerData from './ControllerDataContainer';
+import DetailData from './DetailDataContainer';
+import styles from '../styles';
 
-const InfoPanel = props => (
+const InfoPanelContainer = props => (
     <Animated.View
         style={[
             styles.infoPanelContainer,
@@ -33,4 +33,4 @@ const Data = props => {
     return null;
 }
 
-export default InfoPanel;
+export default InfoPanelContainer;

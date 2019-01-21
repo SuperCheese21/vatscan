@@ -2,12 +2,12 @@ import React from 'react';
 import { Animated, BackHandler, Text, View } from 'react-native';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 
-import Map from './Map';
-import InfoPanel from './InfoPanel';
-import { panelStates, panelTransitionDuration } from '../config/constants.json';
-import styles from './styles';
+import MapContainer from '../containers/MapContainer';
+import InfoPanelContainer from '../containers/InfoPanelContainer';
+import { panelStates, panelTransitionDuration } from '../../config/constants.json';
+import styles from '../styles';
 
-export default class MapContainer extends React.PureComponent {
+export default class MapScreen extends React.PureComponent {
     constructor(props) {
         super(props);
 
@@ -87,7 +87,7 @@ export default class MapContainer extends React.PureComponent {
     render() {
         return (
             <View style={{ flex: 1 }}>
-                <Map
+                <MapContainer
                     clientData={this.props.screenProps.clientData}
                     flightPathData={this.state.flightPathData}
                     focusedMarkerIndex={this.state.focusedMarkerIndex}
@@ -97,7 +97,7 @@ export default class MapContainer extends React.PureComponent {
                 <Text style={styles.clientCountText}>
                     Clients: {this.props.screenProps.clientData.length}
                 </Text>
-                <InfoPanel
+                <InfoPanelContainer
                     panelPosition={this.state.panelPosition}
                     focusedClient={this.state.focusedClient}
                 />
