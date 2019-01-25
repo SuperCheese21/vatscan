@@ -3,6 +3,7 @@
     "ARTCC_URL": "https://map.vatsim.net/api/atcGeoJSON",
     "UPDATE_INTERVAL": 60000,
     "EARTH_RADIUS_NM": 3440.06,
+    "EARTH_RADIUS_M": 6371000,
     "aircraft": {
         "WIDEBODY": [
             "A30", "A310", "A33", "A34", "A35", "A38",
@@ -65,5 +66,6 @@
             "radius": 2500,
             "zIndex": 3
         }
-    }
+    },
+    "NUM_SIDES_CIRCLE": 20
 }

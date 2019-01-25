@@ -9,6 +9,7 @@ import mapStyle from '../../config/map-styles/style_blue_essence.json';
 
 const MapContainer = props => (
     <MapView style={{ flex: 1 }}
+        provider={'google'}
         initialRegion={initialMapRegion}
         customMapStyle={mapStyle}
         moveOnMarkerPress={false}

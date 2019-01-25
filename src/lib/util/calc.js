@@ -11,6 +11,29 @@ export function getRandomElement(arr) {
 }
 
 /**
+ * [getProjectedCoords description]
+ * @param  {[type]} loc1     [description]
+ * @param  {[type]} distance [description]
+ * @param  {[type]} bearing  [description]
+ * @return {[type]}          [description]
+ */
+export function getProjectedCoords(loc1, distance, bearing) {
+    const lat1 = toRadians(loc1.latitude);
+    const lon1 = toRadians(loc1.longitude);
+    const brng = toRadians(bearing);
+
+    const arcLength = distance / constants.EARTH_RADIUS_M;
+
+    const lat2 = Math.asin(Math.sin(lat1) * Math.cos(arcLength) + Math.cos(lat1) * Math.sin(arcLength) * Math.cos(brng));
+    const lon2 = lon1 + Math.atan2(Math.sin(brng) * Math.sin(arcLength) * Math.cos(lat1), Math.cos(arcLength) - Math.sin(lat1) * Math.sin(lat2));
+
+    return {
+        latitude: toDegrees(lat2),
+        longitude: toDegrees(lon2)
+    };
+}
+
+/**
  * Gets the great circle distance between two points on earth
  * @param  {LatLng} lat1 Coordinates of location 1
  * @param  {LatLng} lat2 Coordinates of location 2
@@ -41,6 +64,15 @@ export function getGCDistance(loc1, loc2) {
  */
 function toRadians(deg) {
     return deg * Math.PI / 180;
+}
+
+/**
+ * [toDegrees description]
+ * @param  {[type]} rad [description]
+ * @return {[type]}     [description]
+ */
+function toDegrees(rad) {
+    return rad * 180 / Math.PI;
 }
 
 /**
