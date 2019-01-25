@@ -83,7 +83,8 @@ const styles = StyleSheet.create({
     },
     listContainer: {
         flex: 1,
-        padding: 5
+        padding: 5,
+        backgroundColor: 'white'
     },
     listItem: {
         elevation: 5,

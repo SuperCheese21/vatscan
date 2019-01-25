@@ -11,7 +11,7 @@ const DetailDataContainer = props => (
             <View style={styles.infoRow}>
                 <Icon name='flight' size={20} color={colors.accent} />
                 <Text style={[styles.text, styles.infoText]}>
-                    {' ' + props.data.aircraft}
+                    {' ' + (props.data.aircraft || 'N/A')}
                 </Text>
             </View>
             <View style={styles.infoRow}>
