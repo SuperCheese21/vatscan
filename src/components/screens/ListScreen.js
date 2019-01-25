@@ -17,6 +17,19 @@ export default class ListScreen extends React.PureComponent {
         }
     };
 
+    getFilteredClients() {
+        const query = this.state.query.toLowerCase();
+        return this.props.screenProps.clientData.filter(client => {
+            // Check if name, callsign, id, or aircraft contain query string
+            return (
+                client.name.toLowerCase().includes(query) ||
+                client.callsign.toLowerCase().includes(query) ||
+                client.id.includes(query) ||
+                client.aircraft && client.aircraft.toLowerCase().includes(query)
+            );
+        });
+    }
+
     _keyExtractor = (item, index) => item.id;
 
     render() {
@@ -31,22 +44,7 @@ export default class ListScreen extends React.PureComponent {
                     value={this.state.query}
                 />
                 <FlatList
-                    data={
-                        // Use Array.filter to filter clients from data array
-                        this.props.screenProps.clientData.filter(client => {
-                            // Check if name, callsign, id, or aircraft contain query string
-                            const query = this.state.query;
-                            if (
-                                client.name.includes(query) ||
-                                client.callsign.includes(query) ||
-                                client.id.includes(query) ||
-                                client.aircraft && client.aircraft.includes(query)
-                            ) {
-                                return true;
-                            }
-                            return false;
-                        }
-                    )}
+                    data={this.getFilteredClients()}
                     keyExtractor={this._keyExtractor}
                     renderItem={({ item }) => (
                         <ClientsListItem item={item} />
