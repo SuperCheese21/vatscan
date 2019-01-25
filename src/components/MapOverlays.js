@@ -32,26 +32,11 @@ export default class MapOverlays extends React.PureComponent {
                             stopPropagation={true}
                             opacity={this.props.focusedMarkerIndex === index ? 2 : 1.1}
                         />
-                    } else if (client.controllerType == 'CTR') {
-                        return <Polygon
-                            key={client.id}
-                            coordinates={client.polygon}
-                            strokeWidth={this.props.focusedMarkerIndex === index ? 2 : 1}
-                            strokeColor={client.strokeColor}
-                            fillColor={
-                                this.props.focusedMarkerIndex === index ?
-                                    client.fillColorSelected :
-                                    client.fillColor
-                            }
-                            tappable={true}
-                            onPress={() => this.props.setFocusedClient(client, index)}
-                            zIndex={client.zIndex}
-                        />
                     } else if (client.type == 'ATC') {
                         return <Polygon
                             key={client.id}
-                            coordinates={this.getPolygonCircle(client.location, client.radius)}
-                            strokeWidth={1}
+                            coordinates={client.polygon || this.getPolygonCircle(client.location, client.radius)}
+                            strokeWidth={this.props.focusedMarkerIndex === index ? 2 : 1}
                             strokeColor={client.strokeColor}
                             fillColor={
                                 this.props.focusedMarkerIndex === index ?
