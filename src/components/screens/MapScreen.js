@@ -98,6 +98,7 @@ export default class MapScreen extends React.PureComponent {
                     Clients: {this.props.screenProps.clientData.length}
                 </Text>
                 <InfoPanelContainer
+                    stackNavigation={this.props.screenProps.stackNavigation}
                     panelPosition={this.state.panelPosition}
                     focusedClient={this.state.focusedClient}
                 />

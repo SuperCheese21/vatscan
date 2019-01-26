@@ -15,15 +15,9 @@ const DetailDataContainer = props => (
                 </Text>
             </View>
             <View style={styles.infoRow}>
-                <Text style={[styles.text, styles.infoLabelText]}>Flown</Text>
+                <Icon name='send' size={20} color={colors.accent} />
                 <Text style={[styles.text, styles.infoText]}>
-                    {props.data.distFlown >= 0 ? (' ' + props.data.distFlown + ' nm') : ' N/A'}
-                </Text>
-            </View>
-            <View style={styles.infoRow}>
-                <Text style={[styles.text, styles.infoLabelText]}>Remaining</Text>
-                <Text style={[styles.text, styles.infoText]}>
-                    {props.data.distRemaining >= 0 ? (' ' + props.data.distRemaining + ' nm') : ' N/A'}
+                    {' ' + props.data.groundSpeed + ' kts'}
                 </Text>
             </View>
         </View>
@@ -38,12 +32,6 @@ const DetailDataContainer = props => (
                 <Icon name='navigation' size={20} color={colors.accent} />
                 <Text style={[styles.text, styles.infoText]}>
                     {' ' + props.data.heading + '°'}
-                </Text>
-            </View>
-            <View style={styles.infoRow}>
-                <Icon name='send' size={20} color={colors.accent} />
-                <Text style={[styles.text, styles.infoText]}>
-                    {' ' + props.data.groundSpeed + ' kts'}
                 </Text>
             </View>
         </View>

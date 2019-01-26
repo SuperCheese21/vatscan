@@ -1,12 +1,15 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 
 import colors from '../../config/colors.json';
 import styles from '../styles';
 
 const ControllerDataContainer = props => (
-    <View style={styles.infoContainerController}>
+    <TouchableOpacity
+        onPress={() => props.stackNavigation.navigate('ClientScreen')}
+        style={styles.infoContainerController}
+    >
         <View style={styles.infoRow}>
             <Icon name='satellite-uplink' size={42} color={colors.accent}></Icon>
             <Text style={styles.controllerCallsignText}>
@@ -22,7 +25,7 @@ const ControllerDataContainer = props => (
                 <Text style={[styles.text, styles.nameText]}>{props.data.name}</Text>
             </View>
         </View>
-    </View>
+    </TouchableOpacity>
 );
 
 export default ControllerDataContainer;

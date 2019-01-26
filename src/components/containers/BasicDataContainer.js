@@ -1,11 +1,14 @@
 import React from 'react';
-import { Image, Text, View } from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 
 import FlightProgressBar from '../FlightProgressBar';
 import styles from '../styles';
 
 const BasicDataContainer = props => (
-    <View style={styles.infoContainerBasic}>
+    <TouchableOpacity
+        onPress={() => props.stackNavigation.navigate('ClientScreen')}
+        style={styles.infoContainerBasic}
+    >
         <View style={styles.infoRow}>
             <Text style={[
                 styles.text,
@@ -40,7 +43,7 @@ const BasicDataContainer = props => (
         <View style={styles.pilotInfoView}>
             <FlightProgressBar progress={props.data.progress} />
         </View>
-    </View>
+    </TouchableOpacity>
 );
 
 export default BasicDataContainer;

@@ -2,10 +2,9 @@ import React from 'react';
 import { View } from 'react-native';
 import { AppLoading, Font } from 'expo';
 
+import StackNavigator from './src/components/navigation/StackNavigator';
 import { UPDATE_INTERVAL } from './src/config/constants.json';
 import { fetchData, parseClientData } from './src/lib/util/fetch';
-import HeaderContainer from './src/components/containers/HeaderContainer';
-import TabNavigatorContainer from './src/components/navigation/TabNavigator';
 
 export default class App extends React.PureComponent {
     // Initialize component state
@@ -58,12 +57,10 @@ export default class App extends React.PureComponent {
         // Otherwise show top-level view
         return (
             <View style={{ flex: 1 }}>
-                <HeaderContainer
-                    loading={this.state.loading}
-                    refresh={this.updateData}
-                />
-                <TabNavigatorContainer
-                    screenProps={{ clientData: this.state.clientData }}
+                <StackNavigator
+                    screenProps={{
+                        clientData: this.state.clientData
+                    }}
                 />
             </View>
         );

@@ -47,7 +47,10 @@ export default class ListScreen extends React.PureComponent {
                     data={this.getFilteredClients()}
                     keyExtractor={this._keyExtractor}
                     renderItem={({ item }) => (
-                        <ClientsListItem item={item} />
+                        <ClientsListItem
+                            item={item}
+                            stackNavigation={this.props.screenProps.stackNavigation}
+                        />
                     )}
                     ListEmptyComponent={
                         <View style={{ flex: 1 }}>

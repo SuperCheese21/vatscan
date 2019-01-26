@@ -1,9 +1,9 @@
 import React from 'react';
 import { Animated } from 'react-native';
 
-import BasicData from './BasicDataContainer';
-import ControllerData from './ControllerDataContainer';
-import DetailData from './DetailDataContainer';
+import BasicDataContainer from './BasicDataContainer';
+import ControllerDataContainer from './ControllerDataContainer';
+import DetailDataContainer from './DetailDataContainer';
 import styles from '../styles';
 
 const InfoPanelContainer = props => (
@@ -13,7 +13,10 @@ const InfoPanelContainer = props => (
             { bottom: props.panelPosition }
         ]}
     >
-        <Data focusedClient={props.focusedClient} />
+        <Data
+            stackNavigation={props.stackNavigation}
+            focusedClient={props.focusedClient}
+        />
     </Animated.View>
 );
 
@@ -21,13 +24,19 @@ const Data = props => {
     if (props.focusedClient.type === 'PILOT') {
         return (
             <>
-                <BasicData data={props.focusedClient} />
-                <DetailData data={props.focusedClient} />
+                <BasicDataContainer
+                    stackNavigation={props.stackNavigation}
+                    data={props.focusedClient}
+                />
+                <DetailDataContainer data={props.focusedClient} />
             </>
         );
     } else if (props.focusedClient.type === 'ATC') {
         return (
-            <ControllerData data={props.focusedClient} />
+            <ControllerDataContainer
+                stackNavigation={props.stackNavigation}
+                data={props.focusedClient}
+            />
         );
     }
     return null;

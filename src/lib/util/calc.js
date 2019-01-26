@@ -24,8 +24,13 @@ export function getProjectedCoords(loc1, distance, bearing) {
 
     const arcLength = distance / constants.EARTH_RADIUS_M;
 
-    const lat2 = Math.asin(Math.sin(lat1) * Math.cos(arcLength) + Math.cos(lat1) * Math.sin(arcLength) * Math.cos(brng));
-    const lon2 = lon1 + Math.atan2(Math.sin(brng) * Math.sin(arcLength) * Math.cos(lat1), Math.cos(arcLength) - Math.sin(lat1) * Math.sin(lat2));
+    const lat2 = Math.asin(
+        Math.sin(lat1) * Math.cos(arcLength) + Math.cos(lat1) * Math.sin(arcLength) * Math.cos(brng)
+    );
+    const lon2 = lon1 + Math.atan2(
+        Math.sin(brng) * Math.sin(arcLength) * Math.cos(lat1),
+        Math.cos(arcLength) - Math.sin(lat1) * Math.sin(lat2)
+    );
 
     return {
         latitude: toDegrees(lat2),
@@ -83,7 +88,7 @@ function toDegrees(rad) {
  */
 export function checkID(data, id) {
     for (let i = 0; i < data.length; i++) {
-        if (data[i].id == id) {
+        if (data[i].id === id) {
             return true;
         }
     }

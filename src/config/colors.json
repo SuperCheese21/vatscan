@@ -5,28 +5,28 @@
     "accent": "#74b320",
     "mapOverlays": {
         "CTR": {
-            "fill": "rgba(0, 0, 255, 0.2)",
-            "fillSelected": "rgba(127, 127, 255, 0.2)",
+            "fill": "rgba(0, 0, 255, 0.15)",
+            "fillSelected": "rgba(127, 127, 255, 0.15)",
             "stroke": "rgba(0, 0, 255, 0.5)"
         },
         "APP": {
-            "fill": "rgba(255, 0, 0, 0.3)",
-            "fillSelected": "rgba(255, 127, 127, 0.3)",
+            "fill": "rgba(255, 0, 0, 0.2)",
+            "fillSelected": "rgba(255, 127, 127, 0.2)",
             "stroke": "rgba(255, 0, 0, 0.6)"
         },
         "DEP": {
-            "fill": "rgba(255, 0, 0, 0.3)",
-            "fillSelected": "rgba(255, 127, 127, 0.3)",
+            "fill": "rgba(255, 0, 0, 0.25)",
+            "fillSelected": "rgba(255, 127, 127, 0.25)",
             "stroke": "rgba(255, 0, 0, 0.6)"
         },
         "TWR": {
-            "fill": "rgba(255, 165, 0, 0.4)",
-            "fillSelected": "rgba(255, 210, 127, 0.4)",
+            "fill": "rgba(255, 165, 0, 0.3)",
+            "fillSelected": "rgba(255, 210, 127, 0.3)",
             "stroke": "rgba(255, 165, 0, 0.7)"
         },
         "GND": {
-            "fill": "rgba(0, 255, 0, 0.5)",
-            "fillSelected": "rgba(127, 255, 127, 0.5)",
+            "fill": "rgba(0, 255, 0, 0.35)",
+            "fillSelected": "rgba(127, 255, 127, 0.35)",
             "stroke": "rgba(0, 255, 0, 0.8)"
         },
         "lineFlown": "#00FF00",
