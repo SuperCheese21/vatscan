@@ -7,7 +7,7 @@ import styles from './styles';
 const ClientsListItem = props => (
     // Wrap list item in touchable ripple for highlight effect
     <TouchableRipple
-        onPress={() => props.stackNavigation.navigate('ClientScreen')}
+        onPress={() => Alert.alert('Under Construction')}
     >
         <Surface style={styles.listItem}>
             <List.Item
