@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { Alert, NetInfo, View } from 'react-native';
 import { AppLoading, Font } from 'expo';
 
 import StackNavigator from './src/components/navigation/StackNavigator';
@@ -24,28 +24,36 @@ export default class App extends React.PureComponent {
             fontLoaded: true
         });
 
+        // Automatically pull data update when internet connection is changed
+        NetInfo.addEventListener('connectionChange', () => {
+            this.updateData(true);
+        });
+
         // Pull first data update
-        this.updateData();
+        this.updateData(true);
     }
 
-    updateData = () => {
-        // Set loading state and call function to fetch data
-        this.setState({ loading: true });
-        fetchData()
-            .then(data => {
-                // Update state with new data
-                this.setState({
-                    clientData: parseClientData(data),
-                    loading: false
+    updateData = initialFetch => {
+        // Check internet connection and alert if there is no connection
+        NetInfo.getConnectionInfo().then(connectionInfo => {
+            if (connectionInfo.type === 'none' || connectionInfo.type === 'unknown') {
+                Alert.alert('No internet connection', 'Connect to the internet in order to update data');
+            } else {
+                // Set loading state and call function to fetch data
+                this.setState({ loading: true });
+                fetchData(initialFetch).then(data => {
+                    // Update state with new data
+                    this.setState({
+                        clientData: parseClientData(data),
+                        loading: false
+                    });
+                    // Set timeout for next data update
+                    setTimeout(() => {
+                        this.updateData();
+                    }, UPDATE_INTERVAL);
                 });
-                // Set timeout for next data update
-                setTimeout(() => {
-                    this.updateData();
-                }, UPDATE_INTERVAL);
-            })
-            .catch(err => {
-                console.error(err);
-            });
+            }
+        });
     }
 
     render() {

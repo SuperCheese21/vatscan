@@ -1,3 +1,5 @@
+import { Alert } from 'react-native';
+
 import Center from '../Center';
 import Controller from '../Controller';
 import Pilot from '../Pilot';
@@ -8,21 +10,22 @@ import constants from '../../config/constants.json';
  * async/await function that requests pilot and ATC data from separate servers
  * @return {Promise} VATSIM server data promise object
  */
-export async function fetchData() {
+export async function fetchData(initialFetch) {
     const urls = await getServerUrls();
 
     const clientsUrl = getRandomElement(urls);
     const artccUrl = constants.ARTCC_URL;
 
-    try {
-        const data = await Promise.all([
-            fetch(clientsUrl).then(data => data.text()),
-            fetch(artccUrl).then(data => data.json())
-        ]);
-        return data;
-    } catch (err) {
-        console.error(err);
-    }
+    return await Promise.all([
+        fetch(clientsUrl)
+            .then(res => res.text())
+            .then(text => text.split('!CLIENTS:\r\n').pop().split('\r\n;\r\n;').shift().split('\r\n'))
+            .catch(e => initialFetch && Alert.alert('Error', 'Unable to fetch client data')),
+        fetch(artccUrl)
+            .then(res => res.json())
+            .then(json => json.features)
+            .catch(e => initialFetch && Alert.alert('Error', 'Unable to fetch ARTCC data'))
+    ]);
 }
 
 /**
@@ -32,8 +35,8 @@ export async function fetchData() {
  * @return {Object}      Client data formatted as a javascript object
  */
 export function parseClientData(rawData) {
-    let data = rawData[0].split('!CLIENTS:\r\n').pop().split('\r\n;\r\n;').shift().split('\r\n');
-    let centerData = rawData[1].features;
+    let data = rawData[0] || [];
+    let centerData = rawData[1] || [];
     let clientData = [];    // Data array of connected VATSIM clients
 
     // Iterate through each client in raw data array
