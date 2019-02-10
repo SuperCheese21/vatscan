@@ -2,7 +2,7 @@ import React from 'react';
 import { Alert, NetInfo, View } from 'react-native';
 import { AppLoading, Font } from 'expo';
 
-import StackNavigator from './src/components/navigation/StackNavigator';
+import StackNavigatorContainer from './src/components/navigation/StackNavigator';
 import { UPDATE_INTERVAL } from './src/config/constants.json';
 import { fetchData, parseClientData } from './src/lib/util/fetch';
 
@@ -37,7 +37,7 @@ export default class App extends React.PureComponent {
         // Check internet connection and alert if there is no connection
         NetInfo.getConnectionInfo().then(connectionInfo => {
             if (connectionInfo.type === 'none' || connectionInfo.type === 'unknown') {
-                Alert.alert('No internet connection', 'Connect to the internet in order to update data');
+                Alert.alert('No internet connection', 'Connect to the internet to update data');
             } else {
                 // Set loading state and call function to fetch data
                 this.setState({ loading: true });
@@ -65,9 +65,11 @@ export default class App extends React.PureComponent {
         // Otherwise show top-level view
         return (
             <View style={{ flex: 1 }}>
-                <StackNavigator
+                <StackNavigatorContainer
                     screenProps={{
-                        clientData: this.state.clientData
+                        clientData: this.state.clientData,
+                        loading: this.state.loading,
+                        refresh: () => this.updateData(false)
                     }}
                 />
             </View>

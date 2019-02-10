@@ -8,6 +8,37 @@ import MapScreen from '../screens/MapScreen';
 import RefreshIcon from '../RefreshIcon';
 import colors from '../../config/colors.json';
 
+export default class TabNavigatorContainer extends React.Component {
+    constructor(props) {
+        super(props);
+        this.props.navigation.setParams({
+            loading: this.props.screenProps.loading,
+            refresh: this.props.screenProps.refresh
+        });
+    }
+
+    static navigationOptions = ({ navigation }) => ({
+        title: 'VATSCAN',
+        headerRight: (
+            <RefreshIcon
+                loading={navigation.getParam('loading')}
+                refresh={navigation.getParam('refresh')}
+            />
+        )
+    });
+
+    render() {
+        return (
+            <TabNavigator
+                screenProps={{
+                    stackNavigation: this.props.navigation,
+                    clientData: this.props.screenProps.clientData
+                }}
+            />
+        );
+    }
+}
+
 // Create tab navigator
 const TabNavigator = createAppContainer(
     createMaterialTopTabNavigator({
@@ -30,14 +61,3 @@ const TabNavigator = createAppContainer(
         }
     })
 );
-
-const TabNavigatorContainer = props => (
-    <TabNavigator
-        screenProps={{
-            stackNavigation: props.navigation,
-            clientData: props.screenProps.clientData
-        }}
-    />
-);
-
-export default TabNavigatorContainer;
