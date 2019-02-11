@@ -58,7 +58,7 @@ export function parseClientData(rawData) {
             // Duplicate ID connections only appear with controllers
             if (!checkID(clientData, id)) {
                 const center = findInCenterData(centerData, id);
-                if (controllerType === 'CTR' && center) {
+                if (controllerType === 'CTR') {
                     clientData.push(new Center(dataArray, center));
                 } else if (['APP','DEP','TWR','GND'].includes(controllerType)) {
                     clientData.push(new Controller(dataArray, controllerType));
