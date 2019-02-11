@@ -1,11 +1,9 @@
 import React from 'react';
-import { View } from 'react-native';
 import { createAppContainer, createMaterialTopTabNavigator } from 'react-navigation';
 
 import HeaderContainer from '../containers/HeaderContainer';
 import ListScreen from '../screens/ListScreen';
 import MapScreen from '../screens/MapScreen';
-import RefreshIcon from '../RefreshIcon';
 import colors from '../../config/colors.json';
 
 // Create tab navigator

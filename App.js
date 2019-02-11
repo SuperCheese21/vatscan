@@ -4,7 +4,6 @@ import { AppLoading, Font } from 'expo';
 
 import { UPDATE_INTERVAL } from './src/config/constants.json';
 import { fetchData, parseClientData } from './src/lib/util/fetch';
-import HeaderContainer from './src/components/containers/HeaderContainer';
 import StackNavigator from './src/components/navigation/StackNavigator';
 
 export default class App extends React.PureComponent {

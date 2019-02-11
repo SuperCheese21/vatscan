@@ -1,5 +1,5 @@
 import React from 'react';
-import { Circle, Marker, Polygon } from 'react-native-maps';
+import { Marker, Polygon } from 'react-native-maps';
 
 import constants from '../config/constants.json';
 import { getProjectedCoords } from '../lib/util/calc';

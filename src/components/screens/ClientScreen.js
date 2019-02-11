@@ -1,7 +1,7 @@
 import React from 'react';
 import { BackHandler, Text, View } from 'react-native';
 
-import airportNames from '../../data/airportNames.json';
+//import airportNames from '../../data/airportNames.json';
 
 export default class ClientScreen extends React.PureComponent {
     componentDidMount() {
