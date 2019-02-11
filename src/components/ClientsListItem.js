@@ -1,5 +1,4 @@
 import React from 'react';
-import { Alert } from 'react-native';
 import { List, Surface, TouchableRipple } from 'react-native-paper';
 
 import styles from './styles';
@@ -7,7 +6,7 @@ import styles from './styles';
 const ClientsListItem = props => (
     // Wrap list item in touchable ripple for highlight effect
     <TouchableRipple
-        onPress={() => Alert.alert('Under Construction')}
+        onPress={() => props.stackNavigation.navigate('ClientScreen')}
     >
         <Surface style={styles.listItem}>
             <List.Item

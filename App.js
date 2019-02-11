@@ -5,7 +5,7 @@ import { AppLoading, Font } from 'expo';
 import { UPDATE_INTERVAL } from './src/config/constants.json';
 import { fetchData, parseClientData } from './src/lib/util/fetch';
 import HeaderContainer from './src/components/containers/HeaderContainer';
-import TabNavigatorContainer from './src/components/navigation/TabNavigator';
+import StackNavigator from './src/components/navigation/StackNavigator';
 
 export default class App extends React.PureComponent {
     // Initialize component state
@@ -34,7 +34,7 @@ export default class App extends React.PureComponent {
         this.updateData(true);
     }
 
-    updateData = initialFetch => {
+    updateData(initialFetch) {
         // Check internet connection and alert if there is no connection
         NetInfo.getConnectionInfo().then(connectionInfo => {
             if (connectionInfo.type === 'none' || connectionInfo.type === 'unknown') {
@@ -66,12 +66,12 @@ export default class App extends React.PureComponent {
         // Otherwise show top-level view
         return (
             <View style={{ flex: 1 }}>
-                <HeaderContainer
-                    loading={this.state.loading}
-                    refresh={() => this.updateData(false)}
-                />
-                <TabNavigatorContainer
-                    screenProps={{ clientData: this.state.clientData }}
+                <StackNavigator
+                    screenProps={{
+                        loading: this.state.loading,
+                        refresh: () => this.updateData(false),
+                        clientData: this.state.clientData
+                    }}
                 />
             </View>
         );

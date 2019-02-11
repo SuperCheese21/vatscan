@@ -32,12 +32,18 @@ const TabNavigator = createAppContainer(
 );
 
 const TabNavigatorContainer = props => (
-    <TabNavigator
-        screenProps={{
-            stackNavigation: props.navigation,
-            clientData: props.screenProps.clientData
-        }}
-    />
+    <>
+        <HeaderContainer
+            loading={props.screenProps.loading}
+            refresh={props.screenProps.refresh}
+        />
+        <TabNavigator
+            screenProps={{
+                stackNavigation: props.navigation,
+                clientData: props.screenProps.clientData
+            }}
+        />
+    </>
 );
 
 export default TabNavigatorContainer;

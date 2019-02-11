@@ -2,14 +2,15 @@ import { createAppContainer, createStackNavigator } from 'react-navigation';
 import getSlideFromRightTransition from 'react-navigation-slide-from-right-transition';
 
 import ClientScreen from '../screens/ClientScreen';
-import TabNavigator from './TabNavigator';
+import TabNavigatorContainer from './TabNavigator';
 
 const StackNavigator = createAppContainer(
     createStackNavigator({
-        TabNavigator: TabNavigator,
+        TabNavigator: TabNavigatorContainer,
         ClientScreen: ClientScreen
     }, {
-        transitionConfig: getSlideFromRightTransition
+        transitionConfig: getSlideFromRightTransition,
+        headerMode: 'none'
     })
 );
 
