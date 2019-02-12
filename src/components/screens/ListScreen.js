@@ -19,15 +19,12 @@ export default class ListScreen extends React.PureComponent {
 
     getFilteredClients() {
         const query = this.state.query.toLowerCase();
-        return this.props.screenProps.clientData.filter(client => {
-            // Check if name, callsign, id, or aircraft contain query string
-            return (
-                client.name.toLowerCase().includes(query) ||
-                client.callsign.toLowerCase().includes(query) ||
-                client.id.includes(query) ||
-                client.aircraft && client.aircraft.toLowerCase().includes(query)
-            );
-        });
+        return this.props.screenProps.clientData.filter(client => (
+            client.name.toLowerCase().includes(query) ||
+            client.callsign.toLowerCase().includes(query) ||
+            client.id.includes(query) ||
+            client.aircraft && client.aircraft.toLowerCase().includes(query)
+        ));
     }
 
     _keyExtractor = (item, index) => item.id;

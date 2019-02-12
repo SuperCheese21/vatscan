@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, NetInfo, View } from 'react-native';
+import { Alert, NetInfo } from 'react-native';
 import { AppLoading, Font } from 'expo';
 
 import { UPDATE_INTERVAL } from './src/config/constants.json';
@@ -64,15 +64,13 @@ export default class App extends React.PureComponent {
 
         // Otherwise show top-level view
         return (
-            <View style={{ flex: 1 }}>
-                <StackNavigator
-                    screenProps={{
-                        loading: this.state.loading,
-                        refresh: () => this.updateData(false),
-                        clientData: this.state.clientData
-                    }}
-                />
-            </View>
+            <StackNavigator
+                screenProps={{
+                    loading: this.state.loading,
+                    refresh: () => this.updateData(false),
+                    clientData: this.state.clientData
+                }}
+            />
         );
     }
 }
