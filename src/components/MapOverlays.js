@@ -20,6 +20,7 @@ export default class MapOverlays extends React.PureComponent {
         return (
             <>
                 {this.props.data.map((client, index) => {
+                    const focusedClient = this.props.focusedClient.callsign == client.callsign;
                     if (client.type == 'PILOT') {
                         return <Marker
                             key={client.id}
@@ -27,24 +28,24 @@ export default class MapOverlays extends React.PureComponent {
                             rotation={client.heading}
                             anchor={{ x: 0.5, y: 0.5 }}
                             coordinate={client.location}
-                            onPress={() => this.props.setFocusedClient(client, index)}
+                            onPress={() => this.props.setFocusedClient(client)}
                             tracksViewChanges={false}
                             stopPropagation={true}
-                            opacity={this.props.focusedMarkerIndex === index ? 2 : 1.1}
+                            opacity={focusedClient ? 2 : 1.1}
                         />
                     } else if (client.type == 'ATC') {
                         return <Polygon
                             key={client.id}
                             coordinates={client.polygon || this.getPolygonCircle(client.location, client.radius)}
-                            strokeWidth={this.props.focusedMarkerIndex === index ? 2 : 1}
+                            strokeWidth={focusedClient ? 2 : 1}
                             strokeColor={client.strokeColor}
                             fillColor={
-                                this.props.focusedMarkerIndex === index ?
+                                focusedClient ?
                                     client.fillColorSelected :
                                     client.fillColor
                             }
                             tappable={true}
-                            onPress={() => this.props.setFocusedClient(client, index)}
+                            onPress={() => this.props.setFocusedClient(client)}
                             zIndex={client.zIndex}
                         />
                     }

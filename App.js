@@ -11,7 +11,8 @@ export default class App extends React.PureComponent {
     state = {
         fontLoaded: false,
         loading: false,
-        clientData: []
+        clientData: [],
+        focusedClient: {}
     };
 
     async componentDidMount() {
@@ -56,6 +57,18 @@ export default class App extends React.PureComponent {
         });
     }
 
+    setFocusedClient = client => {
+        this.setState({
+            focusedClient: client
+        });
+    }
+
+    removeFocusedClient = () => {
+        this.setState({
+            focusedClient: {}
+        });
+    }
+
     render() {
         // Show app loading screen if font is still being loaded
         if (!this.state.fontLoaded) {
@@ -68,7 +81,10 @@ export default class App extends React.PureComponent {
                 screenProps={{
                     loading: this.state.loading,
                     refresh: () => this.updateData(false),
-                    clientData: this.state.clientData
+                    clientData: this.state.clientData,
+                    focusedClient: this.state.focusedClient,
+                    setFocusedClient: this.setFocusedClient,
+                    removeFocusedClient: this.removeFocusedClient
                 }}
             />
         );

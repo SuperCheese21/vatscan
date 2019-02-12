@@ -6,6 +6,24 @@ import ListScreen from '../screens/ListScreen';
 import MapScreen from '../screens/MapScreen';
 import colors from '../../config/colors.json';
 
+const TabNavigatorContainer = props => (
+    <>
+        <HeaderContainer
+            loading={props.screenProps.loading}
+            refresh={props.screenProps.refresh}
+        />
+        <TabNavigator
+            screenProps={{
+                stackNavigation: props.navigation,
+                clientData: props.screenProps.clientData,
+                focusedClient: props.screenProps.focusedClient,
+                setFocusedClient: props.screenProps.setFocusedClient,
+                removeFocusedClient: props.screenProps.removeFocusedClient
+            }}
+        />
+    </>
+);
+
 // Create tab navigator
 const TabNavigator = createAppContainer(
     createMaterialTopTabNavigator({
@@ -27,21 +45,6 @@ const TabNavigator = createAppContainer(
             }
         }
     })
-);
-
-const TabNavigatorContainer = props => (
-    <>
-        <HeaderContainer
-            loading={props.screenProps.loading}
-            refresh={props.screenProps.refresh}
-        />
-        <TabNavigator
-            screenProps={{
-                stackNavigation: props.navigation,
-                clientData: props.screenProps.clientData
-            }}
-        />
-    </>
 );
 
 export default TabNavigatorContainer;

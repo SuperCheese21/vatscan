@@ -20,7 +20,7 @@ export default class ClientScreen extends React.PureComponent {
     render() {
         return (
             <View style={{ flex: 1 }}>
-                <Text>Test</Text>
+                <Text>{this.props.screenProps.focusedClient.callsign}</Text>
             </View>
         );
     }

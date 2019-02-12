@@ -4,9 +4,9 @@ import { Polyline } from 'react-native-maps';
 import colors from '../config/colors.json';
 
 const FlightPath = props => {
-    const depCoords = props.data.depCoords;
-    const location = props.data.location;
-    const arrCoords = props.data.arrCoords;
+    const depCoords = props.focusedClient.depCoords;
+    const location = props.focusedClient.location;
+    const arrCoords = props.focusedClient.arrCoords;
 
     // Render polylines only if airport coords are present
     if (depCoords && location && arrCoords) {

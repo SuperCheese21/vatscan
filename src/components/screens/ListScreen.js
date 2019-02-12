@@ -45,7 +45,8 @@ export default class ListScreen extends React.PureComponent {
                     keyExtractor={this._keyExtractor}
                     renderItem={({ item }) => (
                         <ClientsListItem
-                            item={item}
+                            client={item}
+                            setFocusedClient={this.props.screenProps.setFocusedClient}
                             stackNavigation={this.props.screenProps.stackNavigation}
                         />
                     )}
