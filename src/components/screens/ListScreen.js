@@ -27,7 +27,7 @@ export default class ListScreen extends React.PureComponent {
         ));
     }
 
-    _keyExtractor = (item, index) => item.id;
+    _keyExtractor = (item, index) => item.callsign;
 
     render() {
         return (

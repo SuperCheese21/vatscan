@@ -23,7 +23,7 @@ export default class MapOverlays extends React.PureComponent {
                     const focusedClient = this.props.focusedClient.callsign == client.callsign;
                     if (client.type == 'PILOT') {
                         return <Marker
-                            key={client.id}
+                            key={client.callsign}
                             image={client.aircraftIcon}
                             rotation={client.heading}
                             anchor={{ x: 0.5, y: 0.5 }}
@@ -35,7 +35,7 @@ export default class MapOverlays extends React.PureComponent {
                         />
                     } else if (client.type == 'ATC') {
                         return <Polygon
-                            key={client.id}
+                            key={client.callsign}
                             coordinates={client.polygon || this.getPolygonCircle(client.location, client.radius)}
                             strokeWidth={focusedClient ? 2 : 1}
                             strokeColor={client.strokeColor}
