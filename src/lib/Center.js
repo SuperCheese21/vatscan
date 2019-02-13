@@ -14,8 +14,4 @@ export default class Center extends Controller {
     get polygon() {
         return this._polygon;
     }
-
-    set polygon(polygon) {
-        this._polygon = polygon;
-    }
 }

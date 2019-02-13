@@ -6,7 +6,9 @@ export default class Client {
         this._type = data[3];
         this._latitude = parseFloat(data[5]) || 0;
         this._longitude = parseFloat(data[6]) || 0;
-        this._time_logon = data[37];
+        this._server = data[14];
+        this._rating = data[16];
+        this._timeLogon = data[37];
     }
 
     get location() {
@@ -20,55 +22,35 @@ export default class Client {
         return this._callsign;
     }
 
-    set callsign(callsign) {
-        this._callsign = callsign;
-    }
-
     get id() {
         return this._id;
-    }
-
-    set id(id) {
-        this._id = id;
     }
 
     get name() {
         return this._name;
     }
 
-    set name(name) {
-        this._name = name;
-    }
-
     get type() {
         return this._type;
-    }
-
-    set type(type) {
-        this._type = type;
     }
 
     get latitude() {
         return this._latitude;
     }
 
-    set latitude(latitude) {
-        this._latitude = latitude;
-    }
-
     get longitude() {
         return this._longitude;
     }
 
-    set longitude(longitude) {
-        this._longitude = longitude;
+    get server() {
+        return this._server;
     }
 
-    get time_logon() {
-        return this._time_logon;
+    get rating() {
+        return this._rating;
     }
 
-    set time_logon(time_logon) {
-        this._time_logon = time_logon;
+    get timeLogon() {
+        return this._timeLogon;
     }
 }

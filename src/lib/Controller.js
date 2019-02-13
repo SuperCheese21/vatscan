@@ -6,9 +6,10 @@ import { mapOverlays as constants } from '../config/constants.json';
 export default class Controller extends Client {
     constructor(data, controllerType) {
         super(data);
-        this._frequency = data[4];
-        this._rating = data[16];
         this._controllerType = controllerType;
+        this._frequency = data[4];
+        this._facilityType = data[18];
+        this._atisMessage = data[35];
     }
 
     get radius() {
@@ -31,27 +32,19 @@ export default class Controller extends Client {
         return constants[this.controllerType].zIndex;
     }
 
-    get frequency() {
-        return this._frequency;
-    }
-
-    set frequency(frequency) {
-        this._frequency = frequency;
-    }
-
-    get rating() {
-        return this._rating;
-    }
-
-    set rating(rating) {
-        this._rating = rating;
-    }
-
     get controllerType() {
         return this._controllerType;
     }
 
-    set controllerType(controllerType) {
-        this._controllerType = controllerType;
+    get frequency() {
+        return this._frequency;
+    }
+
+    get facilityType() {
+        return this._facilityType;
+    }
+
+    get atisMessage() {
+        return this._atisMessage;
     }
 }

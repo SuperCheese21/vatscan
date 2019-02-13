@@ -9,7 +9,9 @@ const ClientsListItem = props => (
         <TouchableRipple
             onPress={() => {
                 props.setFocusedClient(props.client);
-                props.stackNavigation.navigate('ClientScreen');
+                props.stackNavigation.navigate('ClientScreen', {
+                    removeFocusedClient: true
+                });
             }}
         >
             <List.Item

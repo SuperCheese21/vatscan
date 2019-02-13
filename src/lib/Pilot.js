@@ -14,16 +14,44 @@ export default class Pilot extends Client {
         this._altitude = data[7];
         this._groundSpeed = data[8];
         this._aircraft = data[9];
+        this._tasCruise = data[10];
         this._depAirport = data[11];
+        this._plannedAltitude = data[12];
         this._arrAirport = data[13];
         this._transponder = data[17];
         this._flightType = data[21];
+        this._depTime = data[22];
+        this._hrsEnRoute = data[24];
+        this._minEnRoute = data[25];
+        this._remarks = data[29];
         this._route = data[30];
         this._heading = parseFloat(data[38]);
     }
 
+    getAircraftType() {
+        const widebody = constants.aircraft.WIDEBODY;
+        const narrowbody = constants.aircraft.NARROWBODY;
+
+        if (this.checkAircraftType(widebody)) {
+            return 2;
+        } else if (this.checkAircraftType(narrowbody) || !this._aircraft) {
+            return 1;
+        }
+        return 0;
+    }
+
+    checkAircraftType(list) {
+        for (let i = 0; i < list.length; i++) {
+            const aircraft = list[i];
+            if (this._aircraft.includes(aircraft)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     get aircraftIcon() {
-        const type = this._getAircraftType();
+        const type = this.getAircraftType();
 
         if (type === 2) {
             return WIDEBODY_ICON;
@@ -53,97 +81,63 @@ export default class Pilot extends Client {
         return this.distFlown / (this.distFlown + this.distRemaining)
     }
 
-    _getAircraftType() {
-        const widebody = constants.aircraft.WIDEBODY;
-        const narrowbody = constants.aircraft.NARROWBODY;
-
-        if (this._checkAircraftType(widebody)) {
-            return 2;
-        } else if (this._checkAircraftType(narrowbody) || !this._aircraft) {
-            return 1;
-        }
-        return 0;
-    }
-
-    _checkAircraftType(list) {
-        for (let i = 0; i < list.length; i++) {
-            const aircraft = list[i];
-            if (this._aircraft.includes(aircraft)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     get altitude() {
         return this._altitude;
-    }
-
-    set altitude(altitude) {
-        this._altitude = altitude;
     }
 
     get groundSpeed() {
         return this._groundSpeed;
     }
 
-    set groundSpeed(groundSpeed) {
-        this._groundSpeed = groundSpeed;
-    }
-
     get aircraft() {
         return this._aircraft;
     }
 
-    set aircraft(aircraft) {
-        this._aircraft = aircraft;
+    get tasCruise() {
+        return this._tasCruise;
     }
 
     get depAirport() {
         return this._depAirport;
     }
 
-    set depAirport(depAirport) {
-        this._depAirport = depAirport;
+    get plannedAltitude() {
+        return this._plannedAltitude;
     }
 
     get arrAirport() {
         return this._arrAirport;
     }
 
-    set arrAirport(arrAirport) {
-        this._arrAirport = arrAirport;
-    }
-
     get transponder() {
         return this._transponder;
-    }
-
-    set transponder(transponder) {
-        this._transponder = transponder;
     }
 
     get flightType() {
         return this._flightType;
     }
 
-    set flightType(flightType) {
-        this._flightType = flightType;
+    get depTime() {
+        return this._depTime;
+    }
+
+    get hrsEnRoute() {
+        return this._hrsEnRoute;
+    }
+
+    get minEnRoute() {
+        return this._minEnRoute;
+    }
+
+    get remarks() {
+        return this._remarks;
     }
 
     get route() {
         return this._route;
     }
 
-    set route(route) {
-        this._route = route;
-    }
-
     get heading() {
         return this._heading;
-    }
-
-    set heading(heading) {
-        this._heading = heading;
     }
 }
