@@ -11,6 +11,7 @@ const TabNavigatorContainer = props => (
         <HeaderContainer
             loading={props.screenProps.loading}
             refresh={props.screenProps.refresh}
+            text={'VATSCAN'}
         />
         <TabNavigator
             screenProps={{

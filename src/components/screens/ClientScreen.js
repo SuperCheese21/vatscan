@@ -1,6 +1,7 @@
 import React from 'react';
 import { BackHandler, Text, View } from 'react-native';
 
+import HeaderContainer from '../containers/HeaderContainer';
 //import airportNames from '../../data/airportNames.json';
 
 export default class ClientScreen extends React.PureComponent {
@@ -19,9 +20,16 @@ export default class ClientScreen extends React.PureComponent {
 
     render() {
         return (
-            <View style={{ flex: 1 }}>
-                <Text>{this.props.screenProps.focusedClient.callsign}</Text>
-            </View>
+            <>
+                <HeaderContainer
+                    loading={this.props.screenProps.loading}
+                    refresh={this.props.screenProps.refresh}
+                    text={this.props.screenProps.focusedClient.callsign}
+                />
+                <View style={{ flex: 1 }}>
+                    <Text>{this.props.screenProps.focusedClient.callsign}</Text>
+                </View>
+            </>
         );
     }
 }

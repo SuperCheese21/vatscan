@@ -7,7 +7,7 @@ import styles from '../styles';
 const HeaderContainer = props => (
     <View style={styles.header}>
         <Text style={[styles.text, styles.headerText]}>
-            VATSCAN
+            {props.text}
         </Text>
 
         <RefreshIcon

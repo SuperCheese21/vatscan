@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapView } from 'expo';
+import MapView from 'react-native-maps';
 
 import FlightPath from '../FlightPath';
 import MapOverlays from '../MapOverlays';
