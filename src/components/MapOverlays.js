@@ -19,7 +19,7 @@ export default class MapOverlays extends React.PureComponent {
         // Return fragment with client data mapped to map components
         return (
             <>
-                {this.props.data.map((client, index) => {
+                {this.props.clients.map((client, index) => {
                     const focusedClient = this.props.focusedClient.callsign == client.callsign;
                     if (client.type == 'PILOT') {
                         return <Marker

@@ -19,7 +19,7 @@ export default class ListScreen extends React.PureComponent {
 
     getFilteredClients() {
         const query = this.state.query.toLowerCase();
-        return this.props.screenProps.clientData.filter(client => (
+        return this.props.screenProps.clients.filter(client => (
             client.name.toLowerCase().includes(query) ||
             client.callsign.toLowerCase().includes(query) ||
             client.id.includes(query) ||
@@ -34,10 +34,7 @@ export default class ListScreen extends React.PureComponent {
             <View style={styles.listContainer}>
                 <Searchbar
                     placeholder="Name, Callsign, CID, Aircraft"
-                    onChangeText={query => {
-                        // Update state on input change (for live results)
-                        this.setState({ query });
-                    }}
+                    onChangeText={query => this.setState({ query })}
                     value={this.state.query}
                 />
                 <FlatList

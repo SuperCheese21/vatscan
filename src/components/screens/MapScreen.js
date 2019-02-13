@@ -63,13 +63,13 @@ export default class MapScreen extends React.PureComponent {
         return (
             <View style={{ flex: 1 }}>
                 <MapContainer
-                    clientData={this.props.screenProps.clientData}
+                    clients={this.props.screenProps.clients}
                     focusedClient={this.props.screenProps.focusedClient}
                     setFocusedClient={this.setFocusedClient}
                     collapsePanel={this.collapsePanel}
                 />
                 <Text style={styles.clientCountText}>
-                    Clients: {this.props.screenProps.clientData.length}
+                    Clients: {this.props.screenProps.clients.length}
                 </Text>
                 <InfoPanelContainer
                     stackNavigation={this.props.screenProps.stackNavigation}

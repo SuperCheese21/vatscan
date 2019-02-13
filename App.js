@@ -2,16 +2,16 @@ import React from 'react';
 import { Alert, NetInfo } from 'react-native';
 import { AppLoading, Font } from 'expo';
 
-import { UPDATE_INTERVAL } from './src/config/constants.json';
-import { fetchData, parseClientData } from './src/lib/util/fetch';
 import StackNavigator from './src/components/navigation/StackNavigator';
+import { UPDATE_INTERVAL } from './src/config/constants.json';
+import { fetchData } from './src/lib/util/fetch';
 
 export default class App extends React.PureComponent {
     // Initialize component state
     state = {
         fontLoaded: false,
         loading: false,
-        clientData: [],
+        clients: [],
         focusedClient: {}
     };
 
@@ -21,9 +21,7 @@ export default class App extends React.PureComponent {
             'Roboto_Regular': require('./assets/fonts/Roboto/Roboto-Regular.ttf'),
             'Roboto_Condensed_Regular': require('./assets/fonts/Roboto_Condensed/RobotoCondensed-Regular.ttf')
         });
-        await this.setState({
-            fontLoaded: true
-        });
+        await this.setState({ fontLoaded: true });
 
         // Automatically pull data update when internet connection is changed
         NetInfo.addEventListener('connectionChange', () => {
@@ -34,40 +32,39 @@ export default class App extends React.PureComponent {
         this.updateData(true);
     }
 
-    updateData(initialFetch) {
+    updateData(isInitialFetch) {
         // Check internet connection and alert if there is no connection
         NetInfo.getConnectionInfo().then(connectionInfo => {
             if (connectionInfo.type === 'none' || connectionInfo.type === 'unknown') {
                 Alert.alert('No internet connection', 'Connect to the internet to update data');
             } else {
-                // Set loading state and call function to fetch data
+                // Set loading state
                 this.setState({ loading: true });
-                fetchData(initialFetch).then(data => {
+
+                // Fetch data
+                const focusedCallsign = this.state.focusedClient.callsign;
+                fetchData(focusedCallsign, isInitialFetch).then(data => {
                     // Update state with new data
                     this.setState({
-                        clientData: parseClientData(data),
-                        loading: false
+                        loading: false,
+                        clients: data.clients,
+                        focusedClient: data.focusedClient
                     });
+
                     // Set timeout for next data update
-                    setTimeout(() => {
-                        this.updateData();
-                    }, UPDATE_INTERVAL);
+                    setTimeout(() => this.updateData(false), UPDATE_INTERVAL);
                 });
             }
         });
     }
 
     setFocusedClient = client => {
-        this.setState({
-            focusedClient: client
-        });
+        this.setState({ focusedClient: client });
     }
 
     removeFocusedClient = () => {
-        this.setState({
-            focusedClient: {}
-        });
-    }
+        this.setState({ focusedClient: {} });
+    };
 
     render() {
         // Show app loading screen if font is still being loaded
@@ -81,7 +78,7 @@ export default class App extends React.PureComponent {
                 screenProps={{
                     loading: this.state.loading,
                     refresh: () => this.updateData(false),
-                    clientData: this.state.clientData,
+                    clients: this.state.clients,
                     focusedClient: this.state.focusedClient,
                     setFocusedClient: this.setFocusedClient,
                     removeFocusedClient: this.removeFocusedClient

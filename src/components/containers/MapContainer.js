@@ -21,7 +21,7 @@ const MapContainer = props => (
     >
 
         <MapOverlays
-            data={props.clientData}
+            clients={props.clients}
             focusedClient={props.focusedClient}
             setFocusedClient={props.setFocusedClient}
         />

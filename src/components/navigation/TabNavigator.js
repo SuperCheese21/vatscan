@@ -15,7 +15,7 @@ const TabNavigatorContainer = props => (
         <TabNavigator
             screenProps={{
                 stackNavigation: props.navigation,
-                clientData: props.screenProps.clientData,
+                clients: props.screenProps.clients,
                 focusedClient: props.screenProps.focusedClient,
                 setFocusedClient: props.screenProps.setFocusedClient,
                 removeFocusedClient: props.screenProps.removeFocusedClient
