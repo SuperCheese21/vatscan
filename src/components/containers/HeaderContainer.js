@@ -6,7 +6,9 @@ import styles from '../styles';
 
 const HeaderContainer = props => (
     <View style={styles.header}>
-        <Text style={[styles.text, styles.headerText]}>
+        <Text style={[styles.text, styles.headerText, {
+            textAlign: props.centerTitle ? 'center' : 'left'
+        }]}>
             {props.text}
         </Text>
 
