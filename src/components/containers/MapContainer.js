@@ -22,11 +22,11 @@ const MapContainer = props => (
 
         <MapOverlays
             data={props.clientData}
+            focusedClient={props.focusedClient}
             setFocusedClient={props.setFocusedClient}
-            focusedMarkerIndex={props.focusedMarkerIndex}
         />
 
-        <FlightPath data={props.flightPathData} />
+        <FlightPath focusedClient={props.focusedClient} />
 
     </MapView>
 );

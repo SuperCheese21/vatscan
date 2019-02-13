@@ -1,5 +1,4 @@
 import React from 'react';
-import { Alert } from 'react-native';
 import { List, Surface, TouchableRipple } from 'react-native-paper';
 
 import styles from './styles';
@@ -7,17 +6,20 @@ import styles from './styles';
 const ClientsListItem = props => (
     // Wrap list item in touchable ripple for highlight effect
     <TouchableRipple
-        onPress={() => props.stackNavigation.navigate('ClientScreen')}
+        onPress={() => {
+            props.setFocusedClient(props.client);
+            props.stackNavigation.navigate('ClientScreen');
+        }}
     >
         <Surface style={styles.listItem}>
             <List.Item
-                title={props.item.callsign}
-                description={props.item.name + ' (' + props.item.id + ')'}
+                title={props.client.callsign}
+                description={props.client.name + ' (' + props.client.id + ')'}
                 left={itemProps => (
                     <List.Icon
                         {...itemProps}
                         icon={
-                            props.item.type === 'ATC' ?
+                            props.client.type === 'ATC' ?
                             'rss-feed' :
                             'airplanemode-active'
                         }

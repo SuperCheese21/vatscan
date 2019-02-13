@@ -8,11 +8,9 @@ import { panelStates, panelTransitionDuration } from '../../config/constants.jso
 import styles from '../styles';
 
 export default class MapScreen extends React.PureComponent {
-    constructor(props) {
-        super(props);
-
-        // Set default state
-        this.state = this.defaultState;
+    state = {
+        panelPosition: new Animated.Value(panelStates.COLLAPSED),
+        panelPositionValue: panelStates.COLLAPSED
     }
 
     componentDidMount() {
@@ -26,20 +24,12 @@ export default class MapScreen extends React.PureComponent {
     }
 
     static navigationOptions = {
-        tabBarIcon: ({ tintColor }) => {
-            return <Icon name={'google-maps'} size={20} color={tintColor} />;
-        }
+        tabBarIcon: ({ tintColor }) => (
+            <Icon name={'google-maps'} size={20} color={tintColor} />
+        )
     }
 
-    defaultState = {
-        panelPosition: new Animated.Value(panelStates.COLLAPSED),
-        panelPositionValue: panelStates.COLLAPSED,
-        focusedClient: {},
-        focusedMarkerIndex: -1,
-        flightPathData: {}
-    }
-
-    _setPanelPosition = position => {
+    setPanelPosition = position => {
         // Animate info panel position change
         this.setState({ panelPositionValue: position });
         Animated.timing(
@@ -51,36 +41,21 @@ export default class MapScreen extends React.PureComponent {
         ).start();
     }
 
-    _removeFocusedClient = () => {
-        // Resetting state removes focused client info from info panel
-        this.setState(this.defaultState);
-    }
-
-    setFocusedClient = (client, index) => {
-        // Set info panel info to focused client
-        this._removeFocusedClient();
-        this.setState({
-            focusedClient: client,
-            focusedMarkerIndex: index,
-            flightPathData: {
-                depCoords: client.depCoords,
-                location: client.location,
-                arrCoords: client.arrCoords
-            }
-        });
-
-        // Expand info panel to correct height based on client type
+    setFocusedClient = client => {
+        // Set focused client and expand panel to height based on client type
+        this.props.screenProps.setFocusedClient(client);
         if (client.type === 'PILOT') {
-            this._setPanelPosition(panelStates.EXPANDED_PILOT);
+            this.setPanelPosition(panelStates.EXPANDED_PILOT);
         } else if (client.type === 'ATC') {
-            this._setPanelPosition(panelStates.EXPANDED_ATC);
+            this.setPanelPosition(panelStates.EXPANDED_ATC);
         }
     }
 
     collapsePanel = () => {
         // Collapse panel and remove focused client
-        this._setPanelPosition(panelStates.COLLAPSED);
-        this._removeFocusedClient();
+        this.setPanelPosition(panelStates.COLLAPSED);
+        this.props.screenProps.removeFocusedClient();
+
         return true;
     }
 
@@ -89,8 +64,7 @@ export default class MapScreen extends React.PureComponent {
             <View style={{ flex: 1 }}>
                 <MapContainer
                     clientData={this.props.screenProps.clientData}
-                    flightPathData={this.state.flightPathData}
-                    focusedMarkerIndex={this.state.focusedMarkerIndex}
+                    focusedClient={this.props.screenProps.focusedClient}
                     setFocusedClient={this.setFocusedClient}
                     collapsePanel={this.collapsePanel}
                 />
@@ -100,7 +74,7 @@ export default class MapScreen extends React.PureComponent {
                 <InfoPanelContainer
                     stackNavigation={this.props.screenProps.stackNavigation}
                     panelPosition={this.state.panelPosition}
-                    focusedClient={this.state.focusedClient}
+                    focusedClient={this.props.screenProps.focusedClient}
                 />
             </View>
         );

@@ -1,17 +1,18 @@
 import React from 'react';
-import { Alert, NetInfo, View } from 'react-native';
+import { Alert, NetInfo } from 'react-native';
 import { AppLoading, Font } from 'expo';
 
-import StackNavigatorContainer from './src/components/navigation/StackNavigator';
 import { UPDATE_INTERVAL } from './src/config/constants.json';
 import { fetchData, parseClientData } from './src/lib/util/fetch';
+import StackNavigator from './src/components/navigation/StackNavigator';
 
 export default class App extends React.PureComponent {
     // Initialize component state
     state = {
         fontLoaded: false,
         loading: false,
-        clientData: []
+        clientData: [],
+        focusedClient: {}
     };
 
     async componentDidMount() {
@@ -33,7 +34,7 @@ export default class App extends React.PureComponent {
         this.updateData(true);
     }
 
-    updateData = initialFetch => {
+    updateData(initialFetch) {
         // Check internet connection and alert if there is no connection
         NetInfo.getConnectionInfo().then(connectionInfo => {
             if (connectionInfo.type === 'none' || connectionInfo.type === 'unknown') {
@@ -56,6 +57,18 @@ export default class App extends React.PureComponent {
         });
     }
 
+    setFocusedClient = client => {
+        this.setState({
+            focusedClient: client
+        });
+    }
+
+    removeFocusedClient = () => {
+        this.setState({
+            focusedClient: {}
+        });
+    }
+
     render() {
         // Show app loading screen if font is still being loaded
         if (!this.state.fontLoaded) {
@@ -64,15 +77,16 @@ export default class App extends React.PureComponent {
 
         // Otherwise show top-level view
         return (
-            <View style={{ flex: 1 }}>
-                <StackNavigatorContainer
-                    screenProps={{
-                        clientData: this.state.clientData,
-                        loading: this.state.loading,
-                        refresh: () => this.updateData(false)
-                    }}
-                />
-            </View>
+            <StackNavigator
+                screenProps={{
+                    loading: this.state.loading,
+                    refresh: () => this.updateData(false),
+                    clientData: this.state.clientData,
+                    focusedClient: this.state.focusedClient,
+                    setFocusedClient: this.setFocusedClient,
+                    removeFocusedClient: this.removeFocusedClient
+                }}
+            />
         );
     }
 }

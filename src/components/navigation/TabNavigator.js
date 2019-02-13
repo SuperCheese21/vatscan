@@ -1,43 +1,28 @@
 import React from 'react';
-import { View } from 'react-native';
 import { createAppContainer, createMaterialTopTabNavigator } from 'react-navigation';
 
 import HeaderContainer from '../containers/HeaderContainer';
 import ListScreen from '../screens/ListScreen';
 import MapScreen from '../screens/MapScreen';
-import RefreshIcon from '../RefreshIcon';
 import colors from '../../config/colors.json';
 
-export default class TabNavigatorContainer extends React.Component {
-    constructor(props) {
-        super(props);
-        this.props.navigation.setParams({
-            loading: this.props.screenProps.loading,
-            refresh: this.props.screenProps.refresh
-        });
-    }
-
-    static navigationOptions = ({ navigation }) => ({
-        title: 'VATSCAN',
-        headerRight: (
-            <RefreshIcon
-                loading={navigation.getParam('loading')}
-                refresh={navigation.getParam('refresh')}
-            />
-        )
-    });
-
-    render() {
-        return (
-            <TabNavigator
-                screenProps={{
-                    stackNavigation: this.props.navigation,
-                    clientData: this.props.screenProps.clientData
-                }}
-            />
-        );
-    }
-}
+const TabNavigatorContainer = props => (
+    <>
+        <HeaderContainer
+            loading={props.screenProps.loading}
+            refresh={props.screenProps.refresh}
+        />
+        <TabNavigator
+            screenProps={{
+                stackNavigation: props.navigation,
+                clientData: props.screenProps.clientData,
+                focusedClient: props.screenProps.focusedClient,
+                setFocusedClient: props.screenProps.setFocusedClient,
+                removeFocusedClient: props.screenProps.removeFocusedClient
+            }}
+        />
+    </>
+);
 
 // Create tab navigator
 const TabNavigator = createAppContainer(
@@ -61,3 +46,5 @@ const TabNavigator = createAppContainer(
         }
     })
 );
+
+export default TabNavigatorContainer;
