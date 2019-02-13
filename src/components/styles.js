@@ -83,12 +83,12 @@ const styles = StyleSheet.create({
     },
     listContainer: {
         flex: 1,
-        padding: 5,
         backgroundColor: 'white'
     },
     listItem: {
         elevation: 5,
-        marginTop: 5
+        margin: 5,
+        borderRadius: 5
     },
     nameText: {
         textAlign: 'left',

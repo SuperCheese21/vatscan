@@ -33,6 +33,7 @@ export default class ListScreen extends React.PureComponent {
         return (
             <View style={styles.listContainer}>
                 <Searchbar
+                    style={{ margin: 5 }}
                     placeholder="Name, Callsign, CID, Aircraft"
                     onChangeText={query => this.setState({ query })}
                     value={this.state.query}

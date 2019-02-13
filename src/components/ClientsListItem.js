@@ -5,13 +5,13 @@ import styles from './styles';
 
 const ClientsListItem = props => (
     // Wrap list item in touchable ripple for highlight effect
-    <TouchableRipple
-        onPress={() => {
-            props.setFocusedClient(props.client);
-            props.stackNavigation.navigate('ClientScreen');
-        }}
-    >
-        <Surface style={styles.listItem}>
+    <Surface style={styles.listItem}>
+        <TouchableRipple
+            onPress={() => {
+                props.setFocusedClient(props.client);
+                props.stackNavigation.navigate('ClientScreen');
+            }}
+        >
             <List.Item
                 title={props.client.callsign}
                 description={props.client.name + ' (' + props.client.id + ')'}
@@ -26,8 +26,8 @@ const ClientsListItem = props => (
                     />
                 )}
             />
-        </Surface>
-    </TouchableRipple>
+        </TouchableRipple>
+    </Surface>
 );
 
 export default ClientsListItem;
