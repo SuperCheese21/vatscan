@@ -1,10 +1,11 @@
 import React from 'react';
-import { BackHandler, Text, View } from 'react-native';
-import { Badge, Surface } from 'react-native-paper';
+import { BackHandler, RefreshControl, ScrollView, Text, View } from 'react-native';
 
+import ClientStatsContainer from '../containers/ClientStatsContainer';
+import FlightPlanContainer from '../containers/FlightPlanContainer';
+import FlightStatsContainer from '../containers/FlightStatsContainer';
 import HeaderContainer from '../containers/HeaderContainer';
-import airportNames from '../../data/airportNames.json';
-import colors from '../../config/colors.json';
+import styles from '../styles';
 
 export default class ClientScreen extends React.PureComponent {
     componentDidMount() {
@@ -23,64 +24,45 @@ export default class ClientScreen extends React.PureComponent {
         return true;
     }
 
+    getStats(client) {
+        if (client.type === 'PILOT') {
+            return (
+                <>
+                    <FlightPlanContainer client={client} />
+                    <FlightStatsContainer client={client} />
+                </>
+            );
+        } else if (client.type === 'ATC') {
+            return null;
+        }
+    }
+
     render() {
         const { focusedClient: client } = this.props.screenProps;
         return (
             <>
-                <HeaderContainer
-                    loading={this.props.screenProps.loading}
-                    refresh={this.props.screenProps.refresh}
-                    text={client.callsign}
-                    centerTitle={true}
-                />
-                <View style={{
-                    flex: 1,
-                    padding: 5
-                }}>
-                    <Surface
-                        style={{
-                            borderRadius: 10,
-                            padding: 10,
-                            elevation: 10,
-                            margin: 5
-                        }}
-                    >
-                        <View style={{
-                            flexDirection: 'row',
-                            justifyContent: 'center',
-                            marginBottom: 8
-                        }}>
-                            <Text style={{
-                                flex: 1,
-                                fontFamily: 'Roboto_Condensed_Regular',
-                                fontSize: 26
-                            }}>
-                                {client.name}
-                            </Text>
-                            <View>
-                                <Text style={{ color: '#898989' }}>{client.id}</Text>
-                                <Badge style={{
-                                    backgroundColor: colors.accent,
-                                    color: 'white'
-                                }}>
-                                    {client.rating}
-                                </Badge>
-                            </View>
-                        </View>
-                        <Text style={{ fontSize: 18 }}>
-                            {client.type === 'PILOT' ? 'Pilot' : 'ATC'}
-                        </Text>
-                        <Text>
-                            Location  <Text style={{ fontSize: 16, color: '#898989' }}>{client.latitude}, {client.longitude}</Text>
-                        </Text>
-                        <Text>
-                            Server  <Text style={{ fontSize: 16, color: '#898989' }}>{client.server}</Text>
-                        </Text>
-                        <Text>
-                            Time connected  <Text style={{ fontSize: 16, color: '#898989' }}>{client.elapsedTimeLogon}</Text>
-                        </Text>
-                    </Surface>
+                <View style={styles.header}>
+                    <Text style={[styles.text, styles.headerText, {
+                        textAlign: 'center'
+                    }]}>
+                        {client.callsign}
+                    </Text>
                 </View>
+                <ScrollView
+                    style={{ flex: 1 }}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={this.props.screenProps.loading}
+                            onRefresh={this.props.screenProps.refresh}
+                        />
+                    }
+                >
+
+                    <ClientStatsContainer client={client} />
+
+                    {this.getStats(client)}
+
+                </ScrollView>
             </>
         );
     }

@@ -1,6 +1,8 @@
-import Client from './Client';
+import moment from 'moment';
 
+import Client from './Client';
 import airportCoords from '../data/airportCoords.json';
+import airportNames from '../data/airportNames.json';
 import constants from '../config/constants.json';
 import { getGCDistance } from './util/calc';
 
@@ -12,7 +14,7 @@ export default class Pilot extends Client {
     constructor(data) {
         super(data);
         this._altitude = data[7];
-        this._groundSpeed = data[8];
+        this._groundSpeed = parseInt(data[8]);
         this._aircraft = data[9];
         this._tasCruise = data[10];
         this._depAirport = data[11];
@@ -21,8 +23,8 @@ export default class Pilot extends Client {
         this._transponder = data[17];
         this._flightType = data[21];
         this._depTime = data[22];
-        this._hrsEnRoute = data[24];
-        this._minEnRoute = data[25];
+        this._hrsEnRoute = parseInt(data[24]);
+        this._minEnRoute = parseInt(data[25]);
         this._remarks = data[29];
         this._route = data[30];
         this._heading = parseFloat(data[38]);
@@ -50,6 +52,17 @@ export default class Pilot extends Client {
         return false;
     }
 
+    getETEMinutes() {
+        if (this.distRemaining && this._groundSpeed > 0) {
+            if (this.distRemaining <= 2 && this._groundSpeed < 40) {
+                return 0;
+            }
+            return Math.round(
+                60 * (this.distRemaining / this._groundSpeed) + (this._altitude / 2000)
+            );
+        }
+    }
+
     get aircraftIcon() {
         const type = this.getAircraftType();
 
@@ -62,11 +75,11 @@ export default class Pilot extends Client {
     }
 
     get depCoords() {
-        return airportCoords[this.depAirport];
+        return airportCoords[this._depAirport];
     }
 
     get arrCoords() {
-        return airportCoords[this.arrAirport];
+        return airportCoords[this._arrAirport];
     }
 
     get distFlown() {
@@ -79,6 +92,47 @@ export default class Pilot extends Client {
 
     get progress() {
         return this.distFlown / (this.distFlown + this.distRemaining)
+    }
+
+    get depAirportName() {
+        const names = airportNames[this._depAirport];
+        if (names) {
+            return names.airport;
+        }
+        return 'Unknown';
+    }
+
+    get arrAirportName() {
+        const names = airportNames[this._arrAirport];
+        if (names) {
+            return names.airport;
+        }
+        return 'Unknown';
+    }
+
+    get plannedDepTime() {
+        return moment.utc(this._depTime, 'Hmm').format('HHmm');
+    }
+
+    get plannedArrTime() {
+        const departureTime = moment.utc(this._depTime, 'Hmm');
+        const flightDuration = 60 * this._hrsEnRoute + this._minEnRoute;
+
+        return departureTime.add(flightDuration, 'm').format('HHmm');
+    }
+
+    get ete() {
+        const eteMinutes = this.getETEMinutes();
+        if (eteMinutes) {
+            return moment.utc(eteMinutes * 60000).format('H:mm');
+        }
+    }
+
+    get eta() {
+        const eteMinutes = this.getETEMinutes();
+        if (eteMinutes) {
+            return moment.utc().add(eteMinutes, 'm').format('HHmm');
+        }
     }
 
     get altitude() {

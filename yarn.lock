@@ -723,10 +723,10 @@
     pouchdb-collections "^1.0.1"
     tiny-queue "^0.2.1"
 
-"@react-navigation/core@3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@react-navigation/core/-/core-3.1.0.tgz#2ab34a8d913564d4454dbdf5d68b6b4c70302099"
-  integrity sha512-VeS2npscdcz8n7rchIEEURfg4vS9IaaItOh8o5lHLByeNHKBASfWfu5KEoAFmX9XnrUSxvG98VjptQxyCLjtYA==
+"@react-navigation/core@3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@react-navigation/core/-/core-3.1.1.tgz#badf449ac7d2ae65b0f5aa1bf63a87e7888458d3"
+  integrity sha512-vVPUIpCWO3VKVvE5zYDDR/lOy5hHvRm60rQAHTF19vmt3Jqnbs3qqgYovfUAnTBm0crGLcuIwzOuprRIhC4bfQ==
   dependencies:
     create-react-context "0.2.2"
     hoist-non-react-statics "^3.0.1"
@@ -2790,10 +2790,10 @@ expo-task-manager@~1.0.0:
     expo-errors "~1.0.0"
     expo-task-manager-interface "~1.0.0"
 
-expo@^32.0.0:
-  version "32.0.2"
-  resolved "https://registry.yarnpkg.com/expo/-/expo-32.0.2.tgz#266abf5b5ff955151609666c23946f4e45f3ed23"
-  integrity sha512-56uBjw1Tph1BKMqRP0yhI136OiID+WBn9YRLjpJ6GTJ1Qwh9bt82rJBK2GiEVF/bNyWb7QkhcrgujIASStg11Q==
+expo@^32.0.5:
+  version "32.0.5"
+  resolved "https://registry.yarnpkg.com/expo/-/expo-32.0.5.tgz#ebfa6a12d6f11938264392ec7300ccc4368678fd"
+  integrity sha512-xo8wZ9/4F3P1xN9nKFSJM3Gb2m0p05aRncjgFF+jxM5XfvKkUrzW0a6FYOY/h/r2r1wyQI7OTBPTiTH/GxuwgA==
   dependencies:
     "@babel/runtime" "^7.1.2"
     "@expo/vector-icons" "github:expo/vector-icons#expo-font-fix"
@@ -2857,7 +2857,7 @@ expo@^32.0.0:
     prop-types "^15.6.0"
     qs "^6.5.0"
     react-native-branch "2.2.5"
-    react-native-gesture-handler "1.0.14"
+    react-native-gesture-handler "~1.0.14"
     react-native-maps expo/react-native-maps#v0.22.1-exp.0
     react-native-reanimated "1.0.0-alpha.11"
     react-native-screens "1.0.0-alpha.22"
@@ -5732,15 +5732,6 @@ react-native-branch@2.2.5:
   resolved "https://registry.yarnpkg.com/react-native-branch/-/react-native-branch-2.2.5.tgz#4074dd63b4973e6397d9ce50e97b57c77a518e9d"
   integrity sha1-QHTdY7SXPmOX2c5Q6XtXx3pRjp0=
 
-react-native-gesture-handler@1.0.14:
-  version "1.0.14"
-  resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.0.14.tgz#0e79fcc7175c9bb2e550917a35488100eec8738b"
-  integrity sha512-mp+VD7ukS/gI6HhIJMp9GTIUzbNB+1MS9CvvtWEYoVp0eWFHuDA4W+t1cFNZv08kgDI9mBNbV9jj05hlzefSTw==
-  dependencies:
-    hoist-non-react-statics "^2.3.1"
-    invariant "^2.2.2"
-    prop-types "^15.5.10"
-
 react-native-gesture-handler@~1.0.14:
   version "1.0.15"
   resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.0.15.tgz#7e0d0a457820a3c9325a3d492daaed14400508a6"
@@ -5915,12 +5906,12 @@ react-navigation-tabs@1.0.2:
     react-lifecycles-compat "^3.0.4"
     react-native-tab-view "^1.0.0"
 
-react-navigation@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/react-navigation/-/react-navigation-3.2.0.tgz#8d75c7514b3c994d5a1833c2e0512efba095bc60"
-  integrity sha512-/26pZRlDlNTPk7umMJhOAOjzeej4+5/7s48QRlZhehHJCUNnEkXn2yI8eMfx8q+psgIYg+da0ptIZjzE1YD8hg==
+react-navigation@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/react-navigation/-/react-navigation-3.2.1.tgz#83873d5fe25ec870455d9760b98df6e915fe2d65"
+  integrity sha512-l0vm1orpEAeMdPxTLbe0xxqUDtCVAcgT8q0+xwGnmRT1+2QhRYXSAjQ1md3RJaeg1wCnlfxtMbLUnkf5z4cDkw==
   dependencies:
-    "@react-navigation/core" "3.1.0"
+    "@react-navigation/core" "3.1.1"
     "@react-navigation/native" "3.1.4"
     react-navigation-drawer "1.1.0"
     react-navigation-stack "1.0.9"

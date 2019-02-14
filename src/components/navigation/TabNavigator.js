@@ -32,6 +32,7 @@ const TabNavigator = createAppContainer(
         Map: MapScreen,
         List: ListScreen
     }, {
+        initialRouteName: 'List',
         tabBarPosition: 'bottom',
         tabBarOptions: {
             showIcon: true,
