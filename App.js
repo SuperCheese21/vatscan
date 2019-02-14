@@ -19,7 +19,8 @@ export default class App extends React.PureComponent {
         // Load fonts and update font loaded state
         await Font.loadAsync({
             'Roboto_Regular': require('./assets/fonts/Roboto/Roboto-Regular.ttf'),
-            'Roboto_Condensed_Regular': require('./assets/fonts/Roboto_Condensed/RobotoCondensed-Regular.ttf')
+            'Roboto_Condensed_Regular': require('./assets/fonts/Roboto_Condensed/RobotoCondensed-Regular.ttf'),
+            'Roboto_Mono': require('./assets/fonts/Roboto_Mono/RobotoMono-Regular.ttf')
         });
         await this.setState({ fontLoaded: true });
 
