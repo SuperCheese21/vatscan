@@ -4,7 +4,6 @@ import { BackHandler, RefreshControl, ScrollView, Text, View } from 'react-nativ
 import ClientStatsContainer from '../containers/ClientStatsContainer';
 import FlightPlanContainer from '../containers/FlightPlanContainer';
 import FlightStatsContainer from '../containers/FlightStatsContainer';
-import HeaderContainer from '../containers/HeaderContainer';
 import styles from '../styles';
 
 export default class ClientScreen extends React.PureComponent {
@@ -48,6 +47,7 @@ export default class ClientScreen extends React.PureComponent {
                         {client.callsign}
                     </Text>
                 </View>
+
                 <ScrollView
                     style={{ flex: 1 }}
                     refreshControl={
