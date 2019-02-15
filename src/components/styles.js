@@ -98,14 +98,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         height: 20
     },
-    routeBlock: {
-        backgroundColor: '#f2f2f2',
-        marginTop: 10,
-        paddingLeft: 10,
-        paddingRight: 10,
-        paddingTop: 5,
-        paddingBottom: 5
-    },
     statsContainer: {
         borderRadius: 10,
         padding: 10,
@@ -115,6 +107,14 @@ const styles = StyleSheet.create({
     text: {
         fontFamily: 'Roboto_Regular',
         color: 'white'
+    },
+    textBlock: {
+        backgroundColor: '#f2f2f2',
+        marginTop: 10,
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingTop: 5,
+        paddingBottom: 5
     }
 });
 

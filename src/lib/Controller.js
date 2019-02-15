@@ -27,6 +27,23 @@ export default class Controller extends Client {
         }
     }
 
+    get typeString() {
+        switch (this._controllerType) {
+            case 'CTR':
+                return 'Center';
+            case 'APP':
+                return 'Approach';
+            case 'DEP':
+                return 'Departure';
+            case 'TWR':
+                return 'Tower';
+            case 'GND':
+                return 'Ground';
+            default:
+                return 'N/A';
+        }
+    }
+
     get polygon() {
         return this._polygon;
     }

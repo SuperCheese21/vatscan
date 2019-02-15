@@ -68,7 +68,6 @@ const FlightStatsContainer = ({ client }) => (
             showsIndoors={false}
         >
             <Marker
-                key={client.callsign}
                 image={client.aircraftIcon}
                 rotation={client.heading}
                 anchor={{ x: 0.5, y: 0.5 }}

@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { Surface } from 'react-native-paper';
 
-import RouteBlock from '../RouteBlock';
+import TextBlock from '../TextBlock';
 import styles from '../styles';
 
 const FlightPlanContainer = ({ client }) => (
@@ -35,7 +35,7 @@ const FlightPlanContainer = ({ client }) => (
             Duration  <Text style={{ fontSize: 16, color: '#898989' }}>{client.hrsEnRoute} hrs {client.minEnRoute} min</Text>
         </Text>
 
-        <RouteBlock route={client.route} />
+        <TextBlock text={client.route} />
 
     </Surface>
 );

@@ -1,6 +1,7 @@
 import React from 'react';
 import { BackHandler, RefreshControl, ScrollView, Text, View } from 'react-native';
 
+import ControllerStatsContainer from '../containers/ControllerStatsContainer';
 import ClientStatsContainer from '../containers/ClientStatsContainer';
 import FlightPlanContainer from '../containers/FlightPlanContainer';
 import FlightStatsContainer from '../containers/FlightStatsContainer';
@@ -23,7 +24,7 @@ export default class ClientScreen extends React.PureComponent {
         return true;
     }
 
-    getStats(client) {
+    getStatsComponent(client) {
         if (client.type === 'PILOT') {
             return (
                 <>
@@ -32,7 +33,7 @@ export default class ClientScreen extends React.PureComponent {
                 </>
             );
         } else if (client.type === 'ATC') {
-            return null;
+            return <ControllerStatsContainer client={client} />
         }
     }
 
@@ -60,7 +61,7 @@ export default class ClientScreen extends React.PureComponent {
 
                     <ClientStatsContainer client={client} />
 
-                    {this.getStats(client)}
+                    {this.getStatsComponent(client)}
 
                 </ScrollView>
             </>
