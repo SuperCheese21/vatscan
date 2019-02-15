@@ -110,7 +110,8 @@ const styles = StyleSheet.create({
     },
     textBlock: {
         backgroundColor: '#f2f2f2',
-        marginTop: 10,
+        marginTop: 5,
+        marginBottom: 5,
         paddingLeft: 10,
         paddingRight: 10,
         paddingTop: 5,
