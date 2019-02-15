@@ -16,7 +16,7 @@ const FlightStatsContainer = ({ client }) => (
         <View style={{ flexDirection: 'row' }}>
             <Text style={{ flex: 1 }}>
                 Speed  <Text style={{ fontSize: 16, color: '#898989' }}>{client.groundSpeed} kts</Text>
-                <Text style={{ fontSize: 12 }}> / {client.tasCruise} kts</Text>
+                <Text style={{ fontSize: 12 }}> / {client.tasCruise}</Text>
             </Text>
             <Text style={{ flex: 1 }}>
                 Heading  <Text style={{ fontSize: 16, color: '#898989' }}>{client.heading}°</Text>
@@ -26,7 +26,7 @@ const FlightStatsContainer = ({ client }) => (
         <View style={{ flexDirection: 'row' }}>
             <Text style={{ flex: 1 }}>
                 Altitude  <Text style={{ fontSize: 16, color: '#898989' }}>{client.altitude} ft</Text>
-                <Text style={{ fontSize: 12 }}> / {client.plannedAltitude} ft</Text>
+                <Text style={{ fontSize: 12 }}> / {client.plannedAltitude}</Text>
             </Text>
             <Text style={{ flex: 1 }}>
                 Transponder  <Text style={{ fontSize: 16, color: '#898989' }}>{client.transponder}</Text>

@@ -10,11 +10,11 @@ const FlightPlanContainer = ({ client }) => (
         <Text style={{ fontSize: 18, marginBottom: 5 }}>
             Flight Plan
         </Text>
-        <Text>
+        <Text numberOfLines={1}>
             From  <Text style={{ fontSize: 16, color: '#898989' }}>{client.depAirport}</Text>
             <Text style={{ fontSize: 12 }}> / {client.depAirportName}</Text>
         </Text>
-        <Text>
+        <Text numberOfLines={1}>
             To  <Text style={{ fontSize: 16, color: '#898989' }}>{client.arrAirport}</Text>
             <Text style={{ fontSize: 12 }}> / {client.arrAirportName}</Text>
         </Text>

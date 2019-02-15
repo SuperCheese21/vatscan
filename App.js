@@ -33,7 +33,7 @@ export default class App extends React.PureComponent {
         this.updateData(true);
     }
 
-    updateData(isInitialFetch) {
+    updateData = isInitialFetch => {
         // Check internet connection and alert if there is no connection
         NetInfo.getConnectionInfo().then(connectionInfo => {
             if (connectionInfo.type === 'none' || connectionInfo.type === 'unknown') {
@@ -53,7 +53,7 @@ export default class App extends React.PureComponent {
                     });
 
                     // Set timeout for next data update
-                    setTimeout(() => this.updateData(false), UPDATE_INTERVAL);
+                    setTimeout(this.updateData, UPDATE_INTERVAL);
                 });
             }
         });
@@ -78,7 +78,7 @@ export default class App extends React.PureComponent {
             <StackNavigator
                 screenProps={{
                     loading: this.state.loading,
-                    refresh: () => this.updateData(false),
+                    refresh: this.updateData,
                     clients: this.state.clients,
                     focusedClient: this.state.focusedClient,
                     setFocusedClient: this.setFocusedClient,
