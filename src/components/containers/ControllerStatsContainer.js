@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text } from 'react-native';
 import { Surface } from 'react-native-paper';
 import MapView, { Polygon } from 'react-native-maps';
 

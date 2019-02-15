@@ -7,7 +7,9 @@ import styles from '../styles';
 
 const ControllerDataContainer = props => (
     <TouchableOpacity
-        onPress={() => props.stackNavigation.navigate('ClientScreen')}
+        onPress={() => props.stackNavigation.navigate('ClientScreen', {
+            callsign: props.data.callsign
+        })}
         style={styles.infoContainerController}
     >
         <View style={styles.infoRow}>

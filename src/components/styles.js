@@ -3,15 +3,20 @@ import { StyleSheet } from 'react-native';
 import colors from '../config/colors.json';
 
 const styles = StyleSheet.create({
+    activityIndicator: {
+        position: 'absolute',
+        right: 3,
+        top: 3
+    },
     callsignText: {
         textAlign: 'right',
         marginRight: 30,
         fontSize: 13
     },
     clientCountText: {
-        position: 'absolute',
         fontFamily: 'Roboto_Regular',
-        right: 5,
+        position: 'absolute',
+        left: 5,
         top: 2
     },
     controllerCallsignText: {
@@ -32,17 +37,11 @@ const styles = StyleSheet.create({
             rotate: '90deg'
         }]
     },
-    header: {
-        backgroundColor: colors.primary,
-        height: 56,
-        paddingLeft: 13,
-        paddingRight: 5,
-        flexDirection: 'row'
-    },
     headerText: {
-        fontSize: 20,
-        flex: 1,
-        textAlignVertical: 'center'
+        color: 'white',
+        fontFamily: 'Roboto_Regular',
+        fontWeight: 'normal',
+        fontSize: 20
     },
     icaoText: {
         flex: 1,

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Alert, NetInfo, Share } from 'react-native';
+import { Alert, NetInfo, Platform } from 'react-native';
+import { SafeAreaView } from 'react-navigation';
 import { AppLoading, Font, Linking } from 'expo';
 
 import StackNavigator from './src/components/navigation/StackNavigator';
@@ -23,6 +24,10 @@ export default class App extends React.PureComponent {
             'Roboto_Mono': require('./assets/fonts/Roboto_Mono/RobotoMono-Regular.ttf')
         });
         await this.setState({ fontLoaded: true });
+
+        if (Platform.OS === 'android') {
+            SafeAreaView.setStatusBarHeight(0);
+        }
 
         // Automatically pull data update when internet connection is changed
         NetInfo.addEventListener('connectionChange', () => {

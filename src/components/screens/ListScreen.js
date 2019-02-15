@@ -41,6 +41,8 @@ export default class ListScreen extends React.PureComponent {
                 <FlatList
                     data={this.getFilteredClients()}
                     keyExtractor={this._keyExtractor}
+                    refreshing={this.props.screenProps.loading}
+                    onRefresh={this.props.screenProps.refresh}
                     renderItem={({ item }) => (
                         <ClientsListItem
                             client={item}

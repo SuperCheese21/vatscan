@@ -10,6 +10,7 @@ const ClientsListItem = props => (
             onPress={() => {
                 props.setFocusedClient(props.client);
                 props.stackNavigation.navigate('ClientScreen', {
+                    callsign: props.client.callsign,
                     removeFocusedClient: true
                 });
             }}

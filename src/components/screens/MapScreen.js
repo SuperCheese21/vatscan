@@ -1,11 +1,13 @@
 import React from 'react';
 import { Animated, BackHandler, Text, View } from 'react-native';
+import { ActivityIndicator } from 'react-native-paper';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 
 import MapContainer from '../containers/MapContainer';
 import InfoPanelContainer from '../containers/InfoPanelContainer';
 import { panelStates, panelTransitionDuration } from '../../config/constants.json';
 import styles from '../styles';
+import colors from '../../config/colors.json';
 
 export default class MapScreen extends React.PureComponent {
     state = {
@@ -67,6 +69,11 @@ export default class MapScreen extends React.PureComponent {
                     focusedClient={this.props.screenProps.focusedClient}
                     setFocusedClient={this.setFocusedClient}
                     collapsePanel={this.collapsePanel}
+                />
+                <ActivityIndicator
+                    color={colors.accent}
+                    animating={this.props.screenProps.loading}
+                    style={styles.activityIndicator}
                 />
                 <Text style={styles.clientCountText}>
                     Clients: {this.props.screenProps.clients.length}
