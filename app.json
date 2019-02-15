@@ -2,8 +2,9 @@
     "expo": {
         "name": "VATSCAN",
         "description": "The premier, next generation live VATSIM map for mobile",
-        "version": "0.7.2",
+        "version": "0.7.6",
         "sdkVersion": "32.0.0",
+        "scheme": "vatscan",
         "updates": {
             "fallbackToCacheTimeout": 0
         },

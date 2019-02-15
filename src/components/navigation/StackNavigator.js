@@ -7,7 +7,10 @@ import TabNavigatorContainer from './TabNavigator';
 const StackNavigator = createAppContainer(
     createStackNavigator({
         TabNavigator: TabNavigatorContainer,
-        ClientScreen: ClientScreen
+        ClientScreen: {
+            screen: ClientScreen,
+            path: 'client/:callsign'
+        }
     }, {
         transitionConfig: getSlideFromRightTransition,
         headerMode: 'none'

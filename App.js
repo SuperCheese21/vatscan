@@ -1,6 +1,6 @@
 import React from 'react';
-import { Alert, NetInfo } from 'react-native';
-import { AppLoading, Font } from 'expo';
+import { Alert, NetInfo, Share } from 'react-native';
+import { AppLoading, Font, Linking } from 'expo';
 
 import StackNavigator from './src/components/navigation/StackNavigator';
 import { UPDATE_INTERVAL } from './src/config/constants.json';
@@ -76,6 +76,7 @@ export default class App extends React.PureComponent {
         // Otherwise show top-level view
         return (
             <StackNavigator
+                uriPrefix={Linking.makeUrl('/')}
                 screenProps={{
                     loading: this.state.loading,
                     refresh: this.updateData,
