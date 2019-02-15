@@ -1,4 +1,3 @@
-import Center from './Center';
 import Controller from './Controller';
 import Pilot from './Pilot';
 
@@ -24,10 +23,8 @@ export default class ClientFactory {
         const controllerType = clientArray[0].split('_').pop();
         const center = this.findInCenterData(id);
 
-        if (controllerType === 'CTR') {
-            return new Center(clientArray, center);
-        } else if (['APP','DEP','TWR','GND'].includes(controllerType)) {
-            return new Controller(clientArray, controllerType);
+        if (['CTR','APP','DEP','TWR','GND'].includes(controllerType)) {
+            return new Controller(clientArray, controllerType, center);
         }
 
         return null;
