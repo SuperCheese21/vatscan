@@ -34,13 +34,11 @@ export default class MapScreen extends React.PureComponent {
     setPanelPosition = position => {
         // Animate info panel position change
         this.setState({ panelPositionValue: position });
-        Animated.timing(
-            this.state.panelPosition,
-            {
-                toValue: position,
-                duration: panelTransitionDuration
-            }
-        ).start();
+        Animated.timing(this.state.panelPosition, {
+            toValue: position,
+            duration: panelTransitionDuration,
+            useNativeDriver: true
+        }).start();
     }
 
     setFocusedClient = client => {
