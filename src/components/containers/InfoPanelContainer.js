@@ -10,7 +10,11 @@ const InfoPanelContainer = props => (
     <Animated.View
         style={[
             styles.infoPanelContainer,
-            { bottom: props.panelPosition }
+            {
+                transform: [{
+                    translateY: props.panelPosition
+                }]
+            }
         ]}
     >
         <Data
