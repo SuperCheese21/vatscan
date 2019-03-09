@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 import colors from '../config/colors.json';
+import { defaultPanelPosition } from '../config/constants.json';
 
 const styles = StyleSheet.create({
     activityIndicator: {
@@ -71,6 +72,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 154,
         position: 'absolute',
+        bottom: defaultPanelPosition,
         backgroundColor: colors.primary
     },
     infoRow: {

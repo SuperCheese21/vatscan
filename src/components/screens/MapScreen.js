@@ -14,8 +14,7 @@ import colors from '../../config/colors.json';
 
 export default class MapScreen extends React.PureComponent {
     state = {
-        panelPosition: new Animated.Value(panelStates.COLLAPSED),
-        panelPositionValue: panelStates.COLLAPSED
+        panelPosition: new Animated.Value(panelStates.COLLAPSED)
     };
 
     componentDidMount() {
@@ -39,10 +38,10 @@ export default class MapScreen extends React.PureComponent {
 
     setPanelPosition = position => {
         // Animate info panel position change
-        this.setState({ panelPositionValue: position });
         Animated.timing(this.state.panelPosition, {
             toValue: position,
-            duration: panelTransitionDuration
+            duration: panelTransitionDuration,
+            useNativeDriver: true
         }).start();
     };
 

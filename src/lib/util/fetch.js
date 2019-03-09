@@ -1,7 +1,7 @@
 import { Alert } from 'react-native';
 
 import ClientFactory from '../ClientFactory';
-import { getRandomElement, checkID } from './calc';
+import { getRandomElement } from './calc';
 import { ARTCC_URL, STATUS_URL } from '../../config/constants.json';
 
 /**

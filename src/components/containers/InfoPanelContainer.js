@@ -8,7 +8,16 @@ import styles from '../styles';
 
 const InfoPanelContainer = props => (
     <Animated.View
-        style={[styles.infoPanelContainer, { bottom: props.panelPosition }]}
+        style={[
+            styles.infoPanelContainer,
+            {
+                transform: [
+                    {
+                        translateY: props.panelPosition
+                    }
+                ]
+            }
+        ]}
     >
         <Data
             stackNavigation={props.stackNavigation}

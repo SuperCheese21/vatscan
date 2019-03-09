@@ -39,10 +39,11 @@
         "latitudeDelta": 60,
         "longitudeDelta": 30
     },
+    "defaultPanelPosition": -154,
     "panelStates": {
-        "EXPANDED_PILOT": 0,
-        "EXPANDED_ATC": -69,
-        "COLLAPSED": -154
+        "EXPANDED_PILOT": -154,
+        "EXPANDED_ATC": -85,
+        "COLLAPSED": 0
     },
     "panelTransitionDuration": 350,
     "mapOverlays": {
