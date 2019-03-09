@@ -14,7 +14,7 @@ export default class ClientScreen extends React.PureComponent {
             title: callsign,
             headerRight: <ShareButton callsign={callsign} />
         };
-    }
+    };
 
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
@@ -31,13 +31,16 @@ export default class ClientScreen extends React.PureComponent {
         if (this.props.navigation.getParam('removeFocusedClient')) {
             this.props.screenProps.removeFocusedClient();
         }
-        BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
+        BackHandler.removeEventListener(
+            'hardwareBackPress',
+            this.handleBackPress
+        );
     }
 
     handleBackPress = () => {
         this.props.navigation.goBack();
         return true;
-    }
+    };
 
     getStatsComponent(client) {
         if (client.type === 'PILOT') {
@@ -48,7 +51,7 @@ export default class ClientScreen extends React.PureComponent {
                 </>
             );
         } else if (client.type === 'ATC') {
-            return <ControllerStatsContainer client={client} />
+            return <ControllerStatsContainer client={client} />;
         }
     }
 
@@ -64,11 +67,9 @@ export default class ClientScreen extends React.PureComponent {
                     />
                 }
             >
-
                 <ClientStatsContainer client={client} />
 
                 {this.getStatsComponent(client)}
-
             </ScrollView>
         );
     }

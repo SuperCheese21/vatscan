@@ -9,7 +9,9 @@ rp(URL)
     .catch(err => console.log(err.message));
 
 function parseData(csv) {
-    let airports = csv.split('\n'), airportCoords = {}, airportNames = {};
+    let airports = csv.split('\n'),
+        airportCoords = {},
+        airportNames = {};
     let headers = airports[0].split(',').map(item => item.replace(/"/g, ''));
 
     airports.forEach((line, index) => {
@@ -35,7 +37,7 @@ function parseData(csv) {
 }
 
 function writeJson(json, path) {
-    fs.writeFile(path, json, (err) => {
+    fs.writeFile(path, json, err => {
         if (err) return console.log(err);
         console.log('Data written to ' + path);
     });

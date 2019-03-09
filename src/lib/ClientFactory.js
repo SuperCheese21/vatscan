@@ -23,7 +23,7 @@ export default class ClientFactory {
         const controllerType = clientArray[0].split('_').pop();
         const center = this.findInCenterData(id);
 
-        if (['CTR','APP','DEP','TWR','GND'].includes(controllerType)) {
+        if (['CTR', 'APP', 'DEP', 'TWR', 'GND'].includes(controllerType)) {
             return new Controller(clientArray, controllerType, center);
         }
 

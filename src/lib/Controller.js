@@ -2,7 +2,10 @@ import Client from './Client';
 
 import { getProjectedCoords } from './util/calc';
 import { mapOverlays as colors } from '../config/colors.json';
-import { mapOverlays as constants, NUM_SIDES_CIRCLE } from '../config/constants.json';
+import {
+    mapOverlays as constants,
+    NUM_SIDES_CIRCLE
+} from '../config/constants.json';
 
 export default class Controller extends Client {
     constructor(data, controllerType, center) {
@@ -21,8 +24,10 @@ export default class Controller extends Client {
         } else if (this._controllerType !== 'CTR') {
             this._polygon = [];
             for (let i = 0; i < NUM_SIDES_CIRCLE; i++) {
-                const bearing = 360 / NUM_SIDES_CIRCLE * i;
-                this._polygon.push(getProjectedCoords(this.location, this.radius, bearing));
+                const bearing = (360 / NUM_SIDES_CIRCLE) * i;
+                this._polygon.push(
+                    getProjectedCoords(this.location, this.radius, bearing)
+                );
             }
         }
     }

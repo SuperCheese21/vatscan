@@ -8,7 +8,8 @@ import { initialMapRegion } from '../../config/constants.json';
 import mapStyle from '../../config/map-styles/style_blue_essence.json';
 
 const MapContainer = props => (
-    <MapView style={{ flex: 1 }}
+    <MapView
+        style={{ flex: 1 }}
         provider={'google'}
         initialRegion={initialMapRegion}
         customMapStyle={mapStyle}
@@ -19,7 +20,6 @@ const MapContainer = props => (
         showsIndoors={false}
         onPress={props.collapsePanel}
     >
-
         <MapOverlays
             clients={props.clients}
             focusedClient={props.focusedClient}
@@ -27,7 +27,6 @@ const MapContainer = props => (
         />
 
         <FlightPath focusedClient={props.focusedClient} />
-
     </MapView>
 );
 

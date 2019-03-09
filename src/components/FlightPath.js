@@ -32,6 +32,6 @@ const FlightPath = props => {
 
     // Render nothing if polylines can't be rendered
     return null;
-}
+};
 
 export default FlightPath;

@@ -9,14 +9,18 @@ import mapStyle from '../../config/map-styles/style_blue_essence.json';
 
 const ControllerStatsContainer = ({ client }) => (
     <Surface style={[styles.statsContainer]}>
-        <Text style={{ fontSize: 18, marginBottom: 5 }}>
-            Controller Info
+        <Text style={{ fontSize: 18, marginBottom: 5 }}>Controller Info</Text>
+        <Text>
+            Type{' '}
+            <Text style={{ fontSize: 16, color: '#898989' }}>
+                {client.typeString}
+            </Text>
         </Text>
         <Text>
-            Type  <Text style={{ fontSize: 16, color: '#898989' }}>{client.typeString}</Text>
-        </Text>
-        <Text>
-            Frequency  <Text style={{ fontSize: 16, color: '#898989' }}>{client.frequency}</Text>
+            Frequency{' '}
+            <Text style={{ fontSize: 16, color: '#898989' }}>
+                {client.frequency}
+            </Text>
         </Text>
 
         <TextBlock text={client.atisMessage} />
@@ -44,7 +48,6 @@ const ControllerStatsContainer = ({ client }) => (
                 fillColor={client.fillColor}
             />
         </MapView>
-
     </Surface>
 );
 

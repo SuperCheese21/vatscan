@@ -58,7 +58,8 @@ export default class Pilot extends Client {
                 return 0;
             }
             return Math.round(
-                60 * (this.distRemaining / this._groundSpeed) + (this._altitude / 2000)
+                60 * (this.distRemaining / this._groundSpeed) +
+                    this._altitude / 2000
             );
         }
     }
@@ -91,7 +92,7 @@ export default class Pilot extends Client {
     }
 
     get progress() {
-        return this.distFlown / (this.distFlown + this.distRemaining)
+        return this.distFlown / (this.distFlown + this.distRemaining);
     }
 
     get depAirportName() {
@@ -131,7 +132,10 @@ export default class Pilot extends Client {
     get eta() {
         const eteMinutes = this.getETEMinutes();
         if (eteMinutes) {
-            return moment.utc().add(eteMinutes, 'm').format('HHmm');
+            return moment
+                .utc()
+                .add(eteMinutes, 'm')
+                .format('HHmm');
         }
     }
 

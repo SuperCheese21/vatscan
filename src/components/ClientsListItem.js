@@ -22,9 +22,9 @@ const ClientsListItem = props => (
                     <List.Icon
                         {...itemProps}
                         icon={
-                            props.client.type === 'ATC' ?
-                            'rss-feed' :
-                            'airplanemode-active'
+                            props.client.type === 'ATC'
+                                ? 'rss-feed'
+                                : 'airplanemode-active'
                         }
                     />
                 )}

@@ -5,7 +5,10 @@ import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 
 import MapContainer from '../containers/MapContainer';
 import InfoPanelContainer from '../containers/InfoPanelContainer';
-import { panelStates, panelTransitionDuration } from '../../config/constants.json';
+import {
+    panelStates,
+    panelTransitionDuration
+} from '../../config/constants.json';
 import styles from '../styles';
 import colors from '../../config/colors.json';
 
@@ -13,7 +16,7 @@ export default class MapScreen extends React.PureComponent {
     state = {
         panelPosition: new Animated.Value(panelStates.COLLAPSED),
         panelPositionValue: panelStates.COLLAPSED
-    }
+    };
 
     componentDidMount() {
         // Add listener for Android hardware back button to close info panel
@@ -22,26 +25,26 @@ export default class MapScreen extends React.PureComponent {
 
     componentWillUnmount() {
         // Remove back button listener before component is unmounted
-        BackHandler.removeEventListener('hardwareBackPress', this.collapsePanel);
+        BackHandler.removeEventListener(
+            'hardwareBackPress',
+            this.collapsePanel
+        );
     }
 
     static navigationOptions = {
         tabBarIcon: ({ tintColor }) => (
             <Icon name={'google-maps'} size={20} color={tintColor} />
         )
-    }
+    };
 
     setPanelPosition = position => {
         // Animate info panel position change
         this.setState({ panelPositionValue: position });
-        Animated.timing(
-            this.state.panelPosition,
-            {
-                toValue: position,
-                duration: panelTransitionDuration
-            }
-        ).start();
-    }
+        Animated.timing(this.state.panelPosition, {
+            toValue: position,
+            duration: panelTransitionDuration
+        }).start();
+    };
 
     setFocusedClient = client => {
         // Set focused client and expand panel to height based on client type
@@ -51,7 +54,7 @@ export default class MapScreen extends React.PureComponent {
         } else if (client.type === 'ATC') {
             this.setPanelPosition(panelStates.EXPANDED_ATC);
         }
-    }
+    };
 
     collapsePanel = () => {
         // Collapse panel and remove focused client
@@ -59,7 +62,7 @@ export default class MapScreen extends React.PureComponent {
         this.props.screenProps.removeFocusedClient();
 
         return true;
-    }
+    };
 
     render() {
         return (

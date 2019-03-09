@@ -7,24 +7,27 @@ import colors from '../../config/colors.json';
 import styles from '../styles';
 
 const StackNavigator = createAppContainer(
-    createStackNavigator({
-        TabNavigator: TabNavigatorContainer,
-        ClientScreen: {
-            screen: ClientScreen,
-            path: 'client/:callsign'
-        }
-    }, {
-        transitionConfig: getSlideFromRightTransition,
-        defaultNavigationOptions: {
-            title: 'VATSCAN',
-            headerStyle: {
-                backgroundColor: colors.primary
-            },
-            headerTitleStyle: styles.headerText,
-            headerTintColor: colors.accent
+    createStackNavigator(
+        {
+            TabNavigator: TabNavigatorContainer,
+            ClientScreen: {
+                screen: ClientScreen,
+                path: 'client/:callsign'
+            }
         },
-        headerLayoutPreset: 'center'
-    })
+        {
+            transitionConfig: getSlideFromRightTransition,
+            defaultNavigationOptions: {
+                title: 'VATSCAN',
+                headerStyle: {
+                    backgroundColor: colors.primary
+                },
+                headerTitleStyle: styles.headerText,
+                headerTintColor: colors.accent
+            },
+            headerLayoutPreset: 'center'
+        }
+    )
 );
 
 export default StackNavigator;

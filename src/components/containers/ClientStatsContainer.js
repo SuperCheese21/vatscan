@@ -7,24 +7,30 @@ import styles from '../styles';
 
 const ClientStatsContainer = ({ client }) => (
     <Surface style={styles.statsContainer}>
-        <View style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            marginBottom: 8
-        }}>
-            <Text style={{
-                flex: 1,
-                fontFamily: 'Roboto_Condensed_Regular',
-                fontSize: 26
-            }}>
+        <View
+            style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                marginBottom: 8
+            }}
+        >
+            <Text
+                style={{
+                    flex: 1,
+                    fontFamily: 'Roboto_Condensed_Regular',
+                    fontSize: 26
+                }}
+            >
                 {client.name}
             </Text>
             <View>
                 <Text style={{ color: '#898989' }}>{client.id}</Text>
-                <Badge style={{
-                    backgroundColor: colors.accent,
-                    color: 'white'
-                }}>
+                <Badge
+                    style={{
+                        backgroundColor: colors.accent,
+                        color: 'white'
+                    }}
+                >
                     {client.rating}
                 </Badge>
             </View>
@@ -33,13 +39,22 @@ const ClientStatsContainer = ({ client }) => (
             {client.type === 'PILOT' ? 'Pilot' : 'ATC'}
         </Text>
         <Text>
-            Location  <Text style={{ fontSize: 16, color: '#898989' }}>{client.latitude}, {client.longitude}</Text>
+            Location{' '}
+            <Text style={{ fontSize: 16, color: '#898989' }}>
+                {client.latitude}, {client.longitude}
+            </Text>
         </Text>
         <Text>
-            Server  <Text style={{ fontSize: 16, color: '#898989' }}>{client.server}</Text>
+            Server{' '}
+            <Text style={{ fontSize: 16, color: '#898989' }}>
+                {client.server}
+            </Text>
         </Text>
         <Text>
-            Time Connected  <Text style={{ fontSize: 16, color: '#898989' }}>{client.elapsedTimeLogon}</Text>
+            Time Connected{' '}
+            <Text style={{ fontSize: 16, color: '#898989' }}>
+                {client.elapsedTimeLogon}
+            </Text>
         </Text>
     </Surface>
 );

@@ -7,13 +7,14 @@ import colors from '../config/colors.json';
 
 const ShareButton = ({ callsign }) => (
     <IconButton
-        icon='share'
+        icon="share"
         color={colors.accent}
         onPress={() => {
             const url = Linking.makeUrl('clients/' + callsign);
             const message = 'Check out ' + callsign + ' on VATSCAN!\n\n' + url;
             Share.share({
-                message: message, url: url
+                message: message,
+                url: url
             });
         }}
     />

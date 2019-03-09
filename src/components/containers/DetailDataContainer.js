@@ -9,13 +9,13 @@ const DetailDataContainer = props => (
     <View style={styles.infoContainerDetail}>
         <View style={styles.infoRow}>
             <View style={styles.infoRow}>
-                <Icon name='flight' size={20} color={colors.accent} />
+                <Icon name="flight" size={20} color={colors.accent} />
                 <Text style={[styles.text, styles.infoText]}>
                     {' ' + (props.data.aircraft || 'N/A')}
                 </Text>
             </View>
             <View style={styles.infoRow}>
-                <Icon name='send' size={20} color={colors.accent} />
+                <Icon name="send" size={20} color={colors.accent} />
                 <Text style={[styles.text, styles.infoText]}>
                     {' ' + props.data.groundSpeed + ' kts'}
                 </Text>
@@ -23,13 +23,13 @@ const DetailDataContainer = props => (
         </View>
         <View style={styles.infoRow}>
             <View style={styles.infoRow}>
-                <Icon name='unfold-more' size={20} color={colors.accent} />
+                <Icon name="unfold-more" size={20} color={colors.accent} />
                 <Text style={[styles.text, styles.infoText]}>
                     {' ' + props.data.altitude + ' ft'}
                 </Text>
             </View>
             <View style={styles.infoRow}>
-                <Icon name='navigation' size={20} color={colors.accent} />
+                <Icon name="navigation" size={20} color={colors.accent} />
                 <Text style={[styles.text, styles.infoText]}>
                     {' ' + props.data.heading + '°'}
                 </Text>

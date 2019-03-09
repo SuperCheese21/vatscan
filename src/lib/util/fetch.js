@@ -15,12 +15,27 @@ export async function fetchData(focusedCallsign, isInitialFetch) {
     const data = await Promise.all([
         fetch(clientsUrl)
             .then(res => res.text())
-            .then(text => text.split('!CLIENTS:\r\n').pop().split('\r\n;\r\n;').shift().split('\r\n'))
-            .catch(e => isInitialFetch && Alert.alert('Error', 'Unable to fetch client data')),
+            .then(text =>
+                text
+                    .split('!CLIENTS:\r\n')
+                    .pop()
+                    .split('\r\n;\r\n;')
+                    .shift()
+                    .split('\r\n')
+            )
+            .catch(
+                e =>
+                    isInitialFetch &&
+                    Alert.alert('Error', 'Unable to fetch client data')
+            ),
         fetch(ARTCC_URL)
             .then(res => res.json())
             .then(json => json.features)
-            .catch(e => isInitialFetch && Alert.alert('Error', 'Unable to fetch ARTCC data'))
+            .catch(
+                e =>
+                    isInitialFetch &&
+                    Alert.alert('Error', 'Unable to fetch ARTCC data')
+            )
     ]);
 
     return parseData(data, focusedCallsign);

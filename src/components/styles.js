@@ -33,9 +33,11 @@ const styles = StyleSheet.create({
     fromToIcon: {
         width: 45,
         height: 45,
-        transform: [{
-            rotate: '90deg'
-        }]
+        transform: [
+            {
+                rotate: '90deg'
+            }
+        ]
     },
     headerText: {
         color: 'white',

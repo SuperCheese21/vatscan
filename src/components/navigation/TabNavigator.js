@@ -1,5 +1,8 @@
 import React from 'react';
-import { createAppContainer, createMaterialTopTabNavigator } from 'react-navigation';
+import {
+    createAppContainer,
+    createMaterialTopTabNavigator
+} from 'react-navigation';
 
 import ListScreen from '../screens/ListScreen';
 import MapScreen from '../screens/MapScreen';
@@ -21,25 +24,28 @@ const TabNavigatorContainer = props => (
 
 // Create tab navigator
 const TabNavigator = createAppContainer(
-    createMaterialTopTabNavigator({
-        Map: MapScreen,
-        List: ListScreen
-    }, {
-        tabBarPosition: 'bottom',
-        tabBarOptions: {
-            showIcon: true,
-            upperCaseLabel: false,
-            indicatorStyle: {
-                backgroundColor: colors.accent
-            },
-            labelStyle: {
-                margin: 0
-            },
-            style: {
-                backgroundColor: colors.primaryDark
+    createMaterialTopTabNavigator(
+        {
+            Map: MapScreen,
+            List: ListScreen
+        },
+        {
+            tabBarPosition: 'bottom',
+            tabBarOptions: {
+                showIcon: true,
+                upperCaseLabel: false,
+                indicatorStyle: {
+                    backgroundColor: colors.accent
+                },
+                labelStyle: {
+                    margin: 0
+                },
+                style: {
+                    backgroundColor: colors.primaryDark
+                }
             }
         }
-    })
+    )
 );
 
 export default TabNavigatorContainer;

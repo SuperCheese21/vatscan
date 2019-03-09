@@ -22,7 +22,7 @@ export default class Client {
 
     get elapsedTimeLogon() {
         const now = moment.utc().format('x');
-        const then = moment.utc(this._timeLogon, "YYYYMMDDhhmmss").format('x');
+        const then = moment.utc(this._timeLogon, 'YYYYMMDDhhmmss').format('x');
 
         return moment.utc(now - then).format('HH:mm');
     }
