@@ -19,9 +19,9 @@ export default class App extends React.PureComponent {
     async componentDidMount() {
         // Load fonts and update font loaded state
         await Font.loadAsync({
-            'Roboto_Regular': require('./assets/fonts/Roboto/Roboto-Regular.ttf'),
-            'Roboto_Condensed_Regular': require('./assets/fonts/Roboto_Condensed/RobotoCondensed-Regular.ttf'),
-            'Roboto_Mono': require('./assets/fonts/Roboto_Mono/RobotoMono-Regular.ttf')
+            Roboto_Regular: require('./assets/fonts/Roboto/Roboto-Regular.ttf'),
+            Roboto_Condensed_Regular: require('./assets/fonts/Roboto_Condensed/RobotoCondensed-Regular.ttf'),
+            Roboto_Mono: require('./assets/fonts/Roboto_Mono/RobotoMono-Regular.ttf')
         });
         await this.setState({ fontLoaded: true });
 
@@ -41,8 +41,14 @@ export default class App extends React.PureComponent {
     updateData = isInitialFetch => {
         // Check internet connection and alert if there is no connection
         NetInfo.getConnectionInfo().then(connectionInfo => {
-            if (connectionInfo.type === 'none' || connectionInfo.type === 'unknown') {
-                Alert.alert('No internet connection', 'Connect to the internet to update data');
+            if (
+                connectionInfo.type === 'none' ||
+                connectionInfo.type === 'unknown'
+            ) {
+                Alert.alert(
+                    'No internet connection',
+                    'Connect to the internet to update data'
+                );
             } else {
                 // Set loading state
                 this.setState({ loading: true });
@@ -62,11 +68,11 @@ export default class App extends React.PureComponent {
                 });
             }
         });
-    }
+    };
 
     setFocusedClient = client => {
         this.setState({ focusedClient: client });
-    }
+    };
 
     removeFocusedClient = () => {
         this.setState({ focusedClient: {} });
@@ -75,7 +81,7 @@ export default class App extends React.PureComponent {
     render() {
         // Show app loading screen if font is still being loaded
         if (!this.state.fontLoaded) {
-            return ( <AppLoading /> );
+            return <AppLoading />;
         }
 
         // Otherwise show top-level view

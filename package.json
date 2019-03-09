@@ -14,8 +14,7 @@
     "eject": "expo eject",
     "build-android": "expo build:android",
     "build-ios": "expo build:ios",
-    "test": "jest",
-    "format": "prettier --config ./.prettierrc --write ./src/**/*.js"
+    "format": "prettier --config ./.prettierrc --write ./App.js ./src/**/*.js"
   },
   "jest": {
     "preset": "jest-expo"
