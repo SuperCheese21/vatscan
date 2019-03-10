@@ -5,6 +5,8 @@
   "main": "node_modules/expo/AppEntry.js",
   "devDependencies": {
     "babel-preset-expo": "^5.0.0",
+    "eslint": "^5.15.1",
+    "eslint-config-universe": "^1.0.7",
     "jest-expo": "^32.0.0",
     "prettier": "1.16.4",
     "react-test-renderer": "16.5.0"
@@ -16,7 +18,8 @@
     "build-ios": "expo build:ios",
     "test": "node_modules/.bin/jest",
     "test:debug": "node --inspect-brk node_modules/jest/bin/jest.js --runInBand",
-    "format": "prettier --config ./.prettierrc --write ./App.js ./src/**/*.js"
+    "format": "node_modules/.bin/prettier --config ./.prettierrc --write ./App.js ./src/**/*.js",
+    "eslint": "node_modules/.bin/eslint App.js src/**/*.js"
   },
   "jest": {
     "preset": "jest-expo"
