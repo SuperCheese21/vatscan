@@ -1,4 +1,4 @@
-import constants from '../../config/constants.json';
+import constants from '../config/constants.json';
 
 /**
  * Selects a random element in an array and returns it

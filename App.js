@@ -3,18 +3,22 @@ import { Alert, NetInfo, Platform } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import { AppLoading, Font, Linking } from 'expo';
 
+import FetchManager from './src/api/FetchManager';
 import StackNavigator from './src/components/navigation/StackNavigator';
 import { UPDATE_INTERVAL } from './src/config/constants.json';
-import { fetchData } from './src/lib/util/fetch';
 
 export default class App extends React.PureComponent {
-    // Initialize component state
-    state = {
-        fontLoaded: false,
-        loading: false,
-        clients: [],
-        focusedClient: {}
-    };
+    // Initialize component state and fetch manager
+    constructor() {
+        super();
+        this.state = {
+            fontLoaded: false,
+            loading: false,
+            clients: [],
+            focusedClient: {}
+        };
+        this.fetchManager = new FetchManager();
+    }
 
     async componentDidMount() {
         // Load fonts and update font loaded state
@@ -55,17 +59,19 @@ export default class App extends React.PureComponent {
 
                 // Fetch data
                 const focusedCallsign = this.state.focusedClient.callsign;
-                fetchData(focusedCallsign, isInitialFetch).then(data => {
-                    // Update state with new data
-                    this.setState({
-                        loading: false,
-                        clients: data.clients,
-                        focusedClient: data.focusedClient
-                    });
+                this.fetchManager
+                    .fetchData(focusedCallsign, isInitialFetch)
+                    .then(data => {
+                        // Update state with new data
+                        this.setState({
+                            loading: false,
+                            clients: data.clients,
+                            focusedClient: data.focusedClient
+                        });
 
-                    // Set timeout for next data update
-                    setTimeout(this.updateData, UPDATE_INTERVAL);
-                });
+                        // Set timeout for next data update
+                        setTimeout(this.updateData, UPDATE_INTERVAL);
+                    });
             }
         });
     };
