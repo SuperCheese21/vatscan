@@ -23,7 +23,7 @@ export default class App extends React.PureComponent {
             Roboto_Condensed_Regular: require('./assets/fonts/Roboto_Condensed/RobotoCondensed-Regular.ttf'),
             Roboto_Mono: require('./assets/fonts/Roboto_Mono/RobotoMono-Regular.ttf')
         });
-        await this.setState({ fontLoaded: true });
+        await this.setState({ fontLoaded: true }); // eslint-disable-line
 
         if (Platform.OS === 'android') {
             SafeAreaView.setStatusBarHeight(0);

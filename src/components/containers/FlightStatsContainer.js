@@ -98,7 +98,7 @@ const FlightStatsContainer = ({ client }) => (
                 anchor={{ x: 0.5, y: 0.5 }}
                 coordinate={client.location}
                 tracksViewChanges={false}
-                stopPropagation={true}
+                stopPropagation
                 opacity={1.1}
             />
 

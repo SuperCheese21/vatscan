@@ -5,8 +5,8 @@ const MapOverlays = props => (
     <>
         {props.clients.map((client, index) => {
             const focusedClient =
-                props.focusedClient.callsign == client.callsign;
-            if (client.type == 'PILOT') {
+                props.focusedClient.callsign === client.callsign;
+            if (client.type === 'PILOT') {
                 return (
                     <Marker
                         key={client.callsign}
@@ -16,11 +16,11 @@ const MapOverlays = props => (
                         coordinate={client.location}
                         onPress={() => props.setFocusedClient(client)}
                         tracksViewChanges={false}
-                        stopPropagation={true}
+                        stopPropagation
                         opacity={focusedClient ? 2 : 1.1}
                     />
                 );
-            } else if (client.type == 'ATC' && client.polygon) {
+            } else if (client.type === 'ATC' && client.polygon) {
                 return (
                     <Polygon
                         key={client.callsign}
@@ -32,7 +32,7 @@ const MapOverlays = props => (
                                 ? client.fillColorSelected
                                 : client.fillColor
                         }
-                        tappable={true}
+                        tappable
                         onPress={() => props.setFocusedClient(client)}
                         zIndex={client.zIndex}
                     />

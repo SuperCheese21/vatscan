@@ -25,6 +25,7 @@ export async function fetchData(focusedCallsign, isInitialFetch) {
             )
             .catch(
                 e =>
+                    e &&
                     isInitialFetch &&
                     Alert.alert('Error', 'Unable to fetch client data')
             ),
@@ -33,6 +34,7 @@ export async function fetchData(focusedCallsign, isInitialFetch) {
             .then(json => json.features)
             .catch(
                 e =>
+                    e &&
                     isInitialFetch &&
                     Alert.alert('Error', 'Unable to fetch ARTCC data')
             )

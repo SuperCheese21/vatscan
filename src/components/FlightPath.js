@@ -16,14 +16,14 @@ const FlightPath = props => {
                     coordinates={[depCoords, location]}
                     strokeWidth={2}
                     strokeColor={colors.mapOverlays.lineFlown}
-                    geodesic={true}
+                    geodesic
                     zIndex={5}
                 />
                 <Polyline
                     coordinates={[location, arrCoords]}
                     strokeWidth={2}
                     strokeColor={colors.mapOverlays.lineRemaining}
-                    geodesic={true}
+                    geodesic
                     zIndex={5}
                 />
             </>
