@@ -1,10 +1,9 @@
 import React from 'react';
-import { FlatList, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import { Searchbar } from 'react-native-paper';
 
 import ClientsListItem from '../ClientsListItem';
-import styles from '../styles';
 
 export default class ListScreen extends React.PureComponent {
     state = {
@@ -74,3 +73,10 @@ export default class ListScreen extends React.PureComponent {
         );
     }
 }
+
+const styles = StyleSheet.create({
+    listContainer: {
+        flex: 1,
+        backgroundColor: 'white'
+    }
+});

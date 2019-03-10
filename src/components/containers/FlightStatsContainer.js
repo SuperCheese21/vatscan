@@ -1,10 +1,9 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { Surface } from 'react-native-paper';
 import MapView, { Marker } from 'react-native-maps';
 
 import FlightPath from '../FlightPath';
-import styles from '../styles';
 import mapStyle from '../../config/map-styles/style_blue_essence.json';
 
 const FlightStatsContainer = ({ client }) => (
@@ -106,5 +105,14 @@ const FlightStatsContainer = ({ client }) => (
         </MapView>
     </Surface>
 );
+
+const styles = StyleSheet.create({
+    statsContainer: {
+        borderRadius: 10,
+        padding: 10,
+        elevation: 10,
+        margin: 5
+    }
+});
 
 export default FlightStatsContainer;

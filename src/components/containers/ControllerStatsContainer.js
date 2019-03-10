@@ -1,10 +1,9 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import { Surface } from 'react-native-paper';
 import MapView, { Polygon } from 'react-native-maps';
 
 import TextBlock from '../TextBlock';
-import styles from '../styles';
 import mapStyle from '../../config/map-styles/style_blue_essence.json';
 
 const ControllerStatsContainer = ({ client }) => (
@@ -50,5 +49,14 @@ const ControllerStatsContainer = ({ client }) => (
         </MapView>
     </Surface>
 );
+
+const styles = StyleSheet.create({
+    statsContainer: {
+        borderRadius: 10,
+        padding: 10,
+        elevation: 10,
+        margin: 5
+    }
+});
 
 export default ControllerStatsContainer;

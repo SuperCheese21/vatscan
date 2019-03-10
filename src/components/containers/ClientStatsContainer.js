@@ -1,9 +1,8 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { Badge, Surface } from 'react-native-paper';
 
 import colors from '../../config/colors.json';
-import styles from '../styles';
 
 const ClientStatsContainer = ({ client }) => (
     <Surface style={styles.statsContainer}>
@@ -58,5 +57,14 @@ const ClientStatsContainer = ({ client }) => (
         </Text>
     </Surface>
 );
+
+const styles = StyleSheet.create({
+    statsContainer: {
+        borderRadius: 10,
+        padding: 10,
+        elevation: 10,
+        margin: 5
+    }
+});
 
 export default ClientStatsContainer;

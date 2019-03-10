@@ -1,9 +1,8 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import Icon from '@expo/vector-icons/MaterialIcons';
 
 import colors from '../../config/colors.json';
-import styles from '../styles';
 
 const DetailDataContainer = props => (
     <View style={styles.infoContainerDetail}>
@@ -37,5 +36,25 @@ const DetailDataContainer = props => (
         </View>
     </View>
 );
+
+const styles = StyleSheet.create({
+    infoContainerDetail: {
+        flex: 5,
+        backgroundColor: colors.primaryMedium
+    },
+    infoRow: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    infoText: {
+        fontSize: 14
+    },
+    text: {
+        fontFamily: 'Roboto_Regular',
+        color: 'white'
+    }
+});
 
 export default DetailDataContainer;

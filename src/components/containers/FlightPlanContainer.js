@@ -1,9 +1,8 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { Surface } from 'react-native-paper';
 
 import TextBlock from '../TextBlock';
-import styles from '../styles';
 
 const FlightPlanContainer = ({ client }) => (
     <Surface style={styles.statsContainer}>
@@ -54,5 +53,14 @@ const FlightPlanContainer = ({ client }) => (
         <TextBlock text={client.route} />
     </Surface>
 );
+
+const styles = StyleSheet.create({
+    statsContainer: {
+        borderRadius: 10,
+        padding: 10,
+        elevation: 10,
+        margin: 5
+    }
+});
 
 export default FlightPlanContainer;

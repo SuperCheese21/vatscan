@@ -1,7 +1,6 @@
 import React from 'react';
+import { StyleSheet } from 'react-native';
 import { List, Surface, TouchableRipple } from 'react-native-paper';
-
-import styles from './styles';
 
 const ClientsListItem = props => (
     // Wrap list item in touchable ripple for highlight effect
@@ -32,5 +31,13 @@ const ClientsListItem = props => (
         </TouchableRipple>
     </Surface>
 );
+
+const styles = StyleSheet.create({
+    listItem: {
+        elevation: 5,
+        margin: 5,
+        borderRadius: 5
+    }
+});
 
 export default ClientsListItem;
