@@ -4,7 +4,7 @@ import Client from './Client';
 import airportCoords from '../data/airportCoords.json';
 import airportNames from '../data/airportNames.json';
 import constants from '../config/constants.json';
-import { getGCDistance } from './calc';
+import { getGCDistance } from './util';
 
 const NARROWBODY_ICON = require('../../assets/icons/narrowbody.png');
 const WIDEBODY_ICON = require('../../assets/icons/widebody.png');
