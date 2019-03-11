@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Badge, Surface } from 'react-native-paper';
 
-import colors from '../../config/colors.json';
+import colors from '../config/colors.json';
 
 const ClientStatsContainer = ({ client }) => (
     <Surface style={styles.statsContainer}>

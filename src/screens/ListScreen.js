@@ -3,7 +3,7 @@ import { FlatList, StyleSheet, Text, View } from 'react-native';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import { Searchbar } from 'react-native-paper';
 
-import ClientsListItem from '../ClientsListItem';
+import ClientsListItem from '../components/ClientsListItem';
 
 export default class ListScreen extends React.PureComponent {
     state = {

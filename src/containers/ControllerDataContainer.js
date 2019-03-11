@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 
-import colors from '../../config/colors.json';
+import colors from '../config/colors.json';
 
 const ControllerDataContainer = props => (
     <TouchableOpacity

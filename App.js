@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-navigation';
 import { AppLoading, Font, Linking } from 'expo';
 
 import FetchManager from './src/api/FetchManager';
-import StackNavigator from './src/components/navigation/StackNavigator';
+import StackNavigator from './src/navigation/StackNavigator';
 import { UPDATE_INTERVAL } from './src/config/constants.json';
 
 export default class App extends React.PureComponent {

@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Surface } from 'react-native-paper';
 
-import TextBlock from '../TextBlock';
+import TextBlock from '../components/TextBlock';
 
 const FlightPlanContainer = ({ client }) => (
     <Surface style={styles.statsContainer}>

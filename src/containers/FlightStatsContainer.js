@@ -3,8 +3,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Surface } from 'react-native-paper';
 import MapView, { Marker } from 'react-native-maps';
 
-import FlightPath from '../FlightPath';
-import mapStyle from '../../config/map-styles/style_blue_essence.json';
+import FlightPath from '../components/FlightPath';
+import mapStyle from '../config/map-styles/style_blue_essence.json';
 
 const FlightStatsContainer = ({ client }) => (
     <Surface style={[styles.statsContainer, { height: 450 }]}>

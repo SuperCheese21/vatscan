@@ -5,7 +5,7 @@ import ControllerStatsContainer from '../containers/ControllerStatsContainer';
 import ClientStatsContainer from '../containers/ClientStatsContainer';
 import FlightPlanContainer from '../containers/FlightPlanContainer';
 import FlightStatsContainer from '../containers/FlightStatsContainer';
-import ShareButton from '../ShareButton';
+import ShareButton from '../components/ShareButton';
 
 export default class ClientScreen extends React.PureComponent {
     static navigationOptions = ({ navigation }) => {

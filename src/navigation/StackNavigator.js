@@ -3,7 +3,7 @@ import getSlideFromRightTransition from 'react-navigation-slide-from-right-trans
 
 import ClientScreen from '../screens/ClientScreen';
 import TabNavigatorContainer from './TabNavigator';
-import colors from '../../config/colors.json';
+import colors from '../config/colors.json';
 
 const StackNavigator = createAppContainer(
     createStackNavigator(

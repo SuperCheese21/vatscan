@@ -3,8 +3,8 @@ import { StyleSheet, Text } from 'react-native';
 import { Surface } from 'react-native-paper';
 import MapView, { Polygon } from 'react-native-maps';
 
-import TextBlock from '../TextBlock';
-import mapStyle from '../../config/map-styles/style_blue_essence.json';
+import TextBlock from '../components/TextBlock';
+import mapStyle from '../config/map-styles/style_blue_essence.json';
 
 const ControllerStatsContainer = ({ client }) => (
     <Surface style={[styles.statsContainer]}>

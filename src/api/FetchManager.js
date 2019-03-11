@@ -54,9 +54,9 @@ export default class FetchManager {
 
     /**
      * Parses the raw server data from text and json to a custom javascript object
-     * @param  {String} text Raw VATSIM server data
-     * @param  {Object} json Raw client dat
-     * @return {Object}      Client data formatted as a javascript object
+     * @param  {String} rawData         Raw VATSIM server data
+     * @param  {Object} focusedCallsign Raw client data
+     * @return {Object}                 Client data formatted as a javascript object
      */
     _parseData(rawData, focusedCallsign) {
         const data = rawData[0] || [];
@@ -84,7 +84,7 @@ export default class FetchManager {
     }
 
     /**
-     * [getServerUrls description]
+     * [_fetchServerUrls description]
      * @return {Promise} [description]
      */
     async _fetchServerUrls() {

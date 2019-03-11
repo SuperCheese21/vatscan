@@ -5,11 +5,11 @@ import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 
 import MapContainer from '../containers/MapContainer';
 import InfoPanelContainer from '../containers/InfoPanelContainer';
-import { accent as accentColor } from '../../config/colors.json';
+import { accent as accentColor } from '../config/colors.json';
 import {
     panelStates,
     panelTransitionDuration
-} from '../../config/constants.json';
+} from '../config/constants.json';
 
 export default class MapScreen extends React.PureComponent {
     state = {

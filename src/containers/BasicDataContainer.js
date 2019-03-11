@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import FlightProgressBar from '../FlightProgressBar';
+import FlightProgressBar from '../components/FlightProgressBar';
 
 const BasicDataContainer = props => (
     <TouchableOpacity
@@ -24,7 +24,7 @@ const BasicDataContainer = props => (
             </Text>
             <Image
                 style={styles.fromToIcon}
-                source={require('../../../assets/icons/narrowbody.png')}
+                source={require('../../assets/icons/narrowbody.png')}
             />
             <Text style={[styles.text, styles.icaoText, { marginLeft: 6 }]}>
                 {props.data.arrAirport || '????'}

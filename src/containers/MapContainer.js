@@ -1,11 +1,11 @@
 import React from 'react';
 import MapView from 'react-native-maps';
 
-import FlightPath from '../FlightPath';
-import MapOverlays from '../MapOverlays';
+import FlightPath from '../components/FlightPath';
+import MapOverlays from '../components/MapOverlays';
 
-import { initialMapRegion } from '../../config/constants.json';
-import mapStyle from '../../config/map-styles/style_blue_essence.json';
+import { initialMapRegion } from '../config/constants.json';
+import mapStyle from '../config/map-styles/style_blue_essence.json';
 
 const MapContainer = props => (
     <MapView

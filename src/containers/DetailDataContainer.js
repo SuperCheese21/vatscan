@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Icon from '@expo/vector-icons/MaterialIcons';
 
-import colors from '../../config/colors.json';
+import colors from '../config/colors.json';
 
 const DetailDataContainer = props => (
     <View style={styles.infoContainerDetail}>
