@@ -34,19 +34,17 @@ export default class FetchManager {
                         .shift()
                         .split('\r\n')
                 )
-                .catch(
-                    e =>    // eslint-disable-line
-                        isInitialFetch &&
-                        Alert.alert('Error', 'Unable to fetch client data')
-                ),
+                .catch(e => {   // eslint-disable-line
+                    isInitialFetch &&
+                        Alert.alert('Error', 'Unable to fetch client data');
+                }),
             fetch(ARTCC_URL)
                 .then(res => res.json())
                 .then(json => json.features)
-                .catch(
-                    e =>    // eslint-disable-line
-                        isInitialFetch &&
-                        Alert.alert('Error', 'Unable to fetch ARTCC data')
-                )
+                .catch(e => {   // eslint-disable-line
+                    isInitialFetch &&
+                        Alert.alert('Error', 'Unable to fetch ARTCC data');
+                })
         ]);
 
         return this._parseData(data, focusedCallsign);

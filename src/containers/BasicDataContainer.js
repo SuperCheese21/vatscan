@@ -1,7 +1,8 @@
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ProgressBar } from 'react-native-paper';
 
-import FlightProgressBar from '../components/FlightProgressBar';
+import colors from '../config/colors.json';
 
 const BasicDataContainer = props => (
     <TouchableOpacity
@@ -46,7 +47,11 @@ const BasicDataContainer = props => (
         </View>
 
         <View style={styles.pilotInfoView}>
-            <FlightProgressBar progress={props.data.progress} />
+            <ProgressBar
+                style={styles.progressBar}
+                progress={props.data.progress}
+                color={colors.accent}
+            />
         </View>
     </TouchableOpacity>
 );
@@ -87,6 +92,11 @@ const styles = StyleSheet.create({
     pilotInfoView: {
         flexDirection: 'row',
         height: 20
+    },
+    progressBar: {
+        flex: 1,
+        marginLeft: 20,
+        marginRight: 20
     },
     text: {
         fontFamily: 'Roboto_Regular',
