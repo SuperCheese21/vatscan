@@ -34,20 +34,40 @@ export default class FetchManager {
                         .shift()
                         .split('\r\n')
                 )
-                .catch(e => {   // eslint-disable-line
-                    isInitialFetch &&
+                .catch(e => {
+                    e &&
+                        isInitialFetch &&
                         Alert.alert('Error', 'Unable to fetch client data');
                 }),
             fetch(ARTCC_URL)
                 .then(res => res.json())
                 .then(json => json.features)
-                .catch(e => {   // eslint-disable-line
-                    isInitialFetch &&
+                .catch(e => {
+                    e &&
+                        isInitialFetch &&
                         Alert.alert('Error', 'Unable to fetch ARTCC data');
                 })
         ]);
 
         return this._parseData(data, focusedCallsign);
+    }
+
+    /**
+     * [_fetchServerUrls description]
+     * @return {Promise} [description]
+     */
+    async _fetchServerUrls() {
+        try {
+            const text = await fetch(STATUS_URL).then(res => res.text());
+
+            text.split('\n').forEach(line => {
+                if (line.includes('url0=')) {
+                    this.serverUrls.push(line.replace('url0=', ''));
+                }
+            });
+        } catch (err) {
+            console.error(err);
+        }
     }
 
     /**
@@ -79,23 +99,5 @@ export default class FetchManager {
         });
 
         return clientData;
-    }
-
-    /**
-     * [_fetchServerUrls description]
-     * @return {Promise} [description]
-     */
-    async _fetchServerUrls() {
-        try {
-            const text = await fetch(STATUS_URL).then(res => res.text());
-
-            text.split('\n').forEach(line => {
-                if (line.includes('url0=')) {
-                    this.serverUrls.push(line.replace('url0=', ''));
-                }
-            });
-        } catch (err) {
-            console.error(err);
-        }
     }
 }
