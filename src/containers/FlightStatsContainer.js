@@ -4,9 +4,9 @@ import { Surface } from 'react-native-paper';
 import { MapView } from 'expo';
 
 import FlightPath from '../components/FlightPath';
+import Map from '../components/Map';
 import StatsLabel from '../components/StatsLabel';
 import StatsRow from '../components/StatsRow';
-import mapStyle from '../config/map-styles/style_blue_essence.json';
 
 const FlightStatsContainer = ({ client }) => (
     <Surface style={styles.statsContainer}>
@@ -43,21 +43,14 @@ const FlightStatsContainer = ({ client }) => (
             />
         </View>
 
-        <MapView
+        <Map
             style={{ flex: 1, marginTop: 5 }}
-            provider={'google'}
             initialRegion={{
                 latitude: client.latitude,
                 longitude: client.longitude,
                 latitudeDelta: 5,
                 longitudeDelta: 5
             }}
-            customMapStyle={mapStyle}
-            moveOnMarkerPress={false}
-            toolbarEnabled={false}
-            pitchEnabled={false}
-            rotateEnabled={false}
-            showsIndoors={false}
         >
             <MapView.Marker
                 image={client.aircraftIcon}
@@ -70,7 +63,7 @@ const FlightStatsContainer = ({ client }) => (
             />
 
             <FlightPath focusedClient={client} />
-        </MapView>
+        </Map>
     </Surface>
 );
 

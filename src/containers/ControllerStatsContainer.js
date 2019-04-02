@@ -3,10 +3,10 @@ import { StyleSheet } from 'react-native';
 import { Surface } from 'react-native-paper';
 import { MapView } from 'expo';
 
+import Map from '../components/Map';
 import StatsLabel from '../components/StatsLabel';
 import StatsRow from '../components/StatsRow';
 import TextBlock from '../components/TextBlock';
-import mapStyle from '../config/map-styles/style_blue_essence.json';
 
 const ControllerStatsContainer = ({ client }) => (
     <Surface style={styles.statsContainer}>
@@ -17,21 +17,14 @@ const ControllerStatsContainer = ({ client }) => (
 
         <TextBlock text={client.atisMessage} />
 
-        <MapView
+        <Map
             style={{ width: '100%', height: 300, marginTop: 5 }}
-            provider={'google'}
             initialRegion={{
                 latitude: client.latitude,
                 longitude: client.longitude,
                 latitudeDelta: 5,
                 longitudeDelta: 5
             }}
-            customMapStyle={mapStyle}
-            moveOnMarkerPress={false}
-            toolbarEnabled={false}
-            pitchEnabled={false}
-            rotateEnabled={false}
-            showsIndoors={false}
         >
             <MapView.Polygon
                 coordinates={client.polygon}
@@ -39,7 +32,7 @@ const ControllerStatsContainer = ({ client }) => (
                 strokeColor={client.strokeColor}
                 fillColor={client.fillColor}
             />
-        </MapView>
+        </Map>
     </Surface>
 );
 

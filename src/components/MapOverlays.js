@@ -1,5 +1,5 @@
 import React from 'react';
-import { Marker, Polygon } from 'react-native-maps';
+import { MapView } from 'expo';
 
 const MapOverlays = props => (
     <>
@@ -8,7 +8,7 @@ const MapOverlays = props => (
                 props.focusedClient.callsign === client.callsign;
             if (client.type === 'PILOT') {
                 return (
-                    <Marker
+                    <MapView.Marker
                         key={client.callsign}
                         image={client.aircraftIcon}
                         rotation={client.heading}
@@ -22,7 +22,7 @@ const MapOverlays = props => (
                 );
             } else if (client.type === 'ATC' && client.polygon) {
                 return (
-                    <Polygon
+                    <MapView.Polygon
                         key={client.callsign}
                         coordinates={client.polygon}
                         strokeWidth={focusedClient ? 2 : 1}
