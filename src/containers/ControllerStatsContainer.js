@@ -1,15 +1,14 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import { Surface } from 'react-native-paper';
 import { MapView } from 'expo';
 
 import Map from '../components/Map';
+import StatsContainer from './StatsContainer';
 import StatsLabel from '../components/StatsLabel';
 import StatsRow from '../components/StatsRow';
 import TextBlock from '../components/TextBlock';
 
 const ControllerStatsContainer = ({ client }) => (
-    <Surface style={styles.statsContainer}>
+    <StatsContainer>
         <StatsLabel text="Controller Info" />
 
         <StatsRow label="Type" text={client.typeString} />
@@ -18,7 +17,7 @@ const ControllerStatsContainer = ({ client }) => (
         <TextBlock text={client.atisMessage} />
 
         <Map
-            style={{ width: '100%', height: 300, marginTop: 5 }}
+            style={{ width: '100%', marginTop: 5, height: 350 }}
             initialRegion={{
                 latitude: client.latitude,
                 longitude: client.longitude,
@@ -33,16 +32,7 @@ const ControllerStatsContainer = ({ client }) => (
                 fillColor={client.fillColor}
             />
         </Map>
-    </Surface>
+    </StatsContainer>
 );
-
-const styles = StyleSheet.create({
-    statsContainer: {
-        borderRadius: 10,
-        padding: 10,
-        elevation: 10,
-        margin: 5
-    }
-});
 
 export default ControllerStatsContainer;

@@ -1,13 +1,14 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Badge, Surface } from 'react-native-paper';
+import { Badge } from 'react-native-paper';
 
+import StatsContainer from './StatsContainer';
 import StatsLabel from '../components/StatsLabel';
 import StatsRow from '../components/StatsRow';
 import colors from '../config/colors.json';
 
 const ClientStatsContainer = ({ client }) => (
-    <Surface style={styles.statsContainer}>
+    <StatsContainer>
         <View style={styles.nameContainer}>
             <Text style={styles.nameText}>{client.name}</Text>
             <View>
@@ -29,7 +30,7 @@ const ClientStatsContainer = ({ client }) => (
         />
         <StatsRow label="Server" text={client.server} />
         <StatsRow label="Time Connected" text={client.elapsedTimeLogon} />
-    </Surface>
+    </StatsContainer>
 );
 
 const styles = StyleSheet.create({
@@ -42,12 +43,6 @@ const styles = StyleSheet.create({
         flex: 1,
         fontFamily: 'Roboto_Condensed_Regular',
         fontSize: 26
-    },
-    statsContainer: {
-        borderRadius: 10,
-        padding: 10,
-        elevation: 10,
-        margin: 5
     }
 });
 

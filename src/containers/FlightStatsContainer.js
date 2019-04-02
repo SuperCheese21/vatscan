@@ -1,15 +1,15 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Surface } from 'react-native-paper';
+import { View } from 'react-native';
 import { MapView } from 'expo';
 
 import FlightPath from '../components/FlightPath';
 import Map from '../components/Map';
+import StatsContainer from './StatsContainer';
 import StatsLabel from '../components/StatsLabel';
 import StatsRow from '../components/StatsRow';
 
 const FlightStatsContainer = ({ client }) => (
-    <Surface style={styles.statsContainer}>
+    <StatsContainer>
         <StatsLabel text="Flight Info" />
 
         <View style={{ flexDirection: 'row' }}>
@@ -44,7 +44,7 @@ const FlightStatsContainer = ({ client }) => (
         </View>
 
         <Map
-            style={{ flex: 1, marginTop: 5 }}
+            style={{ flex: 1, marginTop: 5, height: 350 }}
             initialRegion={{
                 latitude: client.latitude,
                 longitude: client.longitude,
@@ -64,17 +64,7 @@ const FlightStatsContainer = ({ client }) => (
 
             <FlightPath focusedClient={client} />
         </Map>
-    </Surface>
+    </StatsContainer>
 );
-
-const styles = StyleSheet.create({
-    statsContainer: {
-        borderRadius: 10,
-        padding: 10,
-        elevation: 10,
-        margin: 5,
-        height: 450
-    }
-});
 
 export default FlightStatsContainer;
