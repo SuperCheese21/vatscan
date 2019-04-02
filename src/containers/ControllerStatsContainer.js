@@ -1,26 +1,19 @@
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Surface } from 'react-native-paper';
-import MapView, { Polygon } from 'react-native-maps';
+import { MapView } from 'expo';
 
+import StatsLabel from '../components/StatsLabel';
+import StatsRow from '../components/StatsRow';
 import TextBlock from '../components/TextBlock';
 import mapStyle from '../config/map-styles/style_blue_essence.json';
 
 const ControllerStatsContainer = ({ client }) => (
-    <Surface style={[styles.statsContainer]}>
-        <Text style={{ fontSize: 18, marginBottom: 5 }}>Controller Info</Text>
-        <Text>
-            Type{'  '}
-            <Text style={{ fontSize: 16, color: '#898989' }}>
-                {client.typeString}
-            </Text>
-        </Text>
-        <Text>
-            Frequency{'  '}
-            <Text style={{ fontSize: 16, color: '#898989' }}>
-                {client.frequency}
-            </Text>
-        </Text>
+    <Surface style={styles.statsContainer}>
+        <StatsLabel text="Controller Info" />
+
+        <StatsRow label="Type" text={client.typeString} />
+        <StatsRow label="Frequency" text={client.frequency} />
 
         <TextBlock text={client.atisMessage} />
 
@@ -40,7 +33,7 @@ const ControllerStatsContainer = ({ client }) => (
             rotateEnabled={false}
             showsIndoors={false}
         >
-            <Polygon
+            <MapView.Polygon
                 coordinates={client.polygon}
                 strokeWidth={1}
                 strokeColor={client.strokeColor}
