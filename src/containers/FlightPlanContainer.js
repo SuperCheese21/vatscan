@@ -1,54 +1,36 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Surface } from 'react-native-paper';
 
+import StatsLabel from '../components/StatsLabel';
+import StatsRow from '../components/StatsRow';
 import TextBlock from '../components/TextBlock';
 
 const FlightPlanContainer = ({ client }) => (
     <Surface style={styles.statsContainer}>
-        <Text style={{ fontSize: 18, marginBottom: 5 }}>Flight Plan</Text>
-        <Text numberOfLines={1}>
-            From{' '}
-            <Text style={{ fontSize: 16, color: '#898989' }}>
-                {client.depAirport}
-            </Text>
-            <Text style={{ fontSize: 12 }}> / {client.depAirportName}</Text>
-        </Text>
-        <Text numberOfLines={1}>
-            To{' '}
-            <Text style={{ fontSize: 16, color: '#898989' }}>
-                {client.arrAirport}
-            </Text>
-            <Text style={{ fontSize: 12 }}> / {client.arrAirportName}</Text>
-        </Text>
-        <Text style={{ flex: 1 }}>
-            Aircraft{' '}
-            <Text style={{ fontSize: 16, color: '#898989' }}>
-                {client.aircraft}
-            </Text>
-        </Text>
+        <StatsLabel text="Flight Plan" />
+
+        <StatsRow
+            label="From"
+            text={client.depAirport}
+            planned={client.depAirportName}
+        />
+        <StatsRow
+            label="To"
+            text={client.arrAirport}
+            planned={client.arrAirportName}
+        />
+        <StatsRow label="Aircraft" text={client.aircraft} />
 
         <View style={{ flexDirection: 'row' }}>
-            <Text style={{ flex: 1 }}>
-                Departure{' '}
-                <Text style={{ fontSize: 16, color: '#898989' }}>
-                    {client.plannedDepTime}z
-                </Text>
-            </Text>
-            <Text style={{ flex: 1 }}>
-                Arrival{' '}
-                <Text style={{ fontSize: 16, color: '#898989' }}>
-                    {client.plannedArrTime}z
-                </Text>
-            </Text>
+            <StatsRow label="Departure" text={client.plannedDepTime + 'z'} />
+            <StatsRow label="Arrival" text={client.plannedArrTime + 'z'} />
         </View>
 
-        <Text style={{ flex: 1 }}>
-            Duration{' '}
-            <Text style={{ fontSize: 16, color: '#898989' }}>
-                {client.hrsEnRoute} hrs {client.minEnRoute} min
-            </Text>
-        </Text>
+        <StatsRow
+            label="Duration"
+            text={client.hrsEnRoute + ' hrs ' + client.minEnRoute + ' min'}
+        />
 
         <TextBlock text={client.route} />
     </Surface>

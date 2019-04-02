@@ -10,13 +10,13 @@ const ControllerStatsContainer = ({ client }) => (
     <Surface style={[styles.statsContainer]}>
         <Text style={{ fontSize: 18, marginBottom: 5 }}>Controller Info</Text>
         <Text>
-            Type{' '}
+            Type{'  '}
             <Text style={{ fontSize: 16, color: '#898989' }}>
                 {client.typeString}
             </Text>
         </Text>
         <Text>
-            Frequency{' '}
+            Frequency{'  '}
             <Text style={{ fontSize: 16, color: '#898989' }}>
                 {client.frequency}
             </Text>
