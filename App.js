@@ -29,6 +29,7 @@ export default class App extends React.PureComponent {
         });
         this.setState({ fontLoaded: true }); // eslint-disable-line
 
+        // Fix status bar height
         if (Platform.OS === 'android') {
             SafeAreaView.setStatusBarHeight(0);
         }

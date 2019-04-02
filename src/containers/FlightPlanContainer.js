@@ -13,12 +13,12 @@ const FlightPlanContainer = ({ client }) => (
         <StatsRow
             label="From"
             text={client.depAirport}
-            planned={client.depAirportName}
+            planned={client.depCityName}
         />
         <StatsRow
             label="To"
             text={client.arrAirport}
-            planned={client.arrAirportName}
+            planned={client.arrCityName}
         />
         <StatsRow label="Aircraft" text={client.aircraft} />
 

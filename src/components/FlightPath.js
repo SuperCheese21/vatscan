@@ -1,5 +1,5 @@
 import React from 'react';
-import { Polyline } from 'react-native-maps';
+import { MapView } from 'expo';
 
 import colors from '../config/colors.json';
 
@@ -12,14 +12,14 @@ const FlightPath = props => {
     if (depCoords && location && arrCoords) {
         return (
             <>
-                <Polyline
+                <MapView.Polyline
                     coordinates={[depCoords, location]}
                     strokeWidth={2}
                     strokeColor={colors.mapOverlays.lineFlown}
                     geodesic
                     zIndex={5}
                 />
-                <Polyline
+                <MapView.Polyline
                     coordinates={[location, arrCoords]}
                     strokeWidth={2}
                     strokeColor={colors.mapOverlays.lineRemaining}

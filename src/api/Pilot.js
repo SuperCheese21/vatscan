@@ -95,18 +95,26 @@ export default class Pilot extends Client {
         return this.distFlown / (this.distFlown + this.distRemaining);
     }
 
-    get depAirportName() {
+    get depCityName() {
         const names = airportNames[this._depAirport];
         if (names) {
-            return names.airport;
+            const region = names.region.split('-');
+            if (region[0] === 'US') {
+                return names.city + ', ' + region[1];
+            }
+            return names.city + ', ' + names.country;
         }
         return 'Unknown';
     }
 
-    get arrAirportName() {
+    get arrCityName() {
         const names = airportNames[this._arrAirport];
         if (names) {
-            return names.airport;
+            const region = names.region.split('-');
+            if (region[0] === 'US') {
+                return names.city + ', ' + region[1];
+            }
+            return names.city + ', ' + names.country;
         }
         return 'Unknown';
     }
