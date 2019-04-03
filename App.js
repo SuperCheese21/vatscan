@@ -97,9 +97,9 @@ export default class App extends React.PureComponent {
                 uriPrefix={Linking.makeUrl('/')}
                 screenProps={{
                     loading: this.state.loading,
-                    refresh: this.updateData,
                     clients: this.state.clients,
                     focusedClient: this.state.focusedClient,
+                    refresh: this.updateData,
                     setFocusedClient: this.setFocusedClient,
                     removeFocusedClient: this.removeFocusedClient
                 }}

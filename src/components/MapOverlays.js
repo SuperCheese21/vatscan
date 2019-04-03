@@ -1,40 +1,27 @@
 import React from 'react';
 import { MapView } from 'expo';
 
-const MapOverlays = props => (
+export default props => (
     <>
         {props.clients.map((client, index) => {
             const focusedClient =
                 props.focusedClient.callsign === client.callsign;
             if (client.type === 'PILOT') {
                 return (
-                    <MapView.Marker
+                    <Marker
                         key={client.callsign}
-                        image={client.aircraftIcon}
-                        rotation={client.heading}
-                        anchor={{ x: 0.5, y: 0.5 }}
-                        coordinate={client.location}
+                        client={client}
+                        selected={focusedClient}
                         onPress={() => props.setFocusedClient(client)}
-                        tracksViewChanges={false}
-                        stopPropagation
-                        opacity={focusedClient ? 2 : 1.1}
                     />
                 );
             } else if (client.type === 'ATC' && client.polygon) {
                 return (
-                    <MapView.Polygon
+                    <Polygon
                         key={client.callsign}
-                        coordinates={client.polygon}
-                        strokeWidth={focusedClient ? 2 : 1}
-                        strokeColor={client.strokeColor}
-                        fillColor={
-                            focusedClient
-                                ? client.fillColorSelected
-                                : client.fillColor
-                        }
-                        tappable
+                        client={client}
+                        selected={focusedClient}
                         onPress={() => props.setFocusedClient(client)}
-                        zIndex={client.zIndex}
                     />
                 );
             }
@@ -42,4 +29,31 @@ const MapOverlays = props => (
     </>
 );
 
-export default MapOverlays;
+export const Polygon = props => (
+    <MapView.Polygon
+        coordinates={props.client.polygon}
+        zIndex={props.client.zIndex}
+        strokeColor={props.client.strokeColor}
+        strokeWidth={props.selected ? 2 : 1}
+        fillColor={
+            props.selected
+                ? props.client.fillColorSelected
+                : props.client.fillColor
+        }
+        onPress={props.onPress}
+        tappable
+    />
+);
+
+export const Marker = props => (
+    <MapView.Marker
+        image={props.client.aircraftIcon}
+        rotation={props.client.heading}
+        coordinate={props.client.location}
+        onPress={props.onPress}
+        opacity={props.selected ? 2 : 1.1}
+        anchor={{ x: 0.5, y: 0.5 }}
+        tracksViewChanges={false}
+        stopPropagation
+    />
+);

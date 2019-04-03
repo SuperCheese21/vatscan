@@ -1,9 +1,9 @@
 import React from 'react';
 import { View } from 'react-native';
-import { MapView } from 'expo';
 
 import FlightPath from '../components/FlightPath';
 import Map from '../components/Map';
+import { Marker } from '../components/MapOverlays';
 import StatsContainer from './StatsContainer';
 import StatsLabel from '../components/StatsLabel';
 import StatsRow from '../components/StatsRow';
@@ -52,15 +52,7 @@ const FlightStatsContainer = ({ client }) => (
                 longitudeDelta: 5
             }}
         >
-            <MapView.Marker
-                image={client.aircraftIcon}
-                rotation={client.heading}
-                anchor={{ x: 0.5, y: 0.5 }}
-                coordinate={client.location}
-                tracksViewChanges={false}
-                stopPropagation
-                opacity={1.1}
-            />
+            <Marker client={client} selected={false} />
 
             <FlightPath focusedClient={client} />
         </Map>

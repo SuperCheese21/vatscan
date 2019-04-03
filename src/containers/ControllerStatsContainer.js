@@ -1,7 +1,7 @@
 import React from 'react';
-import { MapView } from 'expo';
 
 import Map from '../components/Map';
+import { Polygon } from '../components/MapOverlays';
 import StatsContainer from './StatsContainer';
 import StatsLabel from '../components/StatsLabel';
 import StatsRow from '../components/StatsRow';
@@ -25,12 +25,7 @@ const ControllerStatsContainer = ({ client }) => (
                 longitudeDelta: 5
             }}
         >
-            <MapView.Polygon
-                coordinates={client.polygon}
-                strokeWidth={1}
-                strokeColor={client.strokeColor}
-                fillColor={client.fillColor}
-            />
+            <Polygon client={client} selected={false} />
         </Map>
     </StatsContainer>
 );
