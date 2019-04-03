@@ -27,10 +27,7 @@ const FlightPlanContainer = ({ client }) => (
             <StatsRow label="Arrival" text={client.plannedArrTime} />
         </View>
 
-        <StatsRow
-            label="Duration"
-            text={client.plannedDuration}
-        />
+        <StatsRow label="Duration" text={client.plannedDuration} />
 
         <TextBlock text={client.route} />
     </Surface>

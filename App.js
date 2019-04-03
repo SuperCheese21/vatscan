@@ -76,7 +76,10 @@ export default class App extends React.PureComponent {
                         }
 
                         // Set timeout for next data update
-                        this.timer = setTimeout(this.updateData, UPDATE_INTERVAL);
+                        this.timer = setTimeout(
+                            this.updateData,
+                            UPDATE_INTERVAL
+                        );
                     });
             }
         });
