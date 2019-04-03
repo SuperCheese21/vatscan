@@ -70,8 +70,16 @@ export default class App extends React.PureComponent {
                             focusedClient: data.focusedClient
                         });
 
+                        // Clear existing timeout
+                        if (this.timer) {
+                            clearTimeout(this.timer);
+                        }
+
                         // Set timeout for next data update
-                        setTimeout(this.updateData, UPDATE_INTERVAL);
+                        this.timer = setTimeout(
+                            this.updateData,
+                            UPDATE_INTERVAL
+                        );
                     });
             }
         });

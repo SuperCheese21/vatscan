@@ -23,14 +23,11 @@ const FlightPlanContainer = ({ client }) => (
         <StatsRow label="Aircraft" text={client.aircraft} />
 
         <View style={{ flexDirection: 'row' }}>
-            <StatsRow label="Departure" text={client.plannedDepTime + 'z'} />
-            <StatsRow label="Arrival" text={client.plannedArrTime + 'z'} />
+            <StatsRow label="Departure" text={client.plannedDepTime} />
+            <StatsRow label="Arrival" text={client.plannedArrTime} />
         </View>
 
-        <StatsRow
-            label="Duration"
-            text={client.hrsEnRoute + ' hrs ' + client.minEnRoute + ' min'}
-        />
+        <StatsRow label="Duration" text={client.plannedDuration} />
 
         <TextBlock text={client.route} />
     </Surface>
