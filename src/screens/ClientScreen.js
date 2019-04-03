@@ -42,19 +42,6 @@ export default class ClientScreen extends React.PureComponent {
         return true;
     };
 
-    getStatsComponent(client) {
-        if (client.type === 'PILOT') {
-            return (
-                <>
-                    <FlightPlanContainer client={client} />
-                    <FlightStatsContainer client={client} />
-                </>
-            );
-        } else if (client.type === 'ATC') {
-            return <ControllerStatsContainer client={client} />;
-        }
-    }
-
     render() {
         const { focusedClient: client } = this.props.screenProps;
         return (
@@ -69,8 +56,22 @@ export default class ClientScreen extends React.PureComponent {
             >
                 <ClientStatsContainer client={client} />
 
-                {this.getStatsComponent(client)}
+                <Stats client={client} />
             </ScrollView>
         );
     }
 }
+
+const Stats = ({ client }) => {
+    if (client.type === 'PILOT') {
+        return (
+            <>
+                <FlightPlanContainer client={client} />
+                <FlightStatsContainer client={client} />
+            </>
+        );
+    } else if (client.type === 'ATC') {
+        return <ControllerStatsContainer client={client} />;
+    }
+    return null;
+};

@@ -1,6 +1,8 @@
 import React from 'react';
 import { MapView } from 'expo';
 
+import colors from '../config/colors.json';
+
 export default props => (
     <>
         {props.clients.map((client, index) => {
@@ -57,3 +59,30 @@ export const Marker = props => (
         stopPropagation
     />
 );
+
+export const FlightPath = ({ client }) => {
+    // Render polylines only if airport coords are present
+    if (client.depCoords && client.location && client.arrCoords) {
+        return (
+            <>
+                <MapView.Polyline
+                    coordinates={[client.depCoords, client.location]}
+                    strokeColor={colors.mapOverlays.lineFlown}
+                    strokeWidth={2}
+                    zIndex={5}
+                    geodesic
+                />
+                <MapView.Polyline
+                    coordinates={[client.location, client.arrCoords]}
+                    strokeColor={colors.mapOverlays.lineRemaining}
+                    strokeWidth={2}
+                    zIndex={5}
+                    geodesic
+                />
+            </>
+        );
+    }
+
+    // Render nothing if polylines can't be rendered
+    return null;
+};

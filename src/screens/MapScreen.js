@@ -3,10 +3,9 @@ import { Animated, BackHandler, StyleSheet, Text, View } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 
-import FlightPath from '../components/FlightPath';
 import InfoPanelContainer from '../containers/InfoPanelContainer';
 import Map from '../components/Map';
-import MapOverlays from '../components/MapOverlays';
+import MapOverlays, { FlightPath } from '../components/MapOverlays';
 import { accent as accentColor } from '../config/colors.json';
 import { panelStates, panelTransitionDuration } from '../config/constants.json';
 
@@ -70,9 +69,7 @@ export default class MapScreen extends React.PureComponent {
                         focusedClient={this.props.screenProps.focusedClient}
                         setFocusedClient={this.setFocusedClient}
                     />
-                    <FlightPath
-                        focusedClient={this.props.screenProps.focusedClient}
-                    />
+                    <FlightPath client={this.props.screenProps.focusedClient} />
                 </Map>
                 <ActivityIndicator
                     color={accentColor}
