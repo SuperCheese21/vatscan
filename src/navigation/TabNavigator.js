@@ -6,7 +6,7 @@ import {
 
 import ListScreen from '../screens/ListScreen';
 import MapScreen from '../screens/MapScreen';
-import colors from '../../config/colors.json';
+import colors from '../config/colors.json';
 
 const TabNavigatorContainer = props => (
     <TabNavigator

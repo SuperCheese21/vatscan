@@ -1,4 +1,4 @@
-import constants from '../../config/constants.json';
+import constants from '../config/constants.json';
 
 /**
  * Selects a random element in an array and returns it
@@ -11,11 +11,11 @@ export function getRandomElement(arr) {
 }
 
 /**
- * [getProjectedCoords description]
- * @param  {[type]} loc1     [description]
- * @param  {[type]} distance [description]
- * @param  {[type]} bearing  [description]
- * @return {[type]}          [description]
+ * Projects a location from another location given a distance and bearing
+ * @param  {LatLng} loc1     Coordinates for initial location to project from
+ * @param  {Number} distance Distance of projected location from initial location
+ * @param  {Number} bearing  Bearing of projected location from initial location
+ * @return {LatLng}          Coordinates for projected location
  */
 export function getProjectedCoords(loc1, distance, bearing) {
     const lat1 = toRadians(loc1.latitude);
@@ -45,7 +45,7 @@ export function getProjectedCoords(loc1, distance, bearing) {
  * Gets the great circle distance between two points on earth
  * @param  {LatLng} lat1 Coordinates of location 1
  * @param  {LatLng} lat2 Coordinates of location 2
- * @return {double}      Great Circle distance between locations in nautical miles
+ * @return {Number}      Great Circle distance between locations in nautical miles
  */
 export function getGCDistance(loc1, loc2) {
     if (loc1 && loc2) {
@@ -69,24 +69,6 @@ export function getGCDistance(loc1, loc2) {
 }
 
 /**
- * Converts degrees to radians
- * @param  {double} deg Degrees value
- * @return {double}     Radians value
- */
-function toRadians(deg) {
-    return (deg * Math.PI) / 180;
-}
-
-/**
- * [toDegrees description]
- * @param  {[type]} rad [description]
- * @return {[type]}     [description]
- */
-function toDegrees(rad) {
-    return (rad * 180) / Math.PI;
-}
-
-/**
  * Checks for duplicate ID in data array before adding new entry
  * @param  {Array} data Data array of pilot or controller objects
  * @param  {String} id  VATSIM CID to check
@@ -99,4 +81,22 @@ export function checkID(data, id) {
         }
     }
     return false;
+}
+
+/**
+ * Converts degrees to radians
+ * @param  {Number} deg Degrees value
+ * @return {Number}     Radians value
+ */
+function toRadians(deg) {
+    return (deg * Math.PI) / 180;
+}
+
+/**
+ * Converts radians to degrees
+ * @param  {Number} rad Radians value
+ * @return {Number}     Degrees value
+ */
+function toDegrees(rad) {
+    return (rad * 180) / Math.PI;
 }

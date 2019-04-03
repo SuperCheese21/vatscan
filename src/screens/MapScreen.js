@@ -1,16 +1,13 @@
 import React from 'react';
-import { Animated, BackHandler, Text, View } from 'react-native';
+import { Animated, BackHandler, StyleSheet, Text, View } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 
-import MapContainer from '../containers/MapContainer';
 import InfoPanelContainer from '../containers/InfoPanelContainer';
-import {
-    panelStates,
-    panelTransitionDuration
-} from '../../config/constants.json';
-import styles from '../styles';
-import colors from '../../config/colors.json';
+import Map from '../components/Map';
+import MapOverlays, { FlightPath } from '../components/MapOverlays';
+import { accent as accentColor } from '../config/colors.json';
+import { panelStates, panelTransitionDuration } from '../config/constants.json';
 
 export default class MapScreen extends React.PureComponent {
     state = {
@@ -36,7 +33,25 @@ export default class MapScreen extends React.PureComponent {
         )
     };
 
-    setPanelPosition = position => {
+    setFocusedClient = client => {
+        // Set focused client and expand panel to height based on client type
+        this.props.screenProps.setFocusedClient(client);
+        if (client.type === 'PILOT') {
+            this._setPanelPosition(panelStates.EXPANDED_PILOT);
+        } else if (client.type === 'ATC') {
+            this._setPanelPosition(panelStates.EXPANDED_ATC);
+        }
+    };
+
+    collapsePanel = () => {
+        // Collapse panel and remove focused client
+        this._setPanelPosition(panelStates.COLLAPSED);
+        this.props.screenProps.removeFocusedClient();
+
+        return true;
+    };
+
+    _setPanelPosition = position => {
         // Animate info panel position change
         Animated.timing(this.state.panelPosition, {
             toValue: position,
@@ -45,35 +60,19 @@ export default class MapScreen extends React.PureComponent {
         }).start();
     };
 
-    setFocusedClient = client => {
-        // Set focused client and expand panel to height based on client type
-        this.props.screenProps.setFocusedClient(client);
-        if (client.type === 'PILOT') {
-            this.setPanelPosition(panelStates.EXPANDED_PILOT);
-        } else if (client.type === 'ATC') {
-            this.setPanelPosition(panelStates.EXPANDED_ATC);
-        }
-    };
-
-    collapsePanel = () => {
-        // Collapse panel and remove focused client
-        this.setPanelPosition(panelStates.COLLAPSED);
-        this.props.screenProps.removeFocusedClient();
-
-        return true;
-    };
-
     render() {
         return (
             <View style={{ flex: 1 }}>
-                <MapContainer
-                    clients={this.props.screenProps.clients}
-                    focusedClient={this.props.screenProps.focusedClient}
-                    setFocusedClient={this.setFocusedClient}
-                    collapsePanel={this.collapsePanel}
-                />
+                <Map style={{ flex: 1 }} onPress={this.collapsePanel}>
+                    <MapOverlays
+                        clients={this.props.screenProps.clients}
+                        focusedClient={this.props.screenProps.focusedClient}
+                        setFocusedClient={this.setFocusedClient}
+                    />
+                    <FlightPath client={this.props.screenProps.focusedClient} />
+                </Map>
                 <ActivityIndicator
-                    color={colors.accent}
+                    color={accentColor}
                     animating={this.props.screenProps.loading}
                     style={styles.activityIndicator}
                 />
@@ -89,3 +88,17 @@ export default class MapScreen extends React.PureComponent {
         );
     }
 }
+
+const styles = StyleSheet.create({
+    activityIndicator: {
+        position: 'absolute',
+        right: 3,
+        top: 3
+    },
+    clientCountText: {
+        fontFamily: 'Roboto_Regular',
+        position: 'absolute',
+        left: 5,
+        top: 2
+    }
+});

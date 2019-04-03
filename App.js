@@ -3,18 +3,22 @@ import { Alert, NetInfo, Platform } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import { AppLoading, Font, Linking } from 'expo';
 
-import StackNavigator from './src/components/navigation/StackNavigator';
+import FetchManager from './src/api/FetchManager';
+import StackNavigator from './src/navigation/StackNavigator';
 import { UPDATE_INTERVAL } from './src/config/constants.json';
-import { fetchData } from './src/lib/util/fetch';
 
 export default class App extends React.PureComponent {
-    // Initialize component state
-    state = {
-        fontLoaded: false,
-        loading: false,
-        clients: [],
-        focusedClient: {}
-    };
+    // Initialize component state and fetch manager
+    constructor() {
+        super();
+        this.state = {
+            fontLoaded: false,
+            loading: false,
+            clients: [],
+            focusedClient: {}
+        };
+        this.fetchManager = new FetchManager();
+    }
 
     async componentDidMount() {
         // Load fonts and update font loaded state
@@ -23,8 +27,9 @@ export default class App extends React.PureComponent {
             Roboto_Condensed_Regular: require('./assets/fonts/Roboto_Condensed/RobotoCondensed-Regular.ttf'),
             Roboto_Mono: require('./assets/fonts/Roboto_Mono/RobotoMono-Regular.ttf')
         });
-        await this.setState({ fontLoaded: true });
+        this.setState({ fontLoaded: true }); // eslint-disable-line
 
+        // Fix status bar height
         if (Platform.OS === 'android') {
             SafeAreaView.setStatusBarHeight(0);
         }
@@ -55,17 +60,19 @@ export default class App extends React.PureComponent {
 
                 // Fetch data
                 const focusedCallsign = this.state.focusedClient.callsign;
-                fetchData(focusedCallsign, isInitialFetch).then(data => {
-                    // Update state with new data
-                    this.setState({
-                        loading: false,
-                        clients: data.clients,
-                        focusedClient: data.focusedClient
-                    });
+                this.fetchManager
+                    .fetchData(focusedCallsign, isInitialFetch)
+                    .then(data => {
+                        // Update state with new data
+                        this.setState({
+                            loading: false,
+                            clients: data.clients,
+                            focusedClient: data.focusedClient
+                        });
 
-                    // Set timeout for next data update
-                    setTimeout(this.updateData, UPDATE_INTERVAL);
-                });
+                        // Set timeout for next data update
+                        setTimeout(this.updateData, UPDATE_INTERVAL);
+                    });
             }
         });
     };
@@ -90,9 +97,9 @@ export default class App extends React.PureComponent {
                 uriPrefix={Linking.makeUrl('/')}
                 screenProps={{
                     loading: this.state.loading,
-                    refresh: this.updateData,
                     clients: this.state.clients,
                     focusedClient: this.state.focusedClient,
+                    refresh: this.updateData,
                     setFocusedClient: this.setFocusedClient,
                     removeFocusedClient: this.removeFocusedClient
                 }}

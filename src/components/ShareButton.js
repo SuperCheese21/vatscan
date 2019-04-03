@@ -13,8 +13,8 @@ const ShareButton = ({ callsign }) => (
             const url = Linking.makeUrl('clients/' + callsign);
             const message = 'Check out ' + callsign + ' on VATSCAN!\n\n' + url;
             Share.share({
-                message: message,
-                url: url
+                message,
+                url
             });
         }}
     />

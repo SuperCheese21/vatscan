@@ -1,9 +1,8 @@
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 
-import colors from '../../config/colors.json';
-import styles from '../styles';
+import colors from '../config/colors.json';
 
 const ControllerDataContainer = props => (
     <TouchableOpacity
@@ -35,5 +34,43 @@ const ControllerDataContainer = props => (
         </View>
     </TouchableOpacity>
 );
+
+const styles = StyleSheet.create({
+    callsignText: {
+        textAlign: 'right',
+        marginRight: 30,
+        fontSize: 13
+    },
+    controllerCallsignText: {
+        textAlign: 'center',
+        marginLeft: 10,
+        color: 'white',
+        fontFamily: 'Roboto_Condensed_Regular',
+        fontSize: 45
+    },
+    controllerInfoView: {
+        flexDirection: 'row',
+        height: 25
+    },
+    infoContainerController: {
+        width: '100%',
+        height: 85,
+        backgroundColor: colors.primary
+    },
+    infoRow: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    nameText: {
+        textAlign: 'left',
+        fontSize: 13
+    },
+    text: {
+        fontFamily: 'Roboto_Regular',
+        color: 'white'
+    }
+});
 
 export default ControllerDataContainer;

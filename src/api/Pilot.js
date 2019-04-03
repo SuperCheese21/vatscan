@@ -4,7 +4,7 @@ import Client from './Client';
 import airportCoords from '../data/airportCoords.json';
 import airportNames from '../data/airportNames.json';
 import constants from '../config/constants.json';
-import { getGCDistance } from './util/calc';
+import { getGCDistance } from './util';
 
 const NARROWBODY_ICON = require('../../assets/icons/narrowbody.png');
 const WIDEBODY_ICON = require('../../assets/icons/widebody.png');
@@ -14,7 +14,7 @@ export default class Pilot extends Client {
     constructor(data) {
         super(data);
         this._altitude = data[7];
-        this._groundSpeed = parseInt(data[8]);
+        this._groundSpeed = parseInt(data[8], 10);
         this._aircraft = data[9];
         this._tasCruise = data[10];
         this._depAirport = data[11];
@@ -23,8 +23,8 @@ export default class Pilot extends Client {
         this._transponder = data[17];
         this._flightType = data[21];
         this._depTime = data[22];
-        this._hrsEnRoute = parseInt(data[24]);
-        this._minEnRoute = parseInt(data[25]);
+        this._hrsEnRoute = parseInt(data[24], 10);
+        this._minEnRoute = parseInt(data[25], 10);
         this._remarks = data[29];
         this._route = data[30];
         this._heading = parseFloat(data[38]);
@@ -95,18 +95,26 @@ export default class Pilot extends Client {
         return this.distFlown / (this.distFlown + this.distRemaining);
     }
 
-    get depAirportName() {
+    get depCityName() {
         const names = airportNames[this._depAirport];
         if (names) {
-            return names.airport;
+            const region = names.region.split('-');
+            if (region[0] === 'US') {
+                return names.city + ', ' + region[1];
+            }
+            return names.city + ', ' + names.country;
         }
         return 'Unknown';
     }
 
-    get arrAirportName() {
+    get arrCityName() {
         const names = airportNames[this._arrAirport];
         if (names) {
-            return names.airport;
+            const region = names.region.split('-');
+            if (region[0] === 'US') {
+                return names.city + ', ' + region[1];
+            }
+            return names.city + ', ' + names.country;
         }
         return 'Unknown';
     }
@@ -127,6 +135,7 @@ export default class Pilot extends Client {
         if (eteMinutes) {
             return moment.utc(eteMinutes * 60000).format('H:mm');
         }
+        return null;
     }
 
     get eta() {
@@ -137,6 +146,7 @@ export default class Pilot extends Client {
                 .add(eteMinutes, 'm')
                 .format('HHmm');
         }
+        return null;
     }
 
     get altitude() {

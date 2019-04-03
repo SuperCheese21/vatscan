@@ -6,22 +6,32 @@ export default class ClientFactory {
         this.centerData = centerData;
     }
 
+    /**
+     * [getClient description]
+     * @param  {[type]} clientArray [description]
+     * @return {[type]}             [description]
+     */
     getClient(clientArray) {
         const clientType = clientArray[3];
 
         if (clientType === 'PILOT') {
             return new Pilot(clientArray);
         } else if (clientType === 'ATC') {
-            return this.getController(clientArray);
+            return this._getController(clientArray);
         }
 
         return null;
     }
 
-    getController(clientArray) {
+    /**
+     * [getController description]
+     * @param  {[type]} clientArray [description]
+     * @return {[type]}             [description]
+     */
+    _getController(clientArray) {
         const id = clientArray[1];
         const controllerType = clientArray[0].split('_').pop();
-        const center = this.findInCenterData(id);
+        const center = this._findInCenterData(id);
 
         if (['CTR', 'APP', 'DEP', 'TWR', 'GND'].includes(controllerType)) {
             return new Controller(clientArray, controllerType, center);
@@ -30,7 +40,12 @@ export default class ClientFactory {
         return null;
     }
 
-    findInCenterData(id) {
+    /**
+     * [findInCenterData description]
+     * @param  {[type]} id [description]
+     * @return {[type]}    [description]
+     */
+    _findInCenterData(id) {
         for (const center of this.centerData) {
             if (center.id === Number(id)) {
                 return center;

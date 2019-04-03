@@ -3,8 +3,7 @@ import getSlideFromRightTransition from 'react-navigation-slide-from-right-trans
 
 import ClientScreen from '../screens/ClientScreen';
 import TabNavigatorContainer from './TabNavigator';
-import colors from '../../config/colors.json';
-import styles from '../styles';
+import colors from '../config/colors.json';
 
 const StackNavigator = createAppContainer(
     createStackNavigator(
@@ -22,7 +21,12 @@ const StackNavigator = createAppContainer(
                 headerStyle: {
                     backgroundColor: colors.primary
                 },
-                headerTitleStyle: styles.headerText,
+                headerTitleStyle: {
+                    color: 'white',
+                    fontFamily: 'Roboto_Regular',
+                    fontWeight: 'normal',
+                    fontSize: 20
+                },
                 headerTintColor: colors.accent
             },
             headerLayoutPreset: 'center'

@@ -1,10 +1,11 @@
 import React from 'react';
-import { Animated } from 'react-native';
+import { Animated, StyleSheet } from 'react-native';
 
 import BasicDataContainer from './BasicDataContainer';
 import ControllerDataContainer from './ControllerDataContainer';
 import DetailDataContainer from './DetailDataContainer';
-import styles from '../styles';
+import { defaultPanelPosition } from '../config/constants.json';
+import { primary as primaryColor } from '../config/colors.json';
 
 const InfoPanelContainer = props => (
     <Animated.View
@@ -47,5 +48,15 @@ const Data = props => {
     }
     return null;
 };
+
+const styles = StyleSheet.create({
+    infoPanelContainer: {
+        width: '100%',
+        height: 154,
+        position: 'absolute',
+        bottom: defaultPanelPosition,
+        backgroundColor: primaryColor
+    }
+});
 
 export default InfoPanelContainer;

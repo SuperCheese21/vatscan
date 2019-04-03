@@ -28,7 +28,8 @@ function parseData(csv) {
         airportNames[airport[1]] = {
             airport: airport[3],
             city: airport[10],
-            country: airport[8]
+            country: airport[8],
+            region: airport[9]
         };
     });
 
