@@ -21,7 +21,7 @@ export default class Controller extends Client {
                 latitude: parseFloat(coords[1]),
                 longitude: parseFloat(coords[0])
             }));
-        } else if (this._controllerType !== 'CTR') {
+        } else if (!['CTR', 'FSS'].includes(this._controllerType)) {
             this._polygon = [];
             for (let i = 0; i < NUM_SIDES_CIRCLE; i++) {
                 const bearing = (360 / NUM_SIDES_CIRCLE) * i;
@@ -35,6 +35,7 @@ export default class Controller extends Client {
     get typeString() {
         switch (this._controllerType) {
             case 'CTR':
+            case 'FSS':
                 return 'Center';
             case 'APP':
                 return 'Approach';
