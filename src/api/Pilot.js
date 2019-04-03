@@ -120,14 +120,27 @@ export default class Pilot extends Client {
     }
 
     get plannedDepTime() {
-        return moment.utc(this._depTime, 'Hmm').format('HHmm');
+        if (this._depTime !== '0') {
+            return moment.utc(this._depTime, 'Hmm').format('HHmm') + 'z';
+        }
+        return 'N/A';
+    }
+
+    get plannedDuration() {
+        if (this._hrsEnRoute || this._minEnRoute) {
+            return this._hrsEnRoute + ' hrs ' + this._minEnRoute + ' min';
+        }
+        return 'N/A';
     }
 
     get plannedArrTime() {
-        const departureTime = moment.utc(this._depTime, 'Hmm');
-        const flightDuration = 60 * this._hrsEnRoute + this._minEnRoute;
+        if (this._depTime !== '0') {
+            const departureTime = moment.utc(this._depTime, 'Hmm');
+            const flightDuration = 60 * this._hrsEnRoute + this._minEnRoute;
 
-        return departureTime.add(flightDuration, 'm').format('HHmm');
+            return departureTime.add(flightDuration, 'm').format('HHmm') + 'z';
+        }
+        return 'N/A';
     }
 
     get ete() {
