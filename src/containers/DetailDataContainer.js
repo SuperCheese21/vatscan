@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Icon from '@expo/vector-icons/MaterialIcons';
 
+import Text from '../components/Text';
 import colors from '../config/colors.json';
 
 const DetailDataContainer = props => (
@@ -9,13 +10,13 @@ const DetailDataContainer = props => (
         <View style={styles.infoRow}>
             <View style={styles.infoRow}>
                 <Icon name="flight" size={20} color={colors.accent} />
-                <Text style={[styles.text, styles.infoText]}>
+                <Text style={styles.infoText}>
                     {' ' + (props.data.aircraft || 'N/A')}
                 </Text>
             </View>
             <View style={styles.infoRow}>
                 <Icon name="send" size={20} color={colors.accent} />
-                <Text style={[styles.text, styles.infoText]}>
+                <Text style={styles.infoText}>
                     {' ' + props.data.groundSpeed + ' kts'}
                 </Text>
             </View>
@@ -23,13 +24,13 @@ const DetailDataContainer = props => (
         <View style={styles.infoRow}>
             <View style={styles.infoRow}>
                 <Icon name="unfold-more" size={20} color={colors.accent} />
-                <Text style={[styles.text, styles.infoText]}>
+                <Text style={styles.infoText}>
                     {' ' + props.data.altitude + ' ft'}
                 </Text>
             </View>
             <View style={styles.infoRow}>
                 <Icon name="navigation" size={20} color={colors.accent} />
-                <Text style={[styles.text, styles.infoText]}>
+                <Text style={styles.infoText}>
                     {' ' + props.data.heading + '°'}
                 </Text>
             </View>
@@ -49,11 +50,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     infoText: {
+        color: 'white',
         fontSize: 14
-    },
-    text: {
-        fontFamily: 'Roboto_Regular',
-        color: 'white'
     }
 });
 
