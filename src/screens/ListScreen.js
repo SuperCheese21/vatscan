@@ -1,8 +1,9 @@
 import React from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import { Searchbar } from 'react-native-paper';
 
+import Text from '../components/Text';
 import ClientsListItem from '../components/ClientsListItem';
 
 export default class ListScreen extends React.PureComponent {

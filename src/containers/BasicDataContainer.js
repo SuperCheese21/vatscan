@@ -1,7 +1,8 @@
 import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ProgressBar } from 'react-native-paper';
 
+import Text from '../components/Text';
 import colors from '../config/colors.json';
 
 const BasicDataContainer = props => (
@@ -15,11 +16,11 @@ const BasicDataContainer = props => (
     >
         <View style={styles.infoRow}>
             <Text
-                style={[
-                    styles.text,
-                    styles.icaoText,
-                    { marginRight: 6, textAlign: 'right' }
-                ]}
+                style={{
+                    marginRight: 6,
+                    textAlign: 'right',
+                    ...styles.icaoText
+                }}
             >
                 {props.data.depAirport || '????'}
             </Text>
@@ -27,22 +28,23 @@ const BasicDataContainer = props => (
                 style={styles.fromToIcon}
                 source={require('../../assets/icons/narrowbody.png')}
             />
-            <Text style={[styles.text, styles.icaoText, { marginLeft: 6 }]}>
+            <Text
+                style={{
+                    marginLeft: 6,
+                    ...styles.icaoText
+                }}
+            >
                 {props.data.arrAirport || '????'}
             </Text>
         </View>
 
         <View style={styles.pilotInfoView}>
             <View style={{ flex: 1 }}>
-                <Text style={[styles.text, styles.callsignText]}>
-                    {props.data.callsign}
-                </Text>
+                <Text style={styles.callsignText}>{props.data.callsign}</Text>
             </View>
 
             <View style={{ flex: 1 }}>
-                <Text style={[styles.text, styles.nameText]}>
-                    {props.data.name}
-                </Text>
+                <Text style={styles.nameText}>{props.data.name}</Text>
             </View>
         </View>
 
@@ -58,6 +60,7 @@ const BasicDataContainer = props => (
 
 const styles = StyleSheet.create({
     callsignText: {
+        color: 'white',
         textAlign: 'right',
         marginRight: 30,
         fontSize: 13
@@ -72,6 +75,7 @@ const styles = StyleSheet.create({
         ]
     },
     icaoText: {
+        color: 'white',
         flex: 1,
         fontFamily: 'Roboto_Condensed_Regular',
         fontSize: 50
@@ -86,6 +90,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     nameText: {
+        color: 'white',
         textAlign: 'left',
         fontSize: 13
     },
@@ -97,10 +102,6 @@ const styles = StyleSheet.create({
         flex: 1,
         marginLeft: 20,
         marginRight: 20
-    },
-    text: {
-        fontFamily: 'Roboto_Regular',
-        color: 'white'
     }
 });
 

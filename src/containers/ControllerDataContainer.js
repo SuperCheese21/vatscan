@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 
+import Text from '../components/Text';
 import colors from '../config/colors.json';
 
 const ControllerDataContainer = props => (
@@ -22,14 +23,10 @@ const ControllerDataContainer = props => (
 
         <View style={styles.controllerInfoView}>
             <View style={{ flex: 1 }}>
-                <Text style={[styles.text, styles.callsignText]}>
-                    {props.data.frequency}
-                </Text>
+                <Text style={styles.callsignText}>{props.data.frequency}</Text>
             </View>
             <View style={{ flex: 1 }}>
-                <Text style={[styles.text, styles.nameText]}>
-                    {props.data.name}
-                </Text>
+                <Text style={styles.nameText}>{props.data.name}</Text>
             </View>
         </View>
     </TouchableOpacity>
@@ -37,6 +34,7 @@ const ControllerDataContainer = props => (
 
 const styles = StyleSheet.create({
     callsignText: {
+        color: 'white',
         textAlign: 'right',
         marginRight: 30,
         fontSize: 13
@@ -64,12 +62,9 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     nameText: {
+        color: 'white',
         textAlign: 'left',
         fontSize: 13
-    },
-    text: {
-        fontFamily: 'Roboto_Regular',
-        color: 'white'
     }
 });
 

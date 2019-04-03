@@ -1,11 +1,12 @@
 import React from 'react';
-import { Animated, BackHandler, StyleSheet, Text, View } from 'react-native';
+import { Animated, BackHandler, StyleSheet, View } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 
 import InfoPanelContainer from '../containers/InfoPanelContainer';
 import Map from '../components/Map';
 import MapOverlays, { FlightPath } from '../components/MapOverlays';
+import Text from '../components/Text';
 import { accent as accentColor } from '../config/colors.json';
 import { panelStates, panelTransitionDuration } from '../config/constants.json';
 

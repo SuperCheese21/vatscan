@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text } from 'react-native';
+import Text from './Text';
 
 const StatsLabel = ({ text }) => <Text style={{ fontSize: 18 }}>{text}</Text>;
 
