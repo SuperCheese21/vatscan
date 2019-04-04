@@ -15,7 +15,6 @@ export default class ClientsListItem extends React.PureComponent {
     );
 
     onPress = () => {
-        this.props.setFocusedClient(this.props.client);
         this.props.stackNavigation.navigate('ClientScreen', {
             callsign: this.props.client.callsign,
             removeFocusedClient: true
