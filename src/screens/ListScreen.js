@@ -35,6 +35,18 @@ export default class ListScreen extends React.PureComponent {
         );
     }
 
+    onChangeText = query => {
+        this.setState({ query });
+    };
+
+    renderItem = ({ item }) => (
+        <ClientsListItem
+            client={item}
+            setFocusedClient={this.props.screenProps.setFocusedClient}
+            stackNavigation={this.props.screenProps.stackNavigation}
+        />
+    );
+
     _keyExtractor = item => item.callsign;
 
     render() {
@@ -43,7 +55,7 @@ export default class ListScreen extends React.PureComponent {
                 <Searchbar
                     style={{ margin: 5 }}
                     placeholder="Name, Callsign, CID, Aircraft"
-                    onChangeText={query => this.setState({ query })}
+                    onChangeText={this.onChangeText}
                     value={this.state.query}
                 />
                 <FlatList
@@ -51,17 +63,7 @@ export default class ListScreen extends React.PureComponent {
                     keyExtractor={this._keyExtractor}
                     refreshing={this.props.screenProps.loading}
                     onRefresh={this.props.screenProps.refresh}
-                    renderItem={({ item }) => (
-                        <ClientsListItem
-                            client={item}
-                            setFocusedClient={
-                                this.props.screenProps.setFocusedClient
-                            }
-                            stackNavigation={
-                                this.props.screenProps.stackNavigation
-                            }
-                        />
-                    )}
+                    renderItem={this.renderItem}
                     ListEmptyComponent={
                         <View style={{ flex: 1 }}>
                             <Text style={{ textAlign: 'center' }}>

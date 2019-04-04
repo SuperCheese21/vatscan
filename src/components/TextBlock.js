@@ -8,26 +8,27 @@ import {
     Vibration
 } from 'react-native';
 
-const TextBlock = ({ text }) => {
-    if (text) {
-        return (
-            <TouchableOpacity
-                style={styles.textBlock}
-                onLongPress={() => {
-                    Vibration.vibrate(10);
-                    ToastAndroid.show(
-                        'Copied to clipboard',
-                        ToastAndroid.SHORT
-                    );
-                    Clipboard.setString(text);
-                }}
-            >
-                <Text style={styles.textBlockText}>{text}</Text>
-            </TouchableOpacity>
-        );
+export default class TextBlock extends React.PureComponent {
+    onLongPress = () => {
+        Vibration.vibrate(10);
+        ToastAndroid.show('Copied to clipboard', ToastAndroid.SHORT);
+        Clipboard.setString(this.props.text);
+    };
+
+    render() {
+        if (this.props.text) {
+            return (
+                <TouchableOpacity
+                    style={styles.textBlock}
+                    onLongPress={this.onLongPress}
+                >
+                    <Text style={styles.textBlockText}>{this.props.text}</Text>
+                </TouchableOpacity>
+            );
+        }
+        return null;
     }
-    return null;
-};
+}
 
 const styles = StyleSheet.create({
     textBlock: {
@@ -44,5 +45,3 @@ const styles = StyleSheet.create({
         fontFamily: 'Roboto_Mono'
     }
 });
-
-export default TextBlock;

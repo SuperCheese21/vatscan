@@ -5,58 +5,68 @@ import { ProgressBar } from 'react-native-paper';
 import Text from '../components/Text';
 import colors from '../config/colors.json';
 
-const BasicDataContainer = props => (
-    <TouchableOpacity
-        onPress={() =>
-            props.stackNavigation.navigate('ClientScreen', {
-                callsign: props.data.callsign
-            })
-        }
-        style={styles.infoContainerBasic}
-    >
-        <View style={styles.infoRow}>
-            <Text
-                style={{
-                    marginRight: 6,
-                    textAlign: 'right',
-                    ...styles.icaoText
-                }}
+export default class BasicDataContainer extends React.PureComponent {
+    onPress = () => {
+        this.props.stackNavigation.navigate('ClientScreen', {
+            callsign: this.props.data.callsign
+        });
+    };
+
+    render() {
+        return (
+            <TouchableOpacity
+                onPress={this.onPress}
+                style={styles.infoContainerBasic}
             >
-                {props.data.depAirport || '????'}
-            </Text>
-            <Image
-                style={styles.fromToIcon}
-                source={require('../../assets/icons/narrowbody.png')}
-            />
-            <Text
-                style={{
-                    marginLeft: 6,
-                    ...styles.icaoText
-                }}
-            >
-                {props.data.arrAirport || '????'}
-            </Text>
-        </View>
+                <View style={styles.infoRow}>
+                    <Text
+                        style={{
+                            marginRight: 6,
+                            textAlign: 'right',
+                            ...styles.icaoText
+                        }}
+                    >
+                        {this.props.data.depAirport || '????'}
+                    </Text>
+                    <Image
+                        style={styles.fromToIcon}
+                        source={require('../../assets/icons/narrowbody.png')}
+                    />
+                    <Text
+                        style={{
+                            marginLeft: 6,
+                            ...styles.icaoText
+                        }}
+                    >
+                        {this.props.data.arrAirport || '????'}
+                    </Text>
+                </View>
 
-        <View style={styles.pilotInfoView}>
-            <View style={{ flex: 1 }}>
-                <Text style={styles.callsignText}>{props.data.callsign}</Text>
-            </View>
+                <View style={styles.pilotInfoView}>
+                    <View style={{ flex: 1 }}>
+                        <Text style={styles.callsignText}>
+                            {this.props.data.callsign}
+                        </Text>
+                    </View>
 
-            <View style={{ flex: 1 }}>
-                <Text style={styles.nameText}>{props.data.name}</Text>
-            </View>
-        </View>
+                    <View style={{ flex: 1 }}>
+                        <Text style={styles.nameText}>
+                            {this.props.data.name}
+                        </Text>
+                    </View>
+                </View>
 
-        <View style={styles.pilotInfoView}>
-            <ProgressBar
-                style={styles.progressBar}
-                progress={props.data.progress}
-                color={colors.accent}
-            />
-        </View>
-    </TouchableOpacity>
-);
+                <View style={styles.pilotInfoView}>
+                    <ProgressBar
+                        style={styles.progressBar}
+                        progress={this.props.data.progress}
+                        color={colors.accent}
+                    />
+                </View>
+            </TouchableOpacity>
+        );
+    }
+}
 
 const styles = StyleSheet.create({
     callsignText: {
@@ -104,5 +114,3 @@ const styles = StyleSheet.create({
         marginRight: 20
     }
 });
-
-export default BasicDataContainer;
