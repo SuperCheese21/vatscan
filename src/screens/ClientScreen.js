@@ -19,7 +19,7 @@ export default class ClientScreen extends React.PureComponent {
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
         const callsign = this.props.navigation.getParam('callsign');
-        for (const client in this.props.screenProps.clients) {
+        for (const client of this.props.screenProps.clients) {
             if (client.callsign === callsign) {
                 this.props.screenProps.setFocusedClient(client);
                 break;

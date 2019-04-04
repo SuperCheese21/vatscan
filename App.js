@@ -45,19 +45,18 @@ export default class App extends React.PureComponent {
 
     updateData = isInitialFetch => {
         // Check internet connection and alert if there is no connection
+        this.setState({ loading: true });
         NetInfo.getConnectionInfo().then(connectionInfo => {
             if (
                 connectionInfo.type === 'none' ||
                 connectionInfo.type === 'unknown'
             ) {
+                this.setState({ loading: false });
                 Alert.alert(
                     'No internet connection',
                     'Connect to the internet to update data'
                 );
             } else {
-                // Set loading state
-                this.setState({ loading: true });
-
                 // Fetch data
                 const focusedCallsign = this.state.focusedClient.callsign;
                 this.fetchManager
