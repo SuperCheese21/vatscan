@@ -14,7 +14,7 @@ export default props => (
                         key={client.callsign}
                         client={client}
                         selected={focusedClient}
-                        setFocusedClient={props.setFocusedClient}
+                        onPress={() => props.setFocusedClient(client)}
                     />
                 );
             } else if (client.type === 'ATC' && client.polygon) {
@@ -23,7 +23,7 @@ export default props => (
                         key={client.callsign}
                         client={client}
                         selected={focusedClient}
-                        setFocusedClient={props.setFocusedClient}
+                        onPress={() => props.setFocusedClient(client)}
                     />
                 );
             }
@@ -31,50 +31,34 @@ export default props => (
     </>
 );
 
-export class Marker extends React.PureComponent {
-    onPress = () => {
-        this.props.setFocusedClient(this.props.client);
-    };
+export const Marker = props => (
+    <MapView.Marker
+        image={props.client.aircraftIcon}
+        rotation={props.client.heading}
+        coordinate={props.client.location}
+        opacity={props.selected ? 2 : 1.1}
+        onPress={props.onPress}
+        anchor={{ x: 0.5, y: 0.5 }}
+        tracksViewChanges={false}
+        stopPropagation
+    />
+);
 
-    render() {
-        return (
-            <MapView.Marker
-                image={this.props.client.aircraftIcon}
-                rotation={this.props.client.heading}
-                coordinate={this.props.client.location}
-                opacity={this.props.selected ? 2 : 1.1}
-                onPress={this.onPress}
-                anchor={{ x: 0.5, y: 0.5 }}
-                tracksViewChanges={false}
-                stopPropagation
-            />
-        );
-    }
-}
-
-export class Polygon extends React.PureComponent {
-    onPress = () => {
-        this.props.setFocusedClient(this.props.client);
-    };
-
-    render() {
-        return (
-            <MapView.Polygon
-                coordinates={this.props.client.polygon}
-                zIndex={this.props.client.zIndex}
-                strokeColor={this.props.client.strokeColor}
-                strokeWidth={this.props.selected ? 2 : 1}
-                fillColor={
-                    this.props.selected
-                        ? this.props.client.fillColorSelected
-                        : this.props.client.fillColor
-                }
-                onPress={this.onPress}
-                tappable
-            />
-        );
-    }
-}
+export const Polygon = props => (
+    <MapView.Polygon
+        coordinates={props.client.polygon}
+        zIndex={props.client.zIndex}
+        strokeColor={props.client.strokeColor}
+        strokeWidth={props.selected ? 2 : 1}
+        fillColor={
+            props.selected
+                ? props.client.fillColorSelected
+                : props.client.fillColor
+        }
+        onPress={props.onPress}
+        tappable
+    />
+);
 
 export const FlightPath = ({ client }) => {
     // Render polylines only if airport coords are present

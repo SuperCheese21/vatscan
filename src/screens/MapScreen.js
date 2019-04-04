@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated, BackHandler, StyleSheet, View } from 'react-native';
+import { BackHandler, StyleSheet, View } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 
@@ -8,23 +8,22 @@ import Map from '../components/Map';
 import MapOverlays, { FlightPath } from '../components/MapOverlays';
 import Text from '../components/Text';
 import { accent as accentColor } from '../config/colors.json';
-import { panelStates, panelTransitionDuration } from '../config/constants.json';
 
 export default class MapScreen extends React.PureComponent {
-    state = {
-        panelPosition: new Animated.Value(panelStates.COLLAPSED)
-    };
-
     componentDidMount() {
         // Add listener for Android hardware back button to close info panel
-        BackHandler.addEventListener('hardwareBackPress', this.collapsePanel);
+        BackHandler.addEventListener(
+            'hardwareBackPress',
+            this.props.screenProps.collapsePanel
+        );
     }
 
     componentWillUnmount() {
         // Remove back button listener before component is unmounted
+        console.log('unmounted');
         BackHandler.removeEventListener(
             'hardwareBackPress',
-            this.collapsePanel
+            this.props.screenProps.collapsePanel
         );
     }
 
@@ -34,41 +33,19 @@ export default class MapScreen extends React.PureComponent {
         )
     };
 
-    setFocusedClient = client => {
-        // Set focused client and expand panel to height based on client type
-        this.props.screenProps.setFocusedClient(client);
-        if (client.type === 'PILOT') {
-            this._setPanelPosition(panelStates.EXPANDED_PILOT);
-        } else if (client.type === 'ATC') {
-            this._setPanelPosition(panelStates.EXPANDED_ATC);
-        }
-    };
-
-    collapsePanel = () => {
-        // Collapse panel and remove focused client
-        this._setPanelPosition(panelStates.COLLAPSED);
-        this.props.screenProps.removeFocusedClient();
-
-        return true;
-    };
-
-    _setPanelPosition = position => {
-        // Animate info panel position change
-        Animated.timing(this.state.panelPosition, {
-            toValue: position,
-            duration: panelTransitionDuration,
-            useNativeDriver: true
-        }).start();
-    };
-
     render() {
         return (
             <View style={{ flex: 1 }}>
-                <Map style={{ flex: 1 }} onPress={this.collapsePanel}>
+                <Map
+                    style={{ flex: 1 }}
+                    onPress={this.props.screenProps.collapsePanel}
+                >
                     <MapOverlays
                         clients={this.props.screenProps.clients}
                         focusedClient={this.props.screenProps.focusedClient}
-                        setFocusedClient={this.setFocusedClient}
+                        setFocusedClient={
+                            this.props.screenProps.setFocusedClient
+                        }
                     />
                     <FlightPath client={this.props.screenProps.focusedClient} />
                 </Map>
@@ -82,7 +59,7 @@ export default class MapScreen extends React.PureComponent {
                 </Text>
                 <InfoPanelContainer
                     stackNavigation={this.props.screenProps.stackNavigation}
-                    panelPosition={this.state.panelPosition}
+                    panelPosition={this.props.screenProps.panelPosition}
                     focusedClient={this.props.screenProps.focusedClient}
                 />
             </View>

@@ -29,7 +29,7 @@ export default class ClientScreen extends React.PureComponent {
 
     componentWillUnmount() {
         if (this.props.navigation.getParam('removeFocusedClient')) {
-            this.props.screenProps.removeFocusedClient();
+            this.props.screenProps.collapsePanel();
         }
         BackHandler.removeEventListener(
             'hardwareBackPress',

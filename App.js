@@ -1,11 +1,15 @@
 import React from 'react';
-import { Alert, NetInfo, Platform } from 'react-native';
+import { Alert, Animated, NetInfo, Platform } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import { AppLoading, Font, Linking } from 'expo';
 
 import FetchManager from './src/api/FetchManager';
 import StackNavigator from './src/navigation/StackNavigator';
-import { UPDATE_INTERVAL } from './src/config/constants.json';
+import {
+    panelStates,
+    panelTransitionDuration,
+    UPDATE_INTERVAL
+} from './src/config/constants.json';
 
 export default class App extends React.PureComponent {
     // Initialize component state and fetch manager
@@ -15,7 +19,8 @@ export default class App extends React.PureComponent {
             fontLoaded: false,
             loading: false,
             clients: [],
-            focusedClient: {}
+            focusedClient: {},
+            panelPosition: new Animated.Value(panelStates.COLLAPSED)
         };
         this.fetchManager = new FetchManager();
     }
@@ -85,11 +90,29 @@ export default class App extends React.PureComponent {
     };
 
     setFocusedClient = client => {
+        if (client.type === 'PILOT') {
+            this._setPanelPosition(panelStates.EXPANDED_PILOT);
+        } else if (client.type === 'ATC') {
+            this._setPanelPosition(panelStates.EXPANDED_ATC);
+        }
         this.setState({ focusedClient: client });
     };
 
-    removeFocusedClient = () => {
+    collapsePanel = () => {
+        // Collapse panel and remove focused client
+        this._setPanelPosition(panelStates.COLLAPSED);
         this.setState({ focusedClient: {} });
+
+        return true;
+    };
+
+    _setPanelPosition = position => {
+        // Animate info panel position change
+        Animated.timing(this.state.panelPosition, {
+            toValue: position,
+            duration: panelTransitionDuration,
+            useNativeDriver: true
+        }).start();
     };
 
     render() {
@@ -106,9 +129,10 @@ export default class App extends React.PureComponent {
                     loading: this.state.loading,
                     clients: this.state.clients,
                     focusedClient: this.state.focusedClient,
+                    panelPosition: this.state.panelPosition,
                     refresh: this.updateData,
                     setFocusedClient: this.setFocusedClient,
-                    removeFocusedClient: this.removeFocusedClient
+                    collapsePanel: this.collapsePanel
                 }}
             />
         );
