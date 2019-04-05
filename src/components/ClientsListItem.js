@@ -2,35 +2,44 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { List, Surface, TouchableRipple } from 'react-native-paper';
 
-const ClientsListItem = props => (
-    // Wrap list item in touchable ripple for highlight effect
-    <Surface style={styles.listItem}>
-        <TouchableRipple
-            onPress={() => {
-                props.setFocusedClient(props.client);
-                props.stackNavigation.navigate('ClientScreen', {
-                    callsign: props.client.callsign,
-                    removeFocusedClient: true
-                });
-            }}
-        >
-            <List.Item
-                title={props.client.callsign}
-                description={props.client.name + ' (' + props.client.id + ')'}
-                left={itemProps => (
-                    <List.Icon
-                        {...itemProps}
-                        icon={
-                            props.client.type === 'ATC'
-                                ? 'rss-feed'
-                                : 'airplanemode-active'
+export default class ClientsListItem extends React.PureComponent {
+    leftIcon = itemProps => (
+        <List.Icon
+            {...itemProps}
+            icon={
+                this.props.client.type === 'ATC'
+                    ? 'rss-feed'
+                    : 'airplanemode-active'
+            }
+        />
+    );
+
+    onPress = () => {
+        this.props.stackNavigation.navigate('ClientScreen', {
+            callsign: this.props.client.callsign,
+            removeFocusedClient: true
+        });
+    };
+
+    render() {
+        return (
+            <Surface style={styles.listItem}>
+                <TouchableRipple onPress={this.onPress}>
+                    <List.Item
+                        title={this.props.client.callsign}
+                        description={
+                            this.props.client.name +
+                            ' (' +
+                            this.props.client.id +
+                            ')'
                         }
+                        left={this.leftIcon}
                     />
-                )}
-            />
-        </TouchableRipple>
-    </Surface>
-);
+                </TouchableRipple>
+            </Surface>
+        );
+    }
+}
 
 const styles = StyleSheet.create({
     listItem: {
@@ -39,5 +48,3 @@ const styles = StyleSheet.create({
         borderRadius: 5
     }
 });
-
-export default ClientsListItem;

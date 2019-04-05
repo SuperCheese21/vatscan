@@ -13,11 +13,12 @@ const TabNavigatorContainer = props => (
         screenProps={{
             stackNavigation: props.navigation,
             loading: props.screenProps.loading,
-            refresh: props.screenProps.refresh,
             clients: props.screenProps.clients,
             focusedClient: props.screenProps.focusedClient,
+            panelPosition: props.screenProps.panelPosition,
+            refresh: props.screenProps.refresh,
             setFocusedClient: props.screenProps.setFocusedClient,
-            removeFocusedClient: props.screenProps.removeFocusedClient
+            collapsePanel: props.screenProps.collapsePanel
         }}
     />
 );

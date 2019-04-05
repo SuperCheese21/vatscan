@@ -17,19 +17,19 @@ export default class ClientScreen extends React.PureComponent {
     };
 
     componentDidMount() {
-        BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
         const callsign = this.props.navigation.getParam('callsign');
-        for (const client in this.props.screenProps.clients) {
+        for (const client of this.props.screenProps.clients) {
             if (client.callsign === callsign) {
                 this.props.screenProps.setFocusedClient(client);
                 break;
             }
         }
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
     }
 
     componentWillUnmount() {
         if (this.props.navigation.getParam('removeFocusedClient')) {
-            this.props.screenProps.removeFocusedClient();
+            this.props.screenProps.collapsePanel();
         }
         BackHandler.removeEventListener(
             'hardwareBackPress',
@@ -43,7 +43,6 @@ export default class ClientScreen extends React.PureComponent {
     };
 
     render() {
-        const { focusedClient: client } = this.props.screenProps;
         return (
             <ScrollView
                 style={{ flex: 1 }}
@@ -54,9 +53,11 @@ export default class ClientScreen extends React.PureComponent {
                     />
                 }
             >
-                <ClientStatsContainer client={client} />
+                <ClientStatsContainer
+                    client={this.props.screenProps.focusedClient}
+                />
 
-                <Stats client={client} />
+                <Stats client={this.props.screenProps.focusedClient} />
             </ScrollView>
         );
     }

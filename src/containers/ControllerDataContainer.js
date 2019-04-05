@@ -5,32 +5,46 @@ import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import Text from '../components/Text';
 import colors from '../config/colors.json';
 
-const ControllerDataContainer = props => (
-    <TouchableOpacity
-        onPress={() =>
-            props.stackNavigation.navigate('ClientScreen', {
-                callsign: props.data.callsign
-            })
-        }
-        style={styles.infoContainerController}
-    >
-        <View style={styles.infoRow}>
-            <Icon name="satellite-uplink" size={42} color={colors.accent} />
-            <Text style={styles.controllerCallsignText}>
-                {props.data.callsign}
-            </Text>
-        </View>
+export default class ControllerDataContainer extends React.PureComponent {
+    onPress = () => {
+        this.props.stackNavigation.navigate('ClientScreen', {
+            callsign: this.props.data.callsign
+        });
+    };
 
-        <View style={styles.controllerInfoView}>
-            <View style={{ flex: 1 }}>
-                <Text style={styles.callsignText}>{props.data.frequency}</Text>
-            </View>
-            <View style={{ flex: 1 }}>
-                <Text style={styles.nameText}>{props.data.name}</Text>
-            </View>
-        </View>
-    </TouchableOpacity>
-);
+    render() {
+        return (
+            <TouchableOpacity
+                onPress={this.onPress}
+                style={styles.infoContainerController}
+            >
+                <View style={styles.infoRow}>
+                    <Icon
+                        name="satellite-uplink"
+                        size={42}
+                        color={colors.accent}
+                    />
+                    <Text style={styles.controllerCallsignText}>
+                        {this.props.data.callsign}
+                    </Text>
+                </View>
+
+                <View style={styles.controllerInfoView}>
+                    <View style={{ flex: 1 }}>
+                        <Text style={styles.callsignText}>
+                            {this.props.data.frequency}
+                        </Text>
+                    </View>
+                    <View style={{ flex: 1 }}>
+                        <Text style={styles.nameText}>
+                            {this.props.data.name}
+                        </Text>
+                    </View>
+                </View>
+            </TouchableOpacity>
+        );
+    }
+}
 
 const styles = StyleSheet.create({
     callsignText: {
@@ -67,5 +81,3 @@ const styles = StyleSheet.create({
         fontSize: 13
     }
 });
-
-export default ControllerDataContainer;

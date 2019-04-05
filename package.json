@@ -1,6 +1,6 @@
 {
   "name": "vatscan-react-native",
-  "version": "0.7.6",
+  "version": "0.7.9",
   "private": true,
   "main": "node_modules/expo/AppEntry.js",
   "devDependencies": {

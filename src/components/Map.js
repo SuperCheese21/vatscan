@@ -7,9 +7,10 @@ import mapStyle from '../config/map-styles/style_blue_essence.json';
 const Map = props => (
     <MapView
         style={props.style}
-        provider={'google'}
+        provider="google"
         initialRegion={props.initialRegion || initialMapRegion}
         customMapStyle={mapStyle}
+        zoomTapEnabled={false}
         moveOnMarkerPress={false}
         toolbarEnabled={false}
         pitchEnabled={false}

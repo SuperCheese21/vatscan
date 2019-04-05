@@ -14,7 +14,7 @@ export default props => (
                         key={client.callsign}
                         client={client}
                         selected={focusedClient}
-                        onPress={() => props.setFocusedClient(client)}
+                        setFocusedClient={props.setFocusedClient}
                     />
                 );
             } else if (client.type === 'ATC' && client.polygon) {
@@ -23,7 +23,7 @@ export default props => (
                         key={client.callsign}
                         client={client}
                         selected={focusedClient}
-                        onPress={() => props.setFocusedClient(client)}
+                        setFocusedClient={props.setFocusedClient}
                     />
                 );
             }
@@ -31,34 +31,50 @@ export default props => (
     </>
 );
 
-export const Polygon = props => (
-    <MapView.Polygon
-        coordinates={props.client.polygon}
-        zIndex={props.client.zIndex}
-        strokeColor={props.client.strokeColor}
-        strokeWidth={props.selected ? 2 : 1}
-        fillColor={
-            props.selected
-                ? props.client.fillColorSelected
-                : props.client.fillColor
+class MapOverlay extends React.PureComponent {
+    onPress = () => {
+        if (this.props.setFocusedClient) {
+            this.props.setFocusedClient(this.props.client);
         }
-        onPress={props.onPress}
-        tappable
-    />
-);
+    };
+}
 
-export const Marker = props => (
-    <MapView.Marker
-        image={props.client.aircraftIcon}
-        rotation={props.client.heading}
-        coordinate={props.client.location}
-        onPress={props.onPress}
-        opacity={props.selected ? 2 : 1.1}
-        anchor={{ x: 0.5, y: 0.5 }}
-        tracksViewChanges={false}
-        stopPropagation
-    />
-);
+export class Marker extends MapOverlay {
+    render() {
+        return (
+            <MapView.Marker
+                image={this.props.client.aircraftIcon}
+                rotation={this.props.client.heading}
+                coordinate={this.props.client.location}
+                opacity={this.props.selected ? 2 : 1.1}
+                onPress={this.onPress}
+                anchor={{ x: 0.5, y: 0.5 }}
+                tracksViewChanges={false}
+                stopPropagation
+            />
+        );
+    }
+}
+
+export class Polygon extends MapOverlay {
+    render() {
+        return (
+            <MapView.Polygon
+                coordinates={this.props.client.polygon}
+                zIndex={this.props.client.zIndex}
+                strokeColor={this.props.client.strokeColor}
+                strokeWidth={this.props.selected ? 2 : 1}
+                fillColor={
+                    this.props.selected
+                        ? this.props.client.fillColorSelected
+                        : this.props.client.fillColor
+                }
+                onPress={this.onPress}
+                tappable
+            />
+        );
+    }
+}
 
 export const FlightPath = ({ client }) => {
     // Render polylines only if airport coords are present
