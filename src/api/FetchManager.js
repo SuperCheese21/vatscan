@@ -35,17 +35,13 @@ export default class FetchManager {
                         .split('\r\n')
                 )
                 .catch(e => {
-                    e &&
-                        isInitialFetch &&
-                        Alert.alert('Error', 'Unable to fetch client data');
+                    e && isInitialFetch && Alert.alert('Error', 'Unable to fetch client data');
                 }),
             fetch(ARTCC_URL)
                 .then(res => res.json())
                 .then(json => json.features)
                 .catch(e => {
-                    e &&
-                        isInitialFetch &&
-                        Alert.alert('Error', 'Unable to fetch ARTCC data');
+                    e && isInitialFetch && Alert.alert('Error', 'Unable to fetch ARTCC data');
                 })
         ]);
 

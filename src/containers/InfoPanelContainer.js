@@ -20,10 +20,7 @@ const InfoPanelContainer = props => (
             }
         ]}
     >
-        <Data
-            stackNavigation={props.stackNavigation}
-            focusedClient={props.focusedClient}
-        />
+        <Data stackNavigation={props.stackNavigation} focusedClient={props.focusedClient} />
     </Animated.View>
 );
 

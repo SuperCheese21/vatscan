@@ -25,8 +25,7 @@ export function getProjectedCoords(loc1, distance, bearing) {
     const arcLength = distance / constants.EARTH_RADIUS_M;
 
     const lat2 = Math.asin(
-        Math.sin(lat1) * Math.cos(arcLength) +
-            Math.cos(lat1) * Math.sin(arcLength) * Math.cos(brng)
+        Math.sin(lat1) * Math.cos(arcLength) + Math.cos(lat1) * Math.sin(arcLength) * Math.cos(brng)
     );
     const lon2 =
         lon1 +
@@ -57,10 +56,7 @@ export function getGCDistance(loc1, loc2) {
 
         var a =
             Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
-            Math.cos(lat1) *
-                Math.cos(lat2) *
-                Math.sin(deltaLon / 2) *
-                Math.sin(deltaLon / 2);
+            Math.cos(lat1) * Math.cos(lat2) * Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
         var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
         return Math.round(c * constants.EARTH_RADIUS_NM);

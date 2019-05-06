@@ -12,40 +12,27 @@ import { accent as accentColor } from '../config/colors.json';
 export default class MapScreen extends React.PureComponent {
     componentDidMount() {
         // Add listener for Android hardware back button to close info panel
-        BackHandler.addEventListener(
-            'hardwareBackPress',
-            this.props.screenProps.collapsePanel
-        );
+        BackHandler.addEventListener('hardwareBackPress', this.props.screenProps.collapsePanel);
     }
 
     componentWillUnmount() {
         // Remove back button listener before component is unmounted
         console.log('unmounted');
-        BackHandler.removeEventListener(
-            'hardwareBackPress',
-            this.props.screenProps.collapsePanel
-        );
+        BackHandler.removeEventListener('hardwareBackPress', this.props.screenProps.collapsePanel);
     }
 
     static navigationOptions = {
-        tabBarIcon: ({ tintColor }) => (
-            <Icon name={'google-maps'} size={20} color={tintColor} />
-        )
+        tabBarIcon: ({ tintColor }) => <Icon name={'google-maps'} size={20} color={tintColor} />
     };
 
     render() {
         return (
             <View style={{ flex: 1 }}>
-                <Map
-                    style={{ flex: 1 }}
-                    onPress={this.props.screenProps.collapsePanel}
-                >
+                <Map style={{ flex: 1 }} onPress={this.props.screenProps.collapsePanel}>
                     <MapOverlays
                         clients={this.props.screenProps.clients}
                         focusedClient={this.props.screenProps.focusedClient}
-                        setFocusedClient={
-                            this.props.screenProps.setFocusedClient
-                        }
+                        setFocusedClient={this.props.screenProps.setFocusedClient}
                     />
                     <FlightPath client={this.props.screenProps.focusedClient} />
                 </Map>

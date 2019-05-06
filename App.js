@@ -5,11 +5,7 @@ import { AppLoading, Font, Linking } from 'expo';
 
 import FetchManager from './src/api/FetchManager';
 import StackNavigator from './src/navigation/StackNavigator';
-import {
-    panelStates,
-    panelTransitionDuration,
-    UPDATE_INTERVAL
-} from './src/config/constants.json';
+import { panelStates, panelTransitionDuration, UPDATE_INTERVAL } from './src/config/constants.json';
 
 export default class App extends React.PureComponent {
     // Initialize component state and fetch manager
@@ -52,15 +48,9 @@ export default class App extends React.PureComponent {
         // Check internet connection and alert if there is no connection
         this.setState({ loading: true });
         NetInfo.getConnectionInfo().then(connectionInfo => {
-            if (
-                connectionInfo.type === 'none' ||
-                connectionInfo.type === 'unknown'
-            ) {
+            if (connectionInfo.type === 'none' || connectionInfo.type === 'unknown') {
                 this.setState({ loading: false });
-                Alert.alert(
-                    'No internet connection',
-                    'Connect to the internet to update data'
-                );
+                Alert.alert('No internet connection', 'Connect to the internet to update data');
             } else {
                 // Fetch data
                 this.fetchManager.fetchData(isInitialFetch).then(clients => {

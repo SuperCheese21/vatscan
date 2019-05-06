@@ -14,10 +14,7 @@ export default class BasicDataContainer extends React.PureComponent {
 
     render() {
         return (
-            <TouchableOpacity
-                onPress={this.onPress}
-                style={styles.infoContainerBasic}
-            >
+            <TouchableOpacity onPress={this.onPress} style={styles.infoContainerBasic}>
                 <View style={styles.infoRow}>
                     <Text
                         style={{
@@ -44,15 +41,11 @@ export default class BasicDataContainer extends React.PureComponent {
 
                 <View style={styles.pilotInfoView}>
                     <View style={{ flex: 1 }}>
-                        <Text style={styles.callsignText}>
-                            {this.props.data.callsign}
-                        </Text>
+                        <Text style={styles.callsignText}>{this.props.data.callsign}</Text>
                     </View>
 
                     <View style={{ flex: 1 }}>
-                        <Text style={styles.nameText}>
-                            {this.props.data.name}
-                        </Text>
+                        <Text style={styles.nameText}>{this.props.data.name}</Text>
                     </View>
                 </View>
 

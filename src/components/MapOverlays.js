@@ -6,8 +6,7 @@ import colors from '../config/colors.json';
 export default props => (
     <>
         {props.clients.map((client, index) => {
-            const focusedClient =
-                props.focusedClient.callsign === client.callsign;
+            const focusedClient = props.focusedClient.callsign === client.callsign;
             if (client.type === 'PILOT') {
                 return (
                     <Marker

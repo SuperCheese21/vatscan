@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-    createAppContainer,
-    createMaterialTopTabNavigator
-} from 'react-navigation';
+import { createAppContainer, createMaterialTopTabNavigator } from 'react-navigation';
 
 import ListScreen from '../screens/ListScreen';
 import MapScreen from '../screens/MapScreen';
