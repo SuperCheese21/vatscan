@@ -31,10 +31,7 @@ export default class ClientScreen extends React.PureComponent {
         if (this.props.navigation.getParam('removeFocusedClient')) {
             this.props.screenProps.collapsePanel();
         }
-        BackHandler.removeEventListener(
-            'hardwareBackPress',
-            this.handleBackPress
-        );
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
     }
 
     handleBackPress = () => {
@@ -53,9 +50,7 @@ export default class ClientScreen extends React.PureComponent {
                     />
                 }
             >
-                <ClientStatsContainer
-                    client={this.props.screenProps.focusedClient}
-                />
+                <ClientStatsContainer client={this.props.screenProps.focusedClient} />
 
                 <Stats client={this.props.screenProps.focusedClient} />
             </ScrollView>

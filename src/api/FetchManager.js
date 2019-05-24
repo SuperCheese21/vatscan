@@ -13,7 +13,7 @@ export default class FetchManager {
      * async/await function that requests pilot and ATC data from separate servers
      * @return {Promise} VATSIM server data promise object
      */
-    async fetchData(focusedCallsign, isInitialFetch) {
+    async fetchData(isInitialFetch) {
         // Fetch server URLs on first execution
         if (!this.serverUrls.length) {
             await this._fetchServerUrls();
@@ -35,21 +35,17 @@ export default class FetchManager {
                         .split('\r\n')
                 )
                 .catch(e => {
-                    e &&
-                        isInitialFetch &&
-                        Alert.alert('Error', 'Unable to fetch client data');
+                    e && isInitialFetch && Alert.alert('Error', 'Unable to fetch client data');
                 }),
             fetch(ARTCC_URL)
                 .then(res => res.json())
                 .then(json => json.features)
                 .catch(e => {
-                    e &&
-                        isInitialFetch &&
-                        Alert.alert('Error', 'Unable to fetch ARTCC data');
+                    e && isInitialFetch && Alert.alert('Error', 'Unable to fetch ARTCC data');
                 })
         ]);
 
-        return this._parseData(data, focusedCallsign);
+        return this._parseData(data);
     }
 
     /**
@@ -73,31 +69,24 @@ export default class FetchManager {
     /**
      * Parses the raw server data from text and json to a custom javascript object
      * @param  {String} rawData         Raw VATSIM server data
-     * @param  {Object} focusedCallsign Raw client data
      * @return {Object}                 Client data formatted as a javascript object
      */
-    _parseData(rawData, focusedCallsign) {
+    _parseData(rawData) {
         const data = rawData[0] || [];
         const centerData = rawData[1] || [];
         const clientFactory = new ClientFactory(centerData);
 
         // Define data object for client data
-        let clientData = {
-            clients: [],
-            focusedClient: {}
-        };
+        let clients = [];
 
         // Iterate through each client in raw data array
         data.forEach(rawClient => {
             const client = clientFactory.getClient(rawClient.split(':'));
             if (client) {
-                if (client.callsign === focusedCallsign) {
-                    clientData.focusedClient = client;
-                }
-                clientData.clients.push(client);
+                clients.push(client);
             }
         });
 
-        return clientData;
+        return clients;
     }
 }

@@ -6,11 +6,7 @@ export default class ClientsListItem extends React.PureComponent {
     leftIcon = itemProps => (
         <List.Icon
             {...itemProps}
-            icon={
-                this.props.client.type === 'ATC'
-                    ? 'rss-feed'
-                    : 'airplanemode-active'
-            }
+            icon={this.props.client.type === 'ATC' ? 'rss-feed' : 'airplanemode-active'}
         />
     );
 
@@ -27,12 +23,7 @@ export default class ClientsListItem extends React.PureComponent {
                 <TouchableRipple onPress={this.onPress}>
                     <List.Item
                         title={this.props.client.callsign}
-                        description={
-                            this.props.client.name +
-                            ' (' +
-                            this.props.client.id +
-                            ')'
-                        }
+                        description={this.props.client.name + ' (' + this.props.client.id + ')'}
                         left={this.leftIcon}
                     />
                 </TouchableRipple>

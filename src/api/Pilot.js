@@ -58,8 +58,7 @@ export default class Pilot extends Client {
                 return 0;
             }
             return Math.round(
-                60 * (this.distRemaining / this._groundSpeed) +
-                    this._altitude / 2000
+                60 * (this.distRemaining / this._groundSpeed) + this._altitude / 2000
             );
         }
     }
@@ -132,10 +131,7 @@ export default class Pilot extends Client {
 
     get plannedArrTime() {
         if (this._hrsEnRoute || this._minEnRoute) {
-            const departureTime = moment.utc(
-                this._depTime.padStart(4, '0'),
-                'HHmm'
-            );
+            const departureTime = moment.utc(this._depTime.padStart(4, '0'), 'HHmm');
             const flightDuration = 60 * this._hrsEnRoute + this._minEnRoute;
             return departureTime.add(flightDuration, 'm').format('HHmm') + 'z';
         }

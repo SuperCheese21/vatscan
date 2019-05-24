@@ -10,16 +10,8 @@ const FlightPlanContainer = ({ client }) => (
     <Surface style={styles.statsContainer}>
         <StatsLabel text="Flight Plan" />
 
-        <StatsRow
-            label="From"
-            text={client.depAirport}
-            planned={client.depCityName}
-        />
-        <StatsRow
-            label="To"
-            text={client.arrAirport}
-            planned={client.arrCityName}
-        />
+        <StatsRow label="From" text={client.depAirport} planned={client.depCityName} />
+        <StatsRow label="To" text={client.arrAirport} planned={client.arrCityName} />
         <StatsRow label="Aircraft" text={client.aircraft} />
 
         <View style={{ flexDirection: 'row' }}>

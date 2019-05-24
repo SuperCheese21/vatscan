@@ -25,10 +25,7 @@ const ClientStatsContainer = ({ client }) => (
             </View>
         </View>
         <StatsLabel text={client.type === 'PILOT' ? 'Pilot' : 'ATC'} />
-        <StatsRow
-            label="Location"
-            text={client.latitude + ', ' + client.longitude}
-        />
+        <StatsRow label="Location" text={client.latitude + ', ' + client.longitude} />
         <StatsRow label="Server" text={client.server} />
         <StatsRow label="Time Connected" text={client.elapsedTimeLogon} />
     </StatsContainer>

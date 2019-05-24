@@ -18,10 +18,7 @@ export default class TextBlock extends React.PureComponent {
     render() {
         if (this.props.text) {
             return (
-                <TouchableOpacity
-                    style={styles.textBlock}
-                    onLongPress={this.onLongPress}
-                >
+                <TouchableOpacity style={styles.textBlock} onLongPress={this.onLongPress}>
                     <Text style={styles.textBlockText}>{this.props.text}</Text>
                 </TouchableOpacity>
             );

@@ -14,31 +14,18 @@ export default class ControllerDataContainer extends React.PureComponent {
 
     render() {
         return (
-            <TouchableOpacity
-                onPress={this.onPress}
-                style={styles.infoContainerController}
-            >
+            <TouchableOpacity onPress={this.onPress} style={styles.infoContainerController}>
                 <View style={styles.infoRow}>
-                    <Icon
-                        name="satellite-uplink"
-                        size={42}
-                        color={colors.accent}
-                    />
-                    <Text style={styles.controllerCallsignText}>
-                        {this.props.data.callsign}
-                    </Text>
+                    <Icon name="satellite-uplink" size={42} color={colors.accent} />
+                    <Text style={styles.controllerCallsignText}>{this.props.data.callsign}</Text>
                 </View>
 
                 <View style={styles.controllerInfoView}>
                     <View style={{ flex: 1 }}>
-                        <Text style={styles.callsignText}>
-                            {this.props.data.frequency}
-                        </Text>
+                        <Text style={styles.callsignText}>{this.props.data.frequency}</Text>
                     </View>
                     <View style={{ flex: 1 }}>
-                        <Text style={styles.nameText}>
-                            {this.props.data.name}
-                        </Text>
+                        <Text style={styles.nameText}>{this.props.data.name}</Text>
                     </View>
                 </View>
             </TouchableOpacity>

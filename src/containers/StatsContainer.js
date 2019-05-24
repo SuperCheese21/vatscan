@@ -2,9 +2,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Surface } from 'react-native-paper';
 
-const StatsContainer = props => (
-    <Surface style={styles.statsContainer}>{props.children}</Surface>
-);
+const StatsContainer = props => <Surface style={styles.statsContainer}>{props.children}</Surface>;
 
 const styles = StyleSheet.create({
     statsContainer: {

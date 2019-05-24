@@ -5,11 +5,7 @@ import { AppLoading, Font, Linking } from 'expo';
 
 import FetchManager from './src/api/FetchManager';
 import StackNavigator from './src/navigation/StackNavigator';
-import {
-    panelStates,
-    panelTransitionDuration,
-    UPDATE_INTERVAL
-} from './src/config/constants.json';
+import { panelStates, panelTransitionDuration, UPDATE_INTERVAL } from './src/config/constants.json';
 
 export default class App extends React.PureComponent {
     // Initialize component state and fetch manager
@@ -52,39 +48,23 @@ export default class App extends React.PureComponent {
         // Check internet connection and alert if there is no connection
         this.setState({ loading: true });
         NetInfo.getConnectionInfo().then(connectionInfo => {
-            if (
-                connectionInfo.type === 'none' ||
-                connectionInfo.type === 'unknown'
-            ) {
+            if (connectionInfo.type === 'none' || connectionInfo.type === 'unknown') {
                 this.setState({ loading: false });
-                Alert.alert(
-                    'No internet connection',
-                    'Connect to the internet to update data'
-                );
+                Alert.alert('No internet connection', 'Connect to the internet to update data');
             } else {
                 // Fetch data
-                const focusedCallsign = this.state.focusedClient.callsign;
-                this.fetchManager
-                    .fetchData(focusedCallsign, isInitialFetch)
-                    .then(data => {
-                        // Update state with new data
-                        this.setState({
-                            loading: false,
-                            clients: data.clients,
-                            focusedClient: data.focusedClient
-                        });
+                this.fetchManager.fetchData(isInitialFetch).then(clients => {
+                    // Update state with new client data
+                    this._handleUpdate(clients);
 
-                        // Clear existing timeout
-                        if (this.timer) {
-                            clearTimeout(this.timer);
-                        }
+                    // Clear existing timeout
+                    if (this.timer) {
+                        clearTimeout(this.timer);
+                    }
 
-                        // Set timeout for next data update
-                        this.timer = setTimeout(
-                            this.updateData,
-                            UPDATE_INTERVAL
-                        );
-                    });
+                    // Set timeout for next data update
+                    this.timer = setTimeout(this.updateData, UPDATE_INTERVAL);
+                });
             }
         });
     };
@@ -106,14 +86,34 @@ export default class App extends React.PureComponent {
         return true;
     };
 
-    _setPanelPosition = position => {
+    _handleUpdate(clients) {
+        const focusedCallsign = this.state.focusedClient.callsign;
+        let focusedClient = {};
+
+        // Find focused client inside updated client data array
+        for (const client of clients) {
+            if (focusedCallsign === client.callsign) {
+                focusedClient = client;
+                break;
+            }
+        }
+
+        // Update state with new data
+        this.setState({
+            loading: false,
+            clients,
+            focusedClient
+        });
+    }
+
+    _setPanelPosition(position) {
         // Animate info panel position change
         Animated.timing(this.state.panelPosition, {
             toValue: position,
             duration: panelTransitionDuration,
             useNativeDriver: true
         }).start();
-    };
+    }
 
     render() {
         // Show app loading screen if font is still being loaded

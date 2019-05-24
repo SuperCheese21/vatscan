@@ -13,13 +13,7 @@ export default class ListScreen extends React.PureComponent {
 
     static navigationOptions = {
         tabBarIcon: ({ tintColor }) => {
-            return (
-                <Icon
-                    name={'format-list-bulleted'}
-                    size={20}
-                    color={tintColor}
-                />
-            );
+            return <Icon name={'format-list-bulleted'} size={20} color={tintColor} />;
         }
     };
 
@@ -30,8 +24,7 @@ export default class ListScreen extends React.PureComponent {
                 client.name.toLowerCase().includes(query) ||
                 client.callsign.toLowerCase().includes(query) ||
                 client.id.includes(query) ||
-                (client.aircraft &&
-                    client.aircraft.toLowerCase().includes(query))
+                (client.aircraft && client.aircraft.toLowerCase().includes(query))
         );
     }
 
@@ -66,9 +59,7 @@ export default class ListScreen extends React.PureComponent {
                     renderItem={this.renderItem}
                     ListEmptyComponent={
                         <View style={{ flex: 1 }}>
-                            <Text style={{ textAlign: 'center' }}>
-                                No results found
-                            </Text>
+                            <Text style={{ textAlign: 'center' }}>No results found</Text>
                         </View>
                     }
                 />

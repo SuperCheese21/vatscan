@@ -12,11 +12,7 @@ const FlightStatsContainer = ({ client }) => (
         <StatsLabel text="Flight Info" />
 
         <View style={{ flexDirection: 'row' }}>
-            <StatsRow
-                label="Speed"
-                text={client.groundSpeed + ' kts'}
-                planned={client.tasCruise}
-            />
+            <StatsRow label="Speed" text={client.groundSpeed + ' kts'} planned={client.tasCruise} />
             <StatsRow label="Heading" text={client.heading + '°'} />
         </View>
 
@@ -36,10 +32,7 @@ const FlightStatsContainer = ({ client }) => (
 
         <View style={{ flexDirection: 'row' }}>
             <StatsRow label="ETE" text={client.ete || 'N/A'} />
-            <StatsRow
-                label="ETA"
-                text={client.eta ? client.eta + 'z' : 'N/A'}
-            />
+            <StatsRow label="ETA" text={client.eta ? client.eta + 'z' : 'N/A'} />
         </View>
 
         <Map
