@@ -2,7 +2,7 @@
     "expo": {
         "name": "VATSCAN",
         "description": "The premier, next generation live VATSIM map for mobile",
-        "version": "0.7.11",
+        "version": "0.7.12",
         "sdkVersion": "32.0.0",
         "scheme": "vatscan",
         "updates": {
@@ -20,7 +20,7 @@
         },
         "android": {
             "package": "com.stratospherelabs.vatscan",
-            "versionCode": 3,
+            "versionCode": 4,
             "config": {
                 "googleMaps": {
                     "apiKey": "AIzaSyDTYczc4NXP-wktSRpKO9C5Uo7M0KM8420"
