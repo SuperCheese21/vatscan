@@ -58,7 +58,7 @@ export default class Pilot extends Client {
                 return 0;
             }
             return Math.round(
-                60 * (this.distRemaining / this._groundSpeed) + this._altitude / 2000
+                60 * (this.distRemaining / this._groundSpeed) + this._altitude / 3400
             );
         }
     }
