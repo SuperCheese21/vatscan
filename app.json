@@ -3,15 +3,13 @@
         "name": "VATSCAN",
         "description": "The premier, next generation live VATSIM map for mobile",
         "version": "0.7.13",
-        "sdkVersion": "32.0.0",
+        "sdkVersion": "34.0.0",
         "scheme": "vatscan",
         "githubUrl": "https://github.com/SuperCheese21/vatscan",
         "updates": {
             "fallbackToCacheTimeout": 0
         },
-        "assetBundlePatterns": [
-            "**/*"
-        ],
+        "assetBundlePatterns": ["**/*"],
         "ios": {
             "bundleIdentifier": "com.stratospherelabs.vatscan",
             "supportsTablet": true,
