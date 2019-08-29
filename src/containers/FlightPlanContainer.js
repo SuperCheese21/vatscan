@@ -7,31 +7,39 @@ import StatsRow from '../components/StatsRow';
 import TextBlock from '../components/TextBlock';
 
 const FlightPlanContainer = ({ client }) => (
-    <Surface style={styles.statsContainer}>
-        <StatsLabel text="Flight Plan" />
+  <Surface style={styles.statsContainer}>
+    <StatsLabel text="Flight Plan" />
 
-        <StatsRow label="From" text={client.depAirport} planned={client.depCityName} />
-        <StatsRow label="To" text={client.arrAirport} planned={client.arrCityName} />
-        <StatsRow label="Aircraft" text={client.aircraft} />
+    <StatsRow
+      label="From"
+      text={client.depAirport}
+      planned={client.depCityName}
+    />
+    <StatsRow
+      label="To"
+      text={client.arrAirport}
+      planned={client.arrCityName}
+    />
+    <StatsRow label="Aircraft" text={client.aircraft} />
 
-        <View style={{ flexDirection: 'row' }}>
-            <StatsRow label="Departure" text={client.plannedDepTime} />
-            <StatsRow label="Arrival" text={client.plannedArrTime} />
-        </View>
+    <View style={{ flexDirection: 'row' }}>
+      <StatsRow label="Departure" text={client.plannedDepTime} />
+      <StatsRow label="Arrival" text={client.plannedArrTime} />
+    </View>
 
-        <StatsRow label="Duration" text={client.plannedDuration} />
+    <StatsRow label="Duration" text={client.plannedDuration} />
 
-        <TextBlock text={client.route} />
-    </Surface>
+    <TextBlock text={client.route} />
+  </Surface>
 );
 
 const styles = StyleSheet.create({
-    statsContainer: {
-        borderRadius: 10,
-        padding: 10,
-        elevation: 10,
-        margin: 5
-    }
+  statsContainer: {
+    borderRadius: 10,
+    padding: 10,
+    elevation: 10,
+    margin: 5
+  }
 });
 
 export default FlightPlanContainer;

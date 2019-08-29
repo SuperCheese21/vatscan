@@ -1,37 +1,37 @@
 {
-    "name": "vatscan-react-native",
-    "version": "0.7.12",
-    "private": true,
-    "main": "node_modules/expo/AppEntry.js",
-    "devDependencies": {
-        "babel-preset-expo": "^5.2.0",
-        "eslint": "^6.2.2",
-        "eslint-config-universe": "^1.0.7",
-        "jest-expo": "^34.0.1",
-        "prettier": "^1.18.2",
-        "react-test-renderer": "16.8.3"
-    },
-    "scripts": {
-        "start": "expo start",
-        "eject": "expo eject",
-        "build-android": "expo build:android",
-        "build-ios": "expo build:ios",
-        "test": "node_modules/.bin/jest",
-        "test:debug": "node --inspect-brk node_modules/jest/bin/jest.js --runInBand",
-        "format": "node_modules/.bin/prettier --config ./.prettierrc --write ./App.js ./src/**/*.js",
-        "eslint": "node_modules/.bin/eslint App.js src/**/*.js"
-    },
-    "jest": {
-        "preset": "jest-expo"
-    },
-    "dependencies": {
-        "@expo/vector-icons": "^10.0.5",
-        "expo": "^34.0.4",
-        "moment": "^2.24.0",
-        "react": "16.8.3",
-        "react-native": "https://github.com/expo/react-native/archive/sdk-34.0.0.tar.gz",
-        "react-native-paper": "^2.16.0",
-        "react-navigation": "^3.12.1",
-        "react-navigation-slide-from-right-transition": "^1.0.4"
-    }
+  "name": "vatscan-react-native",
+  "version": "0.7.12",
+  "private": true,
+  "main": "node_modules/expo/AppEntry.js",
+  "devDependencies": {
+    "babel-preset-expo": "^5.2.0",
+    "eslint": "^6.2.2",
+    "eslint-config-universe": "^1.0.7",
+    "jest-expo": "^34.0.1",
+    "prettier": "^1.18.2",
+    "react-test-renderer": "16.8.3"
+  },
+  "scripts": {
+    "start": "expo start",
+    "eject": "expo eject",
+    "build-android": "expo build:android",
+    "build-ios": "expo build:ios",
+    "test": "node_modules/.bin/jest",
+    "test:debug": "node --inspect-brk node_modules/jest/bin/jest.js --runInBand",
+    "format": "node_modules/.bin/prettier --config ./.prettierrc --write ./App.js ./src/**/*.js",
+    "eslint": "node_modules/.bin/eslint App.js src/**/*.js"
+  },
+  "jest": {
+    "preset": "jest-expo"
+  },
+  "dependencies": {
+    "@expo/vector-icons": "^10.0.5",
+    "expo": "^34.0.4",
+    "moment": "^2.24.0",
+    "react": "16.8.3",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-34.0.0.tar.gz",
+    "react-native-paper": "^2.16.0",
+    "react-navigation": "^3.12.1",
+    "react-navigation-slide-from-right-transition": "^1.0.4"
+  }
 }
