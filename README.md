@@ -1,3 +1,3 @@
 # VATSCAN React Native
 
-https://supercheese21.github.io/vatscan-site/
+https://vatscan.stratospherelabs.io/

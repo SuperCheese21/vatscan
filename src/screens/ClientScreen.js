@@ -8,66 +8,66 @@ import FlightStatsContainer from '../containers/FlightStatsContainer';
 import ShareButton from '../components/ShareButton';
 
 export default class ClientScreen extends React.PureComponent {
-    static navigationOptions = ({ navigation }) => {
-        const callsign = navigation.getParam('callsign');
-        return {
-            title: callsign,
-            headerRight: <ShareButton callsign={callsign} />
-        };
+  static navigationOptions = ({ navigation }) => {
+    const callsign = navigation.getParam('callsign');
+    return {
+      title: callsign,
+      headerRight: <ShareButton callsign={callsign} />
     };
+  };
 
-    componentDidMount() {
-        const callsign = this.props.navigation.getParam('callsign');
-        for (const client of this.props.screenProps.clients) {
-            if (client.callsign === callsign) {
-                this.props.screenProps.setFocusedClient(client);
-                break;
-            }
+  componentDidMount() {
+    const callsign = this.props.navigation.getParam('callsign');
+    for (const client of this.props.screenProps.clients) {
+      if (client.callsign === callsign) {
+        this.props.screenProps.setFocusedClient(client);
+        break;
+      }
+    }
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+  }
+
+  componentWillUnmount() {
+    if (this.props.navigation.getParam('removeFocusedClient')) {
+      this.props.screenProps.collapsePanel();
+    }
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
+  }
+
+  handleBackPress = () => {
+    this.props.navigation.goBack();
+    return true;
+  };
+
+  render() {
+    return (
+      <ScrollView
+        style={{ flex: 1 }}
+        refreshControl={
+          <RefreshControl
+            refreshing={this.props.screenProps.loading}
+            onRefresh={this.props.screenProps.refresh}
+          />
         }
-        BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
-    }
+      >
+        <ClientStatsContainer client={this.props.screenProps.focusedClient} />
 
-    componentWillUnmount() {
-        if (this.props.navigation.getParam('removeFocusedClient')) {
-            this.props.screenProps.collapsePanel();
-        }
-        BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
-    }
-
-    handleBackPress = () => {
-        this.props.navigation.goBack();
-        return true;
-    };
-
-    render() {
-        return (
-            <ScrollView
-                style={{ flex: 1 }}
-                refreshControl={
-                    <RefreshControl
-                        refreshing={this.props.screenProps.loading}
-                        onRefresh={this.props.screenProps.refresh}
-                    />
-                }
-            >
-                <ClientStatsContainer client={this.props.screenProps.focusedClient} />
-
-                <Stats client={this.props.screenProps.focusedClient} />
-            </ScrollView>
-        );
-    }
+        <Stats client={this.props.screenProps.focusedClient} />
+      </ScrollView>
+    );
+  }
 }
 
 const Stats = ({ client }) => {
-    if (client.type === 'PILOT') {
-        return (
-            <>
-                <FlightPlanContainer client={client} />
-                <FlightStatsContainer client={client} />
-            </>
-        );
-    } else if (client.type === 'ATC') {
-        return <ControllerStatsContainer client={client} />;
-    }
-    return null;
+  if (client.type === 'PILOT') {
+    return (
+      <>
+        <FlightPlanContainer client={client} />
+        <FlightStatsContainer client={client} />
+      </>
+    );
+  } else if (client.type === 'ATC') {
+    return <ControllerStatsContainer client={client} />;
+  }
+  return null;
 };
