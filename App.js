@@ -64,7 +64,7 @@ export default class App extends PureComponent {
     const clients = await this.fetchManager.fetchData(isInitialFetch);
 
     // Update state with new client data
-    this._handleUpdate(clients);
+    this.handleUpdate(clients);
 
     // Clear existing timeout
     if (this.timer) {
@@ -77,22 +77,22 @@ export default class App extends PureComponent {
 
   setFocusedClient = client => {
     if (client.type === 'PILOT') {
-      this._setPanelPosition(panelStates.EXPANDED_PILOT);
+      this.setPanelPosition(panelStates.EXPANDED_PILOT);
     } else if (client.type === 'ATC') {
-      this._setPanelPosition(panelStates.EXPANDED_ATC);
+      this.setPanelPosition(panelStates.EXPANDED_ATC);
     }
     this.setState({ focusedClient: client });
   };
 
   collapsePanel = () => {
     // Collapse panel and remove focused client
-    this._setPanelPosition(panelStates.COLLAPSED);
+    this.setPanelPosition(panelStates.COLLAPSED);
     this.setState({ focusedClient: {} });
 
     return true;
   };
 
-  _handleUpdate(clients) {
+  handleUpdate(clients) {
     const focusedCallsign = this.state.focusedClient.callsign;
     let focusedClient = {};
 
@@ -112,7 +112,7 @@ export default class App extends PureComponent {
     });
   }
 
-  _setPanelPosition(position) {
+  setPanelPosition(position) {
     // Animate info panel position change
     Animated.timing(this.state.panelPosition, {
       toValue: position,
