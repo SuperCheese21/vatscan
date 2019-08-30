@@ -28,11 +28,11 @@ export default class FetchManager {
         .then(res => res.text())
         .then(text =>
           text
-            .split('!CLIENTS:\r\n')
+            .split('!CLIENTS:\n')
             .pop()
-            .split('\r\n;\r\n;')
+            .split('\n;\n;')
             .shift()
-            .split('\r\n')
+            .split('\n')
         )
         .catch(e => {
           e &&
