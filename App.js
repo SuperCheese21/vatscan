@@ -1,7 +1,8 @@
 import React from 'react';
 import { Alert, Animated, NetInfo, Platform } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
-import { AppLoading, Font, Linking } from 'expo';
+import { AppLoading, Linking } from 'expo';
+import * as Font from 'expo-font';
 
 import FetchManager from './src/api/FetchManager';
 import StackNavigator from './src/navigation/StackNavigator';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapView } from 'expo';
+import MapView from 'react-native-maps';
 
 import { initialMapRegion } from '../config/constants.json';
 import mapStyle from '../config/map-styles/style_blue_essence.json';
