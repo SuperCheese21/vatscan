@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Map from '../components/Map';
-import { Polygon } from '../components/MapOverlays';
+import { ControllerPolygon } from '../components/MapOverlays';
 import StatsContainer from './StatsContainer';
 import StatsLabel from '../components/StatsLabel';
 import StatsRow from '../components/StatsRow';
@@ -25,7 +25,7 @@ const ControllerStatsContainer = ({ client }) => (
         longitudeDelta: 5
       }}
     >
-      <Polygon client={client} selected={false} />
+      <ControllerPolygon client={client} selected={false} />
     </Map>
   </StatsContainer>
 );

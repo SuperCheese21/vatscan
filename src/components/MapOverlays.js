@@ -1,5 +1,5 @@
-import React from 'react';
-import { MapView } from 'expo';
+import React, { PureComponent } from 'react';
+import { Marker, Polygon, Polyline } from 'react-native-maps';
 
 import colors from '../config/colors.json';
 
@@ -9,7 +9,7 @@ export default props => (
       const focusedClient = props.focusedClient.callsign === client.callsign;
       if (client.type === 'PILOT') {
         return (
-          <Marker
+          <AircraftMarker
             key={client.callsign}
             client={client}
             selected={focusedClient}
@@ -18,7 +18,7 @@ export default props => (
         );
       } else if (client.type === 'ATC' && client.polygon) {
         return (
-          <Polygon
+          <ControllerPolygon
             key={client.callsign}
             client={client}
             selected={focusedClient}
@@ -30,7 +30,7 @@ export default props => (
   </>
 );
 
-class MapOverlay extends React.PureComponent {
+class MapOverlay extends PureComponent {
   onPress = () => {
     if (this.props.setFocusedClient) {
       this.props.setFocusedClient(this.props.client);
@@ -38,10 +38,10 @@ class MapOverlay extends React.PureComponent {
   };
 }
 
-export class Marker extends MapOverlay {
+export class AircraftMarker extends MapOverlay {
   render() {
     return (
-      <MapView.Marker
+      <Marker
         image={this.props.client.aircraftIcon}
         rotation={this.props.client.heading}
         coordinate={this.props.client.location}
@@ -55,10 +55,10 @@ export class Marker extends MapOverlay {
   }
 }
 
-export class Polygon extends MapOverlay {
+export class ControllerPolygon extends MapOverlay {
   render() {
     return (
-      <MapView.Polygon
+      <Polygon
         coordinates={this.props.client.polygon}
         zIndex={this.props.client.zIndex}
         strokeColor={this.props.client.strokeColor}
@@ -80,14 +80,14 @@ export const FlightPath = ({ client }) => {
   if (client.depCoords && client.location && client.arrCoords) {
     return (
       <>
-        <MapView.Polyline
+        <Polyline
           coordinates={[client.depCoords, client.location]}
           strokeColor={colors.mapOverlays.lineFlown}
           strokeWidth={2}
           zIndex={5}
           geodesic
         />
-        <MapView.Polyline
+        <Polyline
           coordinates={[client.location, client.arrCoords]}
           strokeColor={colors.mapOverlays.lineRemaining}
           strokeWidth={2}

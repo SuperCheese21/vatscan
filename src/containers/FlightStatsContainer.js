@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 
 import Map from '../components/Map';
-import { FlightPath, Marker } from '../components/MapOverlays';
+import { AircraftMarker, FlightPath } from '../components/MapOverlays';
 import StatsContainer from './StatsContainer';
 import StatsLabel from '../components/StatsLabel';
 import StatsRow from '../components/StatsRow';
@@ -48,7 +48,7 @@ const FlightStatsContainer = ({ client }) => (
         longitudeDelta: 5
       }}
     >
-      <Marker client={client} selected={false} />
+      <AircraftMarker client={client} selected={false} />
 
       <FlightPath client={client} />
     </Map>
