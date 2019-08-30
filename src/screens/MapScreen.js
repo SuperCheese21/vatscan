@@ -20,7 +20,6 @@ export default class MapScreen extends React.PureComponent {
 
   componentWillUnmount() {
     // Remove back button listener before component is unmounted
-    console.log('unmounted');
     BackHandler.removeEventListener(
       'hardwareBackPress',
       this.props.screenProps.collapsePanel

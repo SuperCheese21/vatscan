@@ -3,32 +3,33 @@ import { StyleSheet, View } from 'react-native';
 import Icon from '@expo/vector-icons/MaterialIcons';
 
 import Text from '../components/Text';
-import colors from '../config/colors.json';
+import {
+  accent as accentColor,
+  primaryMedium as primaryMediumColor
+} from '../config/colors.json';
 
-const DetailDataContainer = props => (
+const DetailDataContainer = ({
+  data: { aircraft, groundSpeed, altitude, heading }
+}) => (
   <View style={styles.infoContainerDetail}>
     <View style={styles.infoRow}>
       <View style={styles.infoRow}>
-        <Icon name="flight" size={20} color={colors.accent} />
-        <Text style={styles.infoText}>
-          {' ' + (props.data.aircraft || 'N/A')}
-        </Text>
+        <Icon name="flight" size={20} color={accentColor} />
+        <Text style={styles.infoText}>{' ' + (aircraft || 'N/A')}</Text>
       </View>
       <View style={styles.infoRow}>
-        <Icon name="send" size={20} color={colors.accent} />
-        <Text style={styles.infoText}>
-          {' ' + props.data.groundSpeed + ' kts'}
-        </Text>
+        <Icon name="send" size={20} color={accentColor} />
+        <Text style={styles.infoText}>{' ' + groundSpeed + ' kts'}</Text>
       </View>
     </View>
     <View style={styles.infoRow}>
       <View style={styles.infoRow}>
-        <Icon name="unfold-more" size={20} color={colors.accent} />
-        <Text style={styles.infoText}>{' ' + props.data.altitude + ' ft'}</Text>
+        <Icon name="unfold-more" size={20} color={accentColor} />
+        <Text style={styles.infoText}>{' ' + altitude + ' ft'}</Text>
       </View>
       <View style={styles.infoRow}>
-        <Icon name="navigation" size={20} color={colors.accent} />
-        <Text style={styles.infoText}>{' ' + props.data.heading + '°'}</Text>
+        <Icon name="navigation" size={20} color={accentColor} />
+        <Text style={styles.infoText}>{' ' + heading + '°'}</Text>
       </View>
     </View>
   </View>
@@ -37,7 +38,7 @@ const DetailDataContainer = props => (
 const styles = StyleSheet.create({
   infoContainerDetail: {
     flex: 5,
-    backgroundColor: colors.primaryMedium
+    backgroundColor: primaryMediumColor
   },
   infoRow: {
     flex: 1,

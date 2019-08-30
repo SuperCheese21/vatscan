@@ -3,16 +3,25 @@ import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ProgressBar } from 'react-native-paper';
 
 import Text from '../components/Text';
-import colors from '../config/colors.json';
+import { accent as accentColor } from '../config/colors.json';
 
 export default class BasicDataContainer extends React.PureComponent {
   onPress = () => {
-    this.props.stackNavigation.navigate('ClientScreen', {
-      callsign: this.props.data.callsign
-    });
+    const {
+      data: { callsign },
+      stackNavigation
+    } = this.props;
+    stackNavigation.navigate('ClientScreen', { callsign });
   };
 
   render() {
+    const {
+      arrAirport,
+      callsign,
+      depAirport,
+      name,
+      progress
+    } = this.props.data;
     return (
       <TouchableOpacity
         onPress={this.onPress}
@@ -26,7 +35,7 @@ export default class BasicDataContainer extends React.PureComponent {
               ...styles.icaoText
             }}
           >
-            {this.props.data.depAirport || '????'}
+            {depAirport || '????'}
           </Text>
           <Image
             style={styles.fromToIcon}
@@ -38,25 +47,25 @@ export default class BasicDataContainer extends React.PureComponent {
               ...styles.icaoText
             }}
           >
-            {this.props.data.arrAirport || '????'}
+            {arrAirport || '????'}
           </Text>
         </View>
 
         <View style={styles.pilotInfoView}>
           <View style={{ flex: 1 }}>
-            <Text style={styles.callsignText}>{this.props.data.callsign}</Text>
+            <Text style={styles.callsignText}>{callsign}</Text>
           </View>
 
           <View style={{ flex: 1 }}>
-            <Text style={styles.nameText}>{this.props.data.name}</Text>
+            <Text style={styles.nameText}>{name}</Text>
           </View>
         </View>
 
         <View style={styles.pilotInfoView}>
           <ProgressBar
             style={styles.progressBar}
-            progress={this.props.data.progress}
-            color={colors.accent}
+            progress={progress}
+            color={accentColor}
           />
         </View>
       </TouchableOpacity>

@@ -1,14 +1,14 @@
 import React from 'react';
 import { Text } from 'react-native';
 
-export default props => (
+export default ({ children, style }) => (
   <Text
     style={{
-      fontFamily: props.style.fontFamily || 'Roboto_Regular',
-      ...props.style
+      fontFamily: style.fontFamily || 'Roboto_Regular',
+      ...style
     }}
     numberOfLines={1}
   >
-    {props.children}
+    {children}
   </Text>
 );

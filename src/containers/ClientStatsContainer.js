@@ -6,7 +6,7 @@ import StatsContainer from './StatsContainer';
 import StatsLabel from '../components/StatsLabel';
 import StatsRow from '../components/StatsRow';
 import Text from '../components/Text';
-import colors from '../config/colors.json';
+import { accent as accentColor } from '../config/colors.json';
 
 const ClientStatsContainer = ({ client }) => (
   <StatsContainer>
@@ -16,7 +16,7 @@ const ClientStatsContainer = ({ client }) => (
         <Text style={{ color: '#898989' }}>{client.id}</Text>
         <Badge
           style={{
-            backgroundColor: colors.accent,
+            backgroundColor: accentColor,
             color: 'white'
           }}
         >

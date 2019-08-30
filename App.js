@@ -97,7 +97,8 @@ export default class App extends PureComponent {
     let focusedClient = {};
 
     // Find focused client inside updated client data array
-    for (const client of clients) { // eslint-disable-line
+    for (const client of clients) {
+      // eslint-disable-line
       if (focusedCallsign === client.callsign) {
         focusedClient = client;
         break;

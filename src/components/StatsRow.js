@@ -1,11 +1,11 @@
 import React from 'react';
 import Text from './Text';
 
-const StatsRow = props => (
+const StatsRow = ({ label, planned, text }) => (
   <Text style={{ flex: 1 }} numberOfLines={1}>
-    {props.label + '  '}
-    <Text style={{ fontSize: 16, color: '#898989' }}>{props.text}</Text>
-    <Planned planned={props.planned} />
+    {label + '  '}
+    <Text style={{ fontSize: 16, color: '#898989' }}>{text}</Text>
+    <Planned planned={planned} />
   </Text>
 );
 

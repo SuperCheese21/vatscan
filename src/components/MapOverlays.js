@@ -32,20 +32,23 @@ export default props => (
 
 class MapOverlay extends PureComponent {
   onPress = () => {
-    if (this.props.setFocusedClient) {
-      this.props.setFocusedClient(this.props.client);
-    }
+    const { client, setFocusedClient } = this.props;
+    setFocusedClient && setFocusedClient(client);
   };
 }
 
 export class AircraftMarker extends MapOverlay {
   render() {
+    const {
+      client: { aircraftIcon, heading, location },
+      selected
+    } = this.props;
     return (
       <Marker
-        image={this.props.client.aircraftIcon}
-        rotation={this.props.client.heading}
-        coordinate={this.props.client.location}
-        opacity={this.props.selected ? 2 : 1.1}
+        image={aircraftIcon}
+        rotation={heading}
+        coordinate={location}
+        opacity={selected ? 2 : 1.1}
         onPress={this.onPress}
         anchor={{ x: 0.5, y: 0.5 }}
         tracksViewChanges={false}
@@ -57,17 +60,17 @@ export class AircraftMarker extends MapOverlay {
 
 export class ControllerPolygon extends MapOverlay {
   render() {
+    const {
+      client: { fillColor, fillColorSelected, polygon, strokeColor, zIndex },
+      selected
+    } = this.props;
     return (
       <Polygon
-        coordinates={this.props.client.polygon}
-        zIndex={this.props.client.zIndex}
-        strokeColor={this.props.client.strokeColor}
-        strokeWidth={this.props.selected ? 2 : 1}
-        fillColor={
-          this.props.selected
-            ? this.props.client.fillColorSelected
-            : this.props.client.fillColor
-        }
+        coordinates={polygon}
+        zIndex={zIndex}
+        strokeColor={strokeColor}
+        strokeWidth={selected ? 2 : 1}
+        fillColor={selected ? fillColorSelected : fillColor}
         onPress={this.onPress}
         tappable
       />
@@ -75,21 +78,22 @@ export class ControllerPolygon extends MapOverlay {
   }
 }
 
-export const FlightPath = ({ client }) => {
+export const FlightPath = ({ client: { depCoords, location, arrCoords } }) => {
   // Render polylines only if airport coords are present
-  if (client.depCoords && client.location && client.arrCoords) {
+  if (depCoords && location && arrCoords) {
+    const { lineFlown, lineRemaining } = colors.mapOverlays;
     return (
       <>
         <Polyline
-          coordinates={[client.depCoords, client.location]}
-          strokeColor={colors.mapOverlays.lineFlown}
+          coordinates={[depCoords, location]}
+          strokeColor={lineFlown}
           strokeWidth={2}
           zIndex={5}
           geodesic
         />
         <Polyline
-          coordinates={[client.location, client.arrCoords]}
-          strokeColor={colors.mapOverlays.lineRemaining}
+          coordinates={[location, arrCoords]}
+          strokeColor={lineRemaining}
           strokeWidth={2}
           zIndex={5}
           geodesic
