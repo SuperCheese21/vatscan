@@ -2,7 +2,7 @@
   "expo": {
     "name": "VATSCAN",
     "description": "The premier, next generation live VATSIM map for mobile",
-    "version": "0.7.13",
+    "version": "0.7.14",
     "sdkVersion": "34.0.0",
     "scheme": "vatscan",
     "githubUrl": "https://github.com/SuperCheese21/vatscan",
@@ -19,7 +19,7 @@
     },
     "android": {
       "package": "com.stratospherelabs.vatscan",
-      "versionCode": 5,
+      "versionCode": 6,
       "playStoreUrl": "https://play.google.com/store/apps/details?id=com.stratospherelabs.vatscan",
       "permissions": [],
       "config": {
