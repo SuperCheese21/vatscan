@@ -24,6 +24,14 @@
   "jest": {
     "preset": "jest-expo"
   },
+  "eslintConfig": {
+    "extends": [
+      "universe/native"
+    ]
+  },
+  "eslintIgnore": [
+    "src/data/*"
+  ],
   "dependencies": {
     "@expo/vector-icons": "^10.0.5",
     "expo": "^34.0.4",
