@@ -5,10 +5,7 @@
   "main": "node_modules/expo/AppEntry.js",
   "devDependencies": {
     "babel-preset-expo": "latest",
-    "eslint": "latest",
-    "eslint-config-universe": "latest",
     "jest-expo": "latest",
-    "prettier": "latest",
     "react-test-renderer": "16.8.3"
   },
   "scripts": {
@@ -25,22 +22,20 @@
     "preset": "jest-expo"
   },
   "eslintConfig": {
-    "extends": [
-      "universe/native"
-    ]
+    "extends": "universe/native"
   },
   "eslintIgnore": [
     "src/data/*"
   ],
   "dependencies": {
     "@expo/vector-icons": "latest",
-    "expo": "^34.0.4",
-    "expo-font": "~6.0.1",
+    "expo": "^35.0.0",
+    "expo-font": "~7.0.0",
     "moment": "latest",
     "react": "16.8.3",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-34.0.0.tar.gz",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",
     "react-native-gesture-handler": "~1.3.0",
-    "react-native-maps": "~0.24.0",
+    "react-native-maps": "~0.25.0",
     "react-native-paper": "latest",
     "react-navigation": "latest",
     "react-navigation-slide-from-right-transition": "latest"
