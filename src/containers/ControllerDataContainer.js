@@ -3,7 +3,10 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 
 import Text from '../components/Text';
-import colors from '../config/colors.json';
+import {
+  accent as accentColor,
+  primary as primaryColor
+} from '../config/colors.json';
 
 export default class ControllerDataContainer extends React.PureComponent {
   onPress = () => {
@@ -13,24 +16,23 @@ export default class ControllerDataContainer extends React.PureComponent {
   };
 
   render() {
+    const { callsign, frequency, name } = this.props.data;
     return (
       <TouchableOpacity
         onPress={this.onPress}
         style={styles.infoContainerController}
       >
         <View style={styles.infoRow}>
-          <Icon name="satellite-uplink" size={42} color={colors.accent} />
-          <Text style={styles.controllerCallsignText}>
-            {this.props.data.callsign}
-          </Text>
+          <Icon name="satellite-uplink" size={42} color={accentColor} />
+          <Text style={styles.controllerCallsignText}>{callsign}</Text>
         </View>
 
         <View style={styles.controllerInfoView}>
           <View style={{ flex: 1 }}>
-            <Text style={styles.callsignText}>{this.props.data.frequency}</Text>
+            <Text style={styles.callsignText}>{frequency}</Text>
           </View>
           <View style={{ flex: 1 }}>
-            <Text style={styles.nameText}>{this.props.data.name}</Text>
+            <Text style={styles.nameText}>{name}</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -59,7 +61,7 @@ const styles = StyleSheet.create({
   infoContainerController: {
     width: '100%',
     height: 85,
-    backgroundColor: colors.primary
+    backgroundColor: primaryColor
   },
   infoRow: {
     flex: 1,

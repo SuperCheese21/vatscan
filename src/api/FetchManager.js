@@ -58,7 +58,8 @@ export default class FetchManager {
    */
   async _fetchServerUrls() {
     try {
-      const text = await fetch(STATUS_URL).then(res => res.text());
+      const res = await fetch(STATUS_URL);
+      const text = await res.text();
 
       text.split('\n').forEach(line => {
         if (line.includes('url0=')) {

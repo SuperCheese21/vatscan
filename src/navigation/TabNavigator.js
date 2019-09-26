@@ -1,8 +1,6 @@
 import React from 'react';
-import {
-  createAppContainer,
-  createMaterialTopTabNavigator
-} from 'react-navigation';
+import { createAppContainer } from 'react-navigation';
+import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 
 import ListScreen from '../screens/ListScreen';
 import MapScreen from '../screens/MapScreen';
@@ -32,6 +30,7 @@ const TabNavigator = createAppContainer(
     },
     {
       tabBarPosition: 'bottom',
+      swipeEnabled: false,
       tabBarOptions: {
         showIcon: true,
         upperCaseLabel: false,

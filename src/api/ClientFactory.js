@@ -17,7 +17,7 @@ export default class ClientFactory {
     if (clientType === 'PILOT') {
       return new Pilot(clientArray);
     } else if (clientType === 'ATC') {
-      return this._getController(clientArray);
+      return this.getController(clientArray);
     }
 
     return null;
@@ -28,10 +28,10 @@ export default class ClientFactory {
    * @param  {[type]} clientArray [description]
    * @return {[type]}             [description]
    */
-  _getController(clientArray) {
+  getController(clientArray) {
     const id = clientArray[1];
     const controllerType = clientArray[0].split('_').pop();
-    const center = this._findInCenterData(id);
+    const center = this.findInCenterData(id);
 
     if (['CTR', 'FSS', 'APP', 'DEP', 'TWR', 'GND'].includes(controllerType)) {
       return new Controller(clientArray, controllerType, center);
@@ -45,8 +45,9 @@ export default class ClientFactory {
    * @param  {[type]} id [description]
    * @return {[type]}    [description]
    */
-  _findInCenterData(id) {
+  findInCenterData(id) {
     for (const center of this.centerData) {
+      // eslint-disable-line
       if (center.id === Number(id)) {
         return center;
       }

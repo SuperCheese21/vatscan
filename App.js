@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { Alert, Animated, NetInfo, Platform } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import { AppLoading, Linking } from 'expo';
@@ -12,19 +12,16 @@ import {
   UPDATE_INTERVAL
 } from './src/config/constants.json';
 
-export default class App extends React.PureComponent {
+export default class App extends PureComponent {
   // Initialize component state and fetch manager
-  constructor() {
-    super();
-    this.state = {
-      fontLoaded: false,
-      loading: false,
-      clients: [],
-      focusedClient: {},
-      panelPosition: new Animated.Value(panelStates.COLLAPSED)
-    };
-    this.fetchManager = new FetchManager();
-  }
+  state = {
+    fontLoaded: false,
+    loading: false,
+    clients: [],
+    focusedClient: {},
+    panelPosition: new Animated.Value(panelStates.COLLAPSED)
+  };
+  fetchManager = new FetchManager();
 
   async componentDidMount() {
     // Load fonts and update font loaded state
@@ -49,57 +46,58 @@ export default class App extends React.PureComponent {
     this.updateData(true);
   }
 
-  updateData = isInitialFetch => {
-    // Check internet connection and alert if there is no connection
+  updateData = async isInitialFetch => {
     this.setState({ loading: true });
-    NetInfo.getConnectionInfo().then(connectionInfo => {
-      if (connectionInfo.type === 'none' || connectionInfo.type === 'unknown') {
-        this.setState({ loading: false });
-        Alert.alert(
-          'No internet connection',
-          'Connect to the internet to update data'
-        );
-      } else {
-        // Fetch data
-        this.fetchManager.fetchData(isInitialFetch).then(clients => {
-          // Update state with new client data
-          this._handleUpdate(clients);
 
-          // Clear existing timeout
-          if (this.timer) {
-            clearTimeout(this.timer);
-          }
+    // Check internet connection and alert if there is no connection
+    const connectionInfo = await NetInfo.getConnectionInfo();
+    if (connectionInfo.type === 'none' || connectionInfo.type === 'unknown') {
+      this.setState({ loading: false });
+      Alert.alert(
+        'No internet connection',
+        'Connect to the internet to update data'
+      );
+      return;
+    }
 
-          // Set timeout for next data update
-          this.timer = setTimeout(this.updateData, UPDATE_INTERVAL);
-        });
-      }
-    });
+    // Fetch data
+    const clients = await this.fetchManager.fetchData(isInitialFetch);
+
+    // Update state with new client data
+    this.handleUpdate(clients);
+
+    // Clear existing timeout
+    if (this.timer) {
+      clearTimeout(this.timer);
+    }
+
+    // Set timeout for next data update
+    this.timer = setTimeout(this.updateData, UPDATE_INTERVAL);
   };
 
   setFocusedClient = client => {
     if (client.type === 'PILOT') {
-      this._setPanelPosition(panelStates.EXPANDED_PILOT);
+      this.setPanelPosition(panelStates.EXPANDED_PILOT);
     } else if (client.type === 'ATC') {
-      this._setPanelPosition(panelStates.EXPANDED_ATC);
+      this.setPanelPosition(panelStates.EXPANDED_ATC);
     }
     this.setState({ focusedClient: client });
   };
 
   collapsePanel = () => {
     // Collapse panel and remove focused client
-    this._setPanelPosition(panelStates.COLLAPSED);
+    this.setPanelPosition(panelStates.COLLAPSED);
     this.setState({ focusedClient: {} });
 
     return true;
   };
 
-  _handleUpdate(clients) {
+  handleUpdate(clients) {
     const focusedCallsign = this.state.focusedClient.callsign;
     let focusedClient = {};
 
     // Find focused client inside updated client data array
-    for (const client of clients) {
+    for (const client of clients) { // eslint-disable-line
       if (focusedCallsign === client.callsign) {
         focusedClient = client;
         break;
@@ -114,7 +112,7 @@ export default class App extends React.PureComponent {
     });
   }
 
-  _setPanelPosition(position) {
+  setPanelPosition(position) {
     // Animate info panel position change
     Animated.timing(this.state.panelPosition, {
       toValue: position,

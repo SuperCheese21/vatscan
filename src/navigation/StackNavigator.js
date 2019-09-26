@@ -1,4 +1,5 @@
-import { createAppContainer, createStackNavigator } from 'react-navigation';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 import getSlideFromRightTransition from 'react-navigation-slide-from-right-transition';
 
 import ClientScreen from '../screens/ClientScreen';
