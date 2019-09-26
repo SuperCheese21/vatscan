@@ -2,14 +2,25 @@
   "expo": {
     "name": "VATSCAN",
     "description": "The premier, next generation live VATSIM map for mobile",
-    "version": "0.7.14",
+    "slug": "vatscan",
+    "privacy": "public",
     "sdkVersion": "35.0.0",
-    "scheme": "vatscan",
+    "version": "0.7.14",
+    "platforms": ["android"],
     "githubUrl": "https://github.com/SuperCheese21/vatscan",
+    "primaryColor": "#1b252b",
+    "icon": "./assets/icons/app_icon.png",
+    "scheme": "vatscan",
+    "assetBundlePatterns": ["**/*"],
+    "androidStatusBar": {
+      "backgroundColor": "#111111"
+    },
+    "splash": {
+      "image": "./assets/icons/splash_screen.png"
+    },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
     "ios": {
       "bundleIdentifier": "com.stratospherelabs.vatscan",
       "supportsTablet": true,
@@ -27,14 +38,6 @@
           "apiKey": "AIzaSyDTYczc4NXP-wktSRpKO9C5Uo7M0KM8420"
         }
       }
-    },
-    "androidStatusBar": {
-      "backgroundColor": "#111111"
-    },
-    "icon": "./assets/icons/app_icon.png",
-    "primaryColor": "#1b252b",
-    "splash": {
-      "image": "./assets/icons/splash_screen.png"
     }
   }
 }
