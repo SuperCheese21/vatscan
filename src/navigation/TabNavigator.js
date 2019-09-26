@@ -30,6 +30,7 @@ const TabNavigator = createAppContainer(
     },
     {
       tabBarPosition: 'bottom',
+      swipeEnabled: false,
       tabBarOptions: {
         showIcon: true,
         upperCaseLabel: false,
