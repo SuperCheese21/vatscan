@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
-import { Alert, Animated, NetInfo, Platform } from 'react-native';
+import { Alert, Animated, Platform } from 'react-native';
+import NetInfo from '@react-native-community/netinfo';
 import { SafeAreaView } from 'react-navigation';
 import { AppLoading, Linking } from 'expo';
 import * as Font from 'expo-font';
@@ -38,7 +39,7 @@ export default class App extends PureComponent {
     }
 
     // Automatically pull data update when internet connection is changed
-    NetInfo.addEventListener('connectionChange', () => {
+    NetInfo.addEventListener(() => {
       this.updateData(true);
     });
 
@@ -50,7 +51,7 @@ export default class App extends PureComponent {
     this.setState({ loading: true });
 
     // Check internet connection and alert if there is no connection
-    const connectionInfo = await NetInfo.getConnectionInfo();
+    const connectionInfo = await NetInfo.fetch();
     if (connectionInfo.type === 'none' || connectionInfo.type === 'unknown') {
       this.setState({ loading: false });
       Alert.alert(
