@@ -6,7 +6,7 @@
   "devDependencies": {
     "babel-preset-expo": "latest",
     "eslint": "latest",
-    "eslint-config-universe": "^1.0.7",
+    "eslint-config-universe": "latest",
     "jest-expo": "^35.0.0",
     "prettier": "latest",
     "react-test-renderer": "16.8.3"
