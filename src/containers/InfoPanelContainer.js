@@ -7,56 +7,58 @@ import DetailDataContainer from './DetailDataContainer';
 import { defaultPanelPosition } from '../config/constants.json';
 import { primary as primaryColor } from '../config/colors.json';
 
-const InfoPanelContainer = props => (
-  <Animated.View
-    style={[
-      styles.infoPanelContainer,
-      {
-        transform: [
-          {
-            translateY: props.panelPosition
-          }
-        ]
-      }
-    ]}
-  >
-    <Data
-      stackNavigation={props.stackNavigation}
-      focusedClient={props.focusedClient}
-    />
-  </Animated.View>
-);
-
-const Data = props => {
-  if (props.focusedClient.type === 'PILOT') {
-    return (
-      <>
-        <BasicDataContainer
-          stackNavigation={props.stackNavigation}
-          data={props.focusedClient}
-        />
-        <DetailDataContainer data={props.focusedClient} />
-      </>
-    );
-  } else if (props.focusedClient.type === 'ATC') {
-    return (
-      <ControllerDataContainer
-        stackNavigation={props.stackNavigation}
-        data={props.focusedClient}
-      />
-    );
-  }
-  return null;
-};
-
 const styles = StyleSheet.create({
   infoPanelContainer: {
     width: '100%',
     height: 154,
     position: 'absolute',
     bottom: defaultPanelPosition,
-    backgroundColor: primaryColor
-  }
+    backgroundColor: primaryColor,
+  },
 });
+
+const InfoPanelContainer = ({
+  focusedClient,
+  panelPosition,
+  stackNavigation,
+}) => (
+  <Animated.View
+    style={[
+      styles.infoPanelContainer,
+      {
+        transform: [
+          {
+            translateY: panelPosition,
+          },
+        ],
+      },
+    ]}
+  >
+    <Data stackNavigation={stackNavigation} focusedClient={focusedClient} />
+  </Animated.View>
+);
+
+const Data = ({ focusedClient, stackNavigation }) => {
+  if (focusedClient.type === 'PILOT') {
+    return (
+      <>
+        <BasicDataContainer
+          stackNavigation={stackNavigation}
+          data={focusedClient}
+        />
+        <DetailDataContainer data={focusedClient} />
+      </>
+    );
+  }
+  if (focusedClient.type === 'ATC') {
+    return (
+      <ControllerDataContainer
+        stackNavigation={stackNavigation}
+        data={focusedClient}
+      />
+    );
+  }
+  return null;
+};
 
 export default InfoPanelContainer;

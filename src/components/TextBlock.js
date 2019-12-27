@@ -5,14 +5,31 @@ import {
   Text,
   ToastAndroid,
   TouchableOpacity,
-  Vibration
+  Vibration,
 } from 'react-native';
+
+const styles = StyleSheet.create({
+  textBlock: {
+    backgroundColor: '#f2f2f2',
+    marginTop: 5,
+    marginBottom: 5,
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingTop: 5,
+    paddingBottom: 5,
+  },
+  textBlockText: {
+    flex: 1,
+    fontFamily: 'Roboto_Mono',
+  },
+});
 
 export default class TextBlock extends React.PureComponent {
   onLongPress = () => {
+    const { text } = this.props;
     Vibration.vibrate(10);
     ToastAndroid.show('Copied to clipboard', ToastAndroid.SHORT);
-    Clipboard.setString(this.props.text);
+    Clipboard.setString(text);
   };
 
   render() {
@@ -30,19 +47,3 @@ export default class TextBlock extends React.PureComponent {
     return null;
   }
 }
-
-const styles = StyleSheet.create({
-  textBlock: {
-    backgroundColor: '#f2f2f2',
-    marginTop: 5,
-    marginBottom: 5,
-    paddingLeft: 10,
-    paddingRight: 10,
-    paddingTop: 5,
-    paddingBottom: 5
-  },
-  textBlockText: {
-    flex: 1,
-    fontFamily: 'Roboto_Mono'
-  }
-});

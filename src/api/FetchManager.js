@@ -16,47 +16,42 @@ export default class FetchManager {
   async fetchData(isInitialFetch) {
     // Fetch server URLs on first execution
     if (!this.serverUrls.length) {
-      await this._fetchServerUrls();
+      await this.fetchServerUrls();
     }
 
     // Pick random URL
     const clientsUrl = getRandomElement(this.serverUrls);
 
     // Fetch data
-    const data = await Promise.all([
+    const [clientData, centerData] = await Promise.all([
       fetch(clientsUrl)
         .then(res => res.text())
-        .then(text =>
-          text
-            .split('!CLIENTS:\n')
-            .pop()
-            .split('\n;\n;')
-            .shift()
-            .split('\n')
-        )
-        .catch(e => {
-          e &&
+        .then(this.transformClientData)
+        .catch(
+          e =>
+            e &&
             isInitialFetch &&
-            Alert.alert('Error', 'Unable to fetch client data');
-        }),
+            Alert.alert('Error', 'Unable to fetch client data'),
+        ),
       fetch(ARTCC_URL)
         .then(res => res.json())
         .then(json => json.features)
-        .catch(e => {
-          e &&
+        .catch(
+          e =>
+            e &&
             isInitialFetch &&
-            Alert.alert('Error', 'Unable to fetch ARTCC data');
-        })
+            Alert.alert('Error', 'Unable to fetch ARTCC data'),
+        ),
     ]);
 
-    return this._parseData(data);
+    return FetchManager.parseData(clientData || [], centerData || []);
   }
 
   /**
    * [_fetchServerUrls description]
    * @return {Promise} [description]
    */
-  async _fetchServerUrls() {
+  async fetchServerUrls() {
     try {
       const res = await fetch(STATUS_URL);
       const text = await res.text();
@@ -66,32 +61,39 @@ export default class FetchManager {
           this.serverUrls.push(line.replace('url0=', ''));
         }
       });
-    } catch (err) {
-      console.error(err);
+    } catch (e) {
+      throw Error(e.message);
     }
   }
+
+  /**
+   * [transformClientData description]
+   * @param  {[type]} text [description]
+   * @return {[type]}      [description]
+   */
+  transformClientData = text =>
+    text
+      .split('!CLIENTS:\n')
+      .pop()
+      .split('\n;\n;')
+      .shift()
+      .split('\n')
+      .map(line => line.split(':'));
 
   /**
    * Parses the raw server data from text and json to a custom javascript object
    * @param  {String} rawData         Raw VATSIM server data
    * @return {Object}                 Client data formatted as a javascript object
    */
-  _parseData(rawData) {
-    const data = rawData[0] || [];
-    const centerData = rawData[1] || [];
+  static parseData(clientData, centerData) {
     const clientFactory = new ClientFactory(centerData);
 
-    // Define data object for client data
-    let clients = [];
-
-    // Iterate through each client in raw data array
-    data.forEach(rawClient => {
-      const client = clientFactory.getClient(rawClient.split(':'));
+    return clientData.reduce((clients, clientArray) => {
+      const client = clientFactory.getClient(clientArray);
       if (client) {
         clients.push(client);
       }
-    });
-
-    return clients;
+      return clients;
+    }, []);
   }
 }

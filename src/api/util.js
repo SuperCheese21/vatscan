@@ -11,6 +11,24 @@ export function getRandomElement(arr) {
 }
 
 /**
+ * Converts degrees to radians
+ * @param  {Number} deg Degrees value
+ * @return {Number}     Radians value
+ */
+function toRadians(deg) {
+  return (deg * Math.PI) / 180;
+}
+
+/**
+ * Converts radians to degrees
+ * @param  {Number} rad Radians value
+ * @return {Number}     Degrees value
+ */
+function toDegrees(rad) {
+  return (rad * 180) / Math.PI;
+}
+
+/**
  * Projects a location from another location given a distance and bearing
  * @param  {LatLng} loc1     Coordinates for initial location to project from
  * @param  {Number} distance Distance of projected location from initial location
@@ -26,18 +44,18 @@ export function getProjectedCoords(loc1, distance, bearing) {
 
   const lat2 = Math.asin(
     Math.sin(lat1) * Math.cos(arcLength) +
-      Math.cos(lat1) * Math.sin(arcLength) * Math.cos(brng)
+      Math.cos(lat1) * Math.sin(arcLength) * Math.cos(brng),
   );
   const lon2 =
     lon1 +
     Math.atan2(
       Math.sin(brng) * Math.sin(arcLength) * Math.cos(lat1),
-      Math.cos(arcLength) - Math.sin(lat1) * Math.sin(lat2)
+      Math.cos(arcLength) - Math.sin(lat1) * Math.sin(lat2),
     );
 
   return {
     latitude: toDegrees(lat2),
-    longitude: toDegrees(lon2)
+    longitude: toDegrees(lon2),
   };
 }
 
@@ -55,13 +73,13 @@ export function getGCDistance(loc1, loc2) {
     const deltaLat = toRadians(loc2.latitude - loc1.latitude);
     const deltaLon = toRadians(loc2.longitude - loc1.longitude);
 
-    var a =
+    const a =
       Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
       Math.cos(lat1) *
         Math.cos(lat2) *
         Math.sin(deltaLon / 2) *
         Math.sin(deltaLon / 2);
-    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
     return Math.round(c * constants.EARTH_RADIUS_NM);
   }
@@ -75,28 +93,9 @@ export function getGCDistance(loc1, loc2) {
  * @return {Boolean}    True if id is already in array, false if it isn't
  */
 export function checkID(data, id) {
-  for (let i = 0; i < data.length; i++) {
-    if (data[i].id === id) {
-      return true;
-    }
+  if (data.find(client => client.id === id)) {
+    return true;
   }
+
   return false;
-}
-
-/**
- * Converts degrees to radians
- * @param  {Number} deg Degrees value
- * @return {Number}     Radians value
- */
-function toRadians(deg) {
-  return (deg * Math.PI) / 180;
-}
-
-/**
- * Converts radians to degrees
- * @param  {Number} rad Radians value
- * @return {Number}     Degrees value
- */
-function toDegrees(rad) {
-  return (rad * 180) / Math.PI;
 }
