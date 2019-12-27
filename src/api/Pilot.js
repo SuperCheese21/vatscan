@@ -46,16 +46,7 @@ export default class Pilot extends Client {
   }
 
   checkAircraftType(list) {
-    const BreakException = new Error();
-
-    try {
-      list.forEach(aircraft => {
-        if (this.aircraft.includes(aircraft)) {
-          throw BreakException;
-        }
-      });
-    } catch (e) {
-      if (e !== BreakException) throw e;
+    if (list.find(aircraft => this.aircraft.includes(aircraft))) {
       return true;
     }
 

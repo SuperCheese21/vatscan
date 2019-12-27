@@ -48,20 +48,6 @@ export default class ClientFactory {
    * @return {[type]}    [description]
    */
   findInCenterData(id) {
-    const BreakException = new Error();
-
-    try {
-      this.centerData.forEach(center => {
-        if (center.id === Number(id)) {
-          BreakException.message = center;
-          throw BreakException;
-        }
-      });
-    } catch (e) {
-      if (e !== BreakException) throw e;
-      return e.message;
-    }
-
-    return {};
+    return this.centerData.find(center => center.id === Number(id)) || {};
   }
 }

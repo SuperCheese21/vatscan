@@ -111,21 +111,9 @@ export default class App extends PureComponent {
     const {
       focusedClient: { callsign: focusedCallsign },
     } = this.state;
-    let focusedClient = {};
 
-    const BreakException = new Error();
-
-    // Find focused client inside updated client data array
-    try {
-      clients.forEach(client => {
-        if (focusedCallsign === client.callsign) {
-          focusedClient = client;
-          throw BreakException;
-        }
-      });
-    } catch (e) {
-      if (e !== BreakException) throw e;
-    }
+    const focusedClient =
+      clients.find(client => client.callsign === focusedCallsign) || {};
 
     // Update state with new data
     this.setState({

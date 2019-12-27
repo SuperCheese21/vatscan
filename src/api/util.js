@@ -93,16 +93,7 @@ export function getGCDistance(loc1, loc2) {
  * @return {Boolean}    True if id is already in array, false if it isn't
  */
 export function checkID(data, id) {
-  const BreakException = new Error();
-
-  try {
-    data.forEach(client => {
-      if (client.id === id) {
-        throw BreakException;
-      }
-    });
-  } catch (e) {
-    if (e !== BreakException) throw e;
+  if (data.find(client => client.id === id)) {
     return true;
   }
 
