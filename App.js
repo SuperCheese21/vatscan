@@ -10,7 +10,7 @@ import StackNavigator from './src/navigation/StackNavigator';
 import {
   panelStates,
   panelTransitionDuration,
-  UPDATE_INTERVAL
+  UPDATE_INTERVAL,
 } from './src/config/constants.json';
 
 export default class App extends PureComponent {
@@ -20,18 +20,22 @@ export default class App extends PureComponent {
     loading: false,
     clients: [],
     focusedClient: {},
-    panelPosition: new Animated.Value(panelStates.COLLAPSED)
+    panelPosition: new Animated.Value(panelStates.COLLAPSED),
   };
+
   fetchManager = new FetchManager();
 
   async componentDidMount() {
     // Load fonts and update font loaded state
+    /* eslint-disable global-require */
     await Font.loadAsync({
       Roboto_Regular: require('./assets/fonts/Roboto/Roboto-Regular.ttf'),
       Roboto_Condensed_Regular: require('./assets/fonts/Roboto_Condensed/RobotoCondensed-Regular.ttf'),
-      Roboto_Mono: require('./assets/fonts/Roboto_Mono/RobotoMono-Regular.ttf')
+      Roboto_Mono: require('./assets/fonts/Roboto_Mono/RobotoMono-Regular.ttf'),
     });
-    this.setState({ fontLoaded: true }); // eslint-disable-line
+    /* eslint-enable global-require */
+
+    this.setState({ fontLoaded: true });
 
     // Fix status bar height
     if (Platform.OS === 'android') {
@@ -47,6 +51,25 @@ export default class App extends PureComponent {
     this.updateData(true);
   }
 
+  setFocusedClient = client => {
+    if (client.type === 'PILOT') {
+      this.setPanelPosition(panelStates.EXPANDED_PILOT);
+    } else if (client.type === 'ATC') {
+      this.setPanelPosition(panelStates.EXPANDED_ATC);
+    }
+    this.setState({ focusedClient: client });
+  };
+
+  setPanelPosition(position) {
+    // Animate info panel position change
+    const { panelPosition } = this.state;
+    Animated.timing(panelPosition, {
+      toValue: position,
+      duration: panelTransitionDuration,
+      useNativeDriver: true,
+    }).start();
+  }
+
   updateData = async isInitialFetch => {
     this.setState({ loading: true });
 
@@ -56,7 +79,7 @@ export default class App extends PureComponent {
       this.setState({ loading: false });
       Alert.alert(
         'No internet connection',
-        'Connect to the internet to update data'
+        'Connect to the internet to update data',
       );
       return;
     }
@@ -76,15 +99,6 @@ export default class App extends PureComponent {
     this.timer = setTimeout(this.updateData, UPDATE_INTERVAL);
   };
 
-  setFocusedClient = client => {
-    if (client.type === 'PILOT') {
-      this.setPanelPosition(panelStates.EXPANDED_PILOT);
-    } else if (client.type === 'ATC') {
-      this.setPanelPosition(panelStates.EXPANDED_ATC);
-    }
-    this.setState({ focusedClient: client });
-  };
-
   collapsePanel = () => {
     // Collapse panel and remove focused client
     this.setPanelPosition(panelStates.COLLAPSED);
@@ -94,37 +108,44 @@ export default class App extends PureComponent {
   };
 
   handleUpdate(clients) {
-    const focusedCallsign = this.state.focusedClient.callsign;
+    const {
+      focusedClient: { callsign: focusedCallsign },
+    } = this.state;
     let focusedClient = {};
 
+    const BreakException = new Error();
+
     // Find focused client inside updated client data array
-    for (const client of clients) { // eslint-disable-line
-      if (focusedCallsign === client.callsign) {
-        focusedClient = client;
-        break;
-      }
+    try {
+      clients.forEach(client => {
+        if (focusedCallsign === client.callsign) {
+          focusedClient = client;
+          throw BreakException;
+        }
+      });
+    } catch (e) {
+      if (e !== BreakException) throw e;
     }
 
     // Update state with new data
     this.setState({
       loading: false,
       clients,
-      focusedClient
+      focusedClient,
     });
   }
 
-  setPanelPosition(position) {
-    // Animate info panel position change
-    Animated.timing(this.state.panelPosition, {
-      toValue: position,
-      duration: panelTransitionDuration,
-      useNativeDriver: true
-    }).start();
-  }
-
   render() {
+    const {
+      fontLoaded,
+      loading,
+      clients,
+      focusedClient,
+      panelPosition,
+    } = this.state;
+
     // Show app loading screen if font is still being loaded
-    if (!this.state.fontLoaded) {
+    if (!fontLoaded) {
       return <AppLoading />;
     }
 
@@ -133,13 +154,13 @@ export default class App extends PureComponent {
       <StackNavigator
         uriPrefix={Linking.makeUrl('/')}
         screenProps={{
-          loading: this.state.loading,
-          clients: this.state.clients,
-          focusedClient: this.state.focusedClient,
-          panelPosition: this.state.panelPosition,
+          loading,
+          clients,
+          focusedClient,
+          panelPosition,
           refresh: this.updateData,
           setFocusedClient: this.setFocusedClient,
-          collapsePanel: this.collapsePanel
+          collapsePanel: this.collapsePanel,
         }}
       />
     );
