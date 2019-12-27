@@ -16,7 +16,7 @@ export default class FetchManager {
   async fetchData(isInitialFetch) {
     // Fetch server URLs on first execution
     if (!this.serverUrls.length) {
-      await this._fetchServerUrls();
+      await this.fetchServerUrls();
     }
 
     // Pick random URL
@@ -32,31 +32,33 @@ export default class FetchManager {
             .pop()
             .split('\n;\n;')
             .shift()
-            .split('\n')
+            .split('\n'),
         )
-        .catch(e => {
-          e &&
+        .catch(
+          e =>
+            e &&
             isInitialFetch &&
-            Alert.alert('Error', 'Unable to fetch client data');
-        }),
+            Alert.alert('Error', 'Unable to fetch client data'),
+        ),
       fetch(ARTCC_URL)
         .then(res => res.json())
         .then(json => json.features)
-        .catch(e => {
-          e &&
+        .catch(
+          e =>
+            e &&
             isInitialFetch &&
-            Alert.alert('Error', 'Unable to fetch ARTCC data');
-        })
+            Alert.alert('Error', 'Unable to fetch ARTCC data'),
+        ),
     ]);
 
-    return this._parseData(data);
+    return this.parseData(data);
   }
 
   /**
    * [_fetchServerUrls description]
    * @return {Promise} [description]
    */
-  async _fetchServerUrls() {
+  async fetchServerUrls() {
     try {
       const res = await fetch(STATUS_URL);
       const text = await res.text();
@@ -66,8 +68,8 @@ export default class FetchManager {
           this.serverUrls.push(line.replace('url0=', ''));
         }
       });
-    } catch (err) {
-      console.error(err);
+    } catch (e) {
+      throw Error(e.message);
     }
   }
 
@@ -76,13 +78,13 @@ export default class FetchManager {
    * @param  {String} rawData         Raw VATSIM server data
    * @return {Object}                 Client data formatted as a javascript object
    */
-  _parseData(rawData) {
+  static parseData(rawData) {
     const data = rawData[0] || [];
     const centerData = rawData[1] || [];
     const clientFactory = new ClientFactory(centerData);
 
     // Define data object for client data
-    let clients = [];
+    const clients = [];
 
     // Iterate through each client in raw data array
     data.forEach(rawClient => {

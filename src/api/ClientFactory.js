@@ -16,7 +16,9 @@ export default class ClientFactory {
 
     if (clientType === 'PILOT') {
       return new Pilot(clientArray);
-    } else if (clientType === 'ATC') {
+    }
+
+    if (clientType === 'ATC') {
       return this.getController(clientArray);
     }
 
@@ -46,11 +48,20 @@ export default class ClientFactory {
    * @return {[type]}    [description]
    */
   findInCenterData(id) {
-    for (const center of this.centerData) {
-      // eslint-disable-line
-      if (center.id === Number(id)) {
-        return center;
-      }
+    const BreakException = new Error();
+
+    try {
+      this.centerData.forEach(center => {
+        if (center.id === Number(id)) {
+          BreakException.message = center;
+          throw BreakException;
+        }
+      });
+    } catch (e) {
+      if (e !== BreakException) throw e;
+      return e.message;
     }
+
+    return {};
   }
 }

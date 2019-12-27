@@ -13,21 +13,21 @@ const GA_ICON = require('../../assets/icons/ga.png');
 export default class Pilot extends Client {
   constructor(data) {
     super(data);
-    this._altitude = data[7];
-    this._groundSpeed = parseInt(data[8], 10);
-    this._aircraft = data[9];
-    this._tasCruise = data[10];
-    this._depAirport = data[11];
-    this._plannedAltitude = data[12];
-    this._arrAirport = data[13];
-    this._transponder = data[17];
-    this._flightType = data[21];
-    this._depTime = data[22];
-    this._hrsEnRoute = parseInt(data[24], 10);
-    this._minEnRoute = parseInt(data[25], 10);
-    this._remarks = data[29];
-    this._route = data[30];
-    this._heading = parseFloat(data[38]);
+    this.altitude = data[7];
+    this.groundSpeed = parseInt(data[8], 10);
+    this.aircraft = data[9];
+    this.tasCruise = data[10];
+    this.depAirport = data[11];
+    this.plannedAltitude = data[12];
+    this.arrAirport = data[13];
+    this.transponder = data[17];
+    this.flightType = data[21];
+    this.depTime = data[22];
+    this.hrsEnRoute = parseInt(data[24], 10);
+    this.minEnRoute = parseInt(data[25], 10);
+    this.remarks = data[29];
+    this.route = data[30];
+    this.heading = parseFloat(data[38]);
   }
 
   getAircraftType() {
@@ -36,31 +36,42 @@ export default class Pilot extends Client {
 
     if (this.checkAircraftType(widebody)) {
       return 2;
-    } else if (this.checkAircraftType(narrowbody) || !this._aircraft) {
+    }
+
+    if (this.checkAircraftType(narrowbody) || !this.aircraft) {
       return 1;
     }
+
     return 0;
   }
 
   checkAircraftType(list) {
-    for (let i = 0; i < list.length; i++) {
-      const aircraft = list[i];
-      if (this._aircraft.includes(aircraft)) {
-        return true;
-      }
+    const BreakException = new Error();
+
+    try {
+      list.forEach(aircraft => {
+        if (this.aircraft.includes(aircraft)) {
+          throw BreakException;
+        }
+      });
+    } catch (e) {
+      if (e !== BreakException) throw e;
+      return true;
     }
+
     return false;
   }
 
   getETEMinutes() {
-    if (this.distRemaining && this._groundSpeed > 0) {
-      if (this.distRemaining <= 2 && this._groundSpeed < 40) {
+    if (this.distRemaining && this.groundSpeed > 0) {
+      if (this.distRemaining <= 2 && this.groundSpeed < 40) {
         return 0;
       }
       return Math.round(
-        60 * (this.distRemaining / this._groundSpeed) + this._altitude / 3400
+        60 * (this.distRemaining / this.groundSpeed) + this.altitude / 3400,
       );
     }
+    return -1;
   }
 
   get aircraftIcon() {
@@ -68,18 +79,21 @@ export default class Pilot extends Client {
 
     if (type === 2) {
       return WIDEBODY_ICON;
-    } else if (type === 1) {
+    }
+
+    if (type === 1) {
       return NARROWBODY_ICON;
     }
+
     return GA_ICON;
   }
 
   get depCoords() {
-    return airportCoords[this._depAirport];
+    return airportCoords[this.depAirport];
   }
 
   get arrCoords() {
-    return airportCoords[this._arrAirport];
+    return airportCoords[this.arrAirport];
   }
 
   get distFlown() {
@@ -95,45 +109,45 @@ export default class Pilot extends Client {
   }
 
   get depCityName() {
-    const names = airportNames[this._depAirport];
+    const names = airportNames[this.depAirport];
     if (names) {
       const region = names.region.split('-');
       if (region[0] === 'US') {
-        return names.city + ', ' + region[1];
+        return `${names.city}, ${region[1]}`;
       }
-      return names.city + ', ' + names.country;
+      return `${names.city}, ${names.country}`;
     }
     return 'Unknown';
   }
 
   get arrCityName() {
-    const names = airportNames[this._arrAirport];
+    const names = airportNames[this.arrAirport];
     if (names) {
       const region = names.region.split('-');
       if (region[0] === 'US') {
-        return names.city + ', ' + region[1];
+        return `${names.city}, ${region[1]}`;
       }
-      return names.city + ', ' + names.country;
+      return `${names.city}, ${names.country}`;
     }
     return 'Unknown';
   }
 
   get plannedDepTime() {
-    return this._depTime.padStart(4, '0') + 'z';
+    return `${this.depTime.padStart(4, '0')} z`;
   }
 
   get plannedDuration() {
-    if (this._hrsEnRoute || this._minEnRoute) {
-      return this._hrsEnRoute + ' hrs ' + this._minEnRoute + ' min';
+    if (this.hrsEnRoute || this.minEnRoute) {
+      return `${this.hrsEnRoute} hrs ${this.minEnRoute} min`;
     }
     return 'N/A';
   }
 
   get plannedArrTime() {
-    if (this._hrsEnRoute || this._minEnRoute) {
-      const departureTime = moment.utc(this._depTime.padStart(4, '0'), 'HHmm');
-      const flightDuration = 60 * this._hrsEnRoute + this._minEnRoute;
-      return departureTime.add(flightDuration, 'm').format('HHmm') + 'z';
+    if (this.hrsEnRoute || this.minEnRoute) {
+      const departureTime = moment.utc(this.depTime.padStart(4, '0'), 'HHmm');
+      const flightDuration = 60 * this.hrsEnRoute + this.minEnRoute;
+      return `${departureTime.add(flightDuration, 'm').format('HHmm')} z`;
     }
     return 'N/A';
   }
@@ -158,62 +172,62 @@ export default class Pilot extends Client {
   }
 
   get altitude() {
-    return this._altitude;
+    return this.altitude;
   }
 
   get groundSpeed() {
-    return this._groundSpeed;
+    return this.groundSpeed;
   }
 
   get aircraft() {
-    return this._aircraft;
+    return this.aircraft;
   }
 
   get tasCruise() {
-    return this._tasCruise;
+    return this.tasCruise;
   }
 
   get depAirport() {
-    return this._depAirport;
+    return this.depAirport;
   }
 
   get plannedAltitude() {
-    return this._plannedAltitude;
+    return this.plannedAltitude;
   }
 
   get arrAirport() {
-    return this._arrAirport;
+    return this.arrAirport;
   }
 
   get transponder() {
-    return this._transponder;
+    return this.transponder;
   }
 
   get flightType() {
-    return this._flightType;
+    return this.flightType;
   }
 
   get depTime() {
-    return this._depTime;
+    return this.depTime;
   }
 
   get hrsEnRoute() {
-    return this._hrsEnRoute;
+    return this.hrsEnRoute;
   }
 
   get minEnRoute() {
-    return this._minEnRoute;
+    return this.minEnRoute;
   }
 
   get remarks() {
-    return this._remarks;
+    return this.remarks;
   }
 
   get route() {
-    return this._route;
+    return this.route;
   }
 
   get heading() {
-    return this._heading;
+    return this.heading;
   }
 }
