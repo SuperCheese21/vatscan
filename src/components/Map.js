@@ -4,11 +4,11 @@ import MapView from 'react-native-maps';
 import { initialMapRegion } from '../config/constants.json';
 import mapStyle from '../config/map-styles/style_blue_essence.json';
 
-const Map = props => (
+const Map = ({ style, initialRegion, onPress, children }) => (
   <MapView
-    style={props.style}
+    style={style}
     provider="google"
-    initialRegion={props.initialRegion || initialMapRegion}
+    initialRegion={initialRegion || initialMapRegion}
     customMapStyle={mapStyle}
     zoomTapEnabled={false}
     moveOnMarkerPress={false}
@@ -16,9 +16,9 @@ const Map = props => (
     pitchEnabled={false}
     rotateEnabled={false}
     showsIndoors={false}
-    onPress={props.onPress}
+    onPress={onPress}
   >
-    {props.children}
+    {children}
   </MapView>
 );
 

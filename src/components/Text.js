@@ -5,7 +5,7 @@ export default ({ children, style }) => (
   <Text
     style={{
       fontFamily: style.fontFamily || 'Roboto_Regular',
-      ...style
+      ...style,
     }}
     numberOfLines={1}
   >

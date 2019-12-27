@@ -8,11 +8,11 @@ import { accent as accentColor } from '../config/colors.json';
 export default class ShareButton extends React.PureComponent {
   onPress = () => {
     const { callsign } = this.props;
-    const url = Linking.makeUrl('clients/' + callsign);
-    const message = 'Check out ' + callsign + ' on VATSCAN!\n\n' + url;
+    const url = Linking.makeUrl(`clients/${callsign}`);
+    const message = `Check out ${callsign} on VATSCAN!\n\n${url}`;
     Share.share({
       message,
-      url
+      url,
     });
   };
 
