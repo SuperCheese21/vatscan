@@ -2,7 +2,8 @@ import React from 'react';
 import { View } from 'react-native';
 
 import Map from '../components/Map';
-import { AircraftMarker, FlightPath } from '../components/MapOverlays';
+import { FlightPath } from '../components/map-overlays/MapOverlays';
+import AircraftMarker from '../components/map-overlays/AircraftMarker';
 import StatsContainer from './StatsContainer';
 import StatsLabel from '../components/StatsLabel';
 import StatsRow from '../components/StatsRow';
@@ -14,29 +15,29 @@ const FlightStatsContainer = ({ client }) => (
     <View style={{ flexDirection: 'row' }}>
       <StatsRow
         label="Speed"
-        text={client.groundSpeed + ' kts'}
+        text={`${client.groundSpeed} kts`}
         planned={client.tasCruise}
       />
-      <StatsRow label="Heading" text={client.heading + '°'} />
+      <StatsRow label="Heading" text={`${client.heading}°`} />
     </View>
 
     <View style={{ flexDirection: 'row' }}>
       <StatsRow
         label="Altitude"
-        text={client.altitude + ' ft'}
+        text={`${client.altitude} ft`}
         planned={client.plannedAltitude}
       />
       <StatsRow label="Transponder" text={client.transponder} />
     </View>
 
     <View style={{ flexDirection: 'row' }}>
-      <StatsRow label="Flown" text={client.distFlown + ' nm'} />
-      <StatsRow label="Remaining" text={client.distRemaining + ' nm'} />
+      <StatsRow label="Flown" text={`${client.distFlown} nm`} />
+      <StatsRow label="Remaining" text={`${client.distRemaining} nm`} />
     </View>
 
     <View style={{ flexDirection: 'row' }}>
       <StatsRow label="ETE" text={client.ete || 'N/A'} />
-      <StatsRow label="ETA" text={client.eta ? client.eta + 'z' : 'N/A'} />
+      <StatsRow label="ETA" text={client.eta ? `${client.eta}z` : 'N/A'} />
     </View>
 
     <Map
@@ -45,7 +46,7 @@ const FlightStatsContainer = ({ client }) => (
         latitude: client.latitude,
         longitude: client.longitude,
         latitudeDelta: 5,
-        longitudeDelta: 5
+        longitudeDelta: 5,
       }}
     >
       <AircraftMarker client={client} selected={false} />
