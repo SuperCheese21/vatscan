@@ -23,7 +23,7 @@ export default class FetchManager {
     const clientsUrl = getRandomElement(this.serverUrls);
 
     // Fetch data
-    const data = await Promise.all([
+    const [clientData, centerData] = await Promise.all([
       fetch(clientsUrl)
         .then(res => res.text())
         .then(text =>
@@ -51,7 +51,7 @@ export default class FetchManager {
         ),
     ]);
 
-    return this.parseData(data);
+    return FetchManager.parseData(clientData || [], centerData || []);
   }
 
   /**
@@ -78,22 +78,15 @@ export default class FetchManager {
    * @param  {String} rawData         Raw VATSIM server data
    * @return {Object}                 Client data formatted as a javascript object
    */
-  static parseData(rawData) {
-    const data = rawData[0] || [];
-    const centerData = rawData[1] || [];
+  static parseData(clientData, centerData) {
     const clientFactory = new ClientFactory(centerData);
 
-    // Define data object for client data
-    const clients = [];
-
-    // Iterate through each client in raw data array
-    data.forEach(rawClient => {
-      const client = clientFactory.getClient(rawClient.split(':'));
+    return clientData.reduce((clients, rawClient) => {
+      const client = clientFactory.getClient(rawClient);
       if (client) {
         clients.push(client);
       }
-    });
-
-    return clients;
+      return clients;
+    }, []);
   }
 }

@@ -19,7 +19,8 @@ export default class ListScreen extends React.PureComponent {
   };
 
   getFilteredClients() {
-    const { query: oldQuery, screenProps } = this.props;
+    const { screenProps } = this.props;
+    const { query: oldQuery } = this.state;
     const query = oldQuery.toLowerCase();
     return screenProps.clients.filter(
       client =>

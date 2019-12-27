@@ -8,10 +8,11 @@ export default class ClientFactory {
 
   /**
    * [getClient description]
-   * @param  {[type]} clientArray [description]
-   * @return {[type]}             [description]
+   * @param  {[type]} rawClient [description]
+   * @return {[type]}           [description]
    */
-  getClient(clientArray) {
+  getClient(rawClient) {
+    const clientArray = rawClient.split(':');
     const clientType = clientArray[3];
 
     if (clientType === 'PILOT') {
@@ -31,7 +32,7 @@ export default class ClientFactory {
    * @return {[type]}             [description]
    */
   getController(clientArray) {
-    const id = clientArray[1];
+    const id = Number(clientArray[1]);
     const controllerType = clientArray[0].split('_').pop();
     const center = this.findInCenterData(id);
 
@@ -48,6 +49,7 @@ export default class ClientFactory {
    * @return {[type]}    [description]
    */
   findInCenterData(id) {
-    return this.centerData.find(center => center.id === Number(id)) || {};
+    const test = this.centerData.find(center => center.id === id);
+    return test;
   }
 }

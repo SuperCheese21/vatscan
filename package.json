@@ -58,6 +58,7 @@
       "react"
     ],
     "rules": {
+      "no-console": "off",
       "prefer-destructuring": [
         "error",
         {
