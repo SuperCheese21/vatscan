@@ -1,5 +1,6 @@
 import React from 'react';
 import { Marker } from 'react-native-maps';
+
 import MapOverlay from './MapOverlay';
 
 export default class AircraftMarker extends MapOverlay {

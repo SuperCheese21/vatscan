@@ -1,8 +1,9 @@
 import React from 'react';
 
+import StatsContainer from './StatsContainer';
+
 import Map from '../components/Map';
 import ControllerPolygon from '../components/map-overlays/ControllerPolygon';
-import StatsContainer from './StatsContainer';
 import StatsLabel from '../components/StatsLabel';
 import StatsRow from '../components/StatsRow';
 import TextBlock from '../components/TextBlock';

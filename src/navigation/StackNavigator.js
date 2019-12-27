@@ -1,10 +1,11 @@
 import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
 import getSlideFromRightTransition from 'react-navigation-slide-from-right-transition';
+import { createStackNavigator } from 'react-navigation-stack';
 
-import ClientScreen from '../screens/ClientScreen';
 import TabNavigatorContainer from './TabNavigator';
+
 import colors from '../config/colors.json';
+import ClientScreen from '../screens/ClientScreen';
 
 const StackNavigator = createAppContainer(
   createStackNavigator(

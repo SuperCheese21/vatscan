@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { Badge } from 'react-native-paper';
 
 import StatsContainer from './StatsContainer';
+
 import StatsLabel from '../components/StatsLabel';
 import StatsRow from '../components/StatsRow';
 import Text from '../components/Text';

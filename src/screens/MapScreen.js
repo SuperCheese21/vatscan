@@ -1,15 +1,15 @@
+import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import React from 'react';
 import { BackHandler, StyleSheet, View } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
-import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 
-import InfoPanelContainer from '../containers/InfoPanelContainer';
 import Map from '../components/Map';
 import MapOverlays, {
   FlightPath,
 } from '../components/map-overlays/MapOverlays';
 import Text from '../components/Text';
 import { accent as accentColor } from '../config/colors.json';
+import InfoPanelContainer from '../containers/InfoPanelContainer';
 
 const styles = StyleSheet.create({
   activityIndicator: {

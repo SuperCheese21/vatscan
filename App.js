@@ -1,17 +1,17 @@
+import { AppLoading, Linking } from 'expo';
+import * as Font from 'expo-font';
 import React, { PureComponent } from 'react';
 import { Alert, Animated, Platform } from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
 import { SafeAreaView } from 'react-navigation';
-import { AppLoading, Linking } from 'expo';
-import * as Font from 'expo-font';
 
 import FetchManager from './src/api/FetchManager';
-import StackNavigator from './src/navigation/StackNavigator';
 import {
   panelStates,
   panelTransitionDuration,
   UPDATE_INTERVAL,
 } from './src/config/constants.json';
+import StackNavigator from './src/navigation/StackNavigator';
 
 export default class App extends PureComponent {
   // Initialize component state and fetch manager

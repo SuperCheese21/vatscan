@@ -1,5 +1,6 @@
 import React from 'react';
 import { Polygon } from 'react-native-maps';
+
 import MapOverlay from './MapOverlay';
 
 export default class ControllerPolygon extends MapOverlay {

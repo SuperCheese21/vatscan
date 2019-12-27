@@ -4,8 +4,9 @@ import { Animated, StyleSheet } from 'react-native';
 import BasicDataContainer from './BasicDataContainer';
 import ControllerDataContainer from './ControllerDataContainer';
 import DetailDataContainer from './DetailDataContainer';
-import { defaultPanelPosition } from '../config/constants.json';
+
 import { primary as primaryColor } from '../config/colors.json';
+import { defaultPanelPosition } from '../config/constants.json';
 
 const styles = StyleSheet.create({
   infoPanelContainer: {

@@ -1,11 +1,11 @@
 import React from 'react';
 import { BackHandler, RefreshControl, ScrollView } from 'react-native';
 
-import ControllerStatsContainer from '../containers/ControllerStatsContainer';
+import ShareButton from '../components/ShareButton';
 import ClientStatsContainer from '../containers/ClientStatsContainer';
+import ControllerStatsContainer from '../containers/ControllerStatsContainer';
 import FlightPlanContainer from '../containers/FlightPlanContainer';
 import FlightStatsContainer from '../containers/FlightStatsContainer';
-import ShareButton from '../components/ShareButton';
 
 export default class ClientScreen extends React.PureComponent {
   static navigationOptions = ({ navigation }) => {

@@ -2,6 +2,7 @@ import { Alert } from 'react-native';
 
 import ClientFactory from './ClientFactory';
 import { getRandomElement } from './util';
+
 import { ARTCC_URL, STATUS_URL } from '../config/constants.json';
 
 export default class FetchManager {

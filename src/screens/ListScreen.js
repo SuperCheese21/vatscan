@@ -1,10 +1,10 @@
+import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import React from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
-import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import { Searchbar } from 'react-native-paper';
 
-import Text from '../components/Text';
 import ClientsListItem from '../components/ClientsListItem';
+import Text from '../components/Text';
 
 const styles = StyleSheet.create({
   listContainer: {

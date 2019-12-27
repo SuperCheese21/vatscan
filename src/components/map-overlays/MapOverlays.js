@@ -3,6 +3,7 @@ import { Polyline } from 'react-native-maps';
 
 import AircraftMarker from './AircraftMarker';
 import ControllerPolygon from './ControllerPolygon';
+
 import colors from '../../config/colors.json';
 
 export default ({ clients, focusedClient, setFocusedClient }) => (

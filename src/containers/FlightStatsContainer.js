@@ -1,10 +1,11 @@
 import React from 'react';
 import { View } from 'react-native';
 
+import StatsContainer from './StatsContainer';
+
 import Map from '../components/Map';
 import { FlightPath } from '../components/map-overlays/MapOverlays';
 import AircraftMarker from '../components/map-overlays/AircraftMarker';
-import StatsContainer from './StatsContainer';
 import StatsLabel from '../components/StatsLabel';
 import StatsRow from '../components/StatsRow';
 

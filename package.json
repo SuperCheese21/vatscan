@@ -58,6 +58,7 @@
       "react"
     ],
     "rules": {
+      "import/order": "error",
       "no-console": "off",
       "prefer-destructuring": [
         "error",

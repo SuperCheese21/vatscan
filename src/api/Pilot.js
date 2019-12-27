@@ -1,14 +1,14 @@
 import moment from 'moment';
 
 import Client from './Client';
-import airportCoords from '../data/airportCoords.json';
-import airportNames from '../data/airportNames.json';
-import constants from '../config/constants.json';
 import { getGCDistance } from './util';
 
-const NARROWBODY_ICON = require('../../assets/icons/narrowbody.png');
-const WIDEBODY_ICON = require('../../assets/icons/widebody.png');
-const GA_ICON = require('../../assets/icons/ga.png');
+import constants from '../config/constants.json';
+import airportCoords from '../data/airportCoords.json';
+import airportNames from '../data/airportNames.json';
+import GA_ICON from '../../assets/icons/ga.png';
+import NARROWBODY_ICON from '../../assets/icons/narrowbody.png';
+import WIDEBODY_ICON from '../../assets/icons/widebody.png';
 
 export default class Pilot extends Client {
   constructor(data) {

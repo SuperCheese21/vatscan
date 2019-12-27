@@ -1,7 +1,7 @@
+import { Linking } from 'expo';
 import React from 'react';
 import { Share } from 'react-native';
 import { IconButton } from 'react-native-paper';
-import { Linking } from 'expo';
 
 import { accent as accentColor } from '../config/colors.json';
 
