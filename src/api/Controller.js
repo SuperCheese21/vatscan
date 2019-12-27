@@ -50,10 +50,6 @@ export default class Controller extends Client {
     }
   }
 
-  get polygon() {
-    return this.polygon;
-  }
-
   get radius() {
     return constants[this.controllerType].radius;
   }
@@ -72,21 +68,5 @@ export default class Controller extends Client {
 
   get zIndex() {
     return constants[this.controllerType].zIndex;
-  }
-
-  get controllerType() {
-    return this.controllerType;
-  }
-
-  get frequency() {
-    return this.frequency;
-  }
-
-  get facilityType() {
-    return this.facilityType;
-  }
-
-  get atisMessage() {
-    return this.atisMessage;
   }
 }

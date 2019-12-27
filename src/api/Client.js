@@ -26,40 +26,4 @@ export default class Client {
 
     return moment.utc(now - then).format('HH:mm');
   }
-
-  get callsign() {
-    return this.callsign;
-  }
-
-  get id() {
-    return this.id;
-  }
-
-  get name() {
-    return this.name;
-  }
-
-  get type() {
-    return this.type;
-  }
-
-  get latitude() {
-    return this.latitude;
-  }
-
-  get longitude() {
-    return this.longitude;
-  }
-
-  get server() {
-    return this.server;
-  }
-
-  get rating() {
-    return this.rating;
-  }
-
-  get timeLogon() {
-    return this.timeLogon;
-  }
 }
