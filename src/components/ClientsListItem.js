@@ -17,7 +17,7 @@ export default class ClientsListItem extends React.PureComponent {
       <List.Icon
         color={itemProps.color}
         style={itemProps.style}
-        icon={client.type === 'ATC' ? 'rss-feed' : 'airplanemode-active'}
+        icon={client.type === 'ATC' ? 'radio-tower' : 'airplane'}
       />
     );
   };

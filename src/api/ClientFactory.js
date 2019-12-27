@@ -14,8 +14,6 @@ export default class ClientFactory {
   getClient(clientArray) {
     const clientType = clientArray[3];
 
-    console.log(`callsign: ${clientArray[0]}, clientType: ${clientType}`);
-
     if (clientType === 'PILOT') {
       return new Pilot(clientArray);
     }
