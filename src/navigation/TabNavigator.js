@@ -6,17 +6,17 @@ import ListScreen from '../screens/ListScreen';
 import MapScreen from '../screens/MapScreen';
 import colors from '../config/colors.json';
 
-const TabNavigatorContainer = props => (
+const TabNavigatorContainer = ({ navigation, screenProps }) => (
   <TabNavigator
     screenProps={{
-      stackNavigation: props.navigation,
-      loading: props.screenProps.loading,
-      clients: props.screenProps.clients,
-      focusedClient: props.screenProps.focusedClient,
-      panelPosition: props.screenProps.panelPosition,
-      refresh: props.screenProps.refresh,
-      setFocusedClient: props.screenProps.setFocusedClient,
-      collapsePanel: props.screenProps.collapsePanel
+      stackNavigation: navigation,
+      loading: screenProps.loading,
+      clients: screenProps.clients,
+      focusedClient: screenProps.focusedClient,
+      panelPosition: screenProps.panelPosition,
+      refresh: screenProps.refresh,
+      setFocusedClient: screenProps.setFocusedClient,
+      collapsePanel: screenProps.collapsePanel,
     }}
   />
 );
@@ -26,7 +26,7 @@ const TabNavigator = createAppContainer(
   createMaterialTopTabNavigator(
     {
       Map: MapScreen,
-      List: ListScreen
+      List: ListScreen,
     },
     {
       tabBarPosition: 'bottom',
@@ -35,17 +35,17 @@ const TabNavigator = createAppContainer(
         showIcon: true,
         upperCaseLabel: false,
         indicatorStyle: {
-          backgroundColor: colors.accent
+          backgroundColor: colors.accent,
         },
         labelStyle: {
-          margin: 0
+          margin: 0,
         },
         style: {
-          backgroundColor: colors.primaryDark
-        }
-      }
-    }
-  )
+          backgroundColor: colors.primaryDark,
+        },
+      },
+    },
+  ),
 );
 
 export default TabNavigatorContainer;

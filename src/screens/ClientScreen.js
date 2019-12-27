@@ -12,47 +12,51 @@ export default class ClientScreen extends React.PureComponent {
     const callsign = navigation.getParam('callsign');
     return {
       title: callsign,
-      headerRight: <ShareButton callsign={callsign} />
+      headerRight: <ShareButton callsign={callsign} />,
     };
   };
 
   componentDidMount() {
-    const callsign = this.props.navigation.getParam('callsign');
-    for (const client of this.props.screenProps.clients) {
-      if (client.callsign === callsign) {
-        this.props.screenProps.setFocusedClient(client);
-        break;
-      }
+    const { navigation, screenProps } = this.props;
+    const callsign = navigation.getParam('callsign');
+    const focusedClient = screenProps.clients.find(
+      client => client.callsign === callsign,
+    );
+    if (focusedClient) {
+      screenProps.setFocusedClient(focusedClient);
     }
     BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
   }
 
   componentWillUnmount() {
-    if (this.props.navigation.getParam('removeFocusedClient')) {
-      this.props.screenProps.collapsePanel();
+    const { navigation, screenProps } = this.props;
+    if (navigation.getParam('removeFocusedClient')) {
+      screenProps.collapsePanel();
     }
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
   }
 
   handleBackPress = () => {
-    this.props.navigation.goBack();
+    const { navigation } = this.props;
+    navigation.goBack();
     return true;
   };
 
   render() {
+    const { screenProps } = this.props;
     return (
       <ScrollView
         style={{ flex: 1 }}
         refreshControl={
           <RefreshControl
-            refreshing={this.props.screenProps.loading}
-            onRefresh={this.props.screenProps.refresh}
+            refreshing={screenProps.loading}
+            onRefresh={screenProps.refresh}
           />
         }
       >
-        <ClientStatsContainer client={this.props.screenProps.focusedClient} />
+        <ClientStatsContainer client={screenProps.focusedClient} />
 
-        <Stats client={this.props.screenProps.focusedClient} />
+        <Stats client={screenProps.focusedClient} />
       </ScrollView>
     );
   }
@@ -66,7 +70,8 @@ const Stats = ({ client }) => {
         <FlightStatsContainer client={client} />
       </>
     );
-  } else if (client.type === 'ATC') {
+  }
+  if (client.type === 'ATC') {
     return <ControllerStatsContainer client={client} />;
   }
   return null;

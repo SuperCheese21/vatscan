@@ -70,8 +70,9 @@
         }
       ],
       "react/jsx-filename-extension": "off",
-      "react/state-in-constructor": "off",
-      "react/prop-types": "off"
+      "react/jsx-wrap-multilines": "off",
+      "react/prop-types": "off",
+      "react/state-in-constructor": "off"
     }
   },
   "eslintIgnore": [
