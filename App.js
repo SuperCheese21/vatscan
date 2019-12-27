@@ -87,6 +87,8 @@ export default class App extends PureComponent {
     // Fetch data
     const clients = await this.fetchManager.fetchData(isInitialFetch);
 
+    console.log(`Number of clients: ${clients.length}`);
+
     // Update state with new client data
     this.handleUpdate(clients);
 

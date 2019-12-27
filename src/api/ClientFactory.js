@@ -11,9 +11,10 @@ export default class ClientFactory {
    * @param  {[type]} rawClient [description]
    * @return {[type]}           [description]
    */
-  getClient(rawClient) {
-    const clientArray = rawClient.split(':');
+  getClient(clientArray) {
     const clientType = clientArray[3];
+
+    console.log(`callsign: ${clientArray[0]}, clientType: ${clientType}`);
 
     if (clientType === 'PILOT') {
       return new Pilot(clientArray);
@@ -32,24 +33,14 @@ export default class ClientFactory {
    * @return {[type]}             [description]
    */
   getController(clientArray) {
-    const id = Number(clientArray[1]);
     const controllerType = clientArray[0].split('_').pop();
-    const center = this.findInCenterData(id);
+    const id = Number(clientArray[1]);
+    const center = this.centerData.find(c => c.id === id);
 
     if (['CTR', 'FSS', 'APP', 'DEP', 'TWR', 'GND'].includes(controllerType)) {
       return new Controller(clientArray, controllerType, center);
     }
 
     return null;
-  }
-
-  /**
-   * [findInCenterData description]
-   * @param  {[type]} id [description]
-   * @return {[type]}    [description]
-   */
-  findInCenterData(id) {
-    const test = this.centerData.find(center => center.id === id);
-    return test;
   }
 }

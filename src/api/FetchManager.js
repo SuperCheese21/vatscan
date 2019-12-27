@@ -26,14 +26,7 @@ export default class FetchManager {
     const [clientData, centerData] = await Promise.all([
       fetch(clientsUrl)
         .then(res => res.text())
-        .then(text =>
-          text
-            .split('!CLIENTS:\n')
-            .pop()
-            .split('\n;\n;')
-            .shift()
-            .split('\n'),
-        )
+        .then(this.transformClientData)
         .catch(
           e =>
             e &&
@@ -74,6 +67,20 @@ export default class FetchManager {
   }
 
   /**
+   * [transformClientData description]
+   * @param  {[type]} text [description]
+   * @return {[type]}      [description]
+   */
+  transformClientData = text =>
+    text
+      .split('!CLIENTS:\n')
+      .pop()
+      .split('\n;\n;')
+      .shift()
+      .split('\n')
+      .map(line => line.split(':'));
+
+  /**
    * Parses the raw server data from text and json to a custom javascript object
    * @param  {String} rawData         Raw VATSIM server data
    * @return {Object}                 Client data formatted as a javascript object
@@ -81,8 +88,8 @@ export default class FetchManager {
   static parseData(clientData, centerData) {
     const clientFactory = new ClientFactory(centerData);
 
-    return clientData.reduce((clients, rawClient) => {
-      const client = clientFactory.getClient(rawClient);
+    return clientData.reduce((clients, clientArray) => {
+      const client = clientFactory.getClient(clientArray);
       if (client) {
         clients.push(client);
       }
