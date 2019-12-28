@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Text, ViewPropTypes } from 'react-native';
+import { Text } from 'react-native';
 
 const CustomText = ({ children, style }) => (
   <Text
@@ -15,8 +15,8 @@ const CustomText = ({ children, style }) => (
 );
 
 CustomText.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.node).isRequired,
-  style: ViewPropTypes.styles,
+  children: PropTypes.string.isRequired,
+  style: Text.propTypes.style,
 };
 
 CustomText.defaultProps = {
