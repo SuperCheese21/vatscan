@@ -4,8 +4,8 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 import TabNavigatorContainer from './TabNavigator';
 
-import colors from '../config/colors.json';
 import ClientScreen from '../screens/ClientScreen';
+import colors from '../../config/colors.json';
 
 const StackNavigator = createAppContainer(
   createStackNavigator(

@@ -4,11 +4,11 @@ import { View } from 'react-native';
 
 import StatsContainer from './StatsContainer';
 
-import Map from '../components/Map';
-import { FlightPath } from '../components/map-overlays/MapOverlays';
-import AircraftMarker from '../components/map-overlays/AircraftMarker';
-import StatsLabel from '../components/StatsLabel';
-import StatsRow from '../components/StatsRow';
+import Map from '../common/Map';
+import { FlightPath } from '../common/map-overlays/MapOverlays';
+import AircraftMarker from '../common/map-overlays/AircraftMarker';
+import StatsLabel from '../common/StatsLabel';
+import StatsRow from '../common/StatsRow';
 
 const FlightStatsContainer = ({ client }) => (
   <StatsContainer>

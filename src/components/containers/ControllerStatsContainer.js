@@ -3,11 +3,11 @@ import React from 'react';
 
 import StatsContainer from './StatsContainer';
 
-import Map from '../components/Map';
-import ControllerPolygon from '../components/map-overlays/ControllerPolygon';
-import StatsLabel from '../components/StatsLabel';
-import StatsRow from '../components/StatsRow';
-import TextBlock from '../components/TextBlock';
+import Map from '../common/Map';
+import ControllerPolygon from '../common/map-overlays/ControllerPolygon';
+import StatsLabel from '../common/StatsLabel';
+import StatsRow from '../common/StatsRow';
+import TextBlock from '../common/TextBlock';
 
 const ControllerStatsContainer = ({ client }) => (
   <StatsContainer>

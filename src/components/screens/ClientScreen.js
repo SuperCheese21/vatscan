@@ -2,15 +2,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { BackHandler, RefreshControl, ScrollView } from 'react-native';
 
-import {
-  navigationShape,
-  screenPropsShape,
-} from '../components/propTypeShapes';
-import ShareButton from '../components/ShareButton';
+import ShareButton from '../common/ShareButton';
 import ClientStatsContainer from '../containers/ClientStatsContainer';
 import ControllerStatsContainer from '../containers/ControllerStatsContainer';
 import FlightPlanContainer from '../containers/FlightPlanContainer';
 import FlightStatsContainer from '../containers/FlightStatsContainer';
+import { navigationShape, screenPropsShape } from '../propTypeShapes';
 
 export default class ClientScreen extends React.PureComponent {
   static navigationOptions = ({ navigation }) => {

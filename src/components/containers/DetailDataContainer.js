@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import Text from '../components/Text';
+import Text from '../common/Text';
 import {
   accent as accentColor,
   primaryMedium as primaryMediumColor,
-} from '../config/colors.json';
+} from '../../config/colors.json';
 
 const styles = StyleSheet.create({
   infoContainerDetail: {
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
 });
 
 const DetailDataContainer = ({
-  data: { aircraft, groundSpeed, altitude, heading },
+  client: { aircraft, groundSpeed, altitude, heading },
 }) => (
   <View style={styles.infoContainerDetail}>
     <View style={styles.infoRow}>
@@ -54,7 +54,7 @@ const DetailDataContainer = ({
 );
 
 DetailDataContainer.propTypes = {
-  data: PropTypes.object.isRequired,
+  client: PropTypes.object.isRequired,
 };
 
 export default DetailDataContainer;

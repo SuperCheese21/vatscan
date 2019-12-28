@@ -6,12 +6,12 @@ import NetInfo from '@react-native-community/netinfo';
 import { SafeAreaView } from 'react-navigation';
 
 import FetchManager from './src/api/FetchManager';
+import StackNavigator from './src/components/navigation/StackNavigator';
 import {
   panelStates,
   panelTransitionDuration,
   UPDATE_INTERVAL,
 } from './src/config/constants.json';
-import StackNavigator from './src/navigation/StackNavigator';
 
 export default class App extends PureComponent {
   // Initialize component state and fetch manager

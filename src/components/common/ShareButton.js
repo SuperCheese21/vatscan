@@ -4,7 +4,7 @@ import React from 'react';
 import { Share } from 'react-native';
 import { IconButton } from 'react-native-paper';
 
-import { accent as accentColor } from '../config/colors.json';
+import { accent as accentColor } from '../../config/colors.json';
 
 export default class ShareButton extends React.PureComponent {
   onPress = () => {
