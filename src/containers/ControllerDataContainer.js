@@ -1,7 +1,9 @@
+import Icon from '@expo/vector-icons/MaterialCommunityIcons';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 
+import { navigationShape } from '../components/propTypeShapes';
 import Text from '../components/Text';
 import {
   accent as accentColor,
@@ -78,3 +80,8 @@ export default class ControllerDataContainer extends React.PureComponent {
     );
   }
 }
+
+ControllerDataContainer.propTypes = {
+  data: PropTypes.object.isRequired,
+  stackNavigation: navigationShape.isRequired,
+};

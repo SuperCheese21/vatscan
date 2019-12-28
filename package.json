@@ -58,6 +58,7 @@
       "react"
     ],
     "rules": {
+      "import/order": "error",
       "no-console": "off",
       "prefer-destructuring": [
         "error",
@@ -70,9 +71,16 @@
           }
         }
       ],
+      "react/forbid-prop-types": [
+        "error",
+        {
+          "forbid": [
+            "any"
+          ]
+        }
+      ],
       "react/jsx-filename-extension": "off",
       "react/jsx-wrap-multilines": "off",
-      "react/prop-types": "off",
       "react/state-in-constructor": "off"
     }
   },
@@ -85,6 +93,7 @@
     "expo": "^36.0.0",
     "expo-font": "~8.0.0",
     "moment": "latest",
+    "prop-types": "latest",
     "react": "16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.1.tar.gz",
     "react-native-gesture-handler": "~1.5.0",

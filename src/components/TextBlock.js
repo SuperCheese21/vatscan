@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {
   Clipboard,
@@ -47,3 +48,7 @@ export default class TextBlock extends React.PureComponent {
     return null;
   }
 }
+
+TextBlock.propTypes = {
+  text: PropTypes.string.isRequired,
+};

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Surface } from 'react-native-paper';
@@ -41,5 +42,9 @@ const FlightPlanContainer = ({ client }) => (
     <TextBlock text={client.route} />
   </Surface>
 );
+
+FlightPlanContainer.propTypes = {
+  client: PropTypes.object.isRequired,
+};
 
 export default FlightPlanContainer;

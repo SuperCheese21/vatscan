@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { PureComponent } from 'react';
 
 export default class MapOverlay extends PureComponent {
@@ -8,3 +9,8 @@ export default class MapOverlay extends PureComponent {
     }
   };
 }
+
+MapOverlay.propTypes = {
+  client: PropTypes.object.isRequired,
+  setFocusedClient: PropTypes.func.isRequired,
+};

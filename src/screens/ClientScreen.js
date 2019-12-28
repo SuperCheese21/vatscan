@@ -1,11 +1,16 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { BackHandler, RefreshControl, ScrollView } from 'react-native';
 
-import ControllerStatsContainer from '../containers/ControllerStatsContainer';
+import {
+  navigationShape,
+  screenPropsShape,
+} from '../components/propTypeShapes';
+import ShareButton from '../components/ShareButton';
 import ClientStatsContainer from '../containers/ClientStatsContainer';
+import ControllerStatsContainer from '../containers/ControllerStatsContainer';
 import FlightPlanContainer from '../containers/FlightPlanContainer';
 import FlightStatsContainer from '../containers/FlightStatsContainer';
-import ShareButton from '../components/ShareButton';
 
 export default class ClientScreen extends React.PureComponent {
   static navigationOptions = ({ navigation }) => {
@@ -75,4 +80,13 @@ const Stats = ({ client }) => {
     return <ControllerStatsContainer client={client} />;
   }
   return null;
+};
+
+ClientScreen.propTypes = {
+  navigation: navigationShape.isRequired,
+  screenProps: screenPropsShape.isRequired,
+};
+
+Stats.propTypes = {
+  client: PropTypes.object.isRequired,
 };

@@ -1,6 +1,7 @@
+import Icon from '@expo/vector-icons/MaterialIcons';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import Icon from '@expo/vector-icons/MaterialIcons';
 
 import Text from '../components/Text';
 import {
@@ -51,5 +52,9 @@ const DetailDataContainer = ({
     </View>
   </View>
 );
+
+DetailDataContainer.propTypes = {
+  data: PropTypes.object.isRequired,
+};
 
 export default DetailDataContainer;

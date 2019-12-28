@@ -1,11 +1,14 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Animated, StyleSheet } from 'react-native';
 
 import BasicDataContainer from './BasicDataContainer';
 import ControllerDataContainer from './ControllerDataContainer';
 import DetailDataContainer from './DetailDataContainer';
-import { defaultPanelPosition } from '../config/constants.json';
+
+import { navigationShape } from '../components/propTypeShapes';
 import { primary as primaryColor } from '../config/colors.json';
+import { defaultPanelPosition } from '../config/constants.json';
 
 const styles = StyleSheet.create({
   infoPanelContainer: {
@@ -59,6 +62,17 @@ const Data = ({ focusedClient, stackNavigation }) => {
     );
   }
   return null;
+};
+
+InfoPanelContainer.propTypes = {
+  focusedClient: PropTypes.object.isRequired,
+  panelPosition: PropTypes.instanceOf(Animated.Value).isRequired,
+  stackNavigation: navigationShape.isRequired,
+};
+
+Data.propTypes = {
+  focusedClient: PropTypes.object.isRequired,
+  stackNavigation: navigationShape.isRequired,
 };
 
 export default InfoPanelContainer;

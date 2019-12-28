@@ -1,6 +1,6 @@
 import Client from './Client';
-
 import { getProjectedCoords } from './util';
+
 import { mapOverlays as colors } from '../config/colors.json';
 import {
   mapOverlays as constants,

@@ -1,7 +1,9 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ProgressBar } from 'react-native-paper';
 
+import { navigationShape } from '../components/propTypeShapes';
 import Text from '../components/Text';
 import { accent as accentColor } from '../config/colors.json';
 
@@ -117,3 +119,8 @@ export default class BasicDataContainer extends React.PureComponent {
     );
   }
 }
+
+BasicDataContainer.propTypes = {
+  data: PropTypes.object.isRequired,
+  stackNavigation: navigationShape.isRequired,
+};

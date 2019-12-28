@@ -1,10 +1,11 @@
+import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import React from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
-import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import { Searchbar } from 'react-native-paper';
 
-import Text from '../components/Text';
 import ClientsListItem from '../components/ClientsListItem';
+import { screenPropsShape } from '../components/propTypeShapes';
+import Text from '../components/Text';
 
 const styles = StyleSheet.create({
   listContainer: {
@@ -81,3 +82,7 @@ export default class ListScreen extends React.PureComponent {
     );
   }
 }
+
+ListScreen.propTypes = {
+  screenProps: screenPropsShape.isRequired,
+};

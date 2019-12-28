@@ -2,9 +2,13 @@ import React from 'react';
 import { createAppContainer } from 'react-navigation';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 
+import {
+  navigationShape,
+  screenPropsShape,
+} from '../components/propTypeShapes';
+import colors from '../config/colors.json';
 import ListScreen from '../screens/ListScreen';
 import MapScreen from '../screens/MapScreen';
-import colors from '../config/colors.json';
 
 const TabNavigatorContainer = ({ navigation, screenProps }) => (
   <TabNavigator
@@ -47,5 +51,10 @@ const TabNavigator = createAppContainer(
     },
   ),
 );
+
+TabNavigatorContainer.propTypes = {
+  navigation: navigationShape.isRequired,
+  screenProps: screenPropsShape.isRequired,
+};
 
 export default TabNavigatorContainer;

@@ -1,10 +1,12 @@
+import PropTypes from 'prop-types';
 import React from 'react';
+import { ViewPropTypes } from 'react-native';
 import MapView from 'react-native-maps';
 
 import { initialMapRegion } from '../config/constants.json';
 import mapStyle from '../config/map-styles/style_blue_essence.json';
 
-const Map = ({ style, initialRegion, onPress, children }) => (
+const Map = ({ children, initialRegion, onPress, style }) => (
   <MapView
     style={style}
     provider="google"
@@ -21,5 +23,29 @@ const Map = ({ style, initialRegion, onPress, children }) => (
     {children}
   </MapView>
 );
+
+const initialRegionShape = PropTypes.shape({
+  latitude: PropTypes.number.isRequired,
+  longitude: PropTypes.number.isRequired,
+  latitudeDelta: PropTypes.number.isRequired,
+  longitudeDelta: PropTypes.number.isRequired,
+});
+
+Map.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+  ]),
+  initialRegion: initialRegionShape,
+  onPress: PropTypes.func,
+  style: ViewPropTypes.style,
+};
+
+Map.defaultProps = {
+  children: null,
+  initialRegion: null,
+  onPress: () => {},
+  style: {},
+};
 
 export default Map;
