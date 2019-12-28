@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
 export default class BasicDataContainer extends React.PureComponent {
   onPress = () => {
     const {
-      data: { callsign },
+      client: { callsign },
       stackNavigation,
     } = this.props;
     stackNavigation.navigate('ClientScreen', { callsign });
@@ -65,7 +65,7 @@ export default class BasicDataContainer extends React.PureComponent {
 
   render() {
     const {
-      data: { arrAirport, callsign, depAirport, name, progress },
+      client: { arrAirport, callsign, depAirport, name, progress },
     } = this.props;
     return (
       <TouchableOpacity
@@ -110,7 +110,7 @@ export default class BasicDataContainer extends React.PureComponent {
 
         <View style={styles.pilotInfoView}>
           <ProgressBar
-            style={styles.progressBar}
+            // style={styles.progressBar}
             progress={progress}
             color={accentColor}
           />
@@ -121,6 +121,6 @@ export default class BasicDataContainer extends React.PureComponent {
 }
 
 BasicDataContainer.propTypes = {
-  data: PropTypes.object.isRequired,
+  client: PropTypes.object.isRequired,
   stackNavigation: navigationShape.isRequired,
 };

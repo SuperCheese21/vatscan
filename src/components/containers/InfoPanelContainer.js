@@ -47,9 +47,9 @@ const Data = ({ focusedClient, stackNavigation }) => {
       <>
         <BasicDataContainer
           stackNavigation={stackNavigation}
-          data={focusedClient}
+          client={focusedClient}
         />
-        <DetailDataContainer data={focusedClient} />
+        <DetailDataContainer client={focusedClient} />
       </>
     );
   }

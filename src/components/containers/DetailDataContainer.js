@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
 });
 
 const DetailDataContainer = ({
-  data: { aircraft, groundSpeed, altitude, heading },
+  client: { aircraft, groundSpeed, altitude, heading },
 }) => (
   <View style={styles.infoContainerDetail}>
     <View style={styles.infoRow}>
@@ -54,7 +54,7 @@ const DetailDataContainer = ({
 );
 
 DetailDataContainer.propTypes = {
-  data: PropTypes.object.isRequired,
+  client: PropTypes.object.isRequired,
 };
 
 export default DetailDataContainer;
