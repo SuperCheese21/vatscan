@@ -5,7 +5,6 @@ import { Polyline } from 'react-native-maps';
 import AircraftMarker from './AircraftMarker';
 import ControllerPolygon from './ControllerPolygon';
 
-import Client from '../../api/Client';
 import colors from '../../config/colors.json';
 
 export const MapOverlays = ({ clients, focusedClient, setFocusedClient }) => (
@@ -66,11 +65,11 @@ export const FlightPath = ({ client: { depCoords, location, arrCoords } }) => {
 };
 
 MapOverlays.propTypes = {
-  clients: PropTypes.arrayOf(PropTypes.instanceOf(Client)).isRequired,
-  focusedClient: PropTypes.instanceOf(Client).isRequired,
+  clients: PropTypes.array.isRequired,
+  focusedClient: PropTypes.object.isRequired,
   setFocusedClient: PropTypes.func.isRequired,
 };
 
 FlightPath.propTypes = {
-  client: PropTypes.instanceOf(Client).isRequired,
+  client: PropTypes.object.isRequired,
 };

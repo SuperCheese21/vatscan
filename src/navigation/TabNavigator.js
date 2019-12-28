@@ -1,9 +1,11 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { createAppContainer } from 'react-navigation';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 
-import Client from '../api/Client';
+import {
+  navigationShape,
+  screenPropsShape,
+} from '../components/propTypeShapes';
 import colors from '../config/colors.json';
 import ListScreen from '../screens/ListScreen';
 import MapScreen from '../screens/MapScreen';
@@ -49,21 +51,6 @@ const TabNavigator = createAppContainer(
     },
   ),
 );
-
-const navigationShape = PropTypes.shape({
-  navigate: PropTypes.func.isRequired,
-});
-
-const screenPropsShape = PropTypes.shape({
-  stackNavigation: navigationShape.isRequired,
-  loading: PropTypes.bool.isRequired,
-  clients: PropTypes.arrayOf(PropTypes.instanceOf(Client)).isRequired,
-  focusedClient: PropTypes.instanceOf(Client).isRequired,
-  panelPosition: PropTypes.number.isRequired,
-  refresh: PropTypes.func.isRequired,
-  setFocusedClient: PropTypes.func.isRequired,
-  collapsePanel: PropTypes.func.isRequired,
-});
 
 TabNavigatorContainer.propTypes = {
   navigation: navigationShape.isRequired,

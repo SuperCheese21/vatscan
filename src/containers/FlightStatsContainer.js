@@ -4,7 +4,6 @@ import { View } from 'react-native';
 
 import StatsContainer from './StatsContainer';
 
-import Pilot from '../api/Pilot';
 import Map from '../components/Map';
 import { FlightPath } from '../components/map-overlays/MapOverlays';
 import AircraftMarker from '../components/map-overlays/AircraftMarker';
@@ -60,7 +59,7 @@ const FlightStatsContainer = ({ client }) => (
 );
 
 FlightStatsContainer.propTypes = {
-  client: PropTypes.instanceOf(Pilot).isRequired,
+  client: PropTypes.object.isRequired,
 };
 
 export default FlightStatsContainer;

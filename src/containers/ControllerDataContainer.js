@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
-import Controller from '../api/Controller';
+import { navigationShape } from '../components/propTypeShapes';
 import Text from '../components/Text';
 import {
   accent as accentColor,
@@ -81,11 +81,7 @@ export default class ControllerDataContainer extends React.PureComponent {
   }
 }
 
-const navigationShape = PropTypes.shape({
-  navigate: PropTypes.func.isRequired,
-});
-
 ControllerDataContainer.propTypes = {
-  data: PropTypes.instanceOf(Controller).isRequired,
+  data: PropTypes.object.isRequired,
   stackNavigation: navigationShape.isRequired,
 };

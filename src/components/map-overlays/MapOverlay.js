@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
 import { PureComponent } from 'react';
 
-import Client from '../../api/Client';
-
 export default class MapOverlay extends PureComponent {
   onPress = () => {
     const { client, setFocusedClient } = this.props;
@@ -13,6 +11,6 @@ export default class MapOverlay extends PureComponent {
 }
 
 MapOverlay.propTypes = {
-  client: PropTypes.instanceOf(Client).isRequired,
+  client: PropTypes.object.isRequired,
   setFocusedClient: PropTypes.func.isRequired,
 };

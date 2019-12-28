@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import Client from '../api/Client';
 import Text from '../components/Text';
 import {
   accent as accentColor,
@@ -55,7 +54,7 @@ const DetailDataContainer = ({
 );
 
 DetailDataContainer.propTypes = {
-  data: PropTypes.instanceOf(Client).isRequired,
+  data: PropTypes.object.isRequired,
 };
 
 export default DetailDataContainer;

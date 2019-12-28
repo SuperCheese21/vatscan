@@ -3,7 +3,7 @@ import React from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ProgressBar } from 'react-native-paper';
 
-import Client from '../api/Client';
+import { navigationShape } from '../components/propTypeShapes';
 import Text from '../components/Text';
 import { accent as accentColor } from '../config/colors.json';
 
@@ -120,11 +120,7 @@ export default class BasicDataContainer extends React.PureComponent {
   }
 }
 
-const navigationShape = PropTypes.shape({
-  navigate: PropTypes.func.isRequired,
-});
-
 BasicDataContainer.propTypes = {
-  data: PropTypes.instanceOf(Client).isRequired,
+  data: PropTypes.object.isRequired,
   stackNavigation: navigationShape.isRequired,
 };

@@ -4,8 +4,6 @@ import { Polygon } from 'react-native-maps';
 
 import MapOverlay from './MapOverlay';
 
-import Client from '../../api/Client';
-
 export default class ControllerPolygon extends MapOverlay {
   render() {
     const {
@@ -27,7 +25,7 @@ export default class ControllerPolygon extends MapOverlay {
 }
 
 ControllerPolygon.propTypes = {
-  client: PropTypes.instanceOf(Client).isRequired,
+  client: PropTypes.object.isRequired,
   selected: PropTypes.bool,
 };
 

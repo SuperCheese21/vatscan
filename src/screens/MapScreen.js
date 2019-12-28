@@ -1,15 +1,14 @@
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
-import PropTypes from 'prop-types';
 import React from 'react';
 import { BackHandler, StyleSheet, View } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
 
-import Client from '../api/Client';
 import Map from '../components/Map';
 import {
   FlightPath,
   MapOverlays,
 } from '../components/map-overlays/MapOverlays';
+import { screenPropsShape } from '../components/propTypeShapes';
 import Text from '../components/Text';
 import { accent as accentColor } from '../config/colors.json';
 import InfoPanelContainer from '../containers/InfoPanelContainer';
@@ -84,21 +83,6 @@ export default class MapScreen extends React.PureComponent {
     );
   }
 }
-
-const navigationShape = PropTypes.shape({
-  navigate: PropTypes.func.isRequired,
-});
-
-const screenPropsShape = PropTypes.shape({
-  stackNavigation: navigationShape.isRequired,
-  loading: PropTypes.bool.isRequired,
-  clients: PropTypes.arrayOf(PropTypes.instanceOf(Client)).isRequired,
-  focusedClient: PropTypes.instanceOf(Client).isRequired,
-  panelPosition: PropTypes.number.isRequired,
-  refresh: PropTypes.func.isRequired,
-  setFocusedClient: PropTypes.func.isRequired,
-  collapsePanel: PropTypes.func.isRequired,
-});
 
 MapScreen.propTypes = {
   screenProps: screenPropsShape.isRequired,

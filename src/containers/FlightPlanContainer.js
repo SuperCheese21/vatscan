@@ -3,7 +3,6 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Surface } from 'react-native-paper';
 
-import Pilot from '../api/Pilot';
 import StatsLabel from '../components/StatsLabel';
 import StatsRow from '../components/StatsRow';
 import TextBlock from '../components/TextBlock';
@@ -45,7 +44,7 @@ const FlightPlanContainer = ({ client }) => (
 );
 
 FlightPlanContainer.propTypes = {
-  client: PropTypes.instanceOf(Pilot).isRequired,
+  client: PropTypes.object.isRequired,
 };
 
 export default FlightPlanContainer;

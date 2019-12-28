@@ -3,7 +3,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { List, Surface, TouchableRipple } from 'react-native-paper';
 
-import Client from '../api/Client';
+import { navigationShape } from './propTypeShapes';
 
 const styles = StyleSheet.create({
   listItem: {
@@ -49,11 +49,7 @@ export default class ClientsListItem extends React.PureComponent {
   }
 }
 
-const navigationShape = PropTypes.shape({
-  navigate: PropTypes.func.isRequired,
-});
-
 ClientsListItem.propTypes = {
-  client: PropTypes.instanceOf(Client).isRequired,
+  client: PropTypes.object.isRequired,
   stackNavigation: navigationShape.isRequired,
 };

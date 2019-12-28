@@ -5,7 +5,6 @@ import { Badge } from 'react-native-paper';
 
 import StatsContainer from './StatsContainer';
 
-import Client from '../api/Client';
 import StatsLabel from '../components/StatsLabel';
 import StatsRow from '../components/StatsRow';
 import Text from '../components/Text';
@@ -51,7 +50,7 @@ const ClientStatsContainer = ({ client }) => (
 );
 
 ClientStatsContainer.propTypes = {
-  client: PropTypes.instanceOf(Client).isRequired,
+  client: PropTypes.object.isRequired,
 };
 
 export default ClientStatsContainer;
