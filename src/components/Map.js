@@ -32,14 +32,19 @@ const initialRegionShape = PropTypes.shape({
 });
 
 Map.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.node).isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+  ]),
   initialRegion: initialRegionShape,
-  onPress: PropTypes.func.isRequired,
+  onPress: PropTypes.func,
   style: ViewPropTypes.style,
 };
 
 Map.defaultProps = {
+  children: null,
   initialRegion: null,
+  onPress: () => {},
   style: {},
 };
 

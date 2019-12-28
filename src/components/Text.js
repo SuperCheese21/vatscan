@@ -15,11 +15,15 @@ const CustomText = ({ children, style }) => (
 );
 
 CustomText.propTypes = {
-  children: PropTypes.string.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+  ]),
   style: Text.propTypes.style,
 };
 
 CustomText.defaultProps = {
+  children: null,
   style: {},
 };
 

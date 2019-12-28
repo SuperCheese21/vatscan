@@ -66,7 +66,7 @@ const Data = ({ focusedClient, stackNavigation }) => {
 
 InfoPanelContainer.propTypes = {
   focusedClient: PropTypes.object.isRequired,
-  panelPosition: PropTypes.number.isRequired,
+  panelPosition: PropTypes.instanceOf(Animated.Value).isRequired,
   stackNavigation: navigationShape.isRequired,
 };
 

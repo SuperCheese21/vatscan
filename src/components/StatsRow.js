@@ -14,11 +14,12 @@ const StatsRow = ({ label, planned, text }) => (
 StatsRow.propTypes = {
   label: PropTypes.string.isRequired,
   planned: PropTypes.string,
-  text: PropTypes.string.isRequired,
+  text: PropTypes.string,
 };
 
 StatsRow.defaultProps = {
   planned: '',
+  text: '',
 };
 
 export default StatsRow;
