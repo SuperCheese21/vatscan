@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { ProgressBar } from 'react-native-paper';
+// import { ProgressBar } from 'react-native-paper';
 
 import Text from '../common/Text';
 import { navigationShape } from '../propTypeShapes';
-import { accent as accentColor } from '../../config/colors.json';
+// import { accent as accentColor } from '../../config/colors.json';
 
 const styles = StyleSheet.create({
   callsignText: {
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   },
   pilotInfoView: {
     flexDirection: 'row',
-    height: 20,
+    height: 30,
   },
   progressBar: {
     flex: 1,
@@ -65,7 +65,7 @@ export default class BasicDataContainer extends React.PureComponent {
 
   render() {
     const {
-      client: { arrAirport, callsign, depAirport, name, progress },
+      client: { arrAirport, callsign, depAirport, name },
     } = this.props;
     return (
       <TouchableOpacity
@@ -108,13 +108,13 @@ export default class BasicDataContainer extends React.PureComponent {
           </View>
         </View>
 
-        <View style={styles.pilotInfoView}>
+        {/* <View style={styles.pilotInfoView}>
           <ProgressBar
             // style={styles.progressBar}
             progress={progress}
             color={accentColor}
           />
-        </View>
+        </View> */}
       </TouchableOpacity>
     );
   }
