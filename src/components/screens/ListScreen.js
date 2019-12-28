@@ -3,9 +3,9 @@ import React from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { Searchbar } from 'react-native-paper';
 
-import ClientsListItem from '../components/ClientsListItem';
-import { screenPropsShape } from '../components/propTypeShapes';
-import Text from '../components/Text';
+import ClientsListItem from '../common/ClientsListItem';
+import Text from '../common/Text';
+import { screenPropsShape } from '../propTypeShapes';
 
 const styles = StyleSheet.create({
   listContainer: {

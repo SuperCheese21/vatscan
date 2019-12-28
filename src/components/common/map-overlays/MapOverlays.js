@@ -5,7 +5,7 @@ import { Polyline } from 'react-native-maps';
 import AircraftMarker from './AircraftMarker';
 import ControllerPolygon from './ControllerPolygon';
 
-import colors from '../../config/colors.json';
+import colors from '../../../config/colors.json';
 
 export const MapOverlays = ({ clients, focusedClient, setFocusedClient }) => (
   <>

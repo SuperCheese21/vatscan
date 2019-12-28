@@ -3,8 +3,8 @@ import React from 'react';
 import { ViewPropTypes } from 'react-native';
 import MapView from 'react-native-maps';
 
-import { initialMapRegion } from '../config/constants.json';
-import mapStyle from '../config/map-styles/style_blue_essence.json';
+import { initialMapRegion } from '../../config/constants.json';
+import mapStyle from '../../config/map-styles/style_blue_essence.json';
 
 const Map = ({ children, initialRegion, onPress, style }) => (
   <MapView

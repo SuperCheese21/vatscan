@@ -3,9 +3,9 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Surface } from 'react-native-paper';
 
-import StatsLabel from '../components/StatsLabel';
-import StatsRow from '../components/StatsRow';
-import TextBlock from '../components/TextBlock';
+import StatsLabel from '../common/StatsLabel';
+import StatsRow from '../common/StatsRow';
+import TextBlock from '../common/TextBlock';
 
 const styles = StyleSheet.create({
   statsContainer: {

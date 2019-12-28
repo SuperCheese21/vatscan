@@ -6,11 +6,6 @@ export default class ClientFactory {
     this.centerData = centerData;
   }
 
-  /**
-   * [getClient description]
-   * @param  {[type]} rawClient [description]
-   * @return {[type]}           [description]
-   */
   getClient(clientArray) {
     const clientType = clientArray[3];
 
@@ -25,11 +20,6 @@ export default class ClientFactory {
     return null;
   }
 
-  /**
-   * [getController description]
-   * @param  {[type]} clientArray [description]
-   * @return {[type]}             [description]
-   */
   getController(clientArray) {
     const controllerType = clientArray[0].split('_').pop();
     const id = Number(clientArray[1]);

@@ -3,15 +3,12 @@ import React from 'react';
 import { BackHandler, StyleSheet, View } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
 
-import Map from '../components/Map';
-import {
-  FlightPath,
-  MapOverlays,
-} from '../components/map-overlays/MapOverlays';
-import { screenPropsShape } from '../components/propTypeShapes';
-import Text from '../components/Text';
-import { accent as accentColor } from '../config/colors.json';
+import Map from '../common/Map';
+import { FlightPath, MapOverlays } from '../common/map-overlays/MapOverlays';
+import Text from '../common/Text';
 import InfoPanelContainer from '../containers/InfoPanelContainer';
+import { screenPropsShape } from '../propTypeShapes';
+import { accent as accentColor } from '../../config/colors.json';
 
 const styles = StyleSheet.create({
   activityIndicator: {

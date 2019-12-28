@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import Text from '../components/Text';
+import Text from '../common/Text';
 import {
   accent as accentColor,
   primaryMedium as primaryMediumColor,
-} from '../config/colors.json';
+} from '../../config/colors.json';
 
 const styles = StyleSheet.create({
   infoContainerDetail: {

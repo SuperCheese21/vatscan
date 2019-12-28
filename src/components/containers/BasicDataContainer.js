@@ -3,9 +3,9 @@ import React from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ProgressBar } from 'react-native-paper';
 
-import { navigationShape } from '../components/propTypeShapes';
-import Text from '../components/Text';
-import { accent as accentColor } from '../config/colors.json';
+import Text from '../common/Text';
+import { navigationShape } from '../propTypeShapes';
+import { accent as accentColor } from '../../config/colors.json';
 
 const styles = StyleSheet.create({
   callsignText: {
@@ -85,7 +85,7 @@ export default class BasicDataContainer extends React.PureComponent {
           {/* eslint-disable global-require */}
           <Image
             style={styles.fromToIcon}
-            source={require('../../assets/icons/narrowbody.png')}
+            source={require('../../../assets/icons/narrowbody.png')}
           />
           {/* eslint-enable global-require */}
           <Text

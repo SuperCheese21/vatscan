@@ -6,9 +6,9 @@ import BasicDataContainer from './BasicDataContainer';
 import ControllerDataContainer from './ControllerDataContainer';
 import DetailDataContainer from './DetailDataContainer';
 
-import { navigationShape } from '../components/propTypeShapes';
-import { primary as primaryColor } from '../config/colors.json';
-import { defaultPanelPosition } from '../config/constants.json';
+import { navigationShape } from '../propTypeShapes';
+import { primary as primaryColor } from '../../config/colors.json';
+import { defaultPanelPosition } from '../../config/constants.json';
 
 const styles = StyleSheet.create({
   infoPanelContainer: {

@@ -5,10 +5,10 @@ import { Badge } from 'react-native-paper';
 
 import StatsContainer from './StatsContainer';
 
-import StatsLabel from '../components/StatsLabel';
-import StatsRow from '../components/StatsRow';
-import Text from '../components/Text';
-import { accent as accentColor } from '../config/colors.json';
+import StatsLabel from '../common/StatsLabel';
+import StatsRow from '../common/StatsRow';
+import Text from '../common/Text';
+import { accent as accentColor } from '../../config/colors.json';
 
 const styles = StyleSheet.create({
   nameContainer: {

@@ -48,10 +48,6 @@ export default class FetchManager {
     return FetchManager.parseData(clientData || [], centerData || []);
   }
 
-  /**
-   * [_fetchServerUrls description]
-   * @return {Promise} [description]
-   */
   async fetchServerUrls() {
     try {
       const res = await fetch(STATUS_URL);
@@ -67,11 +63,6 @@ export default class FetchManager {
     }
   }
 
-  /**
-   * [transformClientData description]
-   * @param  {[type]} text [description]
-   * @return {[type]}      [description]
-   */
   transformClientData = text =>
     text
       .split('!CLIENTS:\n')

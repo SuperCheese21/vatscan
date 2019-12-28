@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
-import { navigationShape } from '../components/propTypeShapes';
-import Text from '../components/Text';
+import Text from '../common/Text';
+import { navigationShape } from '../propTypeShapes';
 import {
   accent as accentColor,
   primary as primaryColor,
-} from '../config/colors.json';
+} from '../../config/colors.json';
 
 const styles = StyleSheet.create({
   callsignText: {
