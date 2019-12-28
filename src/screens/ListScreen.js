@@ -1,8 +1,10 @@
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { Searchbar } from 'react-native-paper';
 
+import Client from '../api/Client';
 import ClientsListItem from '../components/ClientsListItem';
 import Text from '../components/Text';
 
@@ -81,3 +83,22 @@ export default class ListScreen extends React.PureComponent {
     );
   }
 }
+
+const navigationShape = PropTypes.shape({
+  navigate: PropTypes.func.isRequired,
+});
+
+const screenPropsShape = PropTypes.shape({
+  stackNavigation: navigationShape.isRequired,
+  loading: PropTypes.bool.isRequired,
+  clients: PropTypes.arrayOf(PropTypes.instanceOf(Client)).isRequired,
+  focusedClient: PropTypes.instanceOf(Client).isRequired,
+  panelPosition: PropTypes.number.isRequired,
+  refresh: PropTypes.func.isRequired,
+  setFocusedClient: PropTypes.func.isRequired,
+  collapsePanel: PropTypes.func.isRequired,
+});
+
+ListScreen.propTypes = {
+  screenProps: screenPropsShape.isRequired,
+};

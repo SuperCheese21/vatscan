@@ -1,9 +1,11 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Badge } from 'react-native-paper';
 
 import StatsContainer from './StatsContainer';
 
+import Client from '../api/Client';
 import StatsLabel from '../components/StatsLabel';
 import StatsRow from '../components/StatsRow';
 import Text from '../components/Text';
@@ -47,5 +49,9 @@ const ClientStatsContainer = ({ client }) => (
     <StatsRow label="Time Connected" text={client.elapsedTimeLogon} />
   </StatsContainer>
 );
+
+ClientStatsContainer.propTypes = {
+  client: PropTypes.instanceOf(Client).isRequired,
+};
 
 export default ClientStatsContainer;

@@ -1,6 +1,9 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { List, Surface, TouchableRipple } from 'react-native-paper';
+
+import Client from '../api/Client';
 
 const styles = StyleSheet.create({
   listItem: {
@@ -45,3 +48,12 @@ export default class ClientsListItem extends React.PureComponent {
     );
   }
 }
+
+const navigationShape = PropTypes.shape({
+  navigate: PropTypes.func.isRequired,
+});
+
+ClientsListItem.propTypes = {
+  client: PropTypes.instanceOf(Client).isRequired,
+  stackNavigation: navigationShape.isRequired,
+};

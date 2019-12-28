@@ -1,7 +1,9 @@
 import Icon from '@expo/vector-icons/MaterialIcons';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
+import Client from '../api/Client';
 import Text from '../components/Text';
 import {
   accent as accentColor,
@@ -51,5 +53,9 @@ const DetailDataContainer = ({
     </View>
   </View>
 );
+
+DetailDataContainer.propTypes = {
+  data: PropTypes.instanceOf(Client).isRequired,
+};
 
 export default DetailDataContainer;

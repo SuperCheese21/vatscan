@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Surface } from 'react-native-paper';
@@ -14,5 +15,9 @@ const styles = StyleSheet.create({
 const StatsContainer = ({ children }) => (
   <Surface style={styles.statsContainer}>{children}</Surface>
 );
+
+StatsContainer.propTypes = {
+  children: PropTypes.arrayOf(PropTypes.node).isRequired,
+};
 
 export default StatsContainer;

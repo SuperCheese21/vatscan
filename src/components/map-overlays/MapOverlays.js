@@ -1,12 +1,14 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Polyline } from 'react-native-maps';
 
 import AircraftMarker from './AircraftMarker';
 import ControllerPolygon from './ControllerPolygon';
 
+import Client from '../../api/Client';
 import colors from '../../config/colors.json';
 
-export default ({ clients, focusedClient, setFocusedClient }) => (
+export const MapOverlays = ({ clients, focusedClient, setFocusedClient }) => (
   <>
     {clients.map(client => {
       const isFocusedClient = focusedClient.callsign === client.callsign;
@@ -61,4 +63,14 @@ export const FlightPath = ({ client: { depCoords, location, arrCoords } }) => {
 
   // Render nothing if polylines can't be rendered
   return null;
+};
+
+MapOverlays.propTypes = {
+  clients: PropTypes.arrayOf(PropTypes.instanceOf(Client)).isRequired,
+  focusedClient: PropTypes.instanceOf(Client).isRequired,
+  setFocusedClient: PropTypes.func.isRequired,
+};
+
+FlightPath.propTypes = {
+  client: PropTypes.instanceOf(Client).isRequired,
 };

@@ -1,7 +1,8 @@
+import PropTypes from 'prop-types';
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, ViewPropTypes } from 'react-native';
 
-export default ({ children, style }) => (
+const CustomText = ({ children, style }) => (
   <Text
     style={{
       fontFamily: style.fontFamily || 'Roboto_Regular',
@@ -12,3 +13,14 @@ export default ({ children, style }) => (
     {children}
   </Text>
 );
+
+CustomText.propTypes = {
+  children: PropTypes.arrayOf(PropTypes.node).isRequired,
+  style: ViewPropTypes.styles,
+};
+
+CustomText.defaultProps = {
+  style: {},
+};
+
+export default CustomText;

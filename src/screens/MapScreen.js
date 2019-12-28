@@ -4,8 +4,9 @@ import { BackHandler, StyleSheet, View } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
 
 import Map from '../components/Map';
-import MapOverlays, {
+import {
   FlightPath,
+  MapOverlays,
 } from '../components/map-overlays/MapOverlays';
 import Text from '../components/Text';
 import { accent as accentColor } from '../config/colors.json';

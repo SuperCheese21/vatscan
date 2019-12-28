@@ -1,4 +1,5 @@
 import { Linking } from 'expo';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Share } from 'react-native';
 import { IconButton } from 'react-native-paper';
@@ -22,3 +23,7 @@ export default class ShareButton extends React.PureComponent {
     );
   }
 }
+
+ShareButton.propTypes = {
+  callsign: PropTypes.string.isRequired,
+};

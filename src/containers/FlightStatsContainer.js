@@ -1,8 +1,10 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 
 import StatsContainer from './StatsContainer';
 
+import Pilot from '../api/Pilot';
 import Map from '../components/Map';
 import { FlightPath } from '../components/map-overlays/MapOverlays';
 import AircraftMarker from '../components/map-overlays/AircraftMarker';
@@ -56,5 +58,9 @@ const FlightStatsContainer = ({ client }) => (
     </Map>
   </StatsContainer>
 );
+
+FlightStatsContainer.propTypes = {
+  client: PropTypes.instanceOf(Pilot).isRequired,
+};
 
 export default FlightStatsContainer;

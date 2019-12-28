@@ -1,6 +1,8 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { BackHandler, RefreshControl, ScrollView } from 'react-native';
 
+import Client from '../api/Client';
 import ShareButton from '../components/ShareButton';
 import ClientStatsContainer from '../containers/ClientStatsContainer';
 import ControllerStatsContainer from '../containers/ControllerStatsContainer';
@@ -75,4 +77,28 @@ const Stats = ({ client }) => {
     return <ControllerStatsContainer client={client} />;
   }
   return null;
+};
+
+const navigationShape = PropTypes.shape({
+  navigate: PropTypes.func.isRequired,
+});
+
+const screenPropsShape = PropTypes.shape({
+  stackNavigation: navigationShape.isRequired,
+  loading: PropTypes.bool.isRequired,
+  clients: PropTypes.arrayOf(PropTypes.instanceOf(Client)).isRequired,
+  focusedClient: PropTypes.instanceOf(Client).isRequired,
+  panelPosition: PropTypes.number.isRequired,
+  refresh: PropTypes.func.isRequired,
+  setFocusedClient: PropTypes.func.isRequired,
+  collapsePanel: PropTypes.func.isRequired,
+});
+
+ClientScreen.propTypes = {
+  navigation: navigationShape.isRequired,
+  screenProps: screenPropsShape.isRequired,
+};
+
+Stats.propTypes = {
+  client: PropTypes.instanceOf(Client).isRequired,
 };

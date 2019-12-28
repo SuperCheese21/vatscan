@@ -1,7 +1,10 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Marker } from 'react-native-maps';
 
 import MapOverlay from './MapOverlay';
+
+import Client from '../../api/Client';
 
 export default class AircraftMarker extends MapOverlay {
   render() {
@@ -23,3 +26,12 @@ export default class AircraftMarker extends MapOverlay {
     );
   }
 }
+
+AircraftMarker.propTypes = {
+  client: PropTypes.instanceOf(Client).isRequired,
+  selected: PropTypes.bool,
+};
+
+AircraftMarker.defaultProps = {
+  selected: false,
+};

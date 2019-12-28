@@ -1,7 +1,10 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Polygon } from 'react-native-maps';
 
 import MapOverlay from './MapOverlay';
+
+import Client from '../../api/Client';
 
 export default class ControllerPolygon extends MapOverlay {
   render() {
@@ -22,3 +25,12 @@ export default class ControllerPolygon extends MapOverlay {
     );
   }
 }
+
+ControllerPolygon.propTypes = {
+  client: PropTypes.instanceOf(Client).isRequired,
+  selected: PropTypes.bool,
+};
+
+ControllerPolygon.defaultProps = {
+  selected: false,
+};
