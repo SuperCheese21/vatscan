@@ -10,16 +10,6 @@ import { navigationShape } from '../propTypeShapes';
 import { primary as primaryColor } from '../../config/colors.json';
 import { defaultPanelPosition } from '../../config/constants.json';
 
-const styles = StyleSheet.create({
-  infoPanelContainer: {
-    width: '100%',
-    height: 154,
-    position: 'absolute',
-    bottom: defaultPanelPosition,
-    backgroundColor: primaryColor,
-  },
-});
-
 const InfoPanelContainer = ({
   focusedClient,
   panelPosition,
@@ -74,5 +64,15 @@ Data.propTypes = {
   focusedClient: PropTypes.object.isRequired,
   stackNavigation: navigationShape.isRequired,
 };
+
+const styles = StyleSheet.create({
+  infoPanelContainer: {
+    width: '100%',
+    height: 154,
+    position: 'absolute',
+    bottom: defaultPanelPosition,
+    backgroundColor: primaryColor,
+  },
+});
 
 export default InfoPanelContainer;

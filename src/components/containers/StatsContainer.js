@@ -3,6 +3,14 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Surface } from 'react-native-paper';
 
+const StatsContainer = ({ children }) => (
+  <Surface style={styles.statsContainer}>{children}</Surface>
+);
+
+StatsContainer.propTypes = {
+  children: PropTypes.arrayOf(PropTypes.node).isRequired,
+};
+
 const styles = StyleSheet.create({
   statsContainer: {
     borderRadius: 10,
@@ -11,13 +19,5 @@ const styles = StyleSheet.create({
     margin: 5,
   },
 });
-
-const StatsContainer = ({ children }) => (
-  <Surface style={styles.statsContainer}>{children}</Surface>
-);
-
-StatsContainer.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.node).isRequired,
-};
 
 export default StatsContainer;

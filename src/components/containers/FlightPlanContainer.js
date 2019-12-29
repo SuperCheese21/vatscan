@@ -7,15 +7,6 @@ import StatsLabel from '../common/StatsLabel';
 import StatsRow from '../common/StatsRow';
 import TextBlock from '../common/TextBlock';
 
-const styles = StyleSheet.create({
-  statsContainer: {
-    borderRadius: 10,
-    padding: 10,
-    elevation: 10,
-    margin: 5,
-  },
-});
-
 const FlightPlanContainer = ({ client }) => (
   <Surface style={styles.statsContainer}>
     <StatsLabel text="Flight Plan" />
@@ -46,5 +37,14 @@ const FlightPlanContainer = ({ client }) => (
 FlightPlanContainer.propTypes = {
   client: PropTypes.object.isRequired,
 };
+
+const styles = StyleSheet.create({
+  statsContainer: {
+    borderRadius: 10,
+    padding: 10,
+    elevation: 10,
+    margin: 5,
+  },
+});
 
 export default FlightPlanContainer;

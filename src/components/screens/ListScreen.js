@@ -7,13 +7,6 @@ import ClientsListItem from '../common/ClientsListItem';
 import Text from '../common/Text';
 import { screenPropsShape } from '../propTypeShapes';
 
-const styles = StyleSheet.create({
-  listContainer: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
-});
-
 export default class ListScreen extends React.PureComponent {
   state = {
     query: '',
@@ -86,3 +79,10 @@ export default class ListScreen extends React.PureComponent {
 ListScreen.propTypes = {
   screenProps: screenPropsShape.isRequired,
 };
+
+const styles = StyleSheet.create({
+  listContainer: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+});

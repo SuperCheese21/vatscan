@@ -10,42 +10,6 @@ import {
   primary as primaryColor,
 } from '../../config/colors.json';
 
-const styles = StyleSheet.create({
-  callsignText: {
-    color: 'white',
-    textAlign: 'right',
-    marginRight: 30,
-    fontSize: 13,
-  },
-  controllerCallsignText: {
-    textAlign: 'center',
-    marginLeft: 10,
-    color: 'white',
-    fontFamily: 'Roboto_Condensed_Regular',
-    fontSize: 45,
-  },
-  controllerInfoView: {
-    flexDirection: 'row',
-    height: 25,
-  },
-  infoContainerController: {
-    width: '100%',
-    height: 85,
-    backgroundColor: primaryColor,
-  },
-  infoRow: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  nameText: {
-    color: 'white',
-    textAlign: 'left',
-    fontSize: 13,
-  },
-});
-
 export default class ControllerDataContainer extends React.PureComponent {
   onPress = () => {
     const { data, stackNavigation } = this.props;
@@ -85,3 +49,39 @@ ControllerDataContainer.propTypes = {
   data: PropTypes.object.isRequired,
   stackNavigation: navigationShape.isRequired,
 };
+
+const styles = StyleSheet.create({
+  callsignText: {
+    color: 'white',
+    textAlign: 'right',
+    marginRight: 30,
+    fontSize: 13,
+  },
+  controllerCallsignText: {
+    textAlign: 'center',
+    marginLeft: 10,
+    color: 'white',
+    fontFamily: 'Roboto_Condensed_Regular',
+    fontSize: 45,
+  },
+  controllerInfoView: {
+    flexDirection: 'row',
+    height: 25,
+  },
+  infoContainerController: {
+    width: '100%',
+    height: 85,
+    backgroundColor: primaryColor,
+  },
+  infoRow: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  nameText: {
+    color: 'white',
+    textAlign: 'left',
+    fontSize: 13,
+  },
+});

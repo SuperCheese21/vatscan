@@ -9,22 +9,6 @@ import {
   Vibration,
 } from 'react-native';
 
-const styles = StyleSheet.create({
-  textBlock: {
-    backgroundColor: '#f2f2f2',
-    marginTop: 5,
-    marginBottom: 5,
-    paddingLeft: 10,
-    paddingRight: 10,
-    paddingTop: 5,
-    paddingBottom: 5,
-  },
-  textBlockText: {
-    flex: 1,
-    fontFamily: 'Roboto_Mono',
-  },
-});
-
 export default class TextBlock extends React.PureComponent {
   onLongPress = () => {
     const { text } = this.props;
@@ -52,3 +36,19 @@ export default class TextBlock extends React.PureComponent {
 TextBlock.propTypes = {
   text: PropTypes.string.isRequired,
 };
+
+const styles = StyleSheet.create({
+  textBlock: {
+    backgroundColor: '#f2f2f2',
+    marginTop: 5,
+    marginBottom: 5,
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingTop: 5,
+    paddingBottom: 5,
+  },
+  textBlockText: {
+    flex: 1,
+    fontFamily: 'Roboto_Mono',
+  },
+});
