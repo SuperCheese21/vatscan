@@ -1,6 +1,6 @@
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import Text from '../common/Text';
@@ -10,7 +10,7 @@ import {
   primary as primaryColor,
 } from '../../config/colors.json';
 
-export default class ControllerDataContainer extends React.PureComponent {
+export default class ControllerDataContainer extends PureComponent {
   onPress = () => {
     const { data, stackNavigation } = this.props;
     stackNavigation.navigate('ClientScreen', {

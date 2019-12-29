@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import Text from '../common/Text';
 import { navigationShape } from '../propTypeShapes';
 
-export default class BasicDataContainer extends React.PureComponent {
+export default class BasicDataContainer extends PureComponent {
   onPress = () => {
     const {
       client: { callsign },

@@ -1,5 +1,5 @@
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { BackHandler, StyleSheet, View } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
 
@@ -10,7 +10,7 @@ import InfoPanelContainer from '../containers/InfoPanelContainer';
 import { screenPropsShape } from '../propTypeShapes';
 import { accent as accentColor } from '../../config/colors.json';
 
-export default class MapScreen extends React.PureComponent {
+export default class MapScreen extends PureComponent {
   componentDidMount() {
     const { screenProps } = this.props;
 
