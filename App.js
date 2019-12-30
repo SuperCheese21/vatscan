@@ -46,9 +46,6 @@ export default class App extends PureComponent {
     NetInfo.addEventListener(() => {
       this.updateData(true);
     });
-
-    // Pull first data update
-    this.updateData(true);
   }
 
   setFocusedClient = client => {
@@ -88,7 +85,7 @@ export default class App extends PureComponent {
     const clients = await this.fetchManager.fetchData(isInitialFetch);
 
     // Update state with new client data
-    this.handleUpdate(clients);
+    this.handleUpdatedData(clients);
 
     // Clear existing timeout
     if (this.timer) {
@@ -107,7 +104,7 @@ export default class App extends PureComponent {
     return true;
   };
 
-  handleUpdate(clients) {
+  handleUpdatedData(clients) {
     const {
       focusedClient: { callsign: focusedCallsign },
     } = this.state;
