@@ -6,9 +6,8 @@ import { getRandomElement } from './util';
 import { ARTCC_URL, STATUS_URL } from '../config/constants.json';
 
 export default class FetchManager {
-  constructor() {
-    this.serverUrls = [];
-  }
+  // Initialize list of data file URLs
+  serverUrls = [];
 
   /**
    * async/await function that requests pilot and ATC data from separate servers

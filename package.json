@@ -87,7 +87,10 @@
       ],
       "react/jsx-filename-extension": "off",
       "react/jsx-wrap-multilines": "off",
-      "react/state-in-constructor": "off"
+      "react/state-in-constructor": [
+        "error",
+        "never"
+      ]
     }
   },
   "eslintIgnore": [
