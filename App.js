@@ -16,7 +16,7 @@ import {
 export default class App extends PureComponent {
   // Initialize component state and fetch manager
   state = {
-    fontLoaded: false,
+    fontsLoaded: false,
     loading: false,
     clients: [],
     focusedClient: {},
@@ -26,17 +26,6 @@ export default class App extends PureComponent {
   fetchManager = new FetchManager();
 
   async componentDidMount() {
-    // Load fonts and update font loaded state
-    /* eslint-disable global-require */
-    await Font.loadAsync({
-      Roboto_Regular: require('./assets/fonts/Roboto/Roboto-Regular.ttf'),
-      Roboto_Condensed_Regular: require('./assets/fonts/Roboto_Condensed/RobotoCondensed-Regular.ttf'),
-      Roboto_Mono: require('./assets/fonts/Roboto_Mono/RobotoMono-Regular.ttf'),
-    });
-    /* eslint-enable global-require */
-
-    this.setState({ fontLoaded: true });
-
     // Fix status bar height
     if (Platform.OS === 'android') {
       SafeAreaView.setStatusBarHeight(0);
@@ -66,6 +55,16 @@ export default class App extends PureComponent {
       useNativeDriver: true,
     }).start();
   }
+
+  loadFonts = async () => {
+    /* eslint-disable global-require */
+    await Font.loadAsync({
+      Roboto_Regular: require('./assets/fonts/Roboto/Roboto-Regular.ttf'),
+      Roboto_Condensed_Regular: require('./assets/fonts/Roboto_Condensed/RobotoCondensed-Regular.ttf'),
+      Roboto_Mono: require('./assets/fonts/Roboto_Mono/RobotoMono-Regular.ttf'),
+    });
+    /* eslint-enable global-require */
+  };
 
   updateData = async isInitialFetch => {
     this.setState({ loading: true });
@@ -122,7 +121,7 @@ export default class App extends PureComponent {
 
   render() {
     const {
-      fontLoaded,
+      fontsLoaded,
       loading,
       clients,
       focusedClient,
@@ -130,8 +129,14 @@ export default class App extends PureComponent {
     } = this.state;
 
     // Show app loading screen if font is still being loaded
-    if (!fontLoaded) {
-      return <AppLoading />;
+    if (!fontsLoaded) {
+      return (
+        <AppLoading
+          startAsync={this.loadFonts}
+          onFinish={() => this.setState({ fontsLoaded: true })}
+          onError={console.warn}
+        />
+      );
     }
 
     // Otherwise show top-level view
