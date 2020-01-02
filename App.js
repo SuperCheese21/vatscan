@@ -26,9 +26,12 @@ export default class App extends PureComponent {
 
   componentDidMount() {
     // Automatically pull data update when internet connection is changed
-    NetInfo.addEventListener(() => {
-      this.updateData(true);
-    });
+    this.unsubscribe = NetInfo.addEventListener(() => this.updateData(true));
+  }
+
+  componentWillUnmount() {
+    // Unsubscribe from updates on internet connection changes
+    this.unsubscribe();
   }
 
   setFocusedClient = client => {
