@@ -98,7 +98,7 @@
   ],
   "dependencies": {
     "@expo/vector-icons": "^10.0.0",
-    "@react-native-community/masked-view": "latest",
+    "@react-native-community/masked-view": "0.1.5",
     "@react-native-community/netinfo": "4.6.0",
     "expo": "^36.0.2",
     "expo-font": "~8.0.0",
@@ -110,7 +110,7 @@
     "react-native-maps": "0.26.1",
     "react-native-paper": "latest",
     "react-native-reanimated": "~1.4.0",
-    "react-native-safe-area-context": "latest",
+    "react-native-safe-area-context": "0.6.0",
     "react-navigation": "latest",
     "react-navigation-stack": "latest",
     "react-navigation-tabs": "latest"
