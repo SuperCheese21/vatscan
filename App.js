@@ -1,9 +1,8 @@
 import { AppLoading, Linking } from 'expo';
 import * as Font from 'expo-font';
 import React, { PureComponent } from 'react';
-import { Alert, Animated, Platform } from 'react-native';
+import { Alert, Animated } from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
-import { SafeAreaView } from 'react-navigation';
 
 import FetchManager from './src/api/FetchManager';
 import StackNavigator from './src/components/navigation/StackNavigator';
@@ -25,12 +24,7 @@ export default class App extends PureComponent {
 
   fetchManager = new FetchManager();
 
-  async componentDidMount() {
-    // Fix status bar height
-    if (Platform.OS === 'android') {
-      SafeAreaView.setStatusBarHeight(0);
-    }
-
+  componentDidMount() {
     // Automatically pull data update when internet connection is changed
     NetInfo.addEventListener(() => {
       this.updateData(true);

@@ -1,5 +1,4 @@
 import { createAppContainer } from 'react-navigation';
-import getSlideFromRightTransition from 'react-navigation-slide-from-right-transition';
 import { createStackNavigator } from 'react-navigation-stack';
 
 import TabNavigatorContainer from './TabNavigator';
@@ -17,12 +16,12 @@ const StackNavigator = createAppContainer(
       },
     },
     {
-      transitionConfig: getSlideFromRightTransition,
       defaultNavigationOptions: {
         title: 'VATSCAN',
         headerStyle: {
           backgroundColor: colors.primary,
         },
+        headerTitleAlign: 'center',
         headerTitleStyle: {
           color: 'white',
           fontFamily: 'Roboto_Regular',
@@ -31,7 +30,6 @@ const StackNavigator = createAppContainer(
         },
         headerTintColor: colors.accent,
       },
-      headerLayoutPreset: 'center',
     },
   ),
 );

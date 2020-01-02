@@ -14,7 +14,7 @@ export default class ClientScreen extends PureComponent {
     const callsign = navigation.getParam('callsign');
     return {
       title: callsign,
-      headerRight: <ShareButton callsign={callsign} />,
+      headerRight: () => <ShareButton callsign={callsign} />,
     };
   };
 
