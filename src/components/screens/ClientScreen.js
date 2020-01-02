@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { BackHandler, RefreshControl, ScrollView } from 'react-native';
 
 import ShareButton from '../common/ShareButton';
@@ -9,12 +9,12 @@ import FlightPlanContainer from '../containers/FlightPlanContainer';
 import FlightStatsContainer from '../containers/FlightStatsContainer';
 import { navigationShape, screenPropsShape } from '../propTypeShapes';
 
-export default class ClientScreen extends React.PureComponent {
+export default class ClientScreen extends PureComponent {
   static navigationOptions = ({ navigation }) => {
     const callsign = navigation.getParam('callsign');
     return {
       title: callsign,
-      headerRight: <ShareButton callsign={callsign} />,
+      headerRight: () => <ShareButton callsign={callsign} />,
     };
   };
 

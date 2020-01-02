@@ -9,23 +9,6 @@ import {
   primaryMedium as primaryMediumColor,
 } from '../../config/colors.json';
 
-const styles = StyleSheet.create({
-  infoContainerDetail: {
-    flex: 5,
-    backgroundColor: primaryMediumColor,
-  },
-  infoRow: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  infoText: {
-    color: 'white',
-    fontSize: 14,
-  },
-});
-
 const DetailDataContainer = ({
   client: { aircraft, groundSpeed, altitude, heading },
 }) => (
@@ -56,5 +39,22 @@ const DetailDataContainer = ({
 DetailDataContainer.propTypes = {
   client: PropTypes.object.isRequired,
 };
+
+const styles = StyleSheet.create({
+  infoContainerDetail: {
+    flex: 5,
+    backgroundColor: primaryMediumColor,
+  },
+  infoRow: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  infoText: {
+    color: 'white',
+    fontSize: 14,
+  },
+});
 
 export default DetailDataContainer;

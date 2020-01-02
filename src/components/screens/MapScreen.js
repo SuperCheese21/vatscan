@@ -1,5 +1,5 @@
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { BackHandler, StyleSheet, View } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
 
@@ -10,21 +10,7 @@ import InfoPanelContainer from '../containers/InfoPanelContainer';
 import { screenPropsShape } from '../propTypeShapes';
 import { accent as accentColor } from '../../config/colors.json';
 
-const styles = StyleSheet.create({
-  activityIndicator: {
-    position: 'absolute',
-    right: 3,
-    top: 3,
-  },
-  clientCountText: {
-    fontFamily: 'Roboto_Regular',
-    position: 'absolute',
-    left: 5,
-    top: 2,
-  },
-});
-
-export default class MapScreen extends React.PureComponent {
+export default class MapScreen extends PureComponent {
   componentDidMount() {
     const { screenProps } = this.props;
 
@@ -84,3 +70,17 @@ export default class MapScreen extends React.PureComponent {
 MapScreen.propTypes = {
   screenProps: screenPropsShape.isRequired,
 };
+
+const styles = StyleSheet.create({
+  activityIndicator: {
+    position: 'absolute',
+    right: 3,
+    top: 3,
+  },
+  clientCountText: {
+    fontFamily: 'Roboto_Regular',
+    position: 'absolute',
+    left: 5,
+    top: 2,
+  },
+});

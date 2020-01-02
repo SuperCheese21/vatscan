@@ -10,19 +10,6 @@ import StatsRow from '../common/StatsRow';
 import Text from '../common/Text';
 import { accent as accentColor } from '../../config/colors.json';
 
-const styles = StyleSheet.create({
-  nameContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginBottom: 8,
-  },
-  nameText: {
-    flex: 1,
-    fontFamily: 'Roboto_Condensed_Regular',
-    fontSize: 26,
-  },
-});
-
 const ClientStatsContainer = ({ client }) => (
   <StatsContainer>
     <View style={styles.nameContainer}>
@@ -52,5 +39,18 @@ const ClientStatsContainer = ({ client }) => (
 ClientStatsContainer.propTypes = {
   client: PropTypes.object.isRequired,
 };
+
+const styles = StyleSheet.create({
+  nameContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: 8,
+  },
+  nameText: {
+    flex: 1,
+    fontFamily: 'Roboto_Condensed_Regular',
+    fontSize: 26,
+  },
+});
 
 export default ClientStatsContainer;

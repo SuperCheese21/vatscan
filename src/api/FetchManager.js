@@ -6,13 +6,13 @@ import { getRandomElement } from './util';
 import { ARTCC_URL, STATUS_URL } from '../config/constants.json';
 
 export default class FetchManager {
-  constructor() {
-    this.serverUrls = [];
-  }
+  // Initialize list of data file URLs
+  serverUrls = [];
 
   /**
    * async/await function that requests pilot and ATC data from separate servers
-   * @return {Promise} VATSIM server data promise object
+   * @param  {Boolean} isInitialFetch indicates whether the request is the first request when the app loads
+   * @return {Promise}                parsed client data
    */
   async fetchData(isInitialFetch) {
     // Fetch server URLs on first execution
@@ -48,6 +48,10 @@ export default class FetchManager {
     return FetchManager.parseData(clientData || [], centerData || []);
   }
 
+  /**
+   * Fetches VATSIM text data URLs from status.vatsim.net
+   * @return {Promise} undefined, adds URLs to serverUrls array
+   */
   async fetchServerUrls() {
     try {
       const res = await fetch(STATUS_URL);
@@ -63,6 +67,11 @@ export default class FetchManager {
     }
   }
 
+  /**
+   * transforms raw text client data into a 2D array
+   * @param  {String} text          raw client data from VATSIM text data dump
+   * @return {Array<Array<String>>} 2D array containing client data
+   */
   transformClientData = text =>
     text
       .split('!CLIENTS:\n')
@@ -74,8 +83,8 @@ export default class FetchManager {
 
   /**
    * Parses the raw server data from text and json to a custom javascript object
-   * @param  {String} rawData         Raw VATSIM server data
-   * @return {Object}                 Client data formatted as a javascript object
+   * @param  {String} rawData Raw VATSIM server data
+   * @return {Object}         Client data formatted as a javascript object
    */
   static parseData(clientData, centerData) {
     const clientFactory = new ClientFactory(centerData);

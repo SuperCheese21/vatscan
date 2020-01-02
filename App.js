@@ -1,9 +1,8 @@
 import { AppLoading, Linking } from 'expo';
 import * as Font from 'expo-font';
 import React, { PureComponent } from 'react';
-import { Alert, Animated, Platform } from 'react-native';
+import { Alert, Animated } from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
-import { SafeAreaView } from 'react-navigation';
 
 import FetchManager from './src/api/FetchManager';
 import StackNavigator from './src/components/navigation/StackNavigator';
@@ -16,7 +15,7 @@ import {
 export default class App extends PureComponent {
   // Initialize component state and fetch manager
   state = {
-    fontLoaded: false,
+    fontsLoaded: false,
     loading: false,
     clients: [],
     focusedClient: {},
@@ -25,30 +24,14 @@ export default class App extends PureComponent {
 
   fetchManager = new FetchManager();
 
-  async componentDidMount() {
-    // Load fonts and update font loaded state
-    /* eslint-disable global-require */
-    await Font.loadAsync({
-      Roboto_Regular: require('./assets/fonts/Roboto/Roboto-Regular.ttf'),
-      Roboto_Condensed_Regular: require('./assets/fonts/Roboto_Condensed/RobotoCondensed-Regular.ttf'),
-      Roboto_Mono: require('./assets/fonts/Roboto_Mono/RobotoMono-Regular.ttf'),
-    });
-    /* eslint-enable global-require */
-
-    this.setState({ fontLoaded: true });
-
-    // Fix status bar height
-    if (Platform.OS === 'android') {
-      SafeAreaView.setStatusBarHeight(0);
-    }
-
+  componentDidMount() {
     // Automatically pull data update when internet connection is changed
-    NetInfo.addEventListener(() => {
-      this.updateData(true);
-    });
+    this.unsubscribe = NetInfo.addEventListener(() => this.updateData(true));
+  }
 
-    // Pull first data update
-    this.updateData(true);
+  componentWillUnmount() {
+    // Unsubscribe from updates on internet connection changes
+    this.unsubscribe();
   }
 
   setFocusedClient = client => {
@@ -70,6 +53,16 @@ export default class App extends PureComponent {
     }).start();
   }
 
+  loadFonts = async () => {
+    /* eslint-disable global-require */
+    await Font.loadAsync({
+      Roboto_Regular: require('./assets/fonts/Roboto/Roboto-Regular.ttf'),
+      Roboto_Condensed_Regular: require('./assets/fonts/Roboto_Condensed/RobotoCondensed-Regular.ttf'),
+      Roboto_Mono: require('./assets/fonts/Roboto_Mono/RobotoMono-Regular.ttf'),
+    });
+    /* eslint-enable global-require */
+  };
+
   updateData = async isInitialFetch => {
     this.setState({ loading: true });
 
@@ -88,7 +81,7 @@ export default class App extends PureComponent {
     const clients = await this.fetchManager.fetchData(isInitialFetch);
 
     // Update state with new client data
-    this.handleUpdate(clients);
+    this.handleUpdatedData(clients);
 
     // Clear existing timeout
     if (this.timer) {
@@ -107,7 +100,7 @@ export default class App extends PureComponent {
     return true;
   };
 
-  handleUpdate(clients) {
+  handleUpdatedData(clients) {
     const {
       focusedClient: { callsign: focusedCallsign },
     } = this.state;
@@ -125,7 +118,7 @@ export default class App extends PureComponent {
 
   render() {
     const {
-      fontLoaded,
+      fontsLoaded,
       loading,
       clients,
       focusedClient,
@@ -133,8 +126,14 @@ export default class App extends PureComponent {
     } = this.state;
 
     // Show app loading screen if font is still being loaded
-    if (!fontLoaded) {
-      return <AppLoading />;
+    if (!fontsLoaded) {
+      return (
+        <AppLoading
+          startAsync={this.loadFonts}
+          onFinish={() => this.setState({ fontsLoaded: true })}
+          onError={console.warn}
+        />
+      );
     }
 
     // Otherwise show top-level view

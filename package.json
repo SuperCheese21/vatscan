@@ -60,6 +60,12 @@
     "rules": {
       "import/order": "error",
       "no-console": "off",
+      "no-use-before-define": [
+        "error",
+        {
+          "variables": false
+        }
+      ],
       "prefer-destructuring": [
         "error",
         {
@@ -81,7 +87,10 @@
       ],
       "react/jsx-filename-extension": "off",
       "react/jsx-wrap-multilines": "off",
-      "react/state-in-constructor": "off"
+      "react/state-in-constructor": [
+        "error",
+        "never"
+      ]
     }
   },
   "eslintIgnore": [
@@ -89,8 +98,9 @@
   ],
   "dependencies": {
     "@expo/vector-icons": "^10.0.0",
+    "@react-native-community/masked-view": "0.1.5",
     "@react-native-community/netinfo": "4.6.0",
-    "expo": "^36.0.0",
+    "expo": "^36.0.2",
     "expo-font": "~8.0.0",
     "moment": "latest",
     "prop-types": "latest",
@@ -100,8 +110,8 @@
     "react-native-maps": "0.26.1",
     "react-native-paper": "latest",
     "react-native-reanimated": "~1.4.0",
+    "react-native-safe-area-context": "0.6.0",
     "react-navigation": "latest",
-    "react-navigation-slide-from-right-transition": "latest",
     "react-navigation-stack": "latest",
     "react-navigation-tabs": "latest"
   }
