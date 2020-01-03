@@ -21,7 +21,7 @@ export default class Controller extends Client {
         latitude: parseFloat(coords[1]),
         longitude: parseFloat(coords[0]),
       }));
-    } else if (!['CTR', 'FSS'].includes(this.controllerType)) {
+    } else {
       this.polygon = [];
       for (let i = 0; i < NUM_SIDES_CIRCLE; i += 1) {
         const bearing = (360 / NUM_SIDES_CIRCLE) * i;

@@ -25,7 +25,20 @@ export default class ClientFactory {
     const id = Number(clientArray[1]);
     const center = this.centerData.find(c => c.id === id);
 
-    if (['CTR', 'FSS', 'APP', 'DEP', 'TWR', 'GND'].includes(controllerType)) {
+    if (
+      [
+        // 'ATIS',
+        // 'DEL',
+        'GND',
+        'TWR',
+        'DEP',
+        'CTR',
+        'FSS',
+        'APP',
+        // 'OBS',
+        // 'SUP',
+      ].includes(controllerType)
+    ) {
       return new Controller(clientArray, controllerType, center);
     }
 

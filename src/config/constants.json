@@ -1,75 +1,121 @@
 {
-    "STATUS_URL": "https://status.vatsim.net/",
-    "ARTCC_URL": "https://map.vatsim.net/api/atcGeoJSON",
-    "UPDATE_INTERVAL": 60000,
-    "EARTH_RADIUS_NM": 3440.06,
-    "EARTH_RADIUS_M": 6371000,
-    "aircraft": {
-        "WIDEBODY": [
-            "A3ST", "A30", "A310", "A33", "A34", "A35", "A38",
-            "A124", "A225",
-            "BLCF", "B74", "B76", "B77", "B78",
-            "IL86", "IL96",
-            "L101",
-            "MD11", "DC10"
-        ],
-        "NARROWBODY": [
-            "BCS",
-            "A31", "A32", "A19N", "A20N", "A21N",
-            "A148", "A158", "AN72",
-            "RJ1H", "RJ70", "RJ85", "B46",
-            "B70", "B71", "B72", "B73", "B75", "B3XM", "B37M", "B38M", "B39M",
-            "BA11", "H25",
-            "CRJ", "C919", "CONC",
-            "DC8", "DC9",
-            "E170", "E75", "E19", "E29", "E13", "E14",
-            "J328",
-            "F100", "F70", "F28",
-            "IL62", "IL76",
-            "MD8", "MD90",
-            "SU95",
-            "T134", "T144", "T154", "T204",
-            "YK4"
-        ]
+  "STATUS_URL": "https://status.vatsim.net/",
+  "ARTCC_URL": "https://map.vatsim.net/api/atcGeoJSON",
+  "UPDATE_INTERVAL": 60000,
+  "EARTH_RADIUS_NM": 3440.06,
+  "EARTH_RADIUS_M": 6371000,
+  "aircraft": {
+    "WIDEBODY": [
+      "A3ST",
+      "A30",
+      "A310",
+      "A33",
+      "A34",
+      "A35",
+      "A38",
+      "A124",
+      "A225",
+      "BLCF",
+      "B74",
+      "B76",
+      "B77",
+      "B78",
+      "IL86",
+      "IL96",
+      "L101",
+      "MD11",
+      "DC10"
+    ],
+    "NARROWBODY": [
+      "BCS",
+      "A31",
+      "A32",
+      "A19N",
+      "A20N",
+      "A21N",
+      "A148",
+      "A158",
+      "AN72",
+      "RJ1H",
+      "RJ70",
+      "RJ85",
+      "B46",
+      "B70",
+      "B71",
+      "B72",
+      "B73",
+      "B75",
+      "B3XM",
+      "B37M",
+      "B38M",
+      "B39M",
+      "BA11",
+      "H25",
+      "CRJ",
+      "C919",
+      "CONC",
+      "DC8",
+      "DC9",
+      "E170",
+      "E75",
+      "E19",
+      "E29",
+      "E13",
+      "E14",
+      "J328",
+      "F100",
+      "F70",
+      "F28",
+      "IL62",
+      "IL76",
+      "MD8",
+      "MD90",
+      "SU95",
+      "T134",
+      "T144",
+      "T154",
+      "T204",
+      "YK4"
+    ]
+  },
+  "initialMapRegion": {
+    "latitude": 38,
+    "longitude": -97,
+    "latitudeDelta": 60,
+    "longitudeDelta": 30
+  },
+  "defaultPanelPosition": -154,
+  "panelStates": {
+    "EXPANDED_PILOT": -154,
+    "EXPANDED_ATC": -85,
+    "COLLAPSED": 0
+  },
+  "panelTransitionDuration": 350,
+  "mapOverlays": {
+    "CTR": {
+      "radius": 372365,
+      "zIndex": 0
     },
-    "initialMapRegion": {
-        "latitude": 38,
-        "longitude": -97,
-        "latitudeDelta": 60,
-        "longitudeDelta": 30
+    "FSS": {
+      "radius": 372365,
+      "zIndex": 0
     },
-    "defaultPanelPosition": -154,
-    "panelStates": {
-        "EXPANDED_PILOT": -154,
-        "EXPANDED_ATC": -85,
-        "COLLAPSED": 0
+    "APP": {
+      "radius": 55560,
+      "zIndex": 1
     },
-    "panelTransitionDuration": 350,
-    "mapOverlays": {
-        "CTR": {
-            "radius": null,
-            "zIndex": 0
-        },
-        "FSS": {
-            "radius": null,
-            "zIndex": 0
-        },
-        "APP": {
-            "radius": 55560,
-            "zIndex": 1
-        },
-        "DEP": {
-            "radius": 55560,
-            "zIndex": 1
-        },
-        "TWR": {
-            "radius": 15000,
-            "zIndex": 2
-        },
-        "GND": {
-            "radius": 2500,
-            "zIndex": 3
-        }
+    "DEP": {
+      "radius": 55560,
+      "zIndex": 1
     },
-    "NUM_SIDES_CIRCLE": 36
+    "TWR": {
+      "radius": 15000,
+      "zIndex": 2
+    },
+    "GND": {
+      "radius": 2500,
+      "zIndex": 3
+    }
+  },
+  "NUM_SIDES_CIRCLE": 36
 }
