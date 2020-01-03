@@ -124,7 +124,7 @@ export default class Pilot extends Client {
   }
 
   get plannedDepTime() {
-    return `${this.depTime.padStart(4, '0')} z`;
+    return `${this.depTime.padStart(4, '0')}z`;
   }
 
   get plannedDuration() {
@@ -138,7 +138,7 @@ export default class Pilot extends Client {
     if (this.hrsEnRoute || this.minEnRoute) {
       const departureTime = moment.utc(this.depTime.padStart(4, '0'), 'HHmm');
       const flightDuration = 60 * this.hrsEnRoute + this.minEnRoute;
-      return `${departureTime.add(flightDuration, 'm').format('HHmm')} z`;
+      return `${departureTime.add(flightDuration, 'm').format('HHmm')}z`;
     }
     return 'N/A';
   }
