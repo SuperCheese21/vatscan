@@ -26,7 +26,7 @@ export default class Controller extends Client {
       for (let i = 0; i < NUM_SIDES_CIRCLE; i += 1) {
         const bearing = (360 / NUM_SIDES_CIRCLE) * i;
         this.polygon.push(
-          getProjectedCoords(this.location, this.radius, bearing),
+          getProjectedCoords(this.location, this.radiusM, bearing),
         );
       }
     }
@@ -50,8 +50,8 @@ export default class Controller extends Client {
     }
   }
 
-  get radius() {
-    return constants[this.controllerType].radius;
+  get radiusM() {
+    return constants[this.controllerType].radiusM;
   }
 
   get strokeColor() {

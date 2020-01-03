@@ -93,27 +93,27 @@
   "panelTransitionDuration": 350,
   "mapOverlays": {
     "CTR": {
-      "radius": 372365,
+      "radiusM": 370400,
       "zIndex": 0
     },
     "FSS": {
-      "radius": 372365,
+      "radiusM": 370400,
       "zIndex": 0
     },
     "APP": {
-      "radius": 55560,
+      "radiusM": 55560,
       "zIndex": 1
     },
     "DEP": {
-      "radius": 55560,
+      "radiusM": 55560,
       "zIndex": 1
     },
     "TWR": {
-      "radius": 15000,
+      "radiusM": 16668,
       "zIndex": 2
     },
     "GND": {
-      "radius": 2500,
+      "radiusM": 2778,
       "zIndex": 3
     }
   },
