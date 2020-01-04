@@ -30,7 +30,15 @@ export default class Pilot extends Client {
     this.heading = parseFloat(data[38]);
   }
 
-  getAircraftType() {
+  checkAircraftType(list) {
+    if (list.find(aircraft => this.aircraft.includes(aircraft))) {
+      return true;
+    }
+
+    return false;
+  }
+
+  get aircraftType() {
     const widebody = constants.aircraft.WIDEBODY;
     const narrowbody = constants.aircraft.NARROWBODY;
 
@@ -45,15 +53,7 @@ export default class Pilot extends Client {
     return 0;
   }
 
-  checkAircraftType(list) {
-    if (list.find(aircraft => this.aircraft.includes(aircraft))) {
-      return true;
-    }
-
-    return false;
-  }
-
-  getETEMinutes() {
+  get eteMinutes() {
     if (this.distRemaining && this.groundSpeed > 0) {
       if (this.distRemaining <= 2 && this.groundSpeed < 40) {
         return 0;
@@ -66,13 +66,13 @@ export default class Pilot extends Client {
   }
 
   get aircraftIcon() {
-    const type = this.getAircraftType();
+    const aircraftType = this.aircraftType;
 
-    if (type === 2) {
+    if (aircraftType === 2) {
       return WIDEBODY_ICON;
     }
 
-    if (type === 1) {
+    if (aircraftType === 1) {
       return NARROWBODY_ICON;
     }
 
@@ -144,16 +144,16 @@ export default class Pilot extends Client {
   }
 
   get ete() {
-    const eteMinutes = this.getETEMinutes();
-    if (eteMinutes) {
+    const eteMinutes = this.eteMinutes;
+    if (eteMinutes > 0) {
       return moment.utc(eteMinutes * 60000).format('H:mm');
     }
     return null;
   }
 
   get eta() {
-    const eteMinutes = this.getETEMinutes();
-    if (eteMinutes) {
+    const eteMinutes = this.eteMinutes;
+    if (eteMinutes > 0) {
       return moment
         .utc()
         .add(eteMinutes, 'm')

@@ -5,8 +5,8 @@ import { View } from 'react-native';
 import StatsContainer from './StatsContainer';
 
 import Map from '../common/Map';
-import { FlightPath } from '../common/map-overlays/MapOverlays';
 import AircraftMarker from '../common/map-overlays/AircraftMarker';
+import FlightPath from '../common/map-overlays/FlightPath';
 import StatsLabel from '../common/StatsLabel';
 import StatsRow from '../common/StatsRow';
 

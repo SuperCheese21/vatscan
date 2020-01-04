@@ -4,7 +4,8 @@ import { BackHandler, StyleSheet, View } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
 
 import Map from '../common/Map';
-import { FlightPath, MapOverlays } from '../common/map-overlays/MapOverlays';
+import FlightPath from '../common/map-overlays/FlightPath';
+import MapOverlays from '../common/map-overlays/MapOverlays';
 import Text from '../common/Text';
 import InfoPanelContainer from '../containers/InfoPanelContainer';
 import { screenPropsShape } from '../propTypeShapes';

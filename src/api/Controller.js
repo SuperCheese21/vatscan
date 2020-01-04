@@ -34,17 +34,25 @@ export default class Controller extends Client {
 
   get typeString() {
     switch (this.controllerType) {
+      case 'ATIS':
+        return 'ATIS';
+      case 'DEL':
+        return 'Delivery';
+      case 'GND':
+        return 'Ground';
+      case 'TWR':
+        return 'Tower';
+      case 'DEP':
+        return 'Departure';
       case 'CTR':
       case 'FSS':
         return 'Center';
       case 'APP':
         return 'Approach';
-      case 'DEP':
-        return 'Departure';
-      case 'TWR':
-        return 'Tower';
-      case 'GND':
-        return 'Ground';
+      case 'OBS':
+        return 'Observer';
+      case 'SUP':
+        return 'Supervisor';
       default:
         return 'N/A';
     }

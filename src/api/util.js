@@ -1,4 +1,4 @@
-import constants from '../config/constants.json';
+import { EARTH_RADIUS_M, EARTH_RADIUS_NM } from '../config/constants.json';
 
 /**
  * Selects a random element in an array and returns it
@@ -40,7 +40,7 @@ export function getProjectedCoords(loc1, distance, bearing) {
   const lon1 = toRadians(loc1.longitude);
   const brng = toRadians(bearing);
 
-  const arcLength = distance / constants.EARTH_RADIUS_M;
+  const arcLength = distance / EARTH_RADIUS_M;
 
   const lat2 = Math.asin(
     Math.sin(lat1) * Math.cos(arcLength) +
@@ -81,7 +81,7 @@ export function getGCDistance(loc1, loc2) {
         Math.sin(deltaLon / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-    return Math.round(c * constants.EARTH_RADIUS_NM);
+    return Math.round(c * EARTH_RADIUS_NM);
   }
   return -1;
 }
