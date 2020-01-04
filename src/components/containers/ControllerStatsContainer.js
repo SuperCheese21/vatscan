@@ -4,7 +4,6 @@ import React from 'react';
 import StatsContainer from './StatsContainer';
 
 import Map from '../common/Map';
-import ControllerPolygon from '../common/map-overlays/ControllerPolygon';
 import StatsLabel from '../common/StatsLabel';
 import StatsRow from '../common/StatsRow';
 import TextBlock from '../common/TextBlock';
@@ -27,7 +26,7 @@ const ControllerStatsContainer = ({ client }) => (
         longitudeDelta: 5,
       }}
     >
-      <ControllerPolygon client={client} selected={false} />
+      {client.getMapOverlay()}
     </Map>
   </StatsContainer>
 );

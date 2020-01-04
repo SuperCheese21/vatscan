@@ -22,21 +22,23 @@ export default class ClientFactory {
 
   getController(clientArray) {
     const controllerType = clientArray[0].split('_').pop();
-    const id = Number(clientArray[1]);
-    const center = this.centerData.find(c => c.id === id);
+    const callsign = clientArray[0];
+    const center = this.centerData.find(
+      c => c.properties.callsign === callsign,
+    );
 
     if (
       [
-        // 'ATIS',
-        // 'DEL',
+        'ATIS',
+        'DEL',
         'GND',
         'TWR',
         'DEP',
         'CTR',
         'FSS',
         'APP',
-        // 'OBS',
-        // 'SUP',
+        'OBS',
+        'SUP',
       ].includes(controllerType)
     ) {
       return new Controller(clientArray, controllerType, center);

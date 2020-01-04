@@ -32,5 +32,5 @@ AircraftMarker.propTypes = {
 };
 
 AircraftMarker.defaultProps = {
-  isFocusedClient: false,
+  isFocusedClient: true,
 };

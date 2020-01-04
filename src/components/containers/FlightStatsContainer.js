@@ -50,7 +50,7 @@ const FlightStatsContainer = ({ client }) => (
         longitudeDelta: 5,
       }}
     >
-      <AircraftMarker client={client} isFocusedClient />
+      {client.getMapOverlay()}
     </Map>
   </StatsContainer>
 );

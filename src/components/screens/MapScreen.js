@@ -4,7 +4,6 @@ import { BackHandler, StyleSheet, View } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
 
 import Map from '../common/Map';
-import MapOverlays from '../common/map-overlays/MapOverlays';
 import Text from '../common/Text';
 import InfoPanelContainer from '../containers/InfoPanelContainer';
 import { screenPropsShape } from '../propTypeShapes';
@@ -38,28 +37,37 @@ export default class MapScreen extends PureComponent {
   };
 
   render() {
-    const { screenProps } = this.props;
+    const {
+      screenProps: {
+        clients,
+        focusedClient,
+        setFocusedClient,
+        collapsePanel,
+        loading,
+        stackNavigation,
+        panelPosition,
+      },
+    } = this.props;
     return (
       <View style={{ flex: 1 }}>
-        <Map style={{ flex: 1 }} onPress={screenProps.collapsePanel}>
-          <MapOverlays
-            clients={screenProps.clients}
-            focusedClient={screenProps.focusedClient}
-            setFocusedClient={screenProps.setFocusedClient}
-          />
+        <Map style={{ flex: 1 }} onPress={collapsePanel}>
+          {clients.map(client => {
+            const isFocusedClient = focusedClient.callsign === client.callsign;
+            return client.getMapOverlay(isFocusedClient, setFocusedClient);
+          })}
         </Map>
         <ActivityIndicator
           color={accentColor}
-          animating={screenProps.loading}
+          animating={loading}
           style={styles.activityIndicator}
         />
         <Text style={styles.clientCountText}>
-          {`Clients: ${screenProps.clients.length}`}
+          {`Clients: ${clients.length}`}
         </Text>
         <InfoPanelContainer
-          stackNavigation={screenProps.stackNavigation}
-          panelPosition={screenProps.panelPosition}
-          focusedClient={screenProps.focusedClient}
+          stackNavigation={stackNavigation}
+          panelPosition={panelPosition}
+          focusedClient={focusedClient}
         />
       </View>
     );

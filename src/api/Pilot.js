@@ -1,9 +1,11 @@
 import moment from 'moment';
+import React from 'react';
 
 import Client from './Client';
 import { getAirportCoords, getCityName, getGCDistance } from './util';
 
 import constants from '../config/constants.json';
+import AircraftMarker from '../components/common/map-overlays/AircraftMarker';
 import GA_ICON from '../../assets/icons/ga.png';
 import NARROWBODY_ICON from '../../assets/icons/narrowbody.png';
 import WIDEBODY_ICON from '../../assets/icons/widebody.png';
@@ -26,6 +28,17 @@ export default class Pilot extends Client {
     this.remarks = data[29];
     this.route = data[30];
     this.heading = parseFloat(data[38]);
+  }
+
+  getMapOverlay(isFocusedClient, setFocusedClient) {
+    return (
+      <AircraftMarker
+        key={this.callsign}
+        client={this}
+        isFocusedClient={isFocusedClient}
+        setFocusedClient={setFocusedClient}
+      />
+    );
   }
 
   checkAircraftType(list) {

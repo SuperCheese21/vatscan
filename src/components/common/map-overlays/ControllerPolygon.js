@@ -29,5 +29,5 @@ ControllerPolygon.propTypes = {
 };
 
 ControllerPolygon.defaultProps = {
-  isFocusedClient: false,
+  isFocusedClient: true,
 };
