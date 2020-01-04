@@ -1,4 +1,35 @@
 import { EARTH_RADIUS_M, EARTH_RADIUS_NM } from '../config/constants.json';
+import airportCoords from '../data/airportCoords.json';
+import airportNames from '../data/airportNames.json';
+
+/**
+ * [formatCoords description]
+ * @param  {[type]} coordsArray [description]
+ * @return {[type]}             [description]
+ */
+export function getAirportCoords(icao) {
+  const coords = airportCoords[icao];
+  if (coords) {
+    return {
+      latitude: coords[0],
+      longitude: coords[1],
+    };
+  }
+  return null;
+}
+
+export function getCityName(icao) {
+  const names = airportNames[icao];
+  if (names) {
+    const [city, country, region] = names;
+    const regionArray = region.split('-');
+    if (['US', 'CA'].includes(regionArray[0])) {
+      return `${city}, ${regionArray[1]}`;
+    }
+    return `${city}, ${country}`;
+  }
+  return 'Unknown';
+}
 
 /**
  * Selects a random element in an array and returns it

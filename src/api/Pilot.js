@@ -1,11 +1,9 @@
 import moment from 'moment';
 
 import Client from './Client';
-import { getGCDistance } from './util';
+import { getAirportCoords, getCityName, getGCDistance } from './util';
 
 import constants from '../config/constants.json';
-import airportCoords from '../data/airportCoords.json';
-import airportNames from '../data/airportNames.json';
 import GA_ICON from '../../assets/icons/ga.png';
 import NARROWBODY_ICON from '../../assets/icons/narrowbody.png';
 import WIDEBODY_ICON from '../../assets/icons/widebody.png';
@@ -80,11 +78,11 @@ export default class Pilot extends Client {
   }
 
   get depCoords() {
-    return airportCoords[this.depAirport];
+    return getAirportCoords(this.depAirport);
   }
 
   get arrCoords() {
-    return airportCoords[this.arrAirport];
+    return getAirportCoords(this.arrAirport);
   }
 
   get distFlown() {
@@ -100,27 +98,11 @@ export default class Pilot extends Client {
   }
 
   get depCityName() {
-    const names = airportNames[this.depAirport];
-    if (names) {
-      const region = names.region.split('-');
-      if (region[0] === 'US') {
-        return `${names.city}, ${region[1]}`;
-      }
-      return `${names.city}, ${names.country}`;
-    }
-    return 'Unknown';
+    return getCityName(this.depAirport);
   }
 
   get arrCityName() {
-    const names = airportNames[this.arrAirport];
-    if (names) {
-      const region = names.region.split('-');
-      if (region[0] === 'US') {
-        return `${names.city}, ${region[1]}`;
-      }
-      return `${names.city}, ${names.country}`;
-    }
-    return 'Unknown';
+    return getCityName(this.arrAirport);
   }
 
   get plannedDepTime() {
