@@ -1,4 +1,35 @@
-import constants from '../config/constants.json';
+import { EARTH_RADIUS_M, EARTH_RADIUS_NM } from '../config/constants.json';
+import airportCoords from '../data/airportCoords.json';
+import airportNames from '../data/airportNames.json';
+
+/**
+ * [formatCoords description]
+ * @param  {[type]} coordsArray [description]
+ * @return {[type]}             [description]
+ */
+export function getAirportCoords(icao) {
+  const coords = airportCoords[icao];
+  if (coords) {
+    return {
+      latitude: coords[0],
+      longitude: coords[1],
+    };
+  }
+  return null;
+}
+
+export function getCityName(icao) {
+  const names = airportNames[icao];
+  if (names) {
+    const [city, country, region] = names;
+    const regionArray = region.split('-');
+    if (['US', 'CA'].includes(regionArray[0])) {
+      return `${city}, ${regionArray[1]}`;
+    }
+    return `${city}, ${country}`;
+  }
+  return 'Unknown';
+}
 
 /**
  * Selects a random element in an array and returns it
@@ -40,7 +71,7 @@ export function getProjectedCoords(loc1, distance, bearing) {
   const lon1 = toRadians(loc1.longitude);
   const brng = toRadians(bearing);
 
-  const arcLength = distance / constants.EARTH_RADIUS_M;
+  const arcLength = distance / EARTH_RADIUS_M;
 
   const lat2 = Math.asin(
     Math.sin(lat1) * Math.cos(arcLength) +
@@ -81,7 +112,7 @@ export function getGCDistance(loc1, loc2) {
         Math.sin(deltaLon / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-    return Math.round(c * constants.EARTH_RADIUS_NM);
+    return Math.round(c * EARTH_RADIUS_NM);
   }
   return -1;
 }

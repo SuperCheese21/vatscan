@@ -5,7 +5,6 @@ import { View } from 'react-native';
 import StatsContainer from './StatsContainer';
 
 import Map from '../common/Map';
-import { FlightPath } from '../common/map-overlays/MapOverlays';
 import AircraftMarker from '../common/map-overlays/AircraftMarker';
 import StatsLabel from '../common/StatsLabel';
 import StatsRow from '../common/StatsRow';
@@ -51,9 +50,7 @@ const FlightStatsContainer = ({ client }) => (
         longitudeDelta: 5,
       }}
     >
-      <AircraftMarker client={client} selected={false} />
-
-      <FlightPath client={client} />
+      {client.getMapOverlay()}
     </Map>
   </StatsContainer>
 );

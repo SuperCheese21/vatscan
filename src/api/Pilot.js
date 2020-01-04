@@ -1,11 +1,11 @@
 import moment from 'moment';
+import React from 'react';
 
 import Client from './Client';
-import { getGCDistance } from './util';
+import { getAirportCoords, getCityName, getGCDistance } from './util';
 
 import constants from '../config/constants.json';
-import airportCoords from '../data/airportCoords.json';
-import airportNames from '../data/airportNames.json';
+import AircraftMarker from '../components/common/map-overlays/AircraftMarker';
 import GA_ICON from '../../assets/icons/ga.png';
 import NARROWBODY_ICON from '../../assets/icons/narrowbody.png';
 import WIDEBODY_ICON from '../../assets/icons/widebody.png';
@@ -30,7 +30,26 @@ export default class Pilot extends Client {
     this.heading = parseFloat(data[38]);
   }
 
-  getAircraftType() {
+  getMapOverlay(isFocusedClient, setFocusedClient) {
+    return (
+      <AircraftMarker
+        key={this.callsign}
+        client={this}
+        isFocusedClient={isFocusedClient}
+        setFocusedClient={setFocusedClient}
+      />
+    );
+  }
+
+  checkAircraftType(list) {
+    if (list.find(aircraft => this.aircraft.includes(aircraft))) {
+      return true;
+    }
+
+    return false;
+  }
+
+  get aircraftType() {
     const widebody = constants.aircraft.WIDEBODY;
     const narrowbody = constants.aircraft.NARROWBODY;
 
@@ -45,15 +64,7 @@ export default class Pilot extends Client {
     return 0;
   }
 
-  checkAircraftType(list) {
-    if (list.find(aircraft => this.aircraft.includes(aircraft))) {
-      return true;
-    }
-
-    return false;
-  }
-
-  getETEMinutes() {
+  get eteMinutes() {
     if (this.distRemaining && this.groundSpeed > 0) {
       if (this.distRemaining <= 2 && this.groundSpeed < 40) {
         return 0;
@@ -66,13 +77,13 @@ export default class Pilot extends Client {
   }
 
   get aircraftIcon() {
-    const type = this.getAircraftType();
+    const aircraftType = this.aircraftType;
 
-    if (type === 2) {
+    if (aircraftType === 2) {
       return WIDEBODY_ICON;
     }
 
-    if (type === 1) {
+    if (aircraftType === 1) {
       return NARROWBODY_ICON;
     }
 
@@ -80,11 +91,11 @@ export default class Pilot extends Client {
   }
 
   get depCoords() {
-    return airportCoords[this.depAirport];
+    return getAirportCoords(this.depAirport);
   }
 
   get arrCoords() {
-    return airportCoords[this.arrAirport];
+    return getAirportCoords(this.arrAirport);
   }
 
   get distFlown() {
@@ -100,27 +111,11 @@ export default class Pilot extends Client {
   }
 
   get depCityName() {
-    const names = airportNames[this.depAirport];
-    if (names) {
-      const region = names.region.split('-');
-      if (region[0] === 'US') {
-        return `${names.city}, ${region[1]}`;
-      }
-      return `${names.city}, ${names.country}`;
-    }
-    return 'Unknown';
+    return getCityName(this.depAirport);
   }
 
   get arrCityName() {
-    const names = airportNames[this.arrAirport];
-    if (names) {
-      const region = names.region.split('-');
-      if (region[0] === 'US') {
-        return `${names.city}, ${region[1]}`;
-      }
-      return `${names.city}, ${names.country}`;
-    }
-    return 'Unknown';
+    return getCityName(this.arrAirport);
   }
 
   get plannedDepTime() {
@@ -144,16 +139,16 @@ export default class Pilot extends Client {
   }
 
   get ete() {
-    const eteMinutes = this.getETEMinutes();
-    if (eteMinutes) {
+    const eteMinutes = this.eteMinutes;
+    if (eteMinutes > 0) {
       return moment.utc(eteMinutes * 60000).format('H:mm');
     }
     return null;
   }
 
   get eta() {
-    const eteMinutes = this.getETEMinutes();
-    if (eteMinutes) {
+    const eteMinutes = this.eteMinutes;
+    if (eteMinutes > 0) {
       return moment
         .utc()
         .add(eteMinutes, 'm')

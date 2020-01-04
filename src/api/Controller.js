@@ -1,6 +1,9 @@
+import React from 'react';
+
 import Client from './Client';
 import { getProjectedCoords } from './util';
 
+import ControllerPolygon from '../components/common/map-overlays/ControllerPolygon';
 import { mapOverlays as colors } from '../config/colors.json';
 import {
   mapOverlays as constants,
@@ -21,37 +24,59 @@ export default class Controller extends Client {
         latitude: parseFloat(coords[1]),
         longitude: parseFloat(coords[0]),
       }));
-    } else {
+    } else if (constants[controllerType]) {
       this.polygon = [];
       for (let i = 0; i < NUM_SIDES_CIRCLE; i += 1) {
         const bearing = (360 / NUM_SIDES_CIRCLE) * i;
         this.polygon.push(
-          getProjectedCoords(this.location, this.radius, bearing),
+          getProjectedCoords(this.location, this.radiusM, bearing),
         );
       }
     }
   }
 
+  getMapOverlay(isFocusedClient, setFocusedClient) {
+    if (this.polygon) {
+      return (
+        <ControllerPolygon
+          key={this.callsign}
+          client={this}
+          isFocusedClient={isFocusedClient}
+          setFocusedClient={setFocusedClient}
+        />
+      );
+    }
+    return null;
+  }
+
   get typeString() {
     switch (this.controllerType) {
+      case 'ATIS':
+        return 'ATIS';
+      case 'DEL':
+        return 'Delivery';
+      case 'GND':
+        return 'Ground';
+      case 'TWR':
+        return 'Tower';
+      case 'DEP':
+        return 'Departure';
       case 'CTR':
       case 'FSS':
         return 'Center';
       case 'APP':
         return 'Approach';
-      case 'DEP':
-        return 'Departure';
-      case 'TWR':
-        return 'Tower';
-      case 'GND':
-        return 'Ground';
+      case 'OBS':
+        return 'Observer';
+      case 'SUP':
+        return 'Supervisor';
       default:
         return 'N/A';
     }
   }
 
-  get radius() {
-    return constants[this.controllerType].radius;
+  get radiusM() {
+    return constants[this.controllerType].radiusM;
   }
 
   get strokeColor() {

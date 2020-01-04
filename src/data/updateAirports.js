@@ -20,17 +20,9 @@ function parseData(csv) {
 
     console.error(' Parsing ' + airport[1]);
 
-    airportCoords[airport[1]] = {
-      latitude: Number(airport[4]),
-      longitude: Number(airport[5])
-    };
+    airportCoords[airport[1]] = [Number(airport[4]), Number(airport[5])];
 
-    airportNames[airport[1]] = {
-      airport: airport[3],
-      city: airport[10],
-      country: airport[8],
-      region: airport[9]
-    };
+    airportNames[airport[1]] = [airport[10], airport[8], airport[9]];
   });
 
   writeJson(JSON.stringify(airportCoords), './airportCoords.json');
