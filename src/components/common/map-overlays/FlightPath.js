@@ -4,9 +4,12 @@ import { Polyline } from 'react-native-maps';
 
 import colors from '../../../config/colors.json';
 
-const FlightPath = ({ client: { depCoords, location, arrCoords } }) => {
+const FlightPath = ({
+  client: { depCoords, location, arrCoords },
+  visible,
+}) => {
   // Render polylines only if airport coords are present
-  if (depCoords && location && arrCoords) {
+  if (visible && depCoords && location && arrCoords) {
     const { lineFlown, lineRemaining } = colors.mapOverlays;
     return (
       <>
@@ -34,6 +37,11 @@ const FlightPath = ({ client: { depCoords, location, arrCoords } }) => {
 
 FlightPath.propTypes = {
   client: PropTypes.object.isRequired,
+  visible: PropTypes.bool,
+};
+
+FlightPath.defaultProps = {
+  visible: true,
 };
 
 export default FlightPath;

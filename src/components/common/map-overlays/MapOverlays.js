@@ -13,7 +13,7 @@ const MapOverlays = ({ clients, focusedClient, setFocusedClient }) => (
           <AircraftMarker
             key={client.callsign}
             client={client}
-            selected={isFocusedClient}
+            isFocusedClient={isFocusedClient}
             setFocusedClient={setFocusedClient}
           />
         );
@@ -23,7 +23,7 @@ const MapOverlays = ({ clients, focusedClient, setFocusedClient }) => (
           <ControllerPolygon
             key={client.callsign}
             client={client}
-            selected={isFocusedClient}
+            isFocusedClient={isFocusedClient}
             setFocusedClient={setFocusedClient}
           />
         );

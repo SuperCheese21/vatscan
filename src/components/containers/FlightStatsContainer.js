@@ -6,7 +6,6 @@ import StatsContainer from './StatsContainer';
 
 import Map from '../common/Map';
 import AircraftMarker from '../common/map-overlays/AircraftMarker';
-import FlightPath from '../common/map-overlays/FlightPath';
 import StatsLabel from '../common/StatsLabel';
 import StatsRow from '../common/StatsRow';
 
@@ -51,9 +50,7 @@ const FlightStatsContainer = ({ client }) => (
         longitudeDelta: 5,
       }}
     >
-      <AircraftMarker client={client} selected={false} />
-
-      <FlightPath client={client} />
+      <AircraftMarker client={client} selected />
     </Map>
   </StatsContainer>
 );

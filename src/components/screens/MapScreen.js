@@ -4,7 +4,6 @@ import { BackHandler, StyleSheet, View } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
 
 import Map from '../common/Map';
-import FlightPath from '../common/map-overlays/FlightPath';
 import MapOverlays from '../common/map-overlays/MapOverlays';
 import Text from '../common/Text';
 import InfoPanelContainer from '../containers/InfoPanelContainer';
@@ -48,7 +47,6 @@ export default class MapScreen extends PureComponent {
             focusedClient={screenProps.focusedClient}
             setFocusedClient={screenProps.setFocusedClient}
           />
-          <FlightPath client={screenProps.focusedClient} />
         </Map>
         <ActivityIndicator
           color={accentColor}

@@ -6,17 +6,16 @@ import MapOverlay from './MapOverlay';
 
 export default class ControllerPolygon extends MapOverlay {
   render() {
-    const {
-      client: { fillColor, fillColorSelected, polygon, strokeColor, zIndex },
-      selected,
-    } = this.props;
+    const { client, isFocusedClient } = this.props;
     return (
       <Polygon
-        coordinates={polygon}
-        zIndex={zIndex}
-        strokeColor={strokeColor}
-        strokeWidth={selected ? 2 : 1}
-        fillColor={selected ? fillColorSelected : fillColor}
+        coordinates={client.polygon}
+        zIndex={client.zIndex}
+        strokeColor={client.strokeColor}
+        strokeWidth={isFocusedClient ? 2 : 1}
+        fillColor={
+          isFocusedClient ? client.fillColorSelected : client.fillColor
+        }
         onPress={this.onPress}
         tappable
       />
@@ -26,9 +25,9 @@ export default class ControllerPolygon extends MapOverlay {
 
 ControllerPolygon.propTypes = {
   client: PropTypes.object.isRequired,
-  selected: PropTypes.bool,
+  isFocusedClient: PropTypes.bool,
 };
 
 ControllerPolygon.defaultProps = {
-  selected: false,
+  isFocusedClient: false,
 };
