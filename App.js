@@ -19,6 +19,26 @@ export default class App extends PureComponent {
     loading: false,
     clients: [],
     focusedClient: {},
+    /* eslint-disable react/no-unused-state */
+    filters: {
+      clients: ['PILOT', 'ATC'],
+      controllers: [
+        'ATIS',
+        'DEL',
+        'GND',
+        'TWR',
+        'DEP',
+        'CTR',
+        'FSS',
+        'APP',
+        'OBS',
+        'SUP',
+      ],
+      aircraft: '',
+      airline: '',
+      airport: '',
+    },
+    /* eslint-enable react/no-unused-state */
     panelPosition: new Animated.Value(panelStates.COLLAPSED),
   };
 

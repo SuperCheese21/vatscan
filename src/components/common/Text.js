@@ -1,6 +1,7 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { Text } from 'react-native';
+
+import { childrenShape } from '../propTypeShapes';
 
 const CustomText = ({ children, style }) => (
   <Text
@@ -15,10 +16,7 @@ const CustomText = ({ children, style }) => (
 );
 
 CustomText.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.node,
-    PropTypes.arrayOf(PropTypes.node),
-  ]),
+  children: childrenShape,
   style: Text.propTypes.style,
 };
 

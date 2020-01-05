@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
-import { BackHandler, RefreshControl, ScrollView } from 'react-native';
+import { RefreshControl, ScrollView } from 'react-native';
+
+import ConfigScreen from './ConfigScreen';
 
 import ShareButton from '../common/ShareButton';
 import ClientStatsContainer from '../containers/ClientStatsContainer';
@@ -27,7 +29,6 @@ export default class ClientScreen extends PureComponent {
     if (focusedClient) {
       screenProps.setFocusedClient(focusedClient);
     }
-    BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
   }
 
   componentWillUnmount() {
@@ -35,31 +36,26 @@ export default class ClientScreen extends PureComponent {
     if (navigation.getParam('removeFocusedClient')) {
       screenProps.collapsePanel();
     }
-    BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
   }
 
-  handleBackPress = () => {
-    const { navigation } = this.props;
-    navigation.goBack();
-    return true;
-  };
-
   render() {
-    const { screenProps } = this.props;
+    const { navigation, screenProps } = this.props;
     return (
-      <ScrollView
-        style={{ flex: 1 }}
-        refreshControl={
-          <RefreshControl
-            refreshing={screenProps.loading}
-            onRefresh={screenProps.refresh}
-          />
-        }
-      >
-        <ClientStatsContainer client={screenProps.focusedClient} />
+      <ConfigScreen navigation={navigation}>
+        <ScrollView
+          style={{ flex: 1 }}
+          refreshControl={
+            <RefreshControl
+              refreshing={screenProps.loading}
+              onRefresh={screenProps.refresh}
+            />
+          }
+        >
+          <ClientStatsContainer client={screenProps.focusedClient} />
 
-        <Stats client={screenProps.focusedClient} />
-      </ScrollView>
+          <Stats client={screenProps.focusedClient} />
+        </ScrollView>
+      </ConfigScreen>
     );
   }
 }
