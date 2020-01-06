@@ -19,7 +19,6 @@ export default class App extends PureComponent {
     loading: false,
     clients: [],
     focusedClient: {},
-    /* eslint-disable react/no-unused-state */
     filters: {
       clients: ['PILOT', 'ATC'],
       controllers: [
@@ -38,7 +37,6 @@ export default class App extends PureComponent {
       airline: '',
       airport: '',
     },
-    /* eslint-enable react/no-unused-state */
     panelPosition: new Animated.Value(panelStates.COLLAPSED),
   };
 
@@ -54,12 +52,23 @@ export default class App extends PureComponent {
     this.unsubscribe();
   }
 
+  getFilteredClients = () => {
+    const { clients, filters } = this.state;
+    return clients.filter(
+      client =>
+        filters.clients.includes(client.type) &&
+        (client.type !== 'ATC' ||
+          filters.controllers.includes(client.controllerType)) &&
+        (client.type !== 'PILOT' ||
+          (client.aircraft.includes(filters.aircraft) &&
+            client.callsign.includes(filters.airline) &&
+            (client.depAirport.includes(filters.airport) ||
+              client.arrAirport.includes(filters.airport)))),
+    );
+  };
+
   setFocusedClient = client => {
-    if (client.type === 'PILOT') {
-      this.setPanelPosition(panelStates.EXPANDED_PILOT);
-    } else if (client.type === 'ATC') {
-      this.setPanelPosition(panelStates.EXPANDED_ATC);
-    }
+    this.setPanelPosition(panelStates[`EXPANDED_${client.type}`]);
     this.setState({ focusedClient: client });
   };
 
@@ -137,13 +146,9 @@ export default class App extends PureComponent {
   }
 
   render() {
-    const {
-      fontsLoaded,
-      loading,
-      clients,
-      focusedClient,
-      panelPosition,
-    } = this.state;
+    const { fontsLoaded, loading, focusedClient, panelPosition } = this.state;
+
+    const clients = this.getFilteredClients();
 
     // Show app loading screen if font is still being loaded
     if (!fontsLoaded) {
