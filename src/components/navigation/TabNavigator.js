@@ -28,16 +28,16 @@ class TabNavigatorContainer extends PureComponent {
   });
 
   render() {
-    const { screenProps, navigation } = this.props;
+    const { navigation, screenProps } = this.props;
     return (
       <TabNavigator
         screenProps={{
           stackNavigation: navigation,
-          loading: screenProps.loading,
-          clients: screenProps.clients,
+          isLoading: screenProps.isLoading,
+          filteredClients: screenProps.filteredClients,
           focusedClient: screenProps.focusedClient,
           panelPosition: screenProps.panelPosition,
-          refresh: screenProps.refresh,
+          updateData: screenProps.updateData,
           setFocusedClient: screenProps.setFocusedClient,
           collapsePanel: screenProps.collapsePanel,
         }}

@@ -13,11 +13,13 @@ export const navigationShape = PropTypes.shape({
 
 export const screenPropsShape = PropTypes.shape({
   stackNavigation: navigationShape,
-  loading: PropTypes.bool.isRequired,
-  clients: PropTypes.array.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  filters: PropTypes.object,
+  filteredClients: PropTypes.array.isRequired,
   focusedClient: PropTypes.object.isRequired,
   panelPosition: PropTypes.instanceOf(Animated.Value).isRequired,
-  refresh: PropTypes.func.isRequired,
+  updateData: PropTypes.func.isRequired,
+  setFilters: PropTypes.func,
   setFocusedClient: PropTypes.func.isRequired,
   collapsePanel: PropTypes.func.isRequired,
 });

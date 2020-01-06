@@ -23,7 +23,7 @@ export default class ClientScreen extends PureComponent {
   componentDidMount() {
     const { navigation, screenProps } = this.props;
     const callsign = navigation.getParam('callsign');
-    const focusedClient = screenProps.clients.find(
+    const focusedClient = screenProps.filteredClients.find(
       client => client.callsign === callsign,
     );
     if (focusedClient) {
@@ -39,21 +39,21 @@ export default class ClientScreen extends PureComponent {
   }
 
   render() {
-    const { navigation, screenProps } = this.props;
+    const {
+      navigation,
+      screenProps: { isLoading, focusedClient, updateData },
+    } = this.props;
     return (
       <ConfigScreen navigation={navigation}>
         <ScrollView
           style={{ flex: 1 }}
           refreshControl={
-            <RefreshControl
-              refreshing={screenProps.loading}
-              onRefresh={screenProps.refresh}
-            />
+            <RefreshControl refreshing={isLoading} onRefresh={updateData} />
           }
         >
-          <ClientStatsContainer client={screenProps.focusedClient} />
+          <ClientStatsContainer client={focusedClient} />
 
-          <Stats client={screenProps.focusedClient} />
+          <Stats client={focusedClient} />
         </ScrollView>
       </ConfigScreen>
     );

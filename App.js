@@ -16,7 +16,7 @@ export default class App extends PureComponent {
   // Initialize component state and fetch manager
   state = {
     fontsLoaded: false,
-    loading: false,
+    isLoading: false,
     clients: [],
     focusedClient: {},
     filters: {
@@ -67,9 +67,13 @@ export default class App extends PureComponent {
     );
   };
 
-  setFocusedClient = client => {
-    this.setPanelPosition(panelStates[`EXPANDED_${client.type}`]);
-    this.setState({ focusedClient: client });
+  setFilters = filters => {
+    this.setState({ filters });
+  };
+
+  setFocusedClient = focusedClient => {
+    this.setPanelPosition(panelStates[`EXPANDED_${focusedClient.type}`]);
+    this.setState({ focusedClient });
   };
 
   setPanelPosition(position) {
@@ -93,12 +97,12 @@ export default class App extends PureComponent {
   };
 
   updateData = async isInitialFetch => {
-    this.setState({ loading: true });
+    this.setState({ isLoading: true });
 
     // Check internet connection and alert if there is no connection
     const connectionInfo = await NetInfo.fetch();
     if (connectionInfo.type === 'none' || connectionInfo.type === 'unknown') {
-      this.setState({ loading: false });
+      this.setState({ isLoading: false });
       Alert.alert(
         'No internet connection',
         'Connect to the internet to update data',
@@ -139,16 +143,22 @@ export default class App extends PureComponent {
 
     // Update state with new data
     this.setState({
-      loading: false,
+      isLoading: false,
       clients,
       focusedClient,
     });
   }
 
   render() {
-    const { fontsLoaded, loading, focusedClient, panelPosition } = this.state;
+    const {
+      filters,
+      fontsLoaded,
+      isLoading,
+      focusedClient,
+      panelPosition,
+    } = this.state;
 
-    const clients = this.getFilteredClients();
+    const filteredClients = this.getFilteredClients();
 
     // Show app loading screen if font is still being loaded
     if (!fontsLoaded) {
@@ -166,11 +176,13 @@ export default class App extends PureComponent {
       <StackNavigator
         uriPrefix={Linking.makeUrl('/')}
         screenProps={{
-          loading,
-          clients,
+          isLoading,
+          filters,
+          filteredClients,
           focusedClient,
           panelPosition,
-          refresh: this.updateData,
+          updateData: this.updateData,
+          setFilters: this.setFilters,
           setFocusedClient: this.setFocusedClient,
           collapsePanel: this.collapsePanel,
         }}

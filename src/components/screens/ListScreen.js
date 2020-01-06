@@ -16,7 +16,7 @@ export default class ListScreen extends PureComponent {
     const { screenProps } = this.props;
     const { query: oldQuery } = this.state;
     const query = oldQuery.toLowerCase();
-    return screenProps.clients.filter(
+    return screenProps.filteredClients.filter(
       client =>
         client.name.toLowerCase().includes(query) ||
         client.callsign.toLowerCase().includes(query) ||
@@ -49,7 +49,9 @@ export default class ListScreen extends PureComponent {
   };
 
   render() {
-    const { screenProps } = this.props;
+    const {
+      screenProps: { isLoading, updateData },
+    } = this.props;
     const { query } = this.state;
     return (
       <View style={styles.listContainer}>
@@ -62,8 +64,8 @@ export default class ListScreen extends PureComponent {
         <FlatList
           data={this.getFilteredClients()}
           keyExtractor={this.keyExtractor}
-          refreshing={screenProps.loading}
-          onRefresh={screenProps.refresh}
+          refreshing={isLoading}
+          onRefresh={updateData}
           renderItem={this.renderItem}
           ListEmptyComponent={
             <View style={{ flex: 1 }}>
