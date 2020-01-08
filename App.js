@@ -7,6 +7,7 @@ import NetInfo from '@react-native-community/netinfo';
 import FetchManager from './src/api/FetchManager';
 import StackNavigator from './src/components/navigation/StackNavigator';
 import {
+  controllerTypes,
   panelStates,
   panelTransitionDuration,
   UPDATE_INTERVAL,
@@ -20,19 +21,13 @@ export default class App extends PureComponent {
     clients: [],
     focusedClient: {},
     filters: {
-      clients: ['PILOT', 'ATC'],
-      controllers: [
-        'ATIS',
-        'DEL',
-        'GND',
-        'TWR',
-        'DEP',
-        'CTR',
-        'FSS',
-        'APP',
-        'OBS',
-        'SUP',
-      ],
+      clientTypes: {
+        PILOT: true,
+        ATC: true,
+      },
+      controllerTypes: Object.fromEntries(
+        Object.keys(controllerTypes).map(key => [key, true]),
+      ),
       aircraft: '',
       airline: '',
       airport: '',
@@ -52,24 +47,21 @@ export default class App extends PureComponent {
     this.unsubscribe();
   }
 
+  // TODO: Rewrite filtering function
   getFilteredClients = () => {
-    const { clients, filters } = this.state;
-    return clients.filter(
-      client =>
-        filters.clients.includes(client.type) &&
-        (client.type !== 'ATC' ||
-          filters.controllers.includes(client.controllerType)) &&
-        (client.type !== 'PILOT' ||
-          (client.aircraft.includes(filters.aircraft) &&
-            client.callsign.includes(filters.airline) &&
-            (client.depAirport.includes(filters.airport) ||
-              client.arrAirport.includes(filters.airport)))),
-    );
+    const { clients } = this.state;
+    return clients.filter(() => {
+      return true;
+    });
   };
 
-  setFilters = filters => {
-    this.setState({ filters });
-  };
+  setFilters = newFilters =>
+    this.setState(({ filters: oldFilters }) => ({
+      filters: {
+        ...oldFilters,
+        ...newFilters,
+      },
+    }));
 
   setFocusedClient = focusedClient => {
     this.setPanelPosition(panelStates[`EXPANDED_${focusedClient.type}`]);

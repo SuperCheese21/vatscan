@@ -84,6 +84,82 @@
     "latitudeDelta": 60,
     "longitudeDelta": 30
   },
+  "controllerTypes": {
+    "ATIS": {
+      "typesList": ["ATIS"],
+      "fullName": "ATIS",
+      "polygon": {}
+    },
+    "DEL": {
+      "typesList": ["DEL"],
+      "fullName": "Delivery",
+      "polygon": {}
+    },
+    "GND": {
+      "typesList": ["GND"],
+      "fullName": "Ground",
+      "polygon": {
+        "radiusM": 2778,
+        "zIndex": 3,
+        "colors": {
+          "fill": "rgba(0, 255, 0, 0.3)",
+          "fillSelected": "rgba(127, 255, 127, 0.3)",
+          "stroke": "rgba(0, 255, 0, 0.8)"
+        }
+      }
+    },
+    "TWR": {
+      "typesList": ["TWR"],
+      "fullName": "Tower",
+      "polygon": {
+        "radiusM": 16668,
+        "zIndex": 2,
+        "colors": {
+          "fill": "rgba(255, 165, 0, 0.25)",
+          "fillSelected": "rgba(255, 210, 127, 0.25)",
+          "stroke": "rgba(255, 165, 0, 0.7)"
+        }
+      }
+    },
+    "APP": {
+      "typesList": ["DEP", "APP"],
+      "fullName": "Approach",
+      "polygon": {
+        "radiusM": 55560,
+        "zIndex": 1,
+        "colors": {
+          "fill": "rgba(255, 0, 0, 0.15)",
+          "fillSelected": "rgba(255, 127, 127, 0.15)",
+          "stroke": "rgba(255, 0, 0, 0.6)"
+        }
+      }
+    },
+    "CTR": {
+      "typesList": ["CTR", "FSS"],
+      "fullName": "Center",
+      "polygon": {
+        "radiusM": 370400,
+        "zIndex": 0,
+        "colors": {
+          "fill": "rgba(0, 0, 255, 0.1)",
+          "fillSelected": "rgba(127, 127, 255, 0.1)",
+          "stroke": "rgba(0, 0, 255, 0.5)"
+        }
+      }
+    },
+    "OBS": {
+      "typesList": ["OBS"],
+      "fullName": "Observer"
+    },
+    "SUP": {
+      "typesList": ["SUP"],
+      "fullName": "Supervisor"
+    },
+    "Other": {
+      "typesList": [],
+      "fullName": "Other"
+    }
+  },
   "defaultPanelPosition": -154,
   "panelStates": {
     "EXPANDED_PILOT": -154,
@@ -91,31 +167,5 @@
     "COLLAPSED": 0
   },
   "panelTransitionDuration": 350,
-  "mapOverlays": {
-    "CTR": {
-      "radiusM": 370400,
-      "zIndex": 0
-    },
-    "FSS": {
-      "radiusM": 370400,
-      "zIndex": 0
-    },
-    "APP": {
-      "radiusM": 55560,
-      "zIndex": 1
-    },
-    "DEP": {
-      "radiusM": 55560,
-      "zIndex": 1
-    },
-    "TWR": {
-      "radiusM": 16668,
-      "zIndex": 2
-    },
-    "GND": {
-      "radiusM": 2778,
-      "zIndex": 3
-    }
-  },
   "NUM_SIDES_CIRCLE": 36
 }
