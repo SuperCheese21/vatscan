@@ -11,32 +11,44 @@ export default class Controller extends Client {
     super(data);
 
     this.controllerType = controllerType || 'Other';
-    this.controllerInfo = controllerTypes[this.controllerType];
-
     this.frequency = data[4];
     this.facilityType = data[18];
     this.atisMessage = data[35];
 
-    const polygon = this.controllerInfo.polygon;
+    const controllerInfo = controllerTypes[this.controllerType];
 
-    if (center) {
-      this.polygon = center.geometry.coordinates[0].map(coords => ({
-        latitude: parseFloat(coords[1]),
-        longitude: parseFloat(coords[0]),
-      }));
-    } else if (polygon) {
-      this.polygon = [];
-      for (let i = 0; i < NUM_SIDES_CIRCLE; i += 1) {
-        const bearing = (360 / NUM_SIDES_CIRCLE) * i;
-        this.polygon.push(
-          getProjectedCoords(this.location, polygon.radiusM, bearing),
-        );
+    this.fullName = controllerInfo.fullName;
+    this.polygonInfo = controllerInfo.polygon;
+
+    // Set polygon coords if polygon info is defined
+    if (this.polygonInfo) {
+      // Use ARTCC boundaries given by external API
+      if (center) {
+        this.polygonCoords = center.geometry.coordinates[0].map(coords => ({
+          latitude: parseFloat(coords[1]),
+          longitude: parseFloat(coords[0]),
+        }));
+      }
+
+      // Otherwise render circle
+      else {
+        this.polygonCoords = [];
+        for (let i = 0; i < NUM_SIDES_CIRCLE; i += 1) {
+          const bearing = (360 / NUM_SIDES_CIRCLE) * i;
+          this.polygonCoords.push(
+            getProjectedCoords(
+              this.location,
+              this.polygonInfo.radiusM,
+              bearing,
+            ),
+          );
+        }
       }
     }
   }
 
   getMapOverlay(isFocusedClient, setFocusedClient) {
-    if (this.polygon) {
+    if (this.polygonInfo) {
       return (
         <ControllerPolygon
           key={this.callsign}

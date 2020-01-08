@@ -87,13 +87,11 @@
   "controllerTypes": {
     "ATIS": {
       "typesList": ["ATIS"],
-      "fullName": "ATIS",
-      "polygon": {}
+      "fullName": "ATIS"
     },
     "DEL": {
       "typesList": ["DEL"],
-      "fullName": "Delivery",
-      "polygon": {}
+      "fullName": "Delivery"
     },
     "GND": {
       "typesList": ["GND"],
