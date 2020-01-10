@@ -33,6 +33,7 @@ export default class App extends PureComponent {
       airport: '',
     },
     panelPosition: new Animated.Value(panelStates.COLLAPSED),
+    panelPositionValue: panelStates.COLLAPSED,
   };
 
   fetchManager = new FetchManager();
@@ -79,14 +80,15 @@ export default class App extends PureComponent {
     this.setState({ focusedClient });
   };
 
-  setPanelPosition(position) {
+  setPanelPosition(newPosition) {
     // Animate info panel position change
     const { panelPosition } = this.state;
     Animated.timing(panelPosition, {
-      toValue: position,
+      toValue: newPosition,
       duration: panelTransitionDuration,
       useNativeDriver: true,
     }).start();
+    this.setState({ panelPositionValue: newPosition });
   }
 
   loadFonts = async () => {
@@ -129,6 +131,13 @@ export default class App extends PureComponent {
   };
 
   collapsePanel = () => {
+    const { panelPositionValue } = this.state;
+
+    // Check if panel is collapsed, exit app if it is
+    if (panelPositionValue === panelStates.COLLAPSED) {
+      return false;
+    }
+
     // Collapse panel and remove focused client
     this.setPanelPosition(panelStates.COLLAPSED);
     this.setState({ focusedClient: {} });
