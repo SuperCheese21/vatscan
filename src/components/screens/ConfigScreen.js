@@ -25,10 +25,6 @@ export default class ConfigScreen extends PureComponent {
 }
 
 ConfigScreen.propTypes = {
-  children: childrenShape,
+  children: childrenShape.isRequired,
   navigation: navigationShape.isRequired,
-};
-
-ConfigScreen.defaultProps = {
-  children: null,
 };

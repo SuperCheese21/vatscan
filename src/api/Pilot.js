@@ -14,7 +14,7 @@ export default class Pilot extends Client {
   constructor(data) {
     super(data);
     this.altitude = data[7];
-    this.groundSpeed = parseInt(data[8], 10);
+    this.groundSpeed = parseInt(data[8], 10) || 0;
     this.aircraft = data[9];
     this.tasCruise = data[10];
     this.depAirport = data[11];
@@ -23,11 +23,11 @@ export default class Pilot extends Client {
     this.transponder = data[17];
     this.flightType = data[21];
     this.depTime = data[22];
-    this.hrsEnRoute = parseInt(data[24], 10);
-    this.minEnRoute = parseInt(data[25], 10);
+    this.hrsEnRoute = parseInt(data[24], 10) || 0;
+    this.minEnRoute = parseInt(data[25], 10) || 0;
     this.remarks = data[29];
     this.route = data[30];
-    this.heading = parseFloat(data[38]);
+    this.heading = parseFloat(data[38]) || 0;
   }
 
   getMapOverlay(isFocusedClient, setFocusedClient) {

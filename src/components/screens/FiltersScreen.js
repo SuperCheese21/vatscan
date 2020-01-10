@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
-import { View } from 'react-native';
 
 import ConfigScreen from './ConfigScreen';
 
+import ChipRow from '../common/ChipRow';
 import { navigationShape, screenPropsShape } from '../propTypeShapes';
 
 export default class FiltersScreen extends PureComponent {
@@ -13,12 +13,23 @@ export default class FiltersScreen extends PureComponent {
   render() {
     const {
       navigation,
-      screenProps: { filters },
+      screenProps: { filters: currentFilters, setFilters },
     } = this.props;
-    console.log(filters);
+
     return (
       <ConfigScreen navigation={navigation}>
-        <View style={{ flex: 1 }} />
+        <ChipRow
+          label="Client Types"
+          currentFilters={currentFilters}
+          filterKey="clientTypes"
+          setFilters={setFilters}
+        />
+        <ChipRow
+          label="Controller Types"
+          currentFilters={currentFilters}
+          filterKey="controllerTypes"
+          setFilters={setFilters}
+        />
       </ConfigScreen>
     );
   }
