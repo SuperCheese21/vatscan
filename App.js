@@ -47,7 +47,6 @@ export default class App extends PureComponent {
     this.unsubscribe();
   }
 
-  // TODO: Rewrite filtering function
   getFilteredClients = () => {
     const { clients, filters } = this.state;
     return clients.filter(
@@ -138,10 +137,12 @@ export default class App extends PureComponent {
   };
 
   handleUpdatedData(clients) {
+    // Update all clients
     const {
       focusedClient: { callsign: focusedCallsign },
     } = this.state;
 
+    // Updated focused client
     const focusedClient =
       clients.find(client => client.callsign === focusedCallsign) || {};
 

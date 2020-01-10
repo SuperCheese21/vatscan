@@ -4,14 +4,7 @@ import { View } from 'react-native';
 import { Chip } from 'react-native-paper';
 
 const ChipRow = ({ filterKey, currentFilters, setFilters }) => (
-  <View
-    style={{
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'flex-start',
-      flexWrap: 'wrap',
-    }}
-  >
+  <View style={styles.chipContainer}>
     {Object.keys(currentFilters[filterKey]).map(type => {
       return (
         <Chip
@@ -26,12 +19,7 @@ const ChipRow = ({ filterKey, currentFilters, setFilters }) => (
             newFilters[filterKey][type] = !newFilters[filterKey][type];
             setFilters(newFilters);
           }}
-          style={{
-            marginRight: 8,
-            marginTop: 4,
-            marginBottom: 4,
-            padding: 3,
-          }}
+          style={styles.chip}
         >
           {type}
         </Chip>
@@ -44,6 +32,21 @@ ChipRow.propTypes = {
   filterKey: PropTypes.string.isRequired,
   currentFilters: PropTypes.object.isRequired,
   setFilters: PropTypes.func.isRequired,
+};
+
+const styles = {
+  chipContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    flexWrap: 'wrap',
+  },
+  chip: {
+    marginRight: 8,
+    marginTop: 4,
+    marginBottom: 4,
+    padding: 3,
+  },
 };
 
 export default ChipRow;
