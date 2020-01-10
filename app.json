@@ -5,7 +5,7 @@
     "slug": "vatscan",
     "privacy": "public",
     "sdkVersion": "36.0.0",
-    "version": "0.7.16",
+    "version": "0.7.17",
     "platforms": ["android"],
     "githubUrl": "https://github.com/SuperCheese21/vatscan",
     "primaryColor": "#1b252b",
