@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
-import { RefreshControl, ScrollView } from 'react-native';
 
 import ConfigScreen from './ConfigScreen';
 
@@ -44,17 +43,14 @@ export default class ClientScreen extends PureComponent {
       screenProps: { isLoading, focusedClient, updateData },
     } = this.props;
     return (
-      <ConfigScreen navigation={navigation}>
-        <ScrollView
-          style={{ flex: 1 }}
-          refreshControl={
-            <RefreshControl refreshing={isLoading} onRefresh={updateData} />
-          }
-        >
-          <ClientStatsContainer client={focusedClient} />
+      <ConfigScreen
+        navigation={navigation}
+        onRefresh={updateData}
+        refreshing={isLoading}
+      >
+        <ClientStatsContainer client={focusedClient} />
 
-          <Stats client={focusedClient} />
-        </ScrollView>
+        <Stats client={focusedClient} />
       </ConfigScreen>
     );
   }

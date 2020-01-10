@@ -1,5 +1,11 @@
+import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
-import { BackHandler, KeyboardAvoidingView, ScrollView } from 'react-native';
+import {
+  BackHandler,
+  KeyboardAvoidingView,
+  RefreshControl,
+  ScrollView,
+} from 'react-native';
 
 import { childrenShape, navigationShape } from '../propTypeShapes';
 
@@ -19,10 +25,18 @@ export default class ConfigScreen extends PureComponent {
   };
 
   render() {
-    const { children } = this.props;
+    const { children, onRefresh, refreshing } = this.props;
     return (
       <KeyboardAvoidingView>
-        <ScrollView>{children}</ScrollView>
+        <ScrollView
+          refreshControl={
+            onRefresh ? (
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            ) : null
+          }
+        >
+          {children}
+        </ScrollView>
       </KeyboardAvoidingView>
     );
   }
@@ -31,8 +45,12 @@ export default class ConfigScreen extends PureComponent {
 ConfigScreen.propTypes = {
   children: childrenShape,
   navigation: navigationShape.isRequired,
+  onRefresh: PropTypes.func,
+  refreshing: PropTypes.bool,
 };
 
 ConfigScreen.defaultProps = {
   children: null,
+  onRefresh: null,
+  refreshing: false,
 };
