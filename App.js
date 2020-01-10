@@ -7,6 +7,7 @@ import NetInfo from '@react-native-community/netinfo';
 import FetchManager from './src/api/FetchManager';
 import StackNavigator from './src/components/navigation/StackNavigator';
 import {
+  controllerTypes,
   panelStates,
   panelTransitionDuration,
   UPDATE_INTERVAL,
@@ -16,9 +17,21 @@ export default class App extends PureComponent {
   // Initialize component state and fetch manager
   state = {
     fontsLoaded: false,
-    loading: false,
+    isLoading: false,
     clients: [],
     focusedClient: {},
+    filters: {
+      clientTypes: {
+        PILOT: true,
+        ATC: true,
+      },
+      controllerTypes: Object.fromEntries(
+        Object.keys(controllerTypes).map(key => [key, true]),
+      ),
+      aircraft: '',
+      airline: '',
+      airport: '',
+    },
     panelPosition: new Animated.Value(panelStates.COLLAPSED),
   };
 
@@ -34,13 +47,37 @@ export default class App extends PureComponent {
     this.unsubscribe();
   }
 
-  setFocusedClient = client => {
-    if (client.type === 'PILOT') {
-      this.setPanelPosition(panelStates.EXPANDED_PILOT);
-    } else if (client.type === 'ATC') {
-      this.setPanelPosition(panelStates.EXPANDED_ATC);
-    }
-    this.setState({ focusedClient: client });
+  // TODO: Rewrite filtering function
+  getFilteredClients = () => {
+    const { clients, filters } = this.state;
+    return clients.filter(
+      client =>
+        Object.keys(filters.clientTypes)
+          .filter(key => filters.clientTypes[key])
+          .includes(client.type) &&
+        (client.type !== 'ATC' ||
+          Object.keys(filters.controllerTypes)
+            .filter(key => filters.controllerTypes[key])
+            .includes(client.controllerType)) &&
+        (client.type !== 'PILOT' ||
+          (client.aircraft.includes(filters.aircraft) &&
+            client.callsign.includes(filters.airline) &&
+            (client.depAirport.includes(filters.airport) ||
+              client.arrAirport.includes(filters.airport)))),
+    );
+  };
+
+  setFilters = newFilters =>
+    this.setState(({ filters: oldFilters }) => ({
+      filters: {
+        ...oldFilters,
+        ...newFilters,
+      },
+    }));
+
+  setFocusedClient = focusedClient => {
+    this.setPanelPosition(panelStates[`EXPANDED_${focusedClient.type}`]);
+    this.setState({ focusedClient });
   };
 
   setPanelPosition(position) {
@@ -64,12 +101,12 @@ export default class App extends PureComponent {
   };
 
   updateData = async isInitialFetch => {
-    this.setState({ loading: true });
+    this.setState({ isLoading: true });
 
     // Check internet connection and alert if there is no connection
     const connectionInfo = await NetInfo.fetch();
     if (connectionInfo.type === 'none' || connectionInfo.type === 'unknown') {
-      this.setState({ loading: false });
+      this.setState({ isLoading: false });
       Alert.alert(
         'No internet connection',
         'Connect to the internet to update data',
@@ -110,7 +147,7 @@ export default class App extends PureComponent {
 
     // Update state with new data
     this.setState({
-      loading: false,
+      isLoading: false,
       clients,
       focusedClient,
     });
@@ -118,12 +155,14 @@ export default class App extends PureComponent {
 
   render() {
     const {
+      filters,
       fontsLoaded,
-      loading,
-      clients,
+      isLoading,
       focusedClient,
       panelPosition,
     } = this.state;
+
+    const filteredClients = this.getFilteredClients();
 
     // Show app loading screen if font is still being loaded
     if (!fontsLoaded) {
@@ -141,11 +180,13 @@ export default class App extends PureComponent {
       <StackNavigator
         uriPrefix={Linking.makeUrl('/')}
         screenProps={{
-          loading,
-          clients,
+          isLoading,
+          filters,
+          filteredClients,
           focusedClient,
           panelPosition,
-          refresh: this.updateData,
+          updateData: this.updateData,
+          setFilters: this.setFilters,
           setFocusedClient: this.setFocusedClient,
           collapsePanel: this.collapsePanel,
         }}

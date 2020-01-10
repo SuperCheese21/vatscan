@@ -4,18 +4,23 @@ import { Polygon } from 'react-native-maps';
 
 import MapOverlay from './MapOverlay';
 
+// TODO: Use composition instead of inheritence
 export default class ControllerPolygon extends MapOverlay {
   render() {
-    const { client, isFocusedClient } = this.props;
+    const {
+      client: {
+        polygonCoords,
+        polygonInfo: { zIndex, colors },
+      },
+      isFocusedClient,
+    } = this.props;
     return (
       <Polygon
-        coordinates={client.polygon}
-        zIndex={client.zIndex}
-        strokeColor={client.strokeColor}
+        coordinates={polygonCoords}
+        zIndex={zIndex}
+        strokeColor={colors.stroke}
         strokeWidth={isFocusedClient ? 2 : 1}
-        fillColor={
-          isFocusedClient ? client.fillColorSelected : client.fillColor
-        }
+        fillColor={isFocusedClient ? colors.fillSelected : colors.fill}
         onPress={this.onPress}
         tappable
       />

@@ -39,30 +39,30 @@ export default class MapScreen extends PureComponent {
   render() {
     const {
       screenProps: {
-        clients,
+        stackNavigation,
+        isLoading,
+        filteredClients,
         focusedClient,
+        panelPosition,
         setFocusedClient,
         collapsePanel,
-        loading,
-        stackNavigation,
-        panelPosition,
       },
     } = this.props;
     return (
       <View style={{ flex: 1 }}>
         <Map style={{ flex: 1 }} onPress={collapsePanel}>
-          {clients.map(client => {
+          {filteredClients.map(client => {
             const isFocusedClient = focusedClient.callsign === client.callsign;
             return client.getMapOverlay(isFocusedClient, setFocusedClient);
           })}
         </Map>
         <ActivityIndicator
           color={accentColor}
-          animating={loading}
+          animating={isLoading}
           style={styles.activityIndicator}
         />
         <Text style={styles.clientCountText}>
-          {`Clients: ${clients.length}`}
+          {`Clients: ${filteredClients.length}`}
         </Text>
         <InfoPanelContainer
           stackNavigation={stackNavigation}

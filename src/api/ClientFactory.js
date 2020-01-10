@@ -1,6 +1,8 @@
 import Controller from './Controller';
 import Pilot from './Pilot';
 
+import { controllerTypes } from '../config/constants.json';
+
 export default class ClientFactory {
   constructor(centerData) {
     this.centerData = centerData;
@@ -21,29 +23,15 @@ export default class ClientFactory {
   }
 
   getController(clientArray) {
-    const controllerType = clientArray[0].split('_').pop();
-    const callsign = clientArray[0];
+    const type = clientArray[0].split('_').pop();
     const center = this.centerData.find(
-      c => c.properties.callsign === callsign,
+      c => c.properties.callsign === clientArray[0],
     );
 
-    if (
-      [
-        'ATIS',
-        'DEL',
-        'GND',
-        'TWR',
-        'DEP',
-        'CTR',
-        'FSS',
-        'APP',
-        'OBS',
-        'SUP',
-      ].includes(controllerType)
-    ) {
-      return new Controller(clientArray, controllerType, center);
-    }
+    const controllerType = Object.keys(controllerTypes).find(key =>
+      controllerTypes[key].typesList.includes(type),
+    );
 
-    return null;
+    return new Controller(clientArray, controllerType, center);
   }
 }
