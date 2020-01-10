@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { BackHandler } from 'react-native';
+import { BackHandler, KeyboardAvoidingView, ScrollView } from 'react-native';
 
 import { childrenShape, navigationShape } from '../propTypeShapes';
 
@@ -20,11 +20,19 @@ export default class ConfigScreen extends PureComponent {
 
   render() {
     const { children } = this.props;
-    return <>{children}</>;
+    return (
+      <KeyboardAvoidingView>
+        <ScrollView>{children}</ScrollView>
+      </KeyboardAvoidingView>
+    );
   }
 }
 
 ConfigScreen.propTypes = {
-  children: childrenShape.isRequired,
+  children: childrenShape,
   navigation: navigationShape.isRequired,
+};
+
+ConfigScreen.defaultProps = {
+  children: null,
 };
