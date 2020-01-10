@@ -129,6 +129,14 @@ export default class App extends PureComponent {
   };
 
   collapsePanel = () => {
+    const { panelPosition } = this.state;
+
+    // Check if panel is collapsed, exit app if it is
+    // eslint-disable-next-line no-underscore-dangle
+    if (panelPosition._value === panelStates.COLLAPSED) {
+      return false;
+    }
+
     // Collapse panel and remove focused client
     this.setPanelPosition(panelStates.COLLAPSED);
     this.setState({ focusedClient: {} });
