@@ -49,10 +49,22 @@ export default class App extends PureComponent {
 
   // TODO: Rewrite filtering function
   getFilteredClients = () => {
-    const { clients } = this.state;
-    return clients.filter(() => {
-      return true;
-    });
+    const { clients, filters } = this.state;
+    return clients.filter(
+      client =>
+        Object.keys(filters.clientTypes)
+          .filter(key => filters.clientTypes[key])
+          .includes(client.type) &&
+        (client.type !== 'ATC' ||
+          Object.keys(filters.controllerTypes)
+            .filter(key => filters.controllerTypes[key])
+            .includes(client.controllerType)) &&
+        (client.type !== 'PILOT' ||
+          (client.aircraft.includes(filters.aircraft) &&
+            client.callsign.includes(filters.airline) &&
+            (client.depAirport.includes(filters.airport) ||
+              client.arrAirport.includes(filters.airport)))),
+    );
   };
 
   setFilters = newFilters =>
