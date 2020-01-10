@@ -12,7 +12,7 @@ const ControllerStatsContainer = ({ client }) => (
   <StatsContainer>
     <StatsLabel text="Controller Info" />
 
-    <StatsRow label="Type" text={client.typeString} />
+    <StatsRow label="Type" text={client.fullName} />
     <StatsRow label="Frequency" text={client.frequency} />
 
     <TextBlock text={client.atisMessage} />

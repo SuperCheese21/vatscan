@@ -48,7 +48,7 @@ export default class FiltersScreen extends PureComponent {
             onChangeText={airline => setFilters({ airline })}
           />
         </ConfigRow>
-        <ConfigRow label="Airport (ICAO)" style={styles.configRow}>
+        <ConfigRow label="Dep/Arr Airport (ICAO)" style={styles.configRow}>
           <TextInput
             dense
             value={currentFilters.airport}
@@ -67,6 +67,6 @@ FiltersScreen.propTypes = {
 
 const styles = {
   configRow: {
-    width: 160,
+    width: 180,
   },
 };
