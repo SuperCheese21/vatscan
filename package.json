@@ -31,68 +31,6 @@
   "jest": {
     "preset": "jest-expo"
   },
-  "eslintConfig": {
-    "env": {
-      "es6": true,
-      "node": true
-    },
-    "extends": [
-      "plugin:react/recommended",
-      "airbnb",
-      "plugin:prettier/recommended"
-    ],
-    "globals": {
-      "Atomics": "readonly",
-      "SharedArrayBuffer": "readonly",
-      "fetch": false
-    },
-    "parser": "babel-eslint",
-    "parserOptions": {
-      "ecmaFeatures": {
-        "jsx": true
-      },
-      "ecmaVersion": 2018,
-      "sourceType": "module"
-    },
-    "plugins": [
-      "react"
-    ],
-    "rules": {
-      "import/order": "error",
-      "no-console": "off",
-      "no-use-before-define": [
-        "error",
-        {
-          "variables": false
-        }
-      ],
-      "prefer-destructuring": [
-        "error",
-        {
-          "AssignmentExpression": {
-            "array": false
-          },
-          "VariableDeclarator": {
-            "array": false
-          }
-        }
-      ],
-      "react/forbid-prop-types": [
-        "error",
-        {
-          "forbid": [
-            "any"
-          ]
-        }
-      ],
-      "react/jsx-filename-extension": "off",
-      "react/jsx-wrap-multilines": "off",
-      "react/state-in-constructor": [
-        "error",
-        "never"
-      ]
-    }
-  },
   "eslintIgnore": [
     "src/data/*"
   ],
@@ -114,6 +52,10 @@
     "react-native-screens": "2.0.0-alpha.12",
     "react-navigation": "latest",
     "react-navigation-stack": "latest",
-    "react-navigation-tabs": "latest"
+    "react-navigation-tabs": "latest",
+    "react-redux": "^7.1.3",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0"
   }
 }
