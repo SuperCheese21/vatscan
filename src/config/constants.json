@@ -158,12 +158,12 @@
       "fullName": "Other"
     }
   },
-  "defaultPanelPosition": -154,
+  "DEFAULT_PANEL_POSITION": -154,
   "panelStates": {
     "EXPANDED_PILOT": -154,
     "EXPANDED_ATC": -85,
     "COLLAPSED": 0
   },
-  "panelTransitionDuration": 350,
+  "PANEL_TRANSITION_DURATION": 350,
   "NUM_SIDES_CIRCLE": 36
 }
