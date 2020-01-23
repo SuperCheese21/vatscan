@@ -26,6 +26,7 @@ export const SET_FOCUSED_CLIENT = 'SET_FOCUSED_CLIENT';
 export const SET_FONTS_LOADED = 'SET_FONTS_LOADED';
 export const SET_IS_LOADING = 'SET_IS_LOADING';
 export const SET_PANEL_POSITION_VALUE = 'SET_PANEL_POSITION_VALUE';
+export const SET_SEARCH_QUERY = 'SET_SEARCH_QUERY';
 export const SET_SERVER_URLS = 'SET_SERVER_URLS';
 export const SET_TIMER_ID = 'SET_TIMER_ID';
 export const UPDATE_CLIENTS = 'UPDATE_CLIENTS';
@@ -49,6 +50,11 @@ export const setIsLoading = isLoading => ({
 export const setPanelPositionValue = position => ({
   type: SET_PANEL_POSITION_VALUE,
   payload: position,
+});
+
+export const setSearchQuery = query => ({
+  type: SET_SEARCH_QUERY,
+  payload: query,
 });
 
 export const setTimerID = id => ({

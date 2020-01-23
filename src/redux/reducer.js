@@ -4,6 +4,7 @@ import {
   SET_FONTS_LOADED,
   SET_IS_LOADING,
   SET_PANEL_POSITION_VALUE,
+  SET_SEARCH_QUERY,
   SET_SERVER_URLS,
   SET_TIMER_ID,
   UPDATE_CLIENTS,
@@ -41,6 +42,11 @@ export default (state, { type, payload }) => {
       return {
         ...state,
         panelPositionValue: payload,
+      };
+    case SET_SEARCH_QUERY:
+      return {
+        ...state,
+        searchQuery: payload,
       };
     case SET_SERVER_URLS:
       return {

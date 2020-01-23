@@ -1,43 +1,24 @@
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
+import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { Searchbar } from 'react-native-paper';
+import { connect } from 'react-redux';
 
 import ClientsListItem from '../common/ClientsListItem';
 import Text from '../common/Text';
-import { screenPropsShape } from '../propTypeShapes';
+import { clientsShape, screenPropsShape } from '../propTypeShapes';
+import { setSearchQuery, updateClients } from '../../redux/actions';
+import {
+  getIsLoading,
+  getSearchQuery,
+  searchFilteredClients,
+} from '../../redux/selectors';
 
-export default class ListScreen extends PureComponent {
-  state = {
-    query: '',
-  };
-
-  getFilteredClients() {
-    const { screenProps } = this.props;
-    const { query: oldQuery } = this.state;
-    const query = oldQuery.toLowerCase();
-    return screenProps.filteredClients.filter(
-      client =>
-        client.name.toLowerCase().includes(query) ||
-        client.callsign.toLowerCase().includes(query) ||
-        client.id.includes(query) ||
-        (client.aircraft && client.aircraft.toLowerCase().includes(query)),
-    );
-  }
-
-  onChangeText = query => {
-    this.setState({ query });
-  };
-
+class ListScreen extends PureComponent {
   renderItem = ({ item }) => {
-    const { screenProps } = this.props;
-    return (
-      <ClientsListItem
-        client={item}
-        setFocusedClient={screenProps.setFocusedClient}
-        stackNavigation={screenProps.stackNavigation}
-      />
-    );
+    const { screenProps: stackNavigation } = this.props;
+    return <ClientsListItem client={item} stackNavigation={stackNavigation} />;
   };
 
   keyExtractor = item => item.callsign;
@@ -50,22 +31,25 @@ export default class ListScreen extends PureComponent {
 
   render() {
     const {
-      screenProps: { isLoading, updateData },
+      dispatchSetSearchQuery,
+      dispatchUpdateClients,
+      filteredClients,
+      isLoading,
+      searchQuery,
     } = this.props;
-    const { query } = this.state;
     return (
       <View style={styles.listContainer}>
         <Searchbar
           style={{ margin: 5 }}
           placeholder="Name, Callsign, CID, Aircraft"
-          onChangeText={this.onChangeText}
-          value={query}
+          onChangeText={dispatchSetSearchQuery}
+          value={searchQuery}
         />
         <FlatList
-          data={this.getFilteredClients()}
+          data={filteredClients}
           keyExtractor={this.keyExtractor}
           refreshing={isLoading}
-          onRefresh={updateData}
+          onRefresh={dispatchUpdateClients}
           renderItem={this.renderItem}
           ListEmptyComponent={
             <View style={{ flex: 1 }}>
@@ -78,13 +62,31 @@ export default class ListScreen extends PureComponent {
   }
 }
 
-ListScreen.propTypes = {
-  screenProps: screenPropsShape.isRequired,
-};
-
 const styles = StyleSheet.create({
   listContainer: {
     flex: 1,
     backgroundColor: 'white',
   },
 });
+
+ListScreen.propTypes = {
+  dispatchSetSearchQuery: PropTypes.func.isRequired,
+  dispatchUpdateClients: PropTypes.func.isRequired,
+  filteredClients: clientsShape.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  screenProps: screenPropsShape.isRequired,
+  searchQuery: PropTypes.string.isRequired,
+};
+
+const mapStateToProps = state => ({
+  isLoading: getIsLoading(state),
+  filteredClients: searchFilteredClients(state),
+  searchQuery: getSearchQuery(state),
+});
+
+const mapDispatchToProps = {
+  dispatchSetSearchQuery: setSearchQuery,
+  dispatchUpdateClients: updateClients,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListScreen);

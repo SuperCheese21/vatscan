@@ -1,33 +1,40 @@
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
+import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
 import { BackHandler, StyleSheet, View } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
+import { connect } from 'react-redux';
 
 import Map from '../common/Map';
 import Text from '../common/Text';
 import InfoPanelContainer from '../containers/InfoPanelContainer';
-import { screenPropsShape } from '../propTypeShapes';
+import {
+  animatedValueShape,
+  clientsShape,
+  screenPropsShape,
+} from '../propTypeShapes';
 import { accent as accentColor } from '../../config/colors.json';
+import { collapsePanel, setFocusedClient } from '../../redux/actions';
+import {
+  getFilteredClients,
+  getFocusedClient,
+  getIsLoading,
+  getPanelPosition,
+} from '../../redux/selectors';
 
-export default class MapScreen extends PureComponent {
+class MapScreen extends PureComponent {
   componentDidMount() {
-    const { screenProps } = this.props;
+    const { dispatchCollapsePanel } = this.props;
 
     // Add listener for Android hardware back button to close info panel
-    BackHandler.addEventListener(
-      'hardwareBackPress',
-      screenProps.collapsePanel,
-    );
+    BackHandler.addEventListener('hardwareBackPress', dispatchCollapsePanel);
   }
 
   componentWillUnmount() {
-    const { screenProps } = this.props;
+    const { dispatchCollapsePanel } = this.props;
 
     // Remove back button listener before component is unmounted
-    BackHandler.removeEventListener(
-      'hardwareBackPress',
-      screenProps.collapsePanel,
-    );
+    BackHandler.removeEventListener('hardwareBackPress', dispatchCollapsePanel);
   }
 
   static navigationOptions = {
@@ -38,22 +45,23 @@ export default class MapScreen extends PureComponent {
 
   render() {
     const {
-      screenProps: {
-        stackNavigation,
-        isLoading,
-        filteredClients,
-        focusedClient,
-        panelPosition,
-        setFocusedClient,
-        collapsePanel,
-      },
+      dispatchCollapsePanel,
+      dispatchSetFocusedClient,
+      filteredClients,
+      focusedClient,
+      isLoading,
+      panelPosition,
+      screenProps: { stackNavigation },
     } = this.props;
     return (
       <View style={{ flex: 1 }}>
-        <Map style={{ flex: 1 }} onPress={collapsePanel}>
+        <Map style={{ flex: 1 }} onPress={dispatchCollapsePanel}>
           {filteredClients.map(client => {
             const isFocusedClient = focusedClient.callsign === client.callsign;
-            return client.getMapOverlay(isFocusedClient, setFocusedClient);
+            return client.getMapOverlay(
+              isFocusedClient,
+              dispatchSetFocusedClient,
+            );
           })}
         </Map>
         <ActivityIndicator
@@ -74,10 +82,6 @@ export default class MapScreen extends PureComponent {
   }
 }
 
-MapScreen.propTypes = {
-  screenProps: screenPropsShape.isRequired,
-};
-
 const styles = StyleSheet.create({
   activityIndicator: {
     position: 'absolute',
@@ -91,3 +95,27 @@ const styles = StyleSheet.create({
     top: 2,
   },
 });
+
+MapScreen.propTypes = {
+  dispatchCollapsePanel: PropTypes.func.isRequired,
+  dispatchSetFocusedClient: PropTypes.func.isRequired,
+  filteredClients: clientsShape.isRequired,
+  focusedClient: PropTypes.object.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  panelPosition: animatedValueShape.isRequired,
+  screenProps: screenPropsShape.isRequired,
+};
+
+const mapStateToProps = state => ({
+  filteredClients: getFilteredClients(state),
+  focusedClient: getFocusedClient(state),
+  isLoading: getIsLoading(state),
+  panelPosition: getPanelPosition(state),
+});
+
+const mapDispatchToProps = {
+  dispatchCollapsePanel: collapsePanel,
+  dispatchSetFocusedClient: setFocusedClient,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MapScreen);

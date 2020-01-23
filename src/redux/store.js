@@ -25,6 +25,7 @@ const initialState = {
   isLoading: false,
   panelPosition: new Animated.Value(panelStates.COLLAPSED),
   panelPositionValue: panelStates.COLLAPSED,
+  searchQuery: '',
   serverUrls: [],
   timerID: null,
 };

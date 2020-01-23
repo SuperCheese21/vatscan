@@ -8,6 +8,7 @@ export const getIsLoading = ({ isLoading }) => isLoading;
 export const getPanelPosition = ({ panelPosition }) => panelPosition;
 export const getPanelPositionValue = ({ panelPositionValue }) =>
   panelPositionValue;
+export const getSearchQuery = ({ searchQuery }) => searchQuery;
 export const getServerUrls = ({ serverUrls }) => serverUrls;
 export const getTimerID = ({ timerID }) => timerID;
 
@@ -30,4 +31,19 @@ export const getFilteredClients = createSelector(
             (client.depAirport.includes(filters.airport) ||
               client.arrAirport.includes(filters.airport)))),
     ),
+);
+
+export const searchFilteredClients = createSelector(
+  getFilteredClients,
+  getSearchQuery,
+  (clients, oldQuery) => {
+    const query = oldQuery.toLowerCase();
+    return clients.filter(
+      client =>
+        client.name.toLowerCase().includes(query) ||
+        client.callsign.toLowerCase().includes(query) ||
+        client.id.includes(query) ||
+        (client.aircraft && client.aircraft.toLowerCase().includes(query)),
+    );
+  },
 );

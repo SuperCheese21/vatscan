@@ -3,7 +3,7 @@ import { IconButton } from 'react-native-paper';
 import { createAppContainer } from 'react-navigation';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 
-import { navigationShape, screenPropsShape } from '../propTypeShapes';
+import { navigationShape } from '../propTypeShapes';
 import ListScreen from '../screens/ListScreen';
 import MapScreen from '../screens/MapScreen';
 import { accent, primaryDark } from '../../config/colors.json';
@@ -28,21 +28,8 @@ class TabNavigatorContainer extends PureComponent {
   });
 
   render() {
-    const { navigation, screenProps } = this.props;
-    return (
-      <TabNavigator
-        screenProps={{
-          stackNavigation: navigation,
-          isLoading: screenProps.isLoading,
-          filteredClients: screenProps.filteredClients,
-          focusedClient: screenProps.focusedClient,
-          panelPosition: screenProps.panelPosition,
-          updateData: screenProps.updateData,
-          setFocusedClient: screenProps.setFocusedClient,
-          collapsePanel: screenProps.collapsePanel,
-        }}
-      />
-    );
+    const { navigation } = this.props;
+    return <TabNavigator screenProps={{ stackNavigation: navigation }} />;
   }
 }
 
@@ -75,7 +62,6 @@ const TabNavigator = createAppContainer(
 
 TabNavigatorContainer.propTypes = {
   navigation: navigationShape.isRequired,
-  screenProps: screenPropsShape.isRequired,
 };
 
 export default TabNavigatorContainer;
