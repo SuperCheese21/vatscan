@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Chip } from 'react-native-paper';
 
 const ChipRow = ({ filterKey, currentFilters, setFilters }) => (
@@ -34,7 +34,7 @@ ChipRow.propTypes = {
   setFilters: PropTypes.func.isRequired,
 };
 
-const styles = {
+const styles = StyleSheet.create({
   chipContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -47,6 +47,6 @@ const styles = {
     marginBottom: 4,
     padding: 3,
   },
-};
+});
 
 export default ChipRow;

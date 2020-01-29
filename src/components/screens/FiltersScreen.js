@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
+import { StyleSheet } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { connect } from 'react-redux';
 
@@ -53,11 +54,11 @@ class FiltersScreen extends PureComponent {
   }
 }
 
-const styles = {
+const styles = StyleSheet.create({
   configRow: {
     width: 180,
   },
-};
+});
 
 FiltersScreen.propTypes = {
   dispatchSetFilters: PropTypes.func.isRequired,
