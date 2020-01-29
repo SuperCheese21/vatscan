@@ -72,14 +72,15 @@ export const collapsePanel = () => (dispatch, getState) => {
     return false;
   }
 
-  dispatch(setPanelPosition(panelStates.COLLAPSED));
   dispatch(setFocusedClient({}));
 
   return true;
 };
 
 export const setFocusedClient = newClient => dispatch => {
-  const newPanelPosition = panelStates[`EXPANDED_${newClient.type}`];
+  const newPanelPosition = newClient.type
+    ? panelStates[`EXPANDED_${newClient.type}`]
+    : panelStates.COLLAPSED;
 
   dispatch({
     type: SET_FOCUSED_CLIENT,

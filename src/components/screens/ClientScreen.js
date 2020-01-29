@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
 
 import ConfigScreen from './ConfigScreen';
 
@@ -8,9 +9,11 @@ import ClientStatsContainer from '../containers/ClientStatsContainer';
 import ControllerStatsContainer from '../containers/ControllerStatsContainer';
 import FlightPlanContainer from '../containers/FlightPlanContainer';
 import FlightStatsContainer from '../containers/FlightStatsContainer';
-import { navigationShape, screenPropsShape } from '../propTypeShapes';
+import { clientsShape, navigationShape } from '../propTypeShapes';
+import { collapsePanel, setFocusedClient } from '../../redux/actions';
+import { getClients, getFocusedClient } from '../../redux/selectors';
 
-export default class ClientScreen extends PureComponent {
+class ClientScreen extends PureComponent {
   static navigationOptions = ({ navigation }) => {
     const callsign = navigation.getParam('callsign');
     return {
@@ -20,62 +23,58 @@ export default class ClientScreen extends PureComponent {
   };
 
   componentDidMount() {
-    const { navigation, screenProps } = this.props;
-    const callsign = navigation.getParam('callsign');
-    const focusedClient = screenProps.filteredClients.find(
-      client => client.callsign === callsign,
+    const { clients, dispatchSetFocusedClient, navigation } = this.props;
+    const focusedCallsign = navigation.getParam('callsign');
+    const focusedClient = clients.find(
+      client => client.callsign === focusedCallsign,
     );
     if (focusedClient) {
-      screenProps.setFocusedClient(focusedClient);
+      dispatchSetFocusedClient(focusedClient);
     }
   }
 
   componentWillUnmount() {
-    const { navigation, screenProps } = this.props;
+    const { dispatchCollapsePanel, navigation } = this.props;
     if (navigation.getParam('removeFocusedClient')) {
-      screenProps.collapsePanel();
+      dispatchCollapsePanel();
     }
   }
 
   render() {
-    const {
-      navigation,
-      screenProps: { isLoading, focusedClient, updateData },
-    } = this.props;
+    const { focusedClient, navigation } = this.props;
     return (
-      <ConfigScreen
-        navigation={navigation}
-        onRefresh={updateData}
-        refreshing={isLoading}
-      >
-        <ClientStatsContainer client={focusedClient} />
+      <ConfigScreen navigation={navigation} refresh>
+        <ClientStatsContainer />
 
-        <Stats client={focusedClient} />
+        {focusedClient.type === 'PILOT' ? (
+          <>
+            <FlightPlanContainer />
+            <FlightStatsContainer />
+          </>
+        ) : (
+          <ControllerStatsContainer />
+        )}
       </ConfigScreen>
     );
   }
 }
 
-const Stats = ({ client }) => {
-  if (client.type === 'PILOT') {
-    return (
-      <>
-        <FlightPlanContainer client={client} />
-        <FlightStatsContainer client={client} />
-      </>
-    );
-  }
-  if (client.type === 'ATC') {
-    return <ControllerStatsContainer client={client} />;
-  }
-  return null;
-};
-
 ClientScreen.propTypes = {
+  clients: clientsShape.isRequired,
+  focusedClient: PropTypes.object.isRequired,
+  dispatchCollapsePanel: PropTypes.func.isRequired,
+  dispatchSetFocusedClient: PropTypes.func.isRequired,
   navigation: navigationShape.isRequired,
-  screenProps: screenPropsShape.isRequired,
 };
 
-Stats.propTypes = {
-  client: PropTypes.object.isRequired,
+const mapStateToProps = state => ({
+  clients: getClients(state),
+  focusedClient: getFocusedClient(state),
+});
+
+const mapDispatchToProps = {
+  dispatchCollapsePanel: collapsePanel,
+  dispatchSetFocusedClient: setFocusedClient,
 };
+
+export default connect(mapStateToProps, mapDispatchToProps)(ClientScreen);

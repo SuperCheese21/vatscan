@@ -6,10 +6,13 @@ import {
   RefreshControl,
   ScrollView,
 } from 'react-native';
+import { connect } from 'react-redux';
 
 import { childrenShape, navigationShape } from '../propTypeShapes';
+import { updateClients } from '../../redux/actions';
+import { getIsLoading } from '../../redux/selectors';
 
-export default class ConfigScreen extends PureComponent {
+class ConfigScreen extends PureComponent {
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
   }
@@ -25,13 +28,16 @@ export default class ConfigScreen extends PureComponent {
   };
 
   render() {
-    const { children, onRefresh, refreshing } = this.props;
+    const { children, dispatchUpdateClients, isLoading, refresh } = this.props;
     return (
       <KeyboardAvoidingView>
         <ScrollView
           refreshControl={
-            onRefresh ? (
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            refresh ? (
+              <RefreshControl
+                refreshing={isLoading}
+                onRefresh={dispatchUpdateClients}
+              />
             ) : null
           }
         >
@@ -44,13 +50,23 @@ export default class ConfigScreen extends PureComponent {
 
 ConfigScreen.propTypes = {
   children: childrenShape,
+  dispatchUpdateClients: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
   navigation: navigationShape.isRequired,
-  onRefresh: PropTypes.func,
-  refreshing: PropTypes.bool,
+  refresh: PropTypes.bool,
 };
 
 ConfigScreen.defaultProps = {
   children: null,
-  onRefresh: null,
-  refreshing: false,
+  refresh: false,
 };
+
+const mapStateToProps = state => ({
+  isLoading: getIsLoading(state),
+});
+
+const mapDispatchToProps = {
+  dispatchUpdateClients: updateClients,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ConfigScreen);
