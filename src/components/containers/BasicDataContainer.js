@@ -1,14 +1,16 @@
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { connect } from 'react-redux';
 
 import Text from '../common/Text';
 import { navigationShape } from '../propTypeShapes';
+import { getFocusedClient } from '../../redux/selectors';
 
-export default class BasicDataContainer extends PureComponent {
+class BasicDataContainer extends PureComponent {
   onPress = () => {
     const {
-      client: { callsign },
+      focusedClient: { callsign },
       stackNavigation,
     } = this.props;
     stackNavigation.navigate('ClientScreen', { callsign });
@@ -16,7 +18,7 @@ export default class BasicDataContainer extends PureComponent {
 
   render() {
     const {
-      client: { arrAirport, callsign, depAirport, name },
+      focusedClient: { arrAirport, callsign, depAirport, name },
     } = this.props;
     return (
       <TouchableOpacity
@@ -64,7 +66,7 @@ export default class BasicDataContainer extends PureComponent {
 }
 
 BasicDataContainer.propTypes = {
-  client: PropTypes.object.isRequired,
+  focusedClient: PropTypes.object.isRequired,
   stackNavigation: navigationShape.isRequired,
 };
 
@@ -109,3 +111,9 @@ const styles = StyleSheet.create({
     height: 30,
   },
 });
+
+const mapStateToProps = state => ({
+  focusedClient: getFocusedClient(state),
+});
+
+export default connect(mapStateToProps)(BasicDataContainer);

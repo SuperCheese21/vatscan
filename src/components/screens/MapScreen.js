@@ -8,18 +8,13 @@ import { connect } from 'react-redux';
 import Map from '../common/Map';
 import Text from '../common/Text';
 import InfoPanelContainer from '../containers/InfoPanelContainer';
-import {
-  animatedValueShape,
-  clientsShape,
-  screenPropsShape,
-} from '../propTypeShapes';
+import { clientsShape, screenPropsShape } from '../propTypeShapes';
 import { accent as accentColor } from '../../config/colors.json';
 import { collapsePanel, setFocusedClient } from '../../redux/actions';
 import {
   getFilteredClients,
   getFocusedClient,
   getIsLoading,
-  getPanelPosition,
 } from '../../redux/selectors';
 
 class MapScreen extends PureComponent {
@@ -48,21 +43,19 @@ class MapScreen extends PureComponent {
       dispatchCollapsePanel,
       dispatchSetFocusedClient,
       filteredClients,
-      focusedClient,
+      focusedClient: { callsign: focusedCallsign },
       isLoading,
-      panelPosition,
       screenProps: { stackNavigation },
     } = this.props;
     return (
       <View style={{ flex: 1 }}>
         <Map style={{ flex: 1 }} onPress={dispatchCollapsePanel}>
-          {filteredClients.map(client => {
-            const isFocusedClient = focusedClient.callsign === client.callsign;
-            return client.getMapOverlay(
-              isFocusedClient,
+          {filteredClients.map(client =>
+            client.getMapOverlay(
+              focusedCallsign === client.callsign,
               dispatchSetFocusedClient,
-            );
-          })}
+            ),
+          )}
         </Map>
         <ActivityIndicator
           color={accentColor}
@@ -72,11 +65,7 @@ class MapScreen extends PureComponent {
         <Text style={styles.clientCountText}>
           {`Clients: ${filteredClients.length}`}
         </Text>
-        <InfoPanelContainer
-          stackNavigation={stackNavigation}
-          panelPosition={panelPosition}
-          focusedClient={focusedClient}
-        />
+        <InfoPanelContainer stackNavigation={stackNavigation} />
       </View>
     );
   }
@@ -102,7 +91,6 @@ MapScreen.propTypes = {
   filteredClients: clientsShape.isRequired,
   focusedClient: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  panelPosition: animatedValueShape.isRequired,
   screenProps: screenPropsShape.isRequired,
 };
 
@@ -110,7 +98,6 @@ const mapStateToProps = state => ({
   filteredClients: getFilteredClients(state),
   focusedClient: getFocusedClient(state),
   isLoading: getIsLoading(state),
-  panelPosition: getPanelPosition(state),
 });
 
 const mapDispatchToProps = {

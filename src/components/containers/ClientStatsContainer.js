@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Badge } from 'react-native-paper';
+import { connect } from 'react-redux';
 
 import StatsContainer from './StatsContainer';
 
@@ -9,35 +10,44 @@ import StatsLabel from '../common/StatsLabel';
 import StatsRow from '../common/StatsRow';
 import Text from '../common/Text';
 import { accent as accentColor } from '../../config/colors.json';
+import { getFocusedClient } from '../../redux/selectors';
 
-const ClientStatsContainer = ({ client }) => (
+const ClientStatsContainer = ({
+  focusedClient: {
+    elapsedTimeLogon,
+    id,
+    latitude,
+    longitude,
+    name,
+    rating,
+    server,
+    type,
+  },
+}) => (
   <StatsContainer>
     <View style={styles.nameContainer}>
-      <Text style={styles.nameText}>{client.name}</Text>
+      <Text style={styles.nameText}>{name}</Text>
       <View>
-        <Text style={{ color: '#898989' }}>{client.id}</Text>
+        <Text style={{ color: '#898989' }}>{id}</Text>
         <Badge
           style={{
             backgroundColor: accentColor,
             color: 'white',
           }}
         >
-          {client.rating}
+          {rating}
         </Badge>
       </View>
     </View>
-    <StatsLabel text={client.type === 'PILOT' ? 'Pilot' : 'ATC'} />
-    <StatsRow
-      label="Location"
-      text={`${client.latitude}, ${client.longitude}`}
-    />
-    <StatsRow label="Server" text={client.server} />
-    <StatsRow label="Time Connected" text={client.elapsedTimeLogon} />
+    <StatsLabel text={type} />
+    <StatsRow label="Location" text={`${latitude}, ${longitude}`} />
+    <StatsRow label="Server" text={server} />
+    <StatsRow label="Time Connected" text={elapsedTimeLogon} />
   </StatsContainer>
 );
 
 ClientStatsContainer.propTypes = {
-  client: PropTypes.object.isRequired,
+  focusedClient: PropTypes.object.isRequired,
 };
 
 const styles = StyleSheet.create({
@@ -53,4 +63,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ClientStatsContainer;
+const mapStateToProps = state => ({
+  focusedClient: getFocusedClient(state),
+});
+
+export default connect(mapStateToProps)(ClientStatsContainer);

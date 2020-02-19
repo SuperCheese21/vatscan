@@ -2,6 +2,7 @@ import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { connect } from 'react-redux';
 
 import Text from '../common/Text';
 import { navigationShape } from '../propTypeShapes';
@@ -9,18 +10,20 @@ import {
   accent as accentColor,
   primary as primaryColor,
 } from '../../config/colors.json';
+import { getFocusedClient } from '../../redux/selectors';
 
-export default class ControllerDataContainer extends PureComponent {
+class ControllerDataContainer extends PureComponent {
   onPress = () => {
-    const { data, stackNavigation } = this.props;
-    stackNavigation.navigate('ClientScreen', {
-      callsign: data.callsign,
-    });
+    const {
+      focusedClient: { callsign },
+      stackNavigation,
+    } = this.props;
+    stackNavigation.navigate('ClientScreen', { callsign });
   };
 
   render() {
     const {
-      data: { callsign, frequency, name },
+      focusedClient: { callsign, frequency, name },
     } = this.props;
     return (
       <TouchableOpacity
@@ -46,7 +49,7 @@ export default class ControllerDataContainer extends PureComponent {
 }
 
 ControllerDataContainer.propTypes = {
-  data: PropTypes.object.isRequired,
+  focusedClient: PropTypes.object.isRequired,
   stackNavigation: navigationShape.isRequired,
 };
 
@@ -85,3 +88,9 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
 });
+
+const mapStateToProps = state => ({
+  focusedClient: getFocusedClient(state),
+});
+
+export default connect(mapStateToProps)(ControllerDataContainer);

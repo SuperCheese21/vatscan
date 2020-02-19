@@ -14,8 +14,8 @@ import { collapsePanel, setFocusedClient } from '../../redux/actions';
 import { getClients, getFocusedClient } from '../../redux/selectors';
 
 class ClientScreen extends PureComponent {
-  static navigationOptions = ({ navigation }) => {
-    const callsign = navigation.getParam('callsign');
+  static navigationOptions = ({ navigation: { getParam } }) => {
+    const callsign = getParam('callsign');
     return {
       title: callsign,
       headerRight: () => <ShareButton callsign={callsign} />,
@@ -41,12 +41,15 @@ class ClientScreen extends PureComponent {
   }
 
   render() {
-    const { focusedClient, navigation } = this.props;
+    const {
+      focusedClient: { type },
+      navigation,
+    } = this.props;
     return (
       <ConfigScreen navigation={navigation} refresh>
         <ClientStatsContainer />
 
-        {focusedClient.type === 'PILOT' ? (
+        {type === 'PILOT' ? (
           <>
             <FlightPlanContainer />
             <FlightStatsContainer />

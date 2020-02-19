@@ -2,15 +2,17 @@ import Icon from '@expo/vector-icons/MaterialIcons';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
+import { connect } from 'react-redux';
 
 import Text from '../common/Text';
 import {
   accent as accentColor,
   primaryMedium as primaryMediumColor,
 } from '../../config/colors.json';
+import { getFocusedClient } from '../../redux/selectors';
 
 const DetailDataContainer = ({
-  client: { aircraft, groundSpeed, altitude, heading },
+  focusedClient: { aircraft, groundSpeed, altitude, heading },
 }) => (
   <View style={styles.infoContainerDetail}>
     <View style={styles.infoRow}>
@@ -37,7 +39,7 @@ const DetailDataContainer = ({
 );
 
 DetailDataContainer.propTypes = {
-  client: PropTypes.object.isRequired,
+  focusedClient: PropTypes.object.isRequired,
 };
 
 const styles = StyleSheet.create({
@@ -57,4 +59,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DetailDataContainer;
+const mapStateToProps = state => ({
+  focusedClient: getFocusedClient(state),
+});
+
+export default connect(mapStateToProps)(DetailDataContainer);

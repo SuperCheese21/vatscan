@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
 
 import StatsContainer from './StatsContainer';
 
@@ -7,32 +9,54 @@ import Map from '../common/Map';
 import StatsLabel from '../common/StatsLabel';
 import StatsRow from '../common/StatsRow';
 import TextBlock from '../common/TextBlock';
+import { getFocusedClient } from '../../redux/selectors';
 
-const ControllerStatsContainer = ({ client }) => (
+const ControllerStatsContainer = ({
+  focusedClient: {
+    atisMessage,
+    frequency,
+    fullName,
+    getMapOverlay,
+    latitude,
+    longitude,
+  },
+}) => (
   <StatsContainer>
     <StatsLabel text="Controller Info" />
 
-    <StatsRow label="Type" text={client.fullName} />
-    <StatsRow label="Frequency" text={client.frequency} />
+    <StatsRow label="Type" text={fullName} />
+    <StatsRow label="Frequency" text={frequency} />
 
-    <TextBlock text={client.atisMessage} />
+    <TextBlock text={atisMessage} />
 
     <Map
-      style={{ width: '100%', marginTop: 5, height: 350 }}
+      style={styles.map}
       initialRegion={{
-        latitude: client.latitude,
-        longitude: client.longitude,
+        latitude,
+        longitude,
         latitudeDelta: 5,
         longitudeDelta: 5,
       }}
     >
-      {client.getMapOverlay()}
+      {getMapOverlay()}
     </Map>
   </StatsContainer>
 );
 
 ControllerStatsContainer.propTypes = {
-  client: PropTypes.object.isRequired,
+  focusedClient: PropTypes.object.isRequired,
 };
 
-export default ControllerStatsContainer;
+const styles = StyleSheet.create({
+  map: {
+    width: '100%',
+    marginTop: 5,
+    height: 350,
+  },
+});
+
+const mapStateToProps = state => ({
+  focusedClient: getFocusedClient(state),
+});
+
+export default connect(mapStateToProps)(ControllerStatsContainer);
