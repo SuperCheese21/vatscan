@@ -1,6 +1,6 @@
 {
   "STATUS_URL": "https://status.vatsim.net/",
-  "ARTCC_URL": "https://map.vatsim.net/api/atcGeoJSON",
+  "ARTCC_URL": "https://map.vatsim.net/api/onlineatc",
   "UPDATE_INTERVAL": 60000,
   "EARTH_RADIUS_NM": 3440.06,
   "EARTH_RADIUS_M": 6371000,
