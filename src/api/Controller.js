@@ -20,9 +20,9 @@ export default class Controller extends Client {
     this.atisMessage = data[35];
 
     if (center) {
-      this.polygon = center.geometry.coordinates[0].map(coords => ({
-        latitude: parseFloat(coords[1]),
-        longitude: parseFloat(coords[0]),
+      this.polygon = center.bounds[0].map(([lat, lon]) => ({
+        latitude: parseFloat(lat),
+        longitude: parseFloat(lon),
       }));
     } else if (constants[controllerType]) {
       this.polygon = [];
