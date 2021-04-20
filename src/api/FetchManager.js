@@ -36,7 +36,7 @@ export default class FetchManager {
         ),
       fetch(ARTCC_URL)
         .then(res => res.json())
-        .then(json => json.features)
+        .then(this.transformCenterData)
         .catch(
           e =>
             e &&
@@ -80,6 +80,12 @@ export default class FetchManager {
       .shift()
       .split('\n')
       .map(line => line.split(':'));
+
+  transformCenterData = json =>
+    Object.values(json).map(({ members: [properties], bounds }) => ({
+      properties,
+      bounds,
+    }));
 
   /**
    * Parses the raw server data from text and json to a custom javascript object

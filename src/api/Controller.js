@@ -24,9 +24,9 @@ export default class Controller extends Client {
     if (this.polygonInfo) {
       // Use ARTCC boundaries given by external API
       if (center) {
-        this.polygonCoords = center.geometry.coordinates[0].map(coords => ({
-          latitude: parseFloat(coords[1]),
-          longitude: parseFloat(coords[0]),
+        this.polygon = center.bounds[0].map(([lat, lon]) => ({
+          latitude: parseFloat(lat),
+          longitude: parseFloat(lon),
         }));
       }
 
