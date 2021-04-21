@@ -149,10 +149,7 @@ export default class Pilot extends Client {
   get eta() {
     const eteMinutes = this.eteMinutes;
     if (eteMinutes > 0) {
-      return moment
-        .utc()
-        .add(eteMinutes, 'm')
-        .format('HHmm');
+      return moment.utc().add(eteMinutes, 'm').format('HHmm');
     }
     return null;
   }
