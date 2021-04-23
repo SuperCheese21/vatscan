@@ -1,25 +1,32 @@
-import { AppLoading, Linking } from 'expo';
+import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
+import * as Linking from 'expo-linking';
 import React, { PureComponent } from 'react';
 import { Alert, Animated } from 'react-native';
-import NetInfo from '@react-native-community/netinfo';
 
-import FetchManager from './src/api/FetchManager';
+import { fetchData } from './src/api/fetchUtils';
 import StackNavigator from './src/components/navigation/StackNavigator';
 import {
   controllerTypes,
   panelStates,
   panelTransitionDuration,
+  MAP_DATA_URL,
   UPDATE_INTERVAL,
+  STATUS_URL,
 } from './src/config/constants.json';
 
 export default class App extends PureComponent {
   // Initialize component state and fetch manager
   state = {
+    urls: {
+      clientDataUrls: [],
+      firDataUrl: '',
+    },
     fontsLoaded: false,
     isLoading: false,
-    clients: [],
+    clients: {},
     focusedClient: {},
+    firData: {},
     filters: {
       clientTypes: {
         PILOT: true,
@@ -36,21 +43,28 @@ export default class App extends PureComponent {
     panelPositionValue: panelStates.COLLAPSED,
   };
 
-  fetchManager = new FetchManager();
-
   componentDidMount() {
-    // Automatically pull data update when internet connection is changed
-    this.unsubscribe = NetInfo.addEventListener(() => this.updateData(true));
+    this.fetchDataUrls();
   }
 
-  componentWillUnmount() {
-    // Unsubscribe from updates on internet connection changes
-    this.unsubscribe();
+  componentDidUpdate(_, prevState) {
+    const {
+      urls: { clientDataUrls, firDataUrl },
+    } = this.state;
+
+    if (!prevState.urls.clientDataUrls.length && clientDataUrls.length) {
+      this.updateClientData();
+    }
+
+    if (prevState.urls.firDataUrl !== firDataUrl) {
+      this.fetchFirData();
+    }
   }
 
   getFilteredClients = () => {
     const { clients, filters } = this.state;
-    return clients.filter(
+    const pilots = clients.pilots || [];
+    return pilots.filter(
       client =>
         Object.keys(filters.clientTypes)
           .filter(key => filters.clientTypes[key])
@@ -91,45 +105,6 @@ export default class App extends PureComponent {
     this.setState({ panelPositionValue: newPosition });
   }
 
-  loadFonts = async () => {
-    /* eslint-disable global-require */
-    await Font.loadAsync({
-      Roboto_Regular: require('./assets/fonts/Roboto/Roboto-Regular.ttf'),
-      Roboto_Condensed_Regular: require('./assets/fonts/Roboto_Condensed/RobotoCondensed-Regular.ttf'),
-      Roboto_Mono: require('./assets/fonts/Roboto_Mono/RobotoMono-Regular.ttf'),
-    });
-    /* eslint-enable global-require */
-  };
-
-  updateData = async isInitialFetch => {
-    this.setState({ isLoading: true });
-
-    // Check internet connection and alert if there is no connection
-    const connectionInfo = await NetInfo.fetch();
-    if (connectionInfo.type === 'none' || connectionInfo.type === 'unknown') {
-      this.setState({ isLoading: false });
-      Alert.alert(
-        'No internet connection',
-        'Connect to the internet to update data',
-      );
-      return;
-    }
-
-    // Fetch data
-    const clients = await this.fetchManager.fetchData(isInitialFetch);
-
-    // Update state with new client data
-    this.handleUpdatedData(clients);
-
-    // Clear existing timeout
-    if (this.timer) {
-      clearTimeout(this.timer);
-    }
-
-    // Set timeout for next data update
-    this.timer = setTimeout(this.updateData, UPDATE_INTERVAL);
-  };
-
   collapsePanel = () => {
     const { panelPositionValue } = this.state;
 
@@ -145,23 +120,71 @@ export default class App extends PureComponent {
     return true;
   };
 
-  handleUpdatedData(clients) {
-    // Update all clients
+  transformFirData = rawFirData => {
+    const firData = rawFirData;
+    return {
+      data: firData,
+    };
+  };
+
+  loadFonts = async () => {
+    /* eslint-disable global-require */
+    await Font.loadAsync({
+      Roboto_Regular: require('./assets/fonts/Roboto/Roboto-Regular.ttf'),
+      Roboto_Condensed_Regular: require('./assets/fonts/Roboto_Condensed/RobotoCondensed-Regular.ttf'),
+      Roboto_Mono: require('./assets/fonts/Roboto_Mono/RobotoMono-Regular.ttf'),
+    });
+    /* eslint-enable global-require */
+  };
+
+  fetchDataUrls = async () => {
+    const [status, mapData] = await Promise.all([
+      fetchData(STATUS_URL, 'Unable to fetch client data URL').then(
+        res => res && res.json(),
+      ),
+      fetchData(MAP_DATA_URL, 'Unable to fetch ARTCC data URL').then(
+        res => res && res.json(),
+      ),
+    ]);
+    const clientDataUrls = status?.data?.v3 || [];
+    const firDataUrl = mapData?.fir_boundaries_dat_url || '';
+
+    this.setState({ urls: { clientDataUrls, firDataUrl } });
+  };
+
+  updateClientData = async () => {
     const {
-      focusedClient: { callsign: focusedCallsign },
+      urls: { clientDataUrls },
     } = this.state;
 
-    // Updated focused client
-    const focusedClient =
-      clients.find(client => client.callsign === focusedCallsign) || {};
+    const res = await fetchData(clientDataUrls, 'Unable to fetch client data');
+    if (!res) return;
 
-    // Update state with new data
-    this.setState({
-      isLoading: false,
-      clients,
-      focusedClient,
-    });
-  }
+    const clients = await res.json();
+    this.setState({ clients });
+
+    // Clear existing timeout
+    if (this.timer) {
+      clearTimeout(this.timer);
+    }
+
+    // Set timeout for next data update
+    this.timer = setTimeout(() => this.updateClientData(), UPDATE_INTERVAL);
+  };
+
+  fetchFirData = async () => {
+    const {
+      urls: { firDataUrl },
+    } = this.state;
+
+    const res = await fetchData(firDataUrl, 'Unable to fetch ARTCC data');
+    if (!res) return;
+
+    const rawFirData = await res.text();
+    const firData = this.transformFirData(rawFirData);
+
+    this.setState({ firData });
+  };
 
   render() {
     const {
@@ -169,6 +192,7 @@ export default class App extends PureComponent {
       fontsLoaded,
       isLoading,
       focusedClient,
+      firData,
       panelPosition,
     } = this.state;
 
@@ -194,8 +218,9 @@ export default class App extends PureComponent {
           filters,
           filteredClients,
           focusedClient,
+          firData,
           panelPosition,
-          updateData: this.updateData,
+          updateData: this.updateClientData,
           setFilters: this.setFilters,
           setFocusedClient: this.setFocusedClient,
           collapsePanel: this.collapsePanel,
