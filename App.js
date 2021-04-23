@@ -171,7 +171,10 @@ export default class App extends PureComponent {
       urls: { clientDataUrls },
     } = this.state;
 
+    this.setState({ isLoading: true });
     const res = await fetchData(clientDataUrls, 'Unable to fetch client data');
+    this.setState({ isLoading: false });
+
     if (!res) return;
 
     const clients = await res.json();
