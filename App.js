@@ -2,7 +2,7 @@ import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 import * as Linking from 'expo-linking';
 import React, { PureComponent } from 'react';
-import { Alert, Animated } from 'react-native';
+import { Animated } from 'react-native';
 
 import { fetchData } from './src/api/fetchUtils';
 import StackNavigator from './src/components/navigation/StackNavigator';
@@ -29,8 +29,8 @@ export default class App extends PureComponent {
     firData: {},
     filters: {
       clientTypes: {
-        PILOT: true,
-        ATC: true,
+        pilots: true,
+        controllers: true,
       },
       controllerTypes: Object.fromEntries(
         Object.keys(controllerTypes).map(key => [key, true]),
@@ -63,22 +63,36 @@ export default class App extends PureComponent {
 
   getFilteredClients = () => {
     const { clients, filters } = this.state;
-    const pilots = clients.pilots || [];
-    return pilots.filter(
-      client =>
-        Object.keys(filters.clientTypes)
-          .filter(key => filters.clientTypes[key])
-          .includes(client.type) &&
-        (client.type !== 'ATC' ||
-          Object.keys(filters.controllerTypes)
-            .filter(key => filters.controllerTypes[key])
-            .includes(client.controllerType)) &&
-        (client.type !== 'PILOT' ||
-          (client.aircraft.includes(filters.aircraft) &&
-            client.callsign.includes(filters.airline) &&
-            (client.depAirport.includes(filters.airport) ||
-              client.arrAirport.includes(filters.airport)))),
+    const clientsByType = Object.entries(clients).reduce(
+      (acc, [clientType, clientsList]) => {
+        if (!filters.clientTypes[clientType]) return acc;
+        return [
+          ...acc,
+          ...clientsList.map(client => ({
+            ...client,
+            type: clientType,
+          })),
+        ];
+      },
+      [],
     );
+    const enabledControllerTypes = Object.keys(controllerTypes).filter(
+      key => controllerTypes[key],
+    );
+    const filteredClients = clientsByType.filter(
+      client =>
+        (client.type !== 'controllers' ||
+          enabledControllerTypes.some(controllerType =>
+            client.callsign.includes(controllerType),
+          )) &&
+        (client.type !== 'pilots' ||
+          (client.callsign.includes(filters.airline) &&
+            client.flight_plan?.aircraft.includes(filters.aircraft) &&
+            (client.flight_plan?.departure.includes(filters.airport) ||
+              client.flight_plan?.arrival.includes(filters.airport)))),
+    );
+    console.log(filteredClients);
+    return filteredClients;
   };
 
   setFilters = newFilters =>

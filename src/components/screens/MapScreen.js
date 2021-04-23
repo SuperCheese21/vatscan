@@ -10,6 +10,12 @@ import { screenPropsShape } from '../propTypeShapes';
 import { accent as accentColor } from '../../config/colors.json';
 
 export default class MapScreen extends PureComponent {
+  static navigationOptions = {
+    tabBarIcon: ({ tintColor }) => (
+      <Icon name="google-maps" size={20} color={tintColor} />
+    ),
+  };
+
   componentDidMount() {
     const { screenProps } = this.props;
 
@@ -29,12 +35,6 @@ export default class MapScreen extends PureComponent {
       screenProps.collapsePanel,
     );
   }
-
-  static navigationOptions = {
-    tabBarIcon: ({ tintColor }) => (
-      <Icon name="google-maps" size={20} color={tintColor} />
-    ),
-  };
 
   render() {
     const {
