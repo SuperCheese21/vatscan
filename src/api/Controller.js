@@ -1,19 +1,18 @@
 import React from 'react';
 
 import Client from './Client';
-import { getProjectedCoords } from './util';
 
 import ControllerPolygon from '../components/common/map-overlays/ControllerPolygon';
 import { controllerTypes, NUM_SIDES_CIRCLE } from '../config/constants.json';
+import { getProjectedCoords } from './utils';
 
 export default class Controller extends Client {
-  constructor(data, controllerType, center) {
-    super(data);
+  constructor(data, center) {
+    super(data, 'ATC');
 
-    this.controllerType = controllerType || 'Other';
-    this.frequency = data[4];
-    this.facilityType = data[18];
-    this.atisMessage = data[35];
+    this.frequency = data.frequency;
+    this.facilityType = data.facility;
+    this.atisMessage = data.text_atis;
 
     const controllerInfo = controllerTypes[this.controllerType];
 
@@ -59,5 +58,13 @@ export default class Controller extends Client {
       );
     }
     return null;
+  }
+
+  get controllerType() {
+    return (
+      Object.keys(controllerTypes).find(key =>
+        controllerTypes[key].typesList.includes(this.callsign.split('_').pop()),
+      ) || 'Other'
+    );
   }
 }

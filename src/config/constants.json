@@ -1,6 +1,6 @@
 {
   "STATUS_URL": "https://status.vatsim.net/status.json",
-  "MAP_DATA_URL": "https://api.vatsim.net/api/map_data/",
+  "CONTROLLER_URL": "https://cdn.orbxsystems.com/volanta/v1-network-controller.json",
   "UPDATE_INTERVAL": 60000,
   "EARTH_RADIUS_NM": 3440.06,
   "EARTH_RADIUS_M": 6371000,

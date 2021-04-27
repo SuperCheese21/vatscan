@@ -4,13 +4,18 @@ import * as Linking from 'expo-linking';
 import React, { PureComponent } from 'react';
 import { Animated } from 'react-native';
 
-import { fetchData } from './src/api/fetchUtils';
+import {
+  fetchData,
+  getFilteredClients,
+  transformClientData,
+  transformControllerData,
+} from './src/api/fetchUtils';
 import StackNavigator from './src/components/navigation/StackNavigator';
 import {
   controllerTypes,
   panelStates,
   panelTransitionDuration,
-  MAP_DATA_URL,
+  CONTROLLER_URL,
   UPDATE_INTERVAL,
   STATUS_URL,
 } from './src/config/constants.json';
@@ -18,19 +23,16 @@ import {
 export default class App extends PureComponent {
   // Initialize component state and fetch manager
   state = {
-    urls: {
-      clientDataUrls: [],
-      firDataUrl: '',
-    },
+    clientDataUrls: [],
     fontsLoaded: false,
     isLoading: false,
-    clients: {},
+    clients: [],
     focusedClient: {},
-    firData: {},
+    polygonCoords: {},
     filters: {
       clientTypes: {
-        pilots: true,
-        controllers: true,
+        PILOT: true,
+        ATC: true,
       },
       controllerTypes: Object.fromEntries(
         Object.keys(controllerTypes).map(key => [key, true]),
@@ -44,56 +46,15 @@ export default class App extends PureComponent {
   };
 
   componentDidMount() {
-    this.fetchDataUrls();
+    this.fetchClientDataUrls();
   }
 
   componentDidUpdate(_, prevState) {
-    const {
-      urls: { clientDataUrls, firDataUrl },
-    } = this.state;
-
-    if (!prevState.urls.clientDataUrls.length && clientDataUrls.length) {
-      this.updateClientData();
-    }
-
-    if (prevState.urls.firDataUrl !== firDataUrl) {
-      this.fetchFirData();
+    const { clientDataUrls } = this.state;
+    if (!prevState.clientDataUrls.length && clientDataUrls.length) {
+      this.fetchAllData(true);
     }
   }
-
-  getFilteredClients = () => {
-    const { clients, filters } = this.state;
-    const clientsByType = Object.entries(clients).reduce(
-      (acc, [clientType, clientsList]) => {
-        if (!filters.clientTypes[clientType]) return acc;
-        return [
-          ...acc,
-          ...clientsList.map(client => ({
-            ...client,
-            type: clientType,
-          })),
-        ];
-      },
-      [],
-    );
-    const enabledControllerTypes = Object.keys(controllerTypes).filter(
-      key => controllerTypes[key],
-    );
-    const filteredClients = clientsByType.filter(
-      client =>
-        (client.type !== 'controllers' ||
-          enabledControllerTypes.some(controllerType =>
-            client.callsign.includes(controllerType),
-          )) &&
-        (client.type !== 'pilots' ||
-          (client.callsign.includes(filters.airline) &&
-            client.flight_plan?.aircraft.includes(filters.aircraft) &&
-            (client.flight_plan?.departure.includes(filters.airport) ||
-              client.flight_plan?.arrival.includes(filters.airport)))),
-    );
-    console.log(filteredClients);
-    return filteredClients;
-  };
 
   setFilters = newFilters =>
     this.setState(({ filters: oldFilters }) => ({
@@ -116,7 +77,9 @@ export default class App extends PureComponent {
       duration: panelTransitionDuration,
       useNativeDriver: true,
     }).start();
-    this.setState({ panelPositionValue: newPosition });
+    this.setState({
+      panelPositionValue: newPosition,
+    });
   }
 
   collapsePanel = () => {
@@ -129,16 +92,11 @@ export default class App extends PureComponent {
 
     // Collapse panel and remove focused client
     this.setPanelPosition(panelStates.COLLAPSED);
-    this.setState({ focusedClient: {} });
+    this.setState({
+      focusedClient: {},
+    });
 
     return true;
-  };
-
-  transformFirData = rawFirData => {
-    const firData = rawFirData;
-    return {
-      data: firData,
-    };
   };
 
   loadFonts = async () => {
@@ -151,76 +109,78 @@ export default class App extends PureComponent {
     /* eslint-enable global-require */
   };
 
-  fetchDataUrls = async () => {
-    const [status, mapData] = await Promise.all([
-      fetchData(STATUS_URL, 'Unable to fetch client data URL').then(
-        res => res && res.json(),
-      ),
-      fetchData(MAP_DATA_URL, 'Unable to fetch ARTCC data URL').then(
-        res => res && res.json(),
-      ),
-    ]);
-    const clientDataUrls = status?.data?.v3 || [];
-    const firDataUrl = mapData?.fir_boundaries_dat_url || '';
-
-    this.setState({ urls: { clientDataUrls, firDataUrl } });
+  fetchClientDataUrls = async () => {
+    const status = await fetchData(
+      STATUS_URL,
+      'Unable to fetch client data URL',
+    );
+    this.setState({
+      clientDataUrls: status?.data?.v3 || [],
+    });
   };
 
-  updateClientData = async () => {
-    const {
-      urls: { clientDataUrls },
-    } = this.state;
+  fetchControllerData = async isInitialFetch => {
+    const controllerData = await fetchData(
+      CONTROLLER_URL,
+      isInitialFetch ? 'Unable to fetch ARTCC data' : '',
+    );
+    this.setState({
+      polygonCoords: transformControllerData(controllerData?.data),
+    });
+  };
 
-    this.setState({ isLoading: true });
-    const res = await fetchData(clientDataUrls, 'Unable to fetch client data');
-    this.setState({ isLoading: false });
+  fetchClientData = async () => {
+    const { clientDataUrls } = this.state;
 
-    if (!res) return;
+    this.setState({
+      isLoading: true,
+    });
+    const clientData = await fetchData(
+      clientDataUrls,
+      'Unable to fetch client data',
+    );
+    this.setState({
+      clients: transformClientData(clientData),
+      isLoading: false,
+    });
+  };
 
-    const clients = await res.json();
-    this.setState({ clients });
+  fetchAllData = async isInitialFetch => {
+    const { polygonCoords } = this.state;
 
-    // Clear existing timeout
-    if (this.timer) {
-      clearTimeout(this.timer);
+    if (!Object.keys(polygonCoords)) {
+      await this.fetchControllerData(isInitialFetch);
     }
 
-    // Set timeout for next data update
-    this.timer = setTimeout(() => this.updateClientData(), UPDATE_INTERVAL);
-  };
+    await this.fetchClientData();
 
-  fetchFirData = async () => {
-    const {
-      urls: { firDataUrl },
-    } = this.state;
-
-    const res = await fetchData(firDataUrl, 'Unable to fetch ARTCC data');
-    if (!res) return;
-
-    const rawFirData = await res.text();
-    const firData = this.transformFirData(rawFirData);
-
-    this.setState({ firData });
+    if (this.timer) clearTimeout(this.timer);
+    this.timer = setTimeout(() => this.fetchAllData(), UPDATE_INTERVAL);
   };
 
   render() {
     const {
+      clients,
       filters,
       fontsLoaded,
       isLoading,
       focusedClient,
-      firData,
+      polygonCoords,
       panelPosition,
     } = this.state;
 
-    const filteredClients = this.getFilteredClients();
+    const filteredClients = getFilteredClients(clients, filters);
 
     // Show app loading screen if font is still being loaded
     if (!fontsLoaded) {
       return (
         <AppLoading
           startAsync={this.loadFonts}
-          onFinish={() => this.setState({ fontsLoaded: true })}
+          onFinish={() =>
+            this.setState({
+              fontsLoaded: true,
+            })
+          }
           onError={console.warn}
         />
       );
@@ -235,9 +195,9 @@ export default class App extends PureComponent {
           filters,
           filteredClients,
           focusedClient,
-          firData,
+          polygonCoords,
           panelPosition,
-          updateData: this.updateClientData,
+          updateData: this.fetchAllData,
           setFilters: this.setFilters,
           setFocusedClient: this.setFocusedClient,
           collapsePanel: this.collapsePanel,

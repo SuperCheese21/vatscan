@@ -2,7 +2,7 @@ import moment from 'moment';
 import React from 'react';
 
 import Client from './Client';
-import { getAirportCoords, getCityName, getGCDistance } from './util';
+import { getAirportCoords, getCityName, getGCDistance } from './utils';
 
 import constants from '../config/constants.json';
 import AircraftMarker from '../components/common/map-overlays/AircraftMarker';
@@ -12,22 +12,25 @@ import WIDEBODY_ICON from '../../assets/icons/widebody.png';
 
 export default class Pilot extends Client {
   constructor(data) {
-    super(data);
-    this.altitude = data[7];
-    this.groundSpeed = parseInt(data[8], 10) || 0;
-    this.aircraft = data[9];
-    this.tasCruise = data[10];
-    this.depAirport = data[11];
-    this.plannedAltitude = data[12];
-    this.arrAirport = data[13];
-    this.transponder = data[17];
-    this.flightType = data[21];
-    this.depTime = data[22];
-    this.hrsEnRoute = parseInt(data[24], 10) || 0;
-    this.minEnRoute = parseInt(data[25], 10) || 0;
-    this.remarks = data[29];
-    this.route = data[30];
-    this.heading = parseFloat(data[38]) || 0;
+    super(data, 'PILOT');
+
+    this.latitude = data.latitude || 0;
+    this.longitude = data.longitude || 0;
+    this.altitude = data.altitude;
+    this.groundSpeed = data.groundspeed;
+    this.heading = data.heading;
+    this.transponder = data.transponder;
+    this.aircraft = data.flight_plan?.aircraft || '';
+    this.tasCruise = data.flight_plan?.cruise_tas;
+    this.depAirport = data.flight_plan?.departure || '';
+    this.plannedAltitude = data.flight_plan?.altitude;
+    this.arrAirport = data.flight_plan?.arrival || '';
+    this.flightType = data.flight_plan?.flight_rules;
+    this.depTime = data.flight_plan?.deptime;
+    this.hrsEnRoute = data.flight_plan?.enroute_time.substring(0, 2);
+    this.minEnRoute = data.flight_plan?.enroute_time.substring(2);
+    this.remarks = data.flight_plan?.remarks;
+    this.route = data.flight_plan?.route;
   }
 
   getMapOverlay(isFocusedClient, setFocusedClient) {
@@ -47,6 +50,13 @@ export default class Pilot extends Client {
     }
 
     return false;
+  }
+
+  get location() {
+    return {
+      latitude: this.latitude,
+      longitude: this.longitude,
+    };
   }
 
   get aircraftType() {
