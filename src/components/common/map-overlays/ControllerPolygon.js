@@ -14,7 +14,7 @@ export default class ControllerPolygon extends MapOverlay {
       },
       isFocusedClient,
     } = this.props;
-    return (
+    return polygonCoords.length ? (
       <Polygon
         coordinates={polygonCoords}
         zIndex={zIndex}
@@ -24,7 +24,7 @@ export default class ControllerPolygon extends MapOverlay {
         onPress={this.onPress}
         tappable
       />
-    );
+    ) : null;
   }
 }
 

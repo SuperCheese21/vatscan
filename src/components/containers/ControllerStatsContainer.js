@@ -20,8 +20,8 @@ const ControllerStatsContainer = ({ client }) => (
     <Map
       style={{ width: '100%', marginTop: 5, height: 350 }}
       initialRegion={{
-        latitude: client.latitude,
-        longitude: client.longitude,
+        latitude: client.location?.latitude || 0,
+        longitude: client.location?.longitude || 0,
         latitudeDelta: 5,
         longitudeDelta: 5,
       }}

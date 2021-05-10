@@ -56,6 +56,10 @@ export default class App extends PureComponent {
     }
   }
 
+  setAsyncState = async newState => {
+    await new Promise(resolve => this.setState({ ...newState }, resolve));
+  };
+
   setFilters = newFilters =>
     this.setState(({ filters: oldFilters }) => ({
       filters: {
@@ -114,7 +118,7 @@ export default class App extends PureComponent {
       STATUS_URL,
       'Unable to fetch client data URL',
     );
-    this.setState({
+    await this.setAsyncState({
       clientDataUrls: status?.data?.v3 || [],
     });
   };
@@ -124,35 +128,34 @@ export default class App extends PureComponent {
       CONTROLLER_URL,
       isInitialFetch ? 'Unable to fetch ARTCC data' : '',
     );
-    this.setState({
+    this.setAsyncState({
       polygonCoords: transformControllerData(controllerData?.data),
     });
   };
 
   fetchClientData = async () => {
-    const { clientDataUrls } = this.state;
-
-    this.setState({
-      isLoading: true,
-    });
+    const { clientDataUrls, polygonCoords } = this.state;
     const clientData = await fetchData(
       clientDataUrls,
       'Unable to fetch client data',
     );
-    this.setState({
-      clients: transformClientData(clientData),
-      isLoading: false,
+    await this.setAsyncState({
+      clients: transformClientData(clientData, polygonCoords),
     });
   };
 
   fetchAllData = async isInitialFetch => {
     const { polygonCoords } = this.state;
 
-    if (!Object.keys(polygonCoords)) {
+    this.setState({ isLoading: true });
+
+    if (!Object.keys(polygonCoords).length) {
       await this.fetchControllerData(isInitialFetch);
     }
 
     await this.fetchClientData();
+
+    this.setState({ isLoading: false });
 
     if (this.timer) clearTimeout(this.timer);
     this.timer = setTimeout(() => this.fetchAllData(), UPDATE_INTERVAL);

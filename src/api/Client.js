@@ -3,7 +3,7 @@ import moment from 'moment';
 export default class Client {
   constructor(data, type) {
     this.callsign = data.callsign;
-    this.id = data.cid;
+    this.id = data.cid.toString();
     this.name = data.name;
     this.type = type;
     this.server = data.server;

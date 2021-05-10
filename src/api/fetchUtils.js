@@ -32,9 +32,9 @@ export const fetchData = async (urls, errorTitle) => {
 };
 
 export const transformControllerData = (controllerData = []) =>
-  controllerData.reduce((acc, { session, polygon = [], location = {} }) => {
+  controllerData.reduce((acc, { session, polygon, location }) => {
     const callsign = session?.callsign;
-    if (callsign && (polygon.length || location.latitude)) {
+    if (callsign && (polygon?.length || location?.latitude)) {
       return {
         ...acc,
         [callsign]: { polygon, location },
@@ -45,11 +45,13 @@ export const transformControllerData = (controllerData = []) =>
 
 export const transformClientData = (
   clientData = { pilots: [], controllers: [] },
+  polygonCoords = {},
 ) => {
   const pilots = clientData.pilots.map(pilotData => new Pilot(pilotData));
-  const controllers = clientData.controllers.map(
-    controllerData => new Controller(controllerData),
-  );
+  const controllers = clientData.controllers.map(controllerData => {
+    const coords = polygonCoords[controllerData.callsign];
+    return new Controller(controllerData, coords);
+  });
   return [...pilots, ...controllers];
 };
 

@@ -7,43 +7,18 @@ import { controllerTypes, NUM_SIDES_CIRCLE } from '../config/constants.json';
 import { getProjectedCoords } from './utils';
 
 export default class Controller extends Client {
-  constructor(data, center) {
+  constructor(data, coords) {
     super(data, 'ATC');
 
     this.frequency = data.frequency;
     this.facilityType = data.facility;
-    this.atisMessage = data.text_atis;
+    this.atisMessage = data.text_atis?.join('\n') || '';
 
     const controllerInfo = controllerTypes[this.controllerType];
 
     this.fullName = controllerInfo.fullName;
-    this.polygonInfo = controllerInfo.polygon;
-
-    // Set polygon coords if polygon info is defined
-    if (this.polygonInfo) {
-      // Use ARTCC boundaries given by external API
-      if (center) {
-        this.polygon = center.bounds[0].map(([lat, lon]) => ({
-          latitude: parseFloat(lat),
-          longitude: parseFloat(lon),
-        }));
-      }
-
-      // Otherwise render circle
-      else {
-        this.polygonCoords = [];
-        for (let i = 0; i < NUM_SIDES_CIRCLE; i += 1) {
-          const bearing = (360 / NUM_SIDES_CIRCLE) * i;
-          this.polygonCoords.push(
-            getProjectedCoords(
-              this.location,
-              this.polygonInfo.radiusM,
-              bearing,
-            ),
-          );
-        }
-      }
-    }
+    this.polygon = coords?.polygon;
+    this.location = coords?.location;
   }
 
   getMapOverlay(isFocusedClient, setFocusedClient) {
@@ -66,5 +41,32 @@ export default class Controller extends Client {
         controllerTypes[key].typesList.includes(this.callsign.split('_').pop()),
       ) || 'Other'
     );
+  }
+
+  get polygonInfo() {
+    const controllerInfo = controllerTypes[this.controllerType];
+    return controllerInfo?.polygon;
+  }
+
+  get polygonCoords() {
+    if (this.polygon?.length) {
+      return this.polygon[0].polygon.map(([lat, lon]) => ({
+        latitude: parseFloat(lat),
+        longitude: parseFloat(lon),
+      }));
+    }
+
+    if (this.location && this.polygonInfo) {
+      const polygonCoords = [];
+      for (let i = 0; i < NUM_SIDES_CIRCLE; i += 1) {
+        const bearing = (360 / NUM_SIDES_CIRCLE) * i;
+        polygonCoords.push(
+          getProjectedCoords(this.location, this.polygonInfo.radiusM, bearing),
+        );
+      }
+      return polygonCoords;
+    }
+
+    return [];
   }
 }
