@@ -1,4 +1,6 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import utc from 'dayjs/plugin/utc';
 import React from 'react';
 
 import Client from './Client';
@@ -10,6 +12,9 @@ import GA_ICON from '../../assets/icons/ga.png';
 import NARROWBODY_ICON from '../../assets/icons/narrowbody.png';
 import WIDEBODY_ICON from '../../assets/icons/widebody.png';
 
+dayjs.extend(customParseFormat);
+dayjs.extend(utc);
+
 export default class Pilot extends Client {
   constructor(data) {
     super(data, 'PILOT');
@@ -20,15 +25,15 @@ export default class Pilot extends Client {
     this.groundSpeed = data.groundspeed;
     this.heading = data.heading;
     this.transponder = data.transponder;
-    this.aircraft = data.flight_plan?.aircraft || '';
+    this.aircraft = data.flight_plan?.aircraft || 'N/A';
     this.tasCruise = data.flight_plan?.cruise_tas;
-    this.depAirport = data.flight_plan?.departure || '';
+    this.depAirport = data.flight_plan?.departure || '????';
     this.plannedAltitude = data.flight_plan?.altitude;
-    this.arrAirport = data.flight_plan?.arrival || '';
+    this.arrAirport = data.flight_plan?.arrival || '????';
     this.flightType = data.flight_plan?.flight_rules;
     this.depTime = data.flight_plan?.deptime;
-    this.hrsEnRoute = data.flight_plan?.enroute_time.substring(0, 2);
-    this.minEnRoute = data.flight_plan?.enroute_time.substring(2);
+    this.hrsEnRoute = data.flight_plan?.enroute_time?.substring(0, 2);
+    this.minEnRoute = data.flight_plan?.enroute_time?.substring(2);
     this.remarks = data.flight_plan?.remarks;
     this.route = data.flight_plan?.route;
   }
@@ -117,7 +122,10 @@ export default class Pilot extends Client {
   }
 
   get progress() {
-    return this.distFlown / (this.distFlown + this.distRemaining);
+    if (this.distFlown >= 0 && this.distRemaining > 0) {
+      return this.distFlown / (this.distFlown + this.distRemaining);
+    }
+    return 0;
   }
 
   get depCityName() {
@@ -129,20 +137,22 @@ export default class Pilot extends Client {
   }
 
   get plannedDepTime() {
-    return `${this.depTime.padStart(4, '0')}z`;
+    const formattedTime = this.depTime?.padStart(4, '0');
+    return formattedTime ? `${formattedTime}z` : 'N/A';
   }
 
   get plannedDuration() {
-    if (this.hrsEnRoute || this.minEnRoute) {
-      return `${this.hrsEnRoute} hrs ${this.minEnRoute} min`;
+    if (this.hrsEnRoute && this.minEnRoute) {
+      return `${Number(this.hrsEnRoute)} hrs ${this.minEnRoute} min`;
     }
     return 'N/A';
   }
 
   get plannedArrTime() {
-    if (this.hrsEnRoute || this.minEnRoute) {
-      const departureTime = moment.utc(this.depTime.padStart(4, '0'), 'HHmm');
-      const flightDuration = 60 * this.hrsEnRoute + this.minEnRoute;
+    if (this.depTime && this.hrsEnRoute && this.minEnRoute) {
+      const departureTime = dayjs.utc(this.depTime.padStart(4, '0'), 'HHmm');
+      const flightDuration =
+        60 * Number(this.hrsEnRoute) + Number(this.minEnRoute);
       return `${departureTime.add(flightDuration, 'm').format('HHmm')}z`;
     }
     return 'N/A';
@@ -151,7 +161,7 @@ export default class Pilot extends Client {
   get ete() {
     const eteMinutes = this.eteMinutes;
     if (eteMinutes > 0) {
-      return moment.utc(eteMinutes * 60000).format('H:mm');
+      return dayjs.utc(eteMinutes * 60000).format('H:mm');
     }
     return null;
   }
@@ -159,7 +169,7 @@ export default class Pilot extends Client {
   get eta() {
     const eteMinutes = this.eteMinutes;
     if (eteMinutes > 0) {
-      return moment.utc().add(eteMinutes, 'm').format('HHmm');
+      return dayjs.utc().add(eteMinutes, 'm').format('HHmm');
     }
     return null;
   }

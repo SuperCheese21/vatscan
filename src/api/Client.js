@@ -1,4 +1,8 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
+import utc from 'dayjs/plugin/utc';
+
+dayjs.extend(advancedFormat, utc);
 
 export default class Client {
   constructor(data, type) {
@@ -12,9 +16,9 @@ export default class Client {
   }
 
   get elapsedTimeLogon() {
-    const now = moment().format('x');
-    const then = moment(this.timeLogon).format('x');
+    const now = dayjs().format('x');
+    const then = dayjs(this.timeLogon).format('x');
 
-    return moment.utc(now - then).format('HH:mm');
+    return dayjs.utc(now - then).format('HH:mm');
   }
 }
