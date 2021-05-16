@@ -3,6 +3,7 @@ import React from 'react';
 import { ViewPropTypes } from 'react-native';
 import MapView from 'react-native-maps';
 
+import { childrenShape } from '../propTypeShapes';
 import { initialMapRegion } from '../../config/constants.json';
 import mapStyle from '../../config/map-styles/style_blue_essence.json';
 
@@ -32,10 +33,7 @@ const initialRegionShape = PropTypes.shape({
 });
 
 Map.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.node,
-    PropTypes.arrayOf(PropTypes.node),
-  ]),
+  children: childrenShape,
   initialRegion: initialRegionShape,
   onPress: PropTypes.func,
   style: ViewPropTypes.style,

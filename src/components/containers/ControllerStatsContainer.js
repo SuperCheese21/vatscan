@@ -12,7 +12,7 @@ const ControllerStatsContainer = ({ client }) => (
   <StatsContainer>
     <StatsLabel text="Controller Info" />
 
-    <StatsRow label="Type" text={client.typeString} />
+    <StatsRow label="Type" text={client.fullName} />
     <StatsRow label="Frequency" text={client.frequency} />
 
     <TextBlock text={client.atisMessage} />
@@ -20,8 +20,8 @@ const ControllerStatsContainer = ({ client }) => (
     <Map
       style={{ width: '100%', marginTop: 5, height: 350 }}
       initialRegion={{
-        latitude: client.latitude,
-        longitude: client.longitude,
+        latitude: client.location?.latitude || 0,
+        longitude: client.location?.longitude || 0,
         latitudeDelta: 5,
         longitudeDelta: 5,
       }}

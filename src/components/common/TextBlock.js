@@ -34,7 +34,11 @@ export default class TextBlock extends PureComponent {
 }
 
 TextBlock.propTypes = {
-  text: PropTypes.string.isRequired,
+  text: PropTypes.string,
+};
+
+TextBlock.defaultProps = {
+  text: null,
 };
 
 const styles = StyleSheet.create({

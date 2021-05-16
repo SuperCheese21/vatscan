@@ -5,7 +5,6 @@ import { View } from 'react-native';
 import StatsContainer from './StatsContainer';
 
 import Map from '../common/Map';
-import AircraftMarker from '../common/map-overlays/AircraftMarker';
 import StatsLabel from '../common/StatsLabel';
 import StatsRow from '../common/StatsRow';
 
@@ -32,8 +31,14 @@ const FlightStatsContainer = ({ client }) => (
     </View>
 
     <View style={{ flexDirection: 'row' }}>
-      <StatsRow label="Flown" text={`${client.distFlown} nm`} />
-      <StatsRow label="Remaining" text={`${client.distRemaining} nm`} />
+      <StatsRow
+        label="Flown"
+        text={client.distFlown >= 0 ? `${client.distFlown} nm` : 'N/A'}
+      />
+      <StatsRow
+        label="Remaining"
+        text={client.distRemaining >= 0 ? `${client.distRemaining} nm` : 'N/A'}
+      />
     </View>
 
     <View style={{ flexDirection: 'row' }}>

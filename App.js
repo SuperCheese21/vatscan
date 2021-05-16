@@ -1,57 +1,107 @@
-import { AppLoading, Linking } from 'expo';
+import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
+import * as Linking from 'expo-linking';
 import React, { PureComponent } from 'react';
-import { Alert, Animated } from 'react-native';
-import NetInfo from '@react-native-community/netinfo';
+import { Animated } from 'react-native';
 
-import FetchManager from './src/api/FetchManager';
+import {
+  fetchData,
+  getFilteredClients,
+  transformClientData,
+  transformControllerData,
+} from './src/api/fetchUtils';
 import StackNavigator from './src/components/navigation/StackNavigator';
 import {
+  controllerTypes,
   panelStates,
   panelTransitionDuration,
+  CONTROLLER_URL,
   UPDATE_INTERVAL,
+  STATUS_URL,
 } from './src/config/constants.json';
 
 export default class App extends PureComponent {
   // Initialize component state and fetch manager
   state = {
+    clientDataUrls: [],
     fontsLoaded: false,
-    loading: false,
+    isLoading: false,
     clients: [],
     focusedClient: {},
+    polygonCoords: {},
+    filters: {
+      clientTypes: {
+        PILOT: true,
+        ATC: true,
+      },
+      controllerTypes: Object.fromEntries(
+        Object.keys(controllerTypes).map(key => [key, true]),
+      ),
+      aircraft: '',
+      airline: '',
+      airport: '',
+    },
     panelPosition: new Animated.Value(panelStates.COLLAPSED),
+    panelPositionValue: panelStates.COLLAPSED,
   };
-
-  fetchManager = new FetchManager();
 
   componentDidMount() {
-    // Automatically pull data update when internet connection is changed
-    this.unsubscribe = NetInfo.addEventListener(() => this.updateData(true));
+    this.fetchClientDataUrls();
   }
 
-  componentWillUnmount() {
-    // Unsubscribe from updates on internet connection changes
-    this.unsubscribe();
-  }
-
-  setFocusedClient = client => {
-    if (client.type === 'PILOT') {
-      this.setPanelPosition(panelStates.EXPANDED_PILOT);
-    } else if (client.type === 'ATC') {
-      this.setPanelPosition(panelStates.EXPANDED_ATC);
+  componentDidUpdate(_, prevState) {
+    const { clientDataUrls } = this.state;
+    if (!prevState.clientDataUrls.length && clientDataUrls.length) {
+      this.fetchAllData(true);
     }
-    this.setState({ focusedClient: client });
+  }
+
+  setAsyncState = async newState => {
+    await new Promise(resolve => this.setState({ ...newState }, resolve));
   };
 
-  setPanelPosition(position) {
+  setFilters = newFilters =>
+    this.setState(({ filters: oldFilters }) => ({
+      filters: {
+        ...oldFilters,
+        ...newFilters,
+      },
+    }));
+
+  setFocusedClient = focusedClient => {
+    this.setPanelPosition(panelStates[`EXPANDED_${focusedClient.type}`]);
+    this.setState({ focusedClient });
+  };
+
+  setPanelPosition(newPosition) {
     // Animate info panel position change
     const { panelPosition } = this.state;
     Animated.timing(panelPosition, {
-      toValue: position,
+      toValue: newPosition,
       duration: panelTransitionDuration,
       useNativeDriver: true,
     }).start();
+    this.setState({
+      panelPositionValue: newPosition,
+    });
   }
+
+  collapsePanel = () => {
+    const { panelPositionValue } = this.state;
+
+    // Check if panel is collapsed, exit app if it is
+    if (panelPositionValue === panelStates.COLLAPSED) {
+      return false;
+    }
+
+    // Collapse panel and remove focused client
+    this.setPanelPosition(panelStates.COLLAPSED);
+    this.setState({
+      focusedClient: {},
+    });
+
+    return true;
+  };
 
   loadFonts = async () => {
     /* eslint-disable global-require */
@@ -63,74 +113,77 @@ export default class App extends PureComponent {
     /* eslint-enable global-require */
   };
 
-  updateData = async isInitialFetch => {
-    this.setState({ loading: true });
-
-    // Check internet connection and alert if there is no connection
-    const connectionInfo = await NetInfo.fetch();
-    if (connectionInfo.type === 'none' || connectionInfo.type === 'unknown') {
-      this.setState({ loading: false });
-      Alert.alert(
-        'No internet connection',
-        'Connect to the internet to update data',
-      );
-      return;
-    }
-
-    // Fetch data
-    const clients = await this.fetchManager.fetchData(isInitialFetch);
-
-    // Update state with new client data
-    this.handleUpdatedData(clients);
-
-    // Clear existing timeout
-    if (this.timer) {
-      clearTimeout(this.timer);
-    }
-
-    // Set timeout for next data update
-    this.timer = setTimeout(this.updateData, UPDATE_INTERVAL);
-  };
-
-  collapsePanel = () => {
-    // Collapse panel and remove focused client
-    this.setPanelPosition(panelStates.COLLAPSED);
-    this.setState({ focusedClient: {} });
-
-    return true;
-  };
-
-  handleUpdatedData(clients) {
-    const {
-      focusedClient: { callsign: focusedCallsign },
-    } = this.state;
-
-    const focusedClient =
-      clients.find(client => client.callsign === focusedCallsign) || {};
-
-    // Update state with new data
-    this.setState({
-      loading: false,
-      clients,
-      focusedClient,
+  fetchClientDataUrls = async () => {
+    const status = await fetchData(
+      STATUS_URL,
+      'Unable to fetch client data URL',
+    );
+    await this.setAsyncState({
+      clientDataUrls: status?.data?.v3 || [],
     });
-  }
+  };
+
+  fetchControllerData = async isInitialFetch => {
+    const controllerData = await fetchData(
+      CONTROLLER_URL,
+      isInitialFetch ? 'Unable to fetch ARTCC data' : '',
+    );
+    this.setAsyncState({
+      polygonCoords: transformControllerData(controllerData?.data),
+    });
+  };
+
+  fetchClientData = async () => {
+    const { clientDataUrls, polygonCoords } = this.state;
+    const clientData = await fetchData(
+      clientDataUrls,
+      'Unable to fetch client data',
+    );
+    await this.setAsyncState({
+      clients: transformClientData(clientData, polygonCoords),
+    });
+  };
+
+  fetchAllData = async isInitialFetch => {
+    const { polygonCoords } = this.state;
+
+    this.setState({ isLoading: true });
+
+    if (!Object.keys(polygonCoords).length) {
+      await this.fetchControllerData(isInitialFetch);
+    }
+
+    await this.fetchClientData();
+
+    this.setState({ isLoading: false });
+
+    if (this.timer) clearTimeout(this.timer);
+    this.timer = setTimeout(() => this.fetchAllData(), UPDATE_INTERVAL);
+  };
 
   render() {
     const {
-      fontsLoaded,
-      loading,
       clients,
+      filters,
+      fontsLoaded,
+      isLoading,
       focusedClient,
+      polygonCoords,
       panelPosition,
     } = this.state;
+
+    const filteredClients = getFilteredClients(clients, filters);
 
     // Show app loading screen if font is still being loaded
     if (!fontsLoaded) {
       return (
         <AppLoading
           startAsync={this.loadFonts}
-          onFinish={() => this.setState({ fontsLoaded: true })}
+          onFinish={() =>
+            this.setState({
+              fontsLoaded: true,
+            })
+          }
           onError={console.warn}
         />
       );
@@ -141,11 +194,14 @@ export default class App extends PureComponent {
       <StackNavigator
         uriPrefix={Linking.makeUrl('/')}
         screenProps={{
-          loading,
-          clients,
+          isLoading,
+          filters,
+          filteredClients,
           focusedClient,
+          polygonCoords,
           panelPosition,
-          refresh: this.updateData,
+          updateData: this.fetchAllData,
+          setFilters: this.setFilters,
           setFocusedClient: this.setFocusedClient,
           collapsePanel: this.collapsePanel,
         }}
