@@ -1,6 +1,6 @@
 {
   "name": "vatscan",
-  "version": "0.7.17",
+  "version": "0.8.0",
   "private": true,
   "main": "node_modules/expo/AppEntry.js",
   "devDependencies": {

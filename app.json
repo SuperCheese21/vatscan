@@ -4,7 +4,7 @@
     "description": "The premier, next generation live VATSIM map for mobile",
     "slug": "vatscan",
     "privacy": "public",
-    "version": "0.7.19",
+    "version": "0.8.0",
     "platforms": ["ios", "android"],
     "githubUrl": "https://github.com/SuperCheese21/vatscan",
     "primaryColor": "#1b252b",
@@ -22,7 +22,7 @@
     },
     "ios": {
       "bundleIdentifier": "com.stratospherelabs.vatscan",
-      "buildNumber": "0.7.19",
+      "buildNumber": "0.8.0",
       "supportsTablet": true,
       "config": {
         "googleMapsApiKey": "AIzaSyDTYczc4NXP-wktSRpKO9C5Uo7M0KM8420"
