@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Image } from 'react-native';
 import { Marker } from 'react-native-maps';
 
 import FlightPath from './FlightPath';
@@ -11,15 +12,18 @@ export default class AircraftMarker extends MapOverlay {
     return (
       <>
         <Marker
-          image={client.aircraftIcon}
           rotation={client.heading}
           coordinate={client.location}
           opacity={isFocusedClient ? 2 : 1.1}
           onPress={this.onPress}
           anchor={{ x: 0.5, y: 0.5 }}
-          tracksViewChanges={false}
           stopPropagation
-        />
+        >
+          <Image
+            source={client.aircraftIcon}
+            style={client.aircraftIconStyle}
+          />
+        </Marker>
         <FlightPath client={client} visible={isFocusedClient} />
       </>
     );
