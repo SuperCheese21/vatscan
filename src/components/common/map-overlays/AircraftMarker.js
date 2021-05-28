@@ -17,6 +17,7 @@ export default class AircraftMarker extends MapOverlay {
           opacity={isFocusedClient ? 2 : 1.1}
           onPress={this.onPress}
           anchor={{ x: 0.5, y: 0.5 }}
+          tracksViewChanges={false}
           stopPropagation
         >
           <Image
