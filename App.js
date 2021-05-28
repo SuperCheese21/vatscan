@@ -1,6 +1,7 @@
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 import * as Linking from 'expo-linking';
+import { StatusBar } from 'expo-status-bar';
 import React, { PureComponent } from 'react';
 import { Animated } from 'react-native';
 
@@ -54,6 +55,10 @@ export default class App extends PureComponent {
     if (!prevState.clientDataUrls.length && clientDataUrls.length) {
       this.fetchAllData(true);
     }
+  }
+
+  componentWillUnmount() {
+    if (this.timer) clearTimeout(this.timer);
   }
 
   setAsyncState = async newState => {
@@ -174,38 +179,39 @@ export default class App extends PureComponent {
 
     const filteredClients = getFilteredClients(clients, filters);
 
-    // Show app loading screen if font is still being loaded
-    if (!fontsLoaded) {
-      return (
-        <AppLoading
-          startAsync={this.loadFonts}
-          onFinish={() =>
-            this.setState({
-              fontsLoaded: true,
-            })
-          }
-          onError={console.warn}
-        />
-      );
-    }
-
     // Otherwise show top-level view
     return (
-      <StackNavigator
-        uriPrefix={Linking.makeUrl('/')}
-        screenProps={{
-          isLoading,
-          filters,
-          filteredClients,
-          focusedClient,
-          polygonCoords,
-          panelPosition,
-          updateData: this.fetchAllData,
-          setFilters: this.setFilters,
-          setFocusedClient: this.setFocusedClient,
-          collapsePanel: this.collapsePanel,
-        }}
-      />
+      <>
+        {fontsLoaded ? (
+          <StackNavigator
+            uriPrefix={Linking.makeUrl('/')}
+            screenProps={{
+              isLoading,
+              filters,
+              filteredClients,
+              focusedClient,
+              polygonCoords,
+              panelPosition,
+              updateData: this.fetchAllData,
+              setFilters: this.setFilters,
+              setFocusedClient: this.setFocusedClient,
+              collapsePanel: this.collapsePanel,
+            }}
+          />
+        ) : (
+          <AppLoading
+            startAsync={this.loadFonts}
+            onFinish={() =>
+              this.setState({
+                fontsLoaded: true,
+              })
+            }
+            onError={console.warn}
+          />
+        )}
+        {/* eslint-disable-next-line react/style-prop-object */}
+        <StatusBar style="light" />
+      </>
     );
   }
 }

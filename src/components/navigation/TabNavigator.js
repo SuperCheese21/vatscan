@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import { Alert } from 'react-native';
 import { IconButton } from 'react-native-paper';
 import { createAppContainer } from 'react-navigation';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
@@ -14,7 +15,7 @@ class TabNavigatorContainer extends PureComponent {
       <IconButton
         icon="settings"
         color={accent}
-        onPress={() => stackNavigation.navigate('SettingsScreen')}
+        onPress={() => Alert.alert('Coming Soon!')}
       />
     ),
     headerRight: () => (
