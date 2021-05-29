@@ -105,6 +105,19 @@ export default class Pilot extends Client {
     return GA_ICON;
   }
 
+  get aircraftIconStyle() {
+    switch (this.aircraftIcon) {
+      case WIDEBODY_ICON:
+        return { width: 35, height: 35 };
+      case NARROWBODY_ICON:
+        return { width: 30, height: 30 };
+      case GA_ICON:
+        return { width: 25, height: 25 };
+      default:
+        return { width: 0, height: 0 };
+    }
+  }
+
   get depCoords() {
     return getAirportCoords(this.depAirport);
   }
