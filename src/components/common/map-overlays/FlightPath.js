@@ -14,6 +14,7 @@ const FlightPath = ({
           coordinates={[depCoords, location]}
           strokeColor="#00FF00"
           strokeWidth={2}
+          lineDashPattern={[0]}
           zIndex={5}
           geodesic
         />
@@ -21,6 +22,7 @@ const FlightPath = ({
           coordinates={[location, arrCoords]}
           strokeColor="#FF0000"
           strokeWidth={2}
+          lineDashPattern={[0]}
           zIndex={5}
           geodesic
         />

@@ -13,7 +13,7 @@ class TabNavigatorContainer extends PureComponent {
   static navigationOptions = ({ navigation: stackNavigation }) => ({
     headerLeft: () => (
       <IconButton
-        icon="settings"
+        icon="cog"
         color={accent}
         onPress={() => Alert.alert('Coming Soon!')}
       />
