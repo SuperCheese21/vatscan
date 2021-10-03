@@ -5,29 +5,23 @@ import { StatusBar } from 'expo-status-bar';
 import React, { PureComponent } from 'react';
 import { Animated } from 'react-native';
 
-import {
-  fetchData,
-  getFilteredClients,
-  transformClientData,
-  transformControllerData,
-} from './src/api/fetchUtils';
+import { fetchData, getFilteredClients } from './src/api/fetchUtils';
 import StackNavigator from './src/components/navigation/StackNavigator';
 import {
   controllerTypes,
   panelStates,
   panelTransitionDuration,
-  CONTROLLER_URL,
-  UPDATE_INTERVAL,
-  STATUS_URL,
+  DATA_SOURCES,
 } from './src/config/constants.json';
 
 export default class App extends PureComponent {
   // Initialize component state and fetch manager
   state = {
-    clientDataUrls: [],
     fontsLoaded: false,
-    isLoading: false,
-    clients: [],
+    loadingStates: {},
+    data: {},
+    timerIds: {},
+    clients: {},
     focusedClient: {},
     polygonCoords: {},
     filters: {
@@ -47,23 +41,15 @@ export default class App extends PureComponent {
   };
 
   componentDidMount() {
-    this.fetchClientDataUrls();
-  }
-
-  componentDidUpdate(_, prevState) {
-    const { clientDataUrls } = this.state;
-    if (!prevState.clientDataUrls.length && clientDataUrls.length) {
-      this.fetchAllData(true);
-    }
+    this.fetchAllData();
   }
 
   componentWillUnmount() {
-    if (this.timer) clearTimeout(this.timer);
+    const { timerIds } = this.state;
+    Object.values(timerIds).forEach(timerId => {
+      if (timerId) clearTimeout(timerId);
+    });
   }
-
-  setAsyncState = async newState => {
-    await new Promise(resolve => this.setState({ ...newState }, resolve));
-  };
 
   setFilters = newFilters =>
     this.setState(({ filters: oldFilters }) => ({
@@ -118,68 +104,80 @@ export default class App extends PureComponent {
     /* eslint-enable global-require */
   };
 
-  fetchClientDataUrls = async () => {
-    const status = await fetchData(
-      STATUS_URL,
-      'Unable to fetch client data URL',
-    );
-    await this.setAsyncState({
-      clientDataUrls: status?.data?.v3 || [],
-    });
-  };
-
-  fetchControllerData = async isInitialFetch => {
-    const controllerData = await fetchData(
-      CONTROLLER_URL,
-      isInitialFetch ? 'Unable to fetch ARTCC data' : '',
-    );
-    this.setAsyncState({
-      polygonCoords: transformControllerData(controllerData?.data),
-    });
-  };
-
-  fetchClientData = async () => {
-    const { clientDataUrls, polygonCoords } = this.state;
-    const clientData = await fetchData(
-      clientDataUrls,
-      'Unable to fetch client data',
-    );
-    await this.setAsyncState({
-      clients: transformClientData(clientData, polygonCoords),
-    });
-  };
-
-  fetchAllData = async isInitialFetch => {
-    const { polygonCoords } = this.state;
-
-    this.setState({ isLoading: true });
-
-    if (!Object.keys(polygonCoords).length) {
-      await this.fetchControllerData(isInitialFetch);
+  getTransformedData = ({ sourceName, data }) => {
+    switch (sourceName) {
+      case 'VATSIM':
+        return [];
+      case 'POSCON':
+        return [];
+      default:
+        return [];
     }
-
-    await this.fetchClientData();
-
-    this.setState({ isLoading: false });
-
-    if (this.timer) clearTimeout(this.timer);
-    this.timer = setTimeout(() => this.fetchAllData(), UPDATE_INTERVAL);
   };
+
+  fetchData = async ({ sourceName, updateInterval }) => {
+    this.setState(({ loadingStates, timerIds }) => {
+      const timerId = timerIds[sourceName];
+      if (timerId) clearTimeout(timerId);
+      return {
+        loadingStates: {
+          ...loadingStates,
+          [sourceName]: true,
+        },
+        timerIds: {
+          ...timerIds,
+          [sourceName]: setTimeout(
+            () => this.fetchData({ sourceName, updateInterval }),
+            updateInterval,
+          ),
+        },
+      };
+    });
+    const { sources } = DATA_SOURCES[sourceName];
+    const promises = sources.map(({ url }) => fetchData(url));
+    const results = await Promise.all(promises);
+    const newData = Object.fromEntries(
+      results.map((res, index) => [sources[index].name, res]),
+    );
+    this.setState(({ clients, data, loadingStates }) => ({
+      data: {
+        ...data,
+        [sourceName]: newData,
+      },
+      clients: {
+        ...clients,
+        [sourceName]: this.getTransformedData({ sourceName, data: newData }),
+      },
+      loadingStates: {
+        ...loadingStates,
+        [sourceName]: false,
+      },
+    }));
+  };
+
+  fetchAllData = () =>
+    Promise.all(
+      Object.entries(DATA_SOURCES).map(([sourceName, { updateInterval }]) =>
+        this.fetchData({ sourceName, updateInterval }),
+      ),
+    );
 
   render() {
     const {
       clients,
       filters,
       fontsLoaded,
-      isLoading,
+      loadingStates,
       focusedClient,
       polygonCoords,
       panelPosition,
     } = this.state;
 
-    const filteredClients = getFilteredClients(clients, filters);
+    const allClients = Object.values(clients).flat();
+    const filteredClients = getFilteredClients(allClients, filters);
 
-    // Otherwise show top-level view
+    const isLoading = Object.values(loadingStates).some(loading => loading);
+
     return (
       <>
         {fontsLoaded ? (

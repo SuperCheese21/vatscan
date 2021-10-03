@@ -1,4 +1,3 @@
-import NetInfo from '@react-native-community/netinfo';
 import { Alert } from 'react-native';
 import Controller from './Controller';
 import Pilot from './Pilot';
@@ -11,14 +10,14 @@ export const fetchData = async (urls, errorTitle) => {
   if (!url) return null;
 
   // Check internet connection and alert if there is no connection
-  const connectionInfo = await NetInfo.fetch();
-  if (connectionInfo.type === 'none' || connectionInfo.type === 'unknown') {
-    Alert.alert(
-      'No internet connection',
-      'Connect to the internet to update data',
-    );
-    return null;
-  }
+  // const connectionInfo = await NetInfo.fetch();
+  // if (connectionInfo.type === 'none' || connectionInfo.type === 'unknown') {
+  //   Alert.alert(
+  //     'No internet connection',
+  //     'Connect to the internet to update data',
+  //   );
+  //   return null;
+  // }
 
   // Make API request
   try {
