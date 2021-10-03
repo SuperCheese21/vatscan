@@ -1,0 +1,196 @@
+export const EARTH_RADIUS_NM = 3440.06;
+export const EARTH_RADIUS_M = 6371000;
+
+export const NUM_SIDES_CIRCLE = 36;
+
+export const DEFAULT_PANEL_POSITION = -154;
+export const PANEL_TRANSITION_DURATION = 350;
+export const PANEL_STATES = {
+  EXPANDED_PILOT: -154,
+  EXPANDED_ATC: -85,
+  COLLAPSED: 0,
+};
+
+export const INITIAL_MAP_REGION = {
+  latitude: 38,
+  longitude: -97,
+  latitudeDelta: 60,
+  longitudeDelta: 30,
+};
+
+export const DATA_SOURCES = {
+  VATSIM: {
+    sources: [
+      {
+        name: 'clients',
+        url: 'https://data.vatsim.net/v3/vatsim-data.json',
+      },
+      {
+        name: 'controllers',
+        url: 'https://cdn.orbxsystems.com/volanta/v1-network-controller.json',
+      },
+    ],
+    transformFn: () => [],
+    updateInterval: 60000,
+  },
+  POSCON: {
+    sources: [
+      {
+        name: 'clients',
+        url: 'https://hqapi.poscon.net/online.json',
+      },
+    ],
+    transformFn: () => [],
+    updateInterval: 30000,
+  },
+};
+
+export const CONTROLLER_TYPES = {
+  ATIS: {
+    typesList: ['ATIS'],
+    fullName: 'ATIS',
+  },
+  DEL: {
+    typesList: ['DEL'],
+    fullName: 'Delivery',
+  },
+  GND: {
+    typesList: ['GND'],
+    fullName: 'Ground',
+    polygon: {
+      radiusM: 2778,
+      zIndex: 3,
+      colors: {
+        fill: 'rgba(0, 255, 0, 0.3)',
+        fillSelected: 'rgba(127, 255, 127, 0.3)',
+        stroke: 'rgba(0, 255, 0, 0.8)',
+      },
+    },
+  },
+  TWR: {
+    typesList: ['TWR'],
+    fullName: 'Tower',
+    polygon: {
+      radiusM: 16668,
+      zIndex: 2,
+      colors: {
+        fill: 'rgba(255, 165, 0, 0.25)',
+        fillSelected: 'rgba(255, 210, 127, 0.25)',
+        stroke: 'rgba(255, 165, 0, 0.7)',
+      },
+    },
+  },
+  APP: {
+    typesList: ['DEP', 'APP'],
+    fullName: 'Approach',
+    polygon: {
+      radiusM: 55560,
+      zIndex: 1,
+      colors: {
+        fill: 'rgba(255, 0, 0, 0.15)',
+        fillSelected: 'rgba(255, 127, 127, 0.15)',
+        stroke: 'rgba(255, 0, 0, 0.6)',
+      },
+    },
+  },
+  CTR: {
+    typesList: ['CTR', 'FSS'],
+    fullName: 'Center',
+    polygon: {
+      radiusM: 370400,
+      zIndex: 0,
+      colors: {
+        fill: 'rgba(0, 0, 255, 0.1)',
+        fillSelected: 'rgba(127, 127, 255, 0.1)',
+        stroke: 'rgba(0, 0, 255, 0.5)',
+      },
+    },
+  },
+  OBS: {
+    typesList: ['OBS'],
+    fullName: 'Observer',
+  },
+  SUP: {
+    typesList: ['SUP'],
+    fullName: 'Supervisor',
+  },
+  Other: {
+    typesList: [],
+    fullName: 'Other',
+  },
+};
+
+export const AIRCRAFT = {
+  WIDEBODY: [
+    'A3ST',
+    'A30',
+    'A310',
+    'A33',
+    'A34',
+    'A35',
+    'A38',
+    'A124',
+    'A225',
+    'BLCF',
+    'B74',
+    'B76',
+    'B77',
+    'B78',
+    'IL86',
+    'IL96',
+    'L101',
+    'MD11',
+    'DC10',
+  ],
+  NARROWBODY: [
+    'BCS',
+    'A31',
+    'A32',
+    'A19N',
+    'A20N',
+    'A21N',
+    'A148',
+    'A158',
+    'AN72',
+    'RJ1H',
+    'RJ70',
+    'RJ85',
+    'B46',
+    'B70',
+    'B71',
+    'B72',
+    'B73',
+    'B75',
+    'B3XM',
+    'B37M',
+    'B38M',
+    'B39M',
+    'BA11',
+    'H25',
+    'CRJ',
+    'C919',
+    'CONC',
+    'DC8',
+    'DC9',
+    'E170',
+    'E75',
+    'E19',
+    'E29',
+    'E13',
+    'E14',
+    'J328',
+    'F100',
+    'F70',
+    'F28',
+    'IL62',
+    'IL76',
+    'MD8',
+    'MD90',
+    'SU95',
+    'T134',
+    'T144',
+    'T154',
+    'T204',
+    'YK4',
+  ],
+};

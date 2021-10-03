@@ -4,14 +4,14 @@ import { ViewPropTypes } from 'react-native';
 import MapView from 'react-native-maps';
 
 import { childrenShape } from '../propTypeShapes';
-import { initialMapRegion } from '../../config/constants.json';
+import { INITIAL_MAP_REGION } from '../../config/constants';
 import mapStyle from '../../config/map-styles/style_blue_essence.json';
 
 const Map = ({ children, initialRegion, onPress, style }) => (
   <MapView
     style={style}
     provider="google"
-    initialRegion={initialRegion || initialMapRegion}
+    initialRegion={initialRegion || INITIAL_MAP_REGION}
     customMapStyle={mapStyle}
     zoomTapEnabled={false}
     moveOnMarkerPress={false}

@@ -8,36 +8,41 @@ import { Animated } from 'react-native';
 import { fetchData, getFilteredClients } from './src/api/fetchUtils';
 import StackNavigator from './src/components/navigation/StackNavigator';
 import {
-  controllerTypes,
-  panelStates,
-  panelTransitionDuration,
+  CONTROLLER_TYPES,
+  PANEL_STATES,
+  PANEL_TRANSITION_DURATION,
   DATA_SOURCES,
-} from './src/config/constants.json';
+} from './src/config/constants';
 
 export default class App extends PureComponent {
   // Initialize component state and fetch manager
   state = {
     fontsLoaded: false,
-    loadingStates: {},
-    data: {},
-    timerIds: {},
-    clients: {},
+    dataSources: Object.fromEntries(
+      Object.keys(DATA_SOURCES).map(sourceName => [
+        sourceName,
+        {
+          timerId: null,
+          clients: [],
+          loading: false,
+        },
+      ]),
+    ),
     focusedClient: {},
-    polygonCoords: {},
     filters: {
       clientTypes: {
         PILOT: true,
         ATC: true,
       },
       controllerTypes: Object.fromEntries(
-        Object.keys(controllerTypes).map(key => [key, true]),
+        Object.keys(CONTROLLER_TYPES).map(key => [key, true]),
       ),
       aircraft: '',
       airline: '',
       airport: '',
     },
-    panelPosition: new Animated.Value(panelStates.COLLAPSED),
-    panelPositionValue: panelStates.COLLAPSED,
+    panelPosition: new Animated.Value(PANEL_STATES.COLLAPSED),
+    panelPositionValue: PANEL_STATES.COLLAPSED,
   };
 
   componentDidMount() {
@@ -45,8 +50,8 @@ export default class App extends PureComponent {
   }
 
   componentWillUnmount() {
-    const { timerIds } = this.state;
-    Object.values(timerIds).forEach(timerId => {
+    const { dataSources } = this.state;
+    Object.values(dataSources).forEach(({ timerId }) => {
       if (timerId) clearTimeout(timerId);
     });
   }
@@ -60,7 +65,7 @@ export default class App extends PureComponent {
     }));
 
   setFocusedClient = focusedClient => {
-    this.setPanelPosition(panelStates[`EXPANDED_${focusedClient.type}`]);
+    this.setPanelPosition(PANEL_STATES[`EXPANDED_${focusedClient.type}`]);
     this.setState({ focusedClient });
   };
 
@@ -69,7 +74,7 @@ export default class App extends PureComponent {
     const { panelPosition } = this.state;
     Animated.timing(panelPosition, {
       toValue: newPosition,
-      duration: panelTransitionDuration,
+      duration: PANEL_TRANSITION_DURATION,
       useNativeDriver: true,
     }).start();
     this.setState({
@@ -81,12 +86,12 @@ export default class App extends PureComponent {
     const { panelPositionValue } = this.state;
 
     // Check if panel is collapsed, exit app if it is
-    if (panelPositionValue === panelStates.COLLAPSED) {
+    if (panelPositionValue === PANEL_STATES.COLLAPSED) {
       return false;
     }
 
     // Collapse panel and remove focused client
-    this.setPanelPosition(panelStates.COLLAPSED);
+    this.setPanelPosition(PANEL_STATES.COLLAPSED);
     this.setState({
       focusedClient: {},
     });
@@ -104,55 +109,41 @@ export default class App extends PureComponent {
     /* eslint-enable global-require */
   };
 
-  getTransformedData = ({ sourceName, data }) => {
-    switch (sourceName) {
-      case 'VATSIM':
-        return [];
-      case 'POSCON':
-        return [];
-      default:
-        return [];
-    }
-  };
-
-  fetchData = async ({ sourceName, updateInterval }) => {
-    this.setState(({ loadingStates, timerIds }) => {
-      const timerId = timerIds[sourceName];
-      if (timerId) clearTimeout(timerId);
-      return {
-        loadingStates: {
-          ...loadingStates,
-          [sourceName]: true,
+  updateDataSource = ({ sourceName, update }) =>
+    this.setState(({ dataSources }) => ({
+      dataSources: {
+        ...dataSources,
+        [sourceName]: {
+          ...dataSources[sourceName],
+          ...update,
         },
-        timerIds: {
-          ...timerIds,
-          [sourceName]: setTimeout(
-            () => this.fetchData({ sourceName, updateInterval }),
-            updateInterval,
-          ),
-        },
-      };
-    });
-    const { sources } = DATA_SOURCES[sourceName];
-    const promises = sources.map(({ url }) => fetchData(url));
-    const results = await Promise.all(promises);
-    const newData = Object.fromEntries(
-      results.map((res, index) => [sources[index].name, res]),
-    );
-    this.setState(({ clients, data, loadingStates }) => ({
-      data: {
-        ...data,
-        [sourceName]: newData,
-      },
-      clients: {
-        ...clients,
-        [sourceName]: this.getTransformedData({ sourceName, data: newData }),
-      },
-      loadingStates: {
-        ...loadingStates,
-        [sourceName]: false,
       },
     }));
+
+  fetchData = async ({ sourceName, updateInterval }) => {
+    this.updateDataSource({
+      sourceName,
+      update: {
+        timerId: setTimeout(
+          () => this.fetchData({ sourceName, updateInterval }),
+          updateInterval,
+        ),
+        loading: true,
+      },
+    });
+    const { sources, transformFn } = DATA_SOURCES[sourceName];
+    const promises = sources.map(({ url }) => fetchData(url));
+    const results = await Promise.all(promises);
+    const data = Object.fromEntries(
+      results.map((res, index) => [sources[index].name, res]),
+    );
+    this.updateDataSource({
+      sourceName,
+      update: {
+        clients: transformFn(data),
+        loading: false,
+      },
+    });
   };
 
   fetchAllData = () =>
@@ -164,19 +155,19 @@ export default class App extends PureComponent {
 
   render() {
     const {
-      clients,
+      dataSources,
       filters,
       fontsLoaded,
-      loadingStates,
       focusedClient,
-      polygonCoords,
       panelPosition,
     } = this.state;
 
-    const allClients = Object.values(clients).flat();
+    const allClients = Object.values(dataSources)
+      .map(({ clients }) => clients)
+      .flat();
     const filteredClients = getFilteredClients(allClients, filters);
 
-    const isLoading = Object.values(loadingStates).some(loading => loading);
+    const isLoading = Object.values(dataSources).some(({ loading }) => loading);
 
     return (
       <>
@@ -188,7 +179,6 @@ export default class App extends PureComponent {
               filters,
               filteredClients,
               focusedClient,
-              polygonCoords,
               panelPosition,
               updateData: this.fetchAllData,
               setFilters: this.setFilters,

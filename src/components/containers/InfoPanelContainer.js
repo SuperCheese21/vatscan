@@ -8,7 +8,7 @@ import DetailDataContainer from './DetailDataContainer';
 
 import { navigationShape } from '../propTypeShapes';
 import { primary as primaryColor } from '../../config/colors.json';
-import { defaultPanelPosition } from '../../config/constants.json';
+import { DEFAULT_PANEL_POSITION } from '../../config/constants';
 
 const InfoPanelContainer = ({
   focusedClient,
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 154,
     position: 'absolute',
-    bottom: defaultPanelPosition,
+    bottom: DEFAULT_PANEL_POSITION,
     backgroundColor: primaryColor,
   },
 });

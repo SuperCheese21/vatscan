@@ -6,7 +6,7 @@ import React from 'react';
 import Client from './Client';
 import { getAirportCoords, getCityName, getGCDistance } from './utils';
 
-import constants from '../config/constants.json';
+import { AIRCRAFT } from '../config/constants';
 import AircraftMarker from '../components/common/map-overlays/AircraftMarker';
 import GA_ICON from '../../assets/icons/ga.png';
 import NARROWBODY_ICON from '../../assets/icons/narrowbody.png';
@@ -65,14 +65,11 @@ export default class Pilot extends Client {
   }
 
   get aircraftType() {
-    const widebody = constants.aircraft.WIDEBODY;
-    const narrowbody = constants.aircraft.NARROWBODY;
-
-    if (this.checkAircraftType(widebody)) {
+    if (this.checkAircraftType(AIRCRAFT.WIDEBODY)) {
       return 2;
     }
 
-    if (this.checkAircraftType(narrowbody) || !this.aircraft) {
+    if (this.checkAircraftType(AIRCRAFT.NARROWBODY) || !this.aircraft) {
       return 1;
     }
 

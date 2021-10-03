@@ -1,4 +1,4 @@
-import { EARTH_RADIUS_M, EARTH_RADIUS_NM } from '../config/constants.json';
+import { EARTH_RADIUS_M, EARTH_RADIUS_NM } from '../config/constants';
 import airportCoords from '../data/airportCoords.json';
 import airportNames from '../data/airportNames.json';
 

@@ -3,7 +3,7 @@ import React from 'react';
 import Client from './Client';
 
 import ControllerPolygon from '../components/common/map-overlays/ControllerPolygon';
-import { controllerTypes, NUM_SIDES_CIRCLE } from '../config/constants.json';
+import { CONTROLLER_TYPES, NUM_SIDES_CIRCLE } from '../config/constants';
 import { getProjectedCoords } from './utils';
 
 export default class Controller extends Client {
@@ -14,7 +14,7 @@ export default class Controller extends Client {
     this.facilityType = data.facility;
     this.atisMessage = data.text_atis?.join('\n') || '';
 
-    const controllerInfo = controllerTypes[this.controllerType];
+    const controllerInfo = CONTROLLER_TYPES[this.controllerType];
 
     this.fullName = controllerInfo.fullName;
     this.polygon = coords?.polygon;
@@ -37,14 +37,16 @@ export default class Controller extends Client {
 
   get controllerType() {
     return (
-      Object.keys(controllerTypes).find(key =>
-        controllerTypes[key].typesList.includes(this.callsign.split('_').pop()),
+      Object.keys(CONTROLLER_TYPES).find(key =>
+        CONTROLLER_TYPES[key].typesList.includes(
+          this.callsign.split('_').pop(),
+        ),
       ) || 'Other'
     );
   }
 
   get polygonInfo() {
-    const controllerInfo = controllerTypes[this.controllerType];
+    const controllerInfo = CONTROLLER_TYPES[this.controllerType];
     return controllerInfo?.polygon;
   }
 
