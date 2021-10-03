@@ -5,21 +5,7 @@ import { getRandomElement } from './utils';
 
 export const fetchData = async (urls, errorTitle) => {
   const url = Array.isArray(urls) ? getRandomElement(urls) : urls;
-
-  // Return null if url is blank
   if (!url) return null;
-
-  // Check internet connection and alert if there is no connection
-  // const connectionInfo = await NetInfo.fetch();
-  // if (connectionInfo.type === 'none' || connectionInfo.type === 'unknown') {
-  //   Alert.alert(
-  //     'No internet connection',
-  //     'Connect to the internet to update data',
-  //   );
-  //   return null;
-  // }
-
-  // Make API request
   try {
     const res = await fetch(url);
     const json = await res.json();
@@ -42,16 +28,28 @@ export const transformControllerData = (controllerData = []) =>
     return acc;
   }, {});
 
-export const transformClientData = (
-  clientData = { pilots: [], controllers: [] },
-  polygonCoords = {},
-) => {
+export const transformVatsimData = ({ clients: clientData }) => {
   const pilots = clientData.pilots.map(pilotData => new Pilot(pilotData));
-  const controllers = clientData.controllers.map(controllerData => {
-    const coords = polygonCoords[controllerData.callsign];
-    return new Controller(controllerData, coords);
-  });
+  const controllers = clientData.controllers.map(
+    controller => new Controller(controller),
+  );
   return [...pilots, ...controllers];
+};
+
+export const transformPosconData = ({ clients: data }) => {
+  console.log(data);
+  return [];
+};
+
+export const transformData = ({ sourceName, data }) => {
+  switch (sourceName) {
+    case 'VATSIM':
+      return transformVatsimData(data);
+    case 'POSCON':
+      return transformPosconData(data);
+    default:
+      return [];
+  }
 };
 
 export const getFilteredClients = (clients, filters) =>

@@ -7,18 +7,15 @@ import { CONTROLLER_TYPES, NUM_SIDES_CIRCLE } from '../config/constants';
 import { getProjectedCoords } from './utils';
 
 export default class Controller extends Client {
-  constructor(data, coords) {
+  constructor(data) {
     super(data, 'ATC');
-
-    this.frequency = data.frequency;
-    this.facilityType = data.facility;
-    this.atisMessage = data.text_atis?.join('\n') || '';
-
     const controllerInfo = CONTROLLER_TYPES[this.controllerType];
-
     this.fullName = controllerInfo.fullName;
-    this.polygon = coords?.polygon;
-    this.location = coords?.location;
+    this.frequency = data.frequency;
+    this.facilityType = data.facilityType;
+    this.atisMessage = data.atisMessage;
+    this.polygon = data.polygon;
+    this.location = data.location;
   }
 
   getMapOverlay(isFocusedClient, setFocusedClient) {

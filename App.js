@@ -5,7 +5,11 @@ import { StatusBar } from 'expo-status-bar';
 import React, { PureComponent } from 'react';
 import { Animated } from 'react-native';
 
-import { fetchData, getFilteredClients } from './src/api/fetchUtils';
+import {
+  fetchData,
+  getFilteredClients,
+  transformData,
+} from './src/api/fetchUtils';
 import StackNavigator from './src/components/navigation/StackNavigator';
 import {
   CONTROLLER_TYPES,
@@ -131,7 +135,7 @@ export default class App extends PureComponent {
         loading: true,
       },
     });
-    const { sources, transformFn } = DATA_SOURCES[sourceName];
+    const { sources } = DATA_SOURCES[sourceName];
     const promises = sources.map(({ url }) => fetchData(url));
     const results = await Promise.all(promises);
     const data = Object.fromEntries(
@@ -140,7 +144,7 @@ export default class App extends PureComponent {
     this.updateDataSource({
       sourceName,
       update: {
-        clients: transformFn(data),
+        clients: transformData({ sourceName, data }),
         loading: false,
       },
     });

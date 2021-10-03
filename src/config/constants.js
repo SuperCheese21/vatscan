@@ -30,7 +30,6 @@ export const DATA_SOURCES = {
         url: 'https://cdn.orbxsystems.com/volanta/v1-network-controller.json',
       },
     ],
-    transformFn: () => [],
     updateInterval: 60000,
   },
   POSCON: {
@@ -40,7 +39,6 @@ export const DATA_SOURCES = {
         url: 'https://hqapi.poscon.net/online.json',
       },
     ],
-    transformFn: () => [],
     updateInterval: 30000,
   },
 };

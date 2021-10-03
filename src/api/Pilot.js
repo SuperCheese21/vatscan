@@ -18,24 +18,23 @@ dayjs.extend(utc);
 export default class Pilot extends Client {
   constructor(data) {
     super(data, 'PILOT');
-
     this.latitude = data.latitude || 0;
     this.longitude = data.longitude || 0;
     this.altitude = data.altitude;
-    this.groundSpeed = data.groundspeed;
+    this.groundSpeed = data.groundSpeed;
     this.heading = data.heading;
     this.transponder = data.transponder;
-    this.aircraft = data.flight_plan?.aircraft || 'N/A';
-    this.tasCruise = data.flight_plan?.cruise_tas;
-    this.depAirport = data.flight_plan?.departure || '????';
-    this.plannedAltitude = data.flight_plan?.altitude;
-    this.arrAirport = data.flight_plan?.arrival || '????';
-    this.flightType = data.flight_plan?.flight_rules;
-    this.depTime = data.flight_plan?.deptime;
-    this.hrsEnRoute = data.flight_plan?.enroute_time?.substring(0, 2);
-    this.minEnRoute = data.flight_plan?.enroute_time?.substring(2);
-    this.remarks = data.flight_plan?.remarks;
-    this.route = data.flight_plan?.route;
+    this.aircraft = data.aircraft || 'N/A';
+    this.tasCruise = data.tasCruise;
+    this.depAirport = data.depAirport || '????';
+    this.plannedAltitude = data.plannedAltitude;
+    this.arrAirport = data.arrAirport || '????';
+    this.flightType = data.flightType;
+    this.depTime = data.depTime;
+    this.hrsEnRoute = data.hrsEnRoute;
+    this.minEnRoute = data.minEnRoute;
+    this.remarks = data.remarks;
+    this.route = data.route;
   }
 
   getMapOverlay(isFocusedClient, setFocusedClient) {
