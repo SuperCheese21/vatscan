@@ -2,7 +2,7 @@ import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
 import * as Linking from 'expo-linking';
 import { StatusBar } from 'expo-status-bar';
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { Animated } from 'react-native';
 
 import {
@@ -18,7 +18,7 @@ import {
   DATA_SOURCES,
 } from './src/config/constants';
 
-export default class App extends PureComponent {
+export default class App extends Component {
   // Initialize component state and fetch manager
   state = {
     fontsLoaded: false,
@@ -34,6 +34,9 @@ export default class App extends PureComponent {
     ),
     focusedClient: {},
     filters: {
+      dataSources: Object.fromEntries(
+        Object.keys(DATA_SOURCES).map(key => [key, true]),
+      ),
       clientTypes: {
         PILOT: true,
         ATC: true,
@@ -54,10 +57,7 @@ export default class App extends PureComponent {
   }
 
   componentWillUnmount() {
-    const { dataSources } = this.state;
-    Object.values(dataSources).forEach(({ timerId }) => {
-      if (timerId) clearTimeout(timerId);
-    });
+    this.clearAllFetchTimers();
   }
 
   setFilters = newFilters =>
@@ -113,6 +113,13 @@ export default class App extends PureComponent {
     /* eslint-enable global-require */
   };
 
+  clearAllFetchTimers = () => {
+    const { dataSources } = this.state;
+    Object.values(dataSources).forEach(({ timerId }) => {
+      if (timerId) clearTimeout(timerId);
+    });
+  };
+
   updateDataSource = ({ sourceName, update }) =>
     this.setState(({ dataSources }) => ({
       dataSources: {
@@ -150,12 +157,14 @@ export default class App extends PureComponent {
     });
   };
 
-  fetchAllData = () =>
+  fetchAllData = () => {
+    this.clearAllFetchTimers();
     Promise.all(
       Object.entries(DATA_SOURCES).map(([sourceName, { updateInterval }]) =>
         this.fetchData({ sourceName, updateInterval }),
       ),
     );
+  };
 
   render() {
     const {

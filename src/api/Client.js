@@ -7,8 +7,9 @@ dayjs.extend(advancedFormat, utc);
 export default class Client {
   constructor(data, type) {
     this.type = type;
+    this.sourceName = data.sourceName;
     this.callsign = data.callsign;
-    this.id = data.id;
+    this.id = data.id?.toString();
     this.name = data.name;
     this.server = data.server;
     this.rating = data.rating;

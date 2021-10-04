@@ -5,26 +5,24 @@ import { Chip } from 'react-native-paper';
 
 const ChipRow = ({ filterKey, currentFilters, setFilters }) => (
   <View style={styles.chipContainer}>
-    {Object.keys(currentFilters[filterKey]).map(type => {
-      return (
-        <Chip
-          key={`chip_${filterKey}_${type}`}
-          selected={currentFilters[filterKey][type]}
-          onPress={() => {
-            const newFilters = {
-              [filterKey]: {
-                ...currentFilters[filterKey],
-              },
-            };
-            newFilters[filterKey][type] = !newFilters[filterKey][type];
-            setFilters(newFilters);
-          }}
-          style={styles.chip}
-        >
-          {type}
-        </Chip>
-      );
-    })}
+    {Object.keys(currentFilters[filterKey]).map(type => (
+      <Chip
+        key={`chip_${filterKey}_${type}`}
+        selected={currentFilters[filterKey][type]}
+        onPress={() => {
+          const newFilters = {
+            [filterKey]: {
+              ...currentFilters[filterKey],
+            },
+          };
+          newFilters[filterKey][type] = !newFilters[filterKey][type];
+          setFilters(newFilters);
+        }}
+        style={styles.chip}
+      >
+        {type}
+      </Chip>
+    ))}
   </View>
 );
 

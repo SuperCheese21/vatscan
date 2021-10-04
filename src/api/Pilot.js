@@ -4,8 +4,12 @@ import utc from 'dayjs/plugin/utc';
 import React from 'react';
 
 import Client from './Client';
-import { getAirportCoords, getCityName, getGCDistance } from './utils';
-
+import {
+  convertToInteger,
+  getAirportCoords,
+  getCityName,
+  getGCDistance,
+} from './utils';
 import { AIRCRAFT } from '../config/constants';
 import AircraftMarker from '../components/common/map-overlays/AircraftMarker';
 import GA_ICON from '../../assets/icons/ga.png';
@@ -21,13 +25,13 @@ export default class Pilot extends Client {
     this.latitude = data.latitude || 0;
     this.longitude = data.longitude || 0;
     this.altitude = data.altitude;
-    this.groundSpeed = data.groundSpeed;
-    this.heading = data.heading;
+    this.groundSpeed = Math.round(data.groundSpeed);
+    this.heading = Math.round(data.heading);
     this.transponder = data.transponder;
-    this.aircraft = data.aircraft || 'N/A';
-    this.tasCruise = data.tasCruise;
+    this.aircraft = data.aircraft?.split('/')[0] || 'N/A';
+    this.tasCruise = convertToInteger(data.tasCruise);
     this.depAirport = data.depAirport || '????';
-    this.plannedAltitude = data.plannedAltitude;
+    this.plannedAltitude = convertToInteger(data.plannedAltitude);
     this.arrAirport = data.arrAirport || '????';
     this.flightType = data.flightType;
     this.depTime = data.depTime;

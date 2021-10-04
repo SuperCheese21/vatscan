@@ -13,8 +13,8 @@ const StatsRow = ({ label, planned, text }) => (
 
 StatsRow.propTypes = {
   label: PropTypes.string.isRequired,
-  planned: PropTypes.string,
-  text: PropTypes.string,
+  planned: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  text: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 StatsRow.defaultProps = {

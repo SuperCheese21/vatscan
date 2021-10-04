@@ -130,3 +130,6 @@ export function checkID(data, id) {
 
   return false;
 }
+
+export const convertToInteger = val =>
+  val ? parseInt(val.toString().replace(/[^0-9]/g, ''), 10) : null;

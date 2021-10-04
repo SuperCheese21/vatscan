@@ -17,13 +17,14 @@ const ClientStatsContainer = ({ client }) => (
       </View>
     </View>
     <StatsLabel text={client.type === 'PILOT' ? 'Pilot' : 'ATC'} />
+    <StatsRow label="Network" text={client.sourceName} />
     {client.location && (
       <StatsRow
         label="Location"
         text={`${client.location.latitude}, ${client.location.longitude}`}
       />
     )}
-    <StatsRow label="Server" text={client.server} />
+    {client.server && <StatsRow label="Server" text={client.server} />}
     <StatsRow label="Time Connected" text={client.elapsedTimeLogon} />
   </StatsContainer>
 );

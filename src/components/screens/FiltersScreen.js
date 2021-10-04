@@ -20,6 +20,13 @@ export default class FiltersScreen extends PureComponent {
 
     return (
       <ConfigScreen navigation={navigation}>
+        <ConfigRow label="Networks">
+          <ChipRow
+            currentFilters={currentFilters}
+            filterKey="dataSources"
+            setFilters={setFilters}
+          />
+        </ConfigRow>
         <ConfigRow label="Client Type">
           <ChipRow
             currentFilters={currentFilters}
