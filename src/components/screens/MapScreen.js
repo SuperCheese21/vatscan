@@ -1,5 +1,5 @@
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { BackHandler, StyleSheet, View } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
 
@@ -9,7 +9,7 @@ import InfoPanelContainer from '../containers/InfoPanelContainer';
 import { screenPropsShape } from '../propTypeShapes';
 import { accent as accentColor } from '../../config/colors.json';
 
-export default class MapScreen extends PureComponent {
+export default class MapScreen extends Component {
   static navigationOptions = {
     tabBarIcon: ({ tintColor }) => (
       <Icon name="google-maps" size={20} color={tintColor} />

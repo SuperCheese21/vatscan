@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import {
   BackHandler,
   KeyboardAvoidingView,
@@ -9,7 +9,7 @@ import {
 
 import { childrenShape, navigationShape } from '../propTypeShapes';
 
-export default class ConfigScreen extends PureComponent {
+export default class ConfigScreen extends Component {
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
   }

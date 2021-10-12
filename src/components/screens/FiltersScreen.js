@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { TextInput } from 'react-native-paper';
 
 import ConfigScreen from './ConfigScreen';
@@ -7,7 +7,7 @@ import ChipRow from '../common/ChipRow';
 import ConfigRow from '../common/ConfigRow';
 import { navigationShape, screenPropsShape } from '../propTypeShapes';
 
-export default class FiltersScreen extends PureComponent {
+export default class FiltersScreen extends Component {
   static navigationOptions = {
     title: 'Filters',
   };

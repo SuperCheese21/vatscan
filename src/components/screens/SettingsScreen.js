@@ -1,11 +1,11 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { View } from 'react-native';
 
 import ConfigScreen from './ConfigScreen';
 
 import { navigationShape } from '../propTypeShapes';
 
-export default class SettingsScreen extends PureComponent {
+export default class SettingsScreen extends Component {
   static navigationOptions = {
     title: 'Settings',
   };

@@ -1,12 +1,12 @@
 import * as Linking from 'expo-linking';
 import PropTypes from 'prop-types';
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { Share } from 'react-native';
 import { IconButton } from 'react-native-paper';
 
 import { accent as accentColor } from '../../config/colors.json';
 
-export default class ShareButton extends PureComponent {
+export default class ShareButton extends Component {
   onPress = () => {
     const { callsign } = this.props;
     const url = Linking.makeUrl(`clients/${callsign}`);

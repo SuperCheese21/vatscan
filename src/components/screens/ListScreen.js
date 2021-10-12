@@ -1,5 +1,5 @@
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { Searchbar } from 'react-native-paper';
 
@@ -7,7 +7,7 @@ import ClientsListItem from '../common/ClientsListItem';
 import Text from '../common/Text';
 import { screenPropsShape } from '../propTypeShapes';
 
-export default class ListScreen extends PureComponent {
+export default class ListScreen extends Component {
   state = {
     query: '',
   };

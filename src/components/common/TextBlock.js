@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import {
   Clipboard,
   StyleSheet,
@@ -9,7 +9,7 @@ import {
   Vibration,
 } from 'react-native';
 
-export default class TextBlock extends PureComponent {
+export default class TextBlock extends Component {
   onLongPress = () => {
     const { text } = this.props;
     Vibration.vibrate(10);

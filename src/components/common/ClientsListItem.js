@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import { List, Surface, TouchableRipple } from 'react-native-paper';
 
 import { navigationShape } from '../propTypeShapes';
 
-export default class ClientsListItem extends PureComponent {
+export default class ClientsListItem extends Component {
   leftIcon = itemProps => {
     const { client } = this.props;
     return (

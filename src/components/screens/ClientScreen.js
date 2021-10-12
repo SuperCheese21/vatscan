@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 
 import ConfigScreen from './ConfigScreen';
 
@@ -10,7 +10,7 @@ import FlightPlanContainer from '../containers/FlightPlanContainer';
 import FlightStatsContainer from '../containers/FlightStatsContainer';
 import { navigationShape, screenPropsShape } from '../propTypeShapes';
 
-export default class ClientScreen extends PureComponent {
+export default class ClientScreen extends Component {
   static navigationOptions = ({ navigation }) => {
     const callsign = navigation.getParam('callsign');
     return {

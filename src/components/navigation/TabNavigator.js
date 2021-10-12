@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { Alert } from 'react-native';
 import { IconButton } from 'react-native-paper';
 import { createAppContainer } from 'react-navigation';
@@ -9,7 +9,7 @@ import ListScreen from '../screens/ListScreen';
 import MapScreen from '../screens/MapScreen';
 import { accent, primaryDark } from '../../config/colors.json';
 
-class TabNavigatorContainer extends PureComponent {
+class TabNavigatorContainer extends Component {
   static navigationOptions = ({ navigation: stackNavigation }) => ({
     headerLeft: () => (
       <IconButton
