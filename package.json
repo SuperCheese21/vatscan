@@ -117,6 +117,7 @@
     "react-native-screens": "~3.4.0",
     "react-navigation": "^4.4.4",
     "react-navigation-stack": "^2.10.4",
-    "react-navigation-tabs": "^2.11.1"
+    "react-navigation-tabs": "^2.11.1",
+    "react-query": "^3.31.0"
   }
 }
