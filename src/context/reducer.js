@@ -11,7 +11,6 @@ import {
   CONTROLLER_TYPES,
   DATA_SOURCES,
   PANEL_STATES,
-  PANEL_TRANSITION_DURATION,
 } from '../config/constants';
 
 export const initialState = {
@@ -38,15 +37,9 @@ export const initialState = {
 
 export const immerReducer = (draft, action) => {
   switch (action.type) {
-    case SET_PANEL_POSITION: {
+    case SET_PANEL_POSITION:
       draft.panelPositionValue = action.payload;
-      Animated.timing(draft.panelPosition, {
-        toValue: action.payload,
-        duration: PANEL_TRANSITION_DURATION,
-        useNativeDriver: true,
-      }).start();
       break;
-    }
     case UPDATE_FILTERS: {
       const { filters } = original(draft);
       draft.filters = {

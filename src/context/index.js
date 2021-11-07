@@ -6,12 +6,19 @@ import mapDispatchToActions from './actions';
 import { immerReducer, initialState } from './reducer';
 import mapStateToSelectors from './selectors';
 
-const AppContext = createContext();
+export const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
   const [state, dispatch] = useImmerReducer(immerReducer, initialState);
 
-  const actions = mapDispatchToActions(dispatch);
+  const dispatchWithThunk = action => {
+    if (typeof action === 'function') {
+      return action(dispatch, () => state);
+    }
+    return dispatch(action);
+  };
+
+  const actions = mapDispatchToActions(dispatchWithThunk);
   const currentState = mapStateToSelectors(state);
 
   return (
