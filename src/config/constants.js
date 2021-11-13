@@ -18,31 +18,6 @@ export const INITIAL_MAP_REGION = {
   longitudeDelta: 30,
 };
 
-export const DATA_SOURCES = {
-  VATSIM: {
-    sources: [
-      {
-        name: 'clients',
-        url: 'https://data.vatsim.net/v3/vatsim-data.json',
-      },
-      {
-        name: 'controllers',
-        url: 'https://cdn.orbxsystems.com/volanta/v1-network-controller.json',
-      },
-    ],
-    updateInterval: 60000,
-  },
-  POSCON: {
-    sources: [
-      {
-        name: 'clients',
-        url: 'https://hqapi.poscon.net/online.json',
-      },
-    ],
-    updateInterval: 30000,
-  },
-};
-
 export const CONTROLLER_TYPES = {
   ATIS: {
     typesList: ['ATIS'],

@@ -12,7 +12,7 @@ export const fetchData = async (urls, errorTitle) => {
     return json;
   } catch (err) {
     if (errorTitle) Alert.alert(errorTitle, err.message);
-    return null;
+    throw err;
   }
 };
 
