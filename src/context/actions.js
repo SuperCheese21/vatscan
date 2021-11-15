@@ -3,7 +3,7 @@ import { Animated } from 'react-native';
 import {
   SET_PANEL_POSITION,
   UPDATE_FILTERS,
-  UPDATE_FOCUSED_CLIENT,
+  UPDATE_FOCUSED_CLIENT_ID,
   UPDATE_FONTS_LOADED,
 } from './actionTypes';
 import { PANEL_STATES, PANEL_TRANSITION_DURATION } from '../config/constants';
@@ -27,18 +27,18 @@ const setPanelPosition = payload => async (dispatch, getState) => {
   }).start(() => dispatch({ type: SET_PANEL_POSITION, payload }));
 };
 
-const updateFocusedClient = payload => dispatch => {
+const updateFocusedClientId = payload => dispatch => {
   const newPanelState = payload.type
     ? PANEL_STATES[`EXPANDED_${payload.type}`]
     : PANEL_STATES.COLLAPSED;
   dispatch(setPanelPosition(newPanelState));
-  dispatch({ type: UPDATE_FOCUSED_CLIENT, payload });
+  dispatch({ type: UPDATE_FOCUSED_CLIENT_ID, payload });
 };
 
 const collapsePanel = () => (dispatch, getState) => {
   const { panelPositionValue } = getState();
   if (panelPositionValue !== PANEL_STATES.COLLAPSED) {
-    dispatch(updateFocusedClient({}));
+    dispatch(updateFocusedClientId(''));
   }
 };
 
@@ -46,7 +46,7 @@ const mapDispatchToActions = dispatch => ({
   setPanelPosition: payload => dispatch(setPanelPosition(payload)),
   updateFilters: payload => dispatch(updateFilters(payload)),
   updateFontsLoaded: payload => dispatch(updateFontsLoaded(payload)),
-  updateFocusedClient: payload => dispatch(updateFocusedClient(payload)),
+  updateFocusedClientId: payload => dispatch(updateFocusedClientId(payload)),
   collapsePanel: () => dispatch(collapsePanel()),
 });
 

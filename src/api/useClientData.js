@@ -5,7 +5,7 @@ import dataSources from './queries';
 import { useAppContext } from '../context';
 
 export const useClientData = () => {
-  const { filters } = useAppContext();
+  const { filters, focusedClientId } = useAppContext();
   const results = useQueries(
     dataSources.reduce(
       (acc, { key, sources, refetchInterval, transformData, ...source }) =>
@@ -27,9 +27,12 @@ export const useClientData = () => {
   );
   const isDataLoading = results.some(({ isLoading }) => isLoading);
   const clientData = results.flatMap(({ data }) => data);
+  const focusedClient =
+    clientData.find(({ id }) => id === focusedClientId) || {};
   return {
     isLoading: isDataLoading,
     clientData,
+    focusedClient,
     results,
   };
 };

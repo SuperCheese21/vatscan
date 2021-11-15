@@ -1,71 +1,36 @@
-import PropTypes from 'prop-types';
-import React, { Component, useEffect } from 'react';
+import React from 'react';
 
 import ConfigScreen from './ConfigScreen';
-
 import ShareButton from '../common/ShareButton';
 import ClientStatsContainer from '../containers/ClientStatsContainer';
 import ControllerStatsContainer from '../containers/ControllerStatsContainer';
 import FlightPlanContainer from '../containers/FlightPlanContainer';
 import FlightStatsContainer from '../containers/FlightStatsContainer';
-import { navigationShape, screenPropsShape } from '../propTypeShapes';
-import useClientData from '../../api/useClientData';
+import { navigationShape } from '../propTypeShapes';
+import { useClientData } from '../../api/useClientData';
 
-const ClientScreen = () => {
-  const { clientData, results } = useClientData();
-
-  const isDataLoading = results.some(({ isLoading }) => isLoading);
-
-  const focusedClient = clientData.find(client => client.callsign === callsign);
-
-  // componentDidMount() {
-  //   const { navigation, screenProps } = this.props;
-  //   const callsign = navigation.getParam('callsign');
-
-  //   if (focusedClient) {
-  //     screenProps.setFocusedClient(focusedClient);
-  //   }
-  // }
-
-  // componentWillUnmount() {
-  //   const { navigation, screenProps } = this.props;
-  //   if (navigation.getParam('removeFocusedClient')) {
-  //     screenProps.collapsePanel();
-  //   }
-  // }
-
-  // render() {
-  //   const {
-  //     navigation,
-  //     screenProps: { isLoading, focusedClient, updateData },
-  //   } = this.props;
-  //   return (
-  //     <ConfigScreen
-  //       navigation={navigation}
-  //       onRefresh={updateData}
-  //       refreshing={isLoading}
-  //     >
-  //       <ClientStatsContainer client={focusedClient} />
-
-  //       <Stats client={focusedClient} />
-  //     </ConfigScreen>
-  //   );
-  // }
-};
-
-const Stats = ({ client }) => {
-  if (client.type === 'PILOT') {
-    return (
-      <>
-        <FlightPlanContainer client={client} />
-        <FlightStatsContainer client={client} />
-      </>
-    );
-  }
-  if (client.type === 'ATC') {
-    return <ControllerStatsContainer client={client} />;
-  }
-  return null;
+export const ClientScreen = ({ navigation }) => {
+  const { focusedClient } = useClientData();
+  const getStatsContainer = () => {
+    if (focusedClient.type === 'PILOT') {
+      return (
+        <>
+          <FlightPlanContainer />
+          <FlightStatsContainer />
+        </>
+      );
+    }
+    if (focusedClient.type === 'ATC') {
+      return <ControllerStatsContainer />;
+    }
+    return null;
+  };
+  return (
+    <ConfigScreen navigation={navigation}>
+      <ClientStatsContainer />
+      {getStatsContainer()}
+    </ConfigScreen>
+  );
 };
 
 ClientScreen.navigationOptions = ({ navigation }) => {
@@ -78,9 +43,6 @@ ClientScreen.navigationOptions = ({ navigation }) => {
 
 ClientScreen.propTypes = {
   navigation: navigationShape.isRequired,
-  screenProps: screenPropsShape.isRequired,
 };
 
-Stats.propTypes = {
-  client: PropTypes.object.isRequired,
-};
+export default ClientScreen;

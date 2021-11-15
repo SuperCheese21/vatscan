@@ -4,22 +4,17 @@ import { Animated } from 'react-native';
 import {
   SET_PANEL_POSITION,
   UPDATE_FILTERS,
-  UPDATE_FOCUSED_CLIENT,
+  UPDATE_FOCUSED_CLIENT_ID,
   UPDATE_FONTS_LOADED,
 } from './actionTypes';
-import {
-  CONTROLLER_TYPES,
-  DATA_SOURCES,
-  PANEL_STATES,
-} from '../config/constants';
+import queries from '../api/queries';
+import { CONTROLLER_TYPES, PANEL_STATES } from '../config/constants';
 
 export const initialState = {
   fontsLoaded: false,
-  focusedClient: {},
+  focusedClientId: '',
   filters: {
-    dataSources: Object.fromEntries(
-      Object.keys(DATA_SOURCES).map(key => [key, true]),
-    ),
+    dataSources: Object.fromEntries(queries.map(({ key }) => [key, true])),
     clientTypes: {
       PILOT: true,
       ATC: true,
@@ -51,8 +46,8 @@ export const immerReducer = (draft, action) => {
     case UPDATE_FONTS_LOADED:
       draft.fontsLoaded = action.payload;
       break;
-    case UPDATE_FOCUSED_CLIENT:
-      draft.updateFocusedClient = action.payload;
+    case UPDATE_FOCUSED_CLIENT_ID:
+      draft.focusedClientId = action.payload;
       break;
     default:
       break;

@@ -9,9 +9,9 @@ const getFontsLoaded = createSelector(
   ({ fontsLoaded }) => fontsLoaded,
 );
 
-const getFocusedClient = createSelector(
+const getFocusedClientId = createSelector(
   [getState],
-  ({ focusedClient }) => focusedClient,
+  ({ focusedClientId }) => focusedClientId,
 );
 
 const getPanelPosition = createSelector(
@@ -27,7 +27,7 @@ const getPanelPositionValue = createSelector(
 const mapStateToSelectors = state => ({
   filters: getFilters(state),
   fontsLoaded: getFontsLoaded(state),
-  focusedClient: getFocusedClient(state),
+  focusedClientId: getFocusedClientId(state),
   panelPosition: getPanelPosition(state),
   panelPositionValue: getPanelPositionValue(state),
 });

@@ -1,37 +1,11 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import StatsContainer from './StatsContainer';
-
 import StatsLabel from '../common/StatsLabel';
 import StatsRow from '../common/StatsRow';
 import Text from '../common/Text';
-
-const ClientStatsContainer = ({ client }) => (
-  <StatsContainer>
-    <View style={styles.nameContainer}>
-      <Text style={styles.nameText}>{client.name}</Text>
-      <View>
-        <Text style={{ color: '#898989' }}>{client.id}</Text>
-      </View>
-    </View>
-    <StatsLabel text={client.type === 'PILOT' ? 'Pilot' : 'ATC'} />
-    <StatsRow label="Network" text={client.sourceName} />
-    {client.location && (
-      <StatsRow
-        label="Location"
-        text={`${client.location.latitude}, ${client.location.longitude}`}
-      />
-    )}
-    {client.server && <StatsRow label="Server" text={client.server} />}
-    <StatsRow label="Time Connected" text={client.elapsedTimeLogon} />
-  </StatsContainer>
-);
-
-ClientStatsContainer.propTypes = {
-  client: PropTypes.object.isRequired,
-};
+import { useClientData } from '../../api/useClientData';
 
 const styles = StyleSheet.create({
   nameContainer: {
@@ -45,5 +19,38 @@ const styles = StyleSheet.create({
     fontSize: 26,
   },
 });
+
+export const ClientStatsContainer = () => {
+  const { focusedClient } = useClientData();
+  const {
+    elapsedTimeLogon,
+    id,
+    location,
+    name,
+    server,
+    sourceName,
+    type,
+  } = focusedClient;
+  return (
+    <StatsContainer>
+      <View style={styles.nameContainer}>
+        <Text style={styles.nameText}>{name}</Text>
+        <View>
+          <Text style={{ color: '#898989' }}>{id}</Text>
+        </View>
+      </View>
+      <StatsLabel text={type} />
+      <StatsRow label="Network" text={sourceName} />
+      {location && (
+        <StatsRow
+          label="Location"
+          text={`${location.latitude}, ${location.longitude}`}
+        />
+      )}
+      {server && <StatsRow label="Server" text={server} />}
+      <StatsRow label="Time Connected" text={elapsedTimeLogon} />
+    </StatsContainer>
+  );
+};
 
 export default ClientStatsContainer;
