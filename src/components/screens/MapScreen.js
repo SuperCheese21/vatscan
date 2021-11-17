@@ -1,82 +1,14 @@
-import Icon from '@expo/vector-icons/MaterialCommunityIcons';
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { BackHandler, StyleSheet, View } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
 
 import Map from '../common/Map';
+import { TabBarIcon } from '../common/TabBarIcon';
 import Text from '../common/Text';
 import InfoPanelContainer from '../containers/InfoPanelContainer';
-import { screenPropsShape } from '../propTypeShapes';
+import { useClientData } from '../../api/useClientData';
 import { accent as accentColor } from '../../config/colors.json';
-
-export default class MapScreen extends Component {
-  static navigationOptions = {
-    tabBarIcon: ({ tintColor }) => (
-      <Icon name="google-maps" size={20} color={tintColor} />
-    ),
-  };
-
-  componentDidMount() {
-    const { screenProps } = this.props;
-
-    // Add listener for Android hardware back button to close info panel
-    BackHandler.addEventListener(
-      'hardwareBackPress',
-      screenProps.collapsePanel,
-    );
-  }
-
-  componentWillUnmount() {
-    const { screenProps } = this.props;
-
-    // Remove back button listener before component is unmounted
-    BackHandler.removeEventListener(
-      'hardwareBackPress',
-      screenProps.collapsePanel,
-    );
-  }
-
-  render() {
-    const {
-      screenProps: {
-        stackNavigation,
-        isLoading,
-        filteredClients,
-        focusedClient,
-        panelPosition,
-        setFocusedClient,
-        collapsePanel,
-      },
-    } = this.props;
-    return (
-      <View style={{ flex: 1 }}>
-        <Map style={{ flex: 1 }} onPress={collapsePanel}>
-          {filteredClients.map(client => {
-            const isFocusedClient = focusedClient.callsign === client.callsign;
-            return client.getMapOverlay(isFocusedClient, setFocusedClient);
-          })}
-        </Map>
-        <ActivityIndicator
-          color={accentColor}
-          animating={isLoading}
-          style={styles.activityIndicator}
-        />
-        <Text style={styles.clientCountText}>
-          {`Clients: ${filteredClients.length}`}
-        </Text>
-        <InfoPanelContainer
-          stackNavigation={stackNavigation}
-          panelPosition={panelPosition}
-          focusedClient={focusedClient}
-        />
-      </View>
-    );
-  }
-}
-
-MapScreen.propTypes = {
-  screenProps: screenPropsShape.isRequired,
-};
+import { useAppContext } from '../../context';
 
 const styles = StyleSheet.create({
   activityIndicator: {
@@ -91,3 +23,41 @@ const styles = StyleSheet.create({
     top: 2,
   },
 });
+
+const MapScreen = () => {
+  const { collapsePanel, focusedClient } = useAppContext();
+  const { clientData, isLoading, setFocusedClient } = useClientData();
+
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', collapsePanel);
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', collapsePanel);
+  }, [collapsePanel]);
+
+  return (
+    <View style={{ flex: 1 }}>
+      <Map style={{ flex: 1 }} onPress={collapsePanel}>
+        {clientData.map(client => {
+          const isFocusedClient = focusedClient.callsign === client.callsign;
+          return client.getMapOverlay(isFocusedClient, setFocusedClient);
+        })}
+      </Map>
+      <ActivityIndicator
+        color={accentColor}
+        animating={isLoading}
+        style={styles.activityIndicator}
+      />
+      <Text style={styles.clientCountText}>
+        {`Clients: ${clientData.length}`}
+      </Text>
+      <InfoPanelContainer
+        panelPosition={panelPosition}
+        focusedClient={focusedClient}
+      />
+    </View>
+  );
+};
+
+MapScreen.navigationOptions = {
+  tabBarIcon: TabBarIcon,
+};
