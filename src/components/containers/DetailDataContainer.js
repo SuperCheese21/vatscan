@@ -1,44 +1,13 @@
 import Icon from '@expo/vector-icons/MaterialIcons';
-import PropTypes from 'prop-types';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import Text from '../common/Text';
+import useClientData from '../../api/useClientData';
 import {
   accent as accentColor,
   primaryMedium as primaryMediumColor,
 } from '../../config/colors.json';
-
-const DetailDataContainer = ({
-  client: { aircraft, groundSpeed, altitude, heading },
-}) => (
-  <View style={styles.infoContainerDetail}>
-    <View style={styles.infoRow}>
-      <View style={styles.infoRow}>
-        <Icon name="flight" size={20} color={accentColor} />
-        <Text style={styles.infoText}>{` ${aircraft || 'N/A'}`}</Text>
-      </View>
-      <View style={styles.infoRow}>
-        <Icon name="send" size={20} color={accentColor} />
-        <Text style={styles.infoText}>{` ${groundSpeed} kts`}</Text>
-      </View>
-    </View>
-    <View style={styles.infoRow}>
-      <View style={styles.infoRow}>
-        <Icon name="unfold-more" size={20} color={accentColor} />
-        <Text style={styles.infoText}>{` ${altitude} ft`}</Text>
-      </View>
-      <View style={styles.infoRow}>
-        <Icon name="navigation" size={20} color={accentColor} />
-        <Text style={styles.infoText}>{` ${heading} °`}</Text>
-      </View>
-    </View>
-  </View>
-);
-
-DetailDataContainer.propTypes = {
-  client: PropTypes.object.isRequired,
-};
 
 const styles = StyleSheet.create({
   infoContainerDetail: {
@@ -56,5 +25,34 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
 });
+
+const DetailDataContainer = () => {
+  const { focusedClient } = useClientData();
+  const { aircraft, groundSpeed, altitude, heading } = focusedClient;
+  return (
+    <View style={styles.infoContainerDetail}>
+      <View style={styles.infoRow}>
+        <View style={styles.infoRow}>
+          <Icon name="flight" size={20} color={accentColor} />
+          <Text style={styles.infoText}>{` ${aircraft || 'N/A'}`}</Text>
+        </View>
+        <View style={styles.infoRow}>
+          <Icon name="send" size={20} color={accentColor} />
+          <Text style={styles.infoText}>{` ${groundSpeed} kts`}</Text>
+        </View>
+      </View>
+      <View style={styles.infoRow}>
+        <View style={styles.infoRow}>
+          <Icon name="unfold-more" size={20} color={accentColor} />
+          <Text style={styles.infoText}>{` ${altitude} ft`}</Text>
+        </View>
+        <View style={styles.infoRow}>
+          <Icon name="navigation" size={20} color={accentColor} />
+          <Text style={styles.infoText}>{` ${heading} °`}</Text>
+        </View>
+      </View>
+    </View>
+  );
+};
 
 export default DetailDataContainer;

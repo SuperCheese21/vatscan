@@ -1,54 +1,15 @@
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { withNavigation } from 'react-navigation';
 
 import Text from '../common/Text';
 import { navigationShape } from '../propTypeShapes';
+import useClientData from '../../api/useClientData';
 import {
   accent as accentColor,
   primary as primaryColor,
 } from '../../config/colors.json';
-
-export default class ControllerDataContainer extends Component {
-  onPress = () => {
-    const { data, stackNavigation } = this.props;
-    stackNavigation.navigate('ClientScreen', {
-      callsign: data.callsign,
-    });
-  };
-
-  render() {
-    const {
-      data: { callsign, frequency, name },
-    } = this.props;
-    return (
-      <TouchableOpacity
-        onPress={this.onPress}
-        style={styles.infoContainerController}
-      >
-        <View style={styles.infoRow}>
-          <Icon name="satellite-uplink" size={42} color={accentColor} />
-          <Text style={styles.controllerCallsignText}>{callsign}</Text>
-        </View>
-
-        <View style={styles.controllerInfoView}>
-          <View style={{ flex: 1 }}>
-            <Text style={styles.callsignText}>{frequency}</Text>
-          </View>
-          <View style={{ flex: 1 }}>
-            <Text style={styles.nameText}>{name}</Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-    );
-  }
-}
-
-ControllerDataContainer.propTypes = {
-  data: PropTypes.object.isRequired,
-  stackNavigation: navigationShape.isRequired,
-};
 
 const styles = StyleSheet.create({
   callsignText: {
@@ -85,3 +46,34 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
 });
+
+const ControllerDataContainer = ({ navigation }) => {
+  const { focusedClient } = useClientData();
+  const { callsign, frequency, name } = focusedClient;
+
+  const onPress = () => navigation.navigate('ClientScreen', { callsign });
+
+  return (
+    <TouchableOpacity onPress={onPress} style={styles.infoContainerController}>
+      <View style={styles.infoRow}>
+        <Icon name="satellite-uplink" size={42} color={accentColor} />
+        <Text style={styles.controllerCallsignText}>{callsign}</Text>
+      </View>
+
+      <View style={styles.controllerInfoView}>
+        <View style={{ flex: 1 }}>
+          <Text style={styles.callsignText}>{frequency}</Text>
+        </View>
+        <View style={{ flex: 1 }}>
+          <Text style={styles.nameText}>{name}</Text>
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+ControllerDataContainer.propTypes = {
+  navigation: navigationShape.isRequired,
+};
+
+export default withNavigation(ControllerDataContainer);

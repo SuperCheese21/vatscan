@@ -1,72 +1,10 @@
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { withNavigation } from 'react-navigation';
 
 import Text from '../common/Text';
 import { navigationShape } from '../propTypeShapes';
-
-export default class BasicDataContainer extends Component {
-  onPress = () => {
-    const {
-      client: { callsign },
-      stackNavigation,
-    } = this.props;
-    stackNavigation.navigate('ClientScreen', { callsign });
-  };
-
-  render() {
-    const {
-      client: { arrAirport, callsign, depAirport, name },
-    } = this.props;
-    return (
-      <TouchableOpacity
-        onPress={this.onPress}
-        style={styles.infoContainerBasic}
-      >
-        <View style={styles.infoRow}>
-          <Text
-            style={{
-              marginRight: 6,
-              textAlign: 'right',
-              ...styles.icaoText,
-            }}
-          >
-            {depAirport || '????'}
-          </Text>
-          {/* eslint-disable global-require */}
-          <Image
-            style={styles.fromToIcon}
-            source={require('../../../assets/icons/narrowbody.png')}
-          />
-          {/* eslint-enable global-require */}
-          <Text
-            style={{
-              marginLeft: 6,
-              ...styles.icaoText,
-            }}
-          >
-            {arrAirport || '????'}
-          </Text>
-        </View>
-
-        <View style={styles.pilotInfoView}>
-          <View style={{ flex: 1 }}>
-            <Text style={styles.callsignText}>{callsign}</Text>
-          </View>
-
-          <View style={{ flex: 1 }}>
-            <Text style={styles.nameText}>{name}</Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-    );
-  }
-}
-
-BasicDataContainer.propTypes = {
-  client: PropTypes.object.isRequired,
-  stackNavigation: navigationShape.isRequired,
-};
+import useClientData from '../../api/useClientData';
 
 const styles = StyleSheet.create({
   callsignText: {
@@ -109,3 +47,56 @@ const styles = StyleSheet.create({
     height: 30,
   },
 });
+
+const BasicDataContainer = ({ navigation }) => {
+  const { focusedClient } = useClientData();
+  const { arrAirport, callsign, depAirport, name } = focusedClient;
+
+  const onPress = () => navigation.navigate('ClientScreen', { callsign });
+
+  return (
+    <TouchableOpacity onPress={onPress} style={styles.infoContainerBasic}>
+      <View style={styles.infoRow}>
+        <Text
+          style={{
+            marginRight: 6,
+            textAlign: 'right',
+            ...styles.icaoText,
+          }}
+        >
+          {depAirport || '????'}
+        </Text>
+        {/* eslint-disable global-require */}
+        <Image
+          style={styles.fromToIcon}
+          source={require('../../../assets/icons/narrowbody.png')}
+        />
+        {/* eslint-enable global-require */}
+        <Text
+          style={{
+            marginLeft: 6,
+            ...styles.icaoText,
+          }}
+        >
+          {arrAirport || '????'}
+        </Text>
+      </View>
+
+      <View style={styles.pilotInfoView}>
+        <View style={{ flex: 1 }}>
+          <Text style={styles.callsignText}>{callsign}</Text>
+        </View>
+
+        <View style={{ flex: 1 }}>
+          <Text style={styles.nameText}>{name}</Text>
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+BasicDataContainer.propTypes = {
+  navigation: navigationShape.isRequired,
+};
+
+export default withNavigation(BasicDataContainer);
