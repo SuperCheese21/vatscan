@@ -1,11 +1,15 @@
-import PropTypes from 'prop-types';
+import { arrayOf, func, node, number, oneOfType, shape } from 'prop-types';
 
-export const childrenShape = PropTypes.oneOfType([
-  PropTypes.node,
-  PropTypes.arrayOf(PropTypes.node),
-]);
+export const childrenShape = oneOfType([node, arrayOf(node)]);
 
-export const navigationShape = PropTypes.shape({
-  goBack: PropTypes.func.isRequired,
-  navigate: PropTypes.func.isRequired,
+export const navigationShape = shape({
+  goBack: func.isRequired,
+  navigate: func.isRequired,
+});
+
+export const mapRegionShape = shape({
+  latitude: number.isRequired,
+  longitude: number.isRequired,
+  latitudeDelta: number.isRequired,
+  longitudeDelta: number.isRequired,
 });

@@ -1,9 +1,9 @@
-import PropTypes from 'prop-types';
+import { func } from 'prop-types';
 import React from 'react';
 import { ViewPropTypes } from 'react-native';
 import MapView from 'react-native-maps';
 
-import { childrenShape } from '../propTypeShapes';
+import { childrenShape, mapRegionShape } from '../propTypeShapes';
 import { INITIAL_MAP_REGION } from '../../config/constants';
 import mapStyle from '../../config/map-styles/style_blue_essence.json';
 
@@ -25,17 +25,10 @@ const Map = ({ children, initialRegion, onPress, style }) => (
   </MapView>
 );
 
-const initialRegionShape = PropTypes.shape({
-  latitude: PropTypes.number.isRequired,
-  longitude: PropTypes.number.isRequired,
-  latitudeDelta: PropTypes.number.isRequired,
-  longitudeDelta: PropTypes.number.isRequired,
-});
-
 Map.propTypes = {
   children: childrenShape,
-  initialRegion: initialRegionShape,
-  onPress: PropTypes.func,
+  initialRegion: mapRegionShape,
+  onPress: func,
   style: ViewPropTypes.style,
 };
 

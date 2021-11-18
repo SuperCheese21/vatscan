@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import { func, object, string } from 'prop-types';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Chip } from 'react-native-paper';
@@ -42,9 +42,9 @@ const ChipRow = ({ filterKey, currentFilters, setFilters }) => (
 );
 
 ChipRow.propTypes = {
-  filterKey: PropTypes.string.isRequired,
-  currentFilters: PropTypes.object.isRequired,
-  setFilters: PropTypes.func.isRequired,
+  filterKey: string.isRequired,
+  currentFilters: object.isRequired,
+  setFilters: func.isRequired,
 };
 
 export default ChipRow;

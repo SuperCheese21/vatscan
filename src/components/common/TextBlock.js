@@ -1,45 +1,13 @@
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import { string } from 'prop-types';
+import React from 'react';
 import {
-  Clipboard,
   StyleSheet,
   Text,
   ToastAndroid,
   TouchableOpacity,
   Vibration,
 } from 'react-native';
-
-export default class TextBlock extends Component {
-  onLongPress = () => {
-    const { text } = this.props;
-    Vibration.vibrate(10);
-    ToastAndroid.show('Copied to clipboard', ToastAndroid.SHORT);
-    Clipboard.setString(text);
-  };
-
-  render() {
-    const { text } = this.props;
-    if (text) {
-      return (
-        <TouchableOpacity
-          style={styles.textBlock}
-          onLongPress={this.onLongPress}
-        >
-          <Text style={styles.textBlockText}>{text}</Text>
-        </TouchableOpacity>
-      );
-    }
-    return null;
-  }
-}
-
-TextBlock.propTypes = {
-  text: PropTypes.string,
-};
-
-TextBlock.defaultProps = {
-  text: null,
-};
+import Clipboard from '@react-native-clipboard/clipboard';
 
 const styles = StyleSheet.create({
   textBlock: {
@@ -56,3 +24,27 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto_Mono',
   },
 });
+
+const TextBlock = ({ text }) => {
+  const onLongPress = () => {
+    Vibration.vibrate(10);
+    ToastAndroid.show('Copied to clipboard', ToastAndroid.SHORT);
+    Clipboard.setString(text);
+  };
+
+  return text ? (
+    <TouchableOpacity style={styles.textBlock} onLongPress={onLongPress}>
+      <Text style={styles.textBlockText}>{text}</Text>
+    </TouchableOpacity>
+  ) : null;
+};
+
+TextBlock.propTypes = {
+  text: string,
+};
+
+TextBlock.defaultProps = {
+  text: '',
+};
+
+export default TextBlock;

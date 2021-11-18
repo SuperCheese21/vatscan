@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import { string } from 'prop-types';
 import React from 'react';
 import { View, ViewPropTypes } from 'react-native';
 
@@ -15,7 +15,7 @@ const ConfigRow = ({ children, label, style }) => (
 
 ConfigRow.propTypes = {
   children: childrenShape,
-  label: PropTypes.string.isRequired,
+  label: string.isRequired,
   style: ViewPropTypes.style,
 };
 

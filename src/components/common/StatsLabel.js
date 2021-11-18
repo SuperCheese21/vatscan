@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import { string } from 'prop-types';
 import React from 'react';
 
 import Text from './Text';
@@ -6,7 +6,7 @@ import Text from './Text';
 const StatsLabel = ({ text }) => <Text style={{ fontSize: 18 }}>{text}</Text>;
 
 StatsLabel.propTypes = {
-  text: PropTypes.string.isRequired,
+  text: string.isRequired,
 };
 
 export default StatsLabel;

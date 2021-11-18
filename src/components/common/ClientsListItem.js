@@ -1,50 +1,10 @@
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import { object } from 'prop-types';
+import React from 'react';
 import { StyleSheet } from 'react-native';
 import { List, Surface, TouchableRipple } from 'react-native-paper';
+import { withNavigation } from 'react-navigation';
 
 import { navigationShape } from '../propTypeShapes';
-
-export default class ClientsListItem extends Component {
-  leftIcon = itemProps => {
-    const { client } = this.props;
-    return (
-      <List.Icon
-        color={itemProps.color}
-        style={itemProps.style}
-        icon={client.type === 'ATC' ? 'radio-tower' : 'airplane'}
-      />
-    );
-  };
-
-  onPress = () => {
-    const { stackNavigation, client } = this.props;
-    stackNavigation.navigate('ClientScreen', {
-      callsign: client.callsign,
-      removeFocusedClient: true,
-    });
-  };
-
-  render() {
-    const { client } = this.props;
-    return (
-      <Surface style={styles.listItem}>
-        <TouchableRipple onPress={this.onPress}>
-          <List.Item
-            title={client.callsign}
-            description={`${client.name} (${client.id})`}
-            left={this.leftIcon}
-          />
-        </TouchableRipple>
-      </Surface>
-    );
-  }
-}
-
-ClientsListItem.propTypes = {
-  client: PropTypes.object.isRequired,
-  stackNavigation: navigationShape.isRequired,
-};
 
 const styles = StyleSheet.create({
   listItem: {
@@ -53,3 +13,38 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
 });
+
+const ClientsListItem = ({ client, navigation }) => {
+  const { callsign, name, id, type } = client;
+
+  const onPress = () =>
+    navigation.navigate('ClientScreen', {
+      callsign,
+      removeFocusedClient: true,
+    });
+
+  return (
+    <Surface style={styles.listItem}>
+      <TouchableRipple onPress={onPress}>
+        <List.Item
+          title={callsign}
+          description={`${name} (${id})`}
+          left={({ color, style }) => (
+            <List.Icon
+              color={color}
+              style={style}
+              icon={type === 'ATC' ? 'radio-tower' : 'airplane'}
+            />
+          )}
+        />
+      </TouchableRipple>
+    </Surface>
+  );
+};
+
+ClientsListItem.propTypes = {
+  client: object.isRequired,
+  navigation: navigationShape.isRequired,
+};
+
+export default withNavigation(ClientsListItem);

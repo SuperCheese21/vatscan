@@ -1,29 +1,25 @@
 import * as Linking from 'expo-linking';
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import { string } from 'prop-types';
+import React from 'react';
 import { Share } from 'react-native';
 import { IconButton } from 'react-native-paper';
 
 import { accent as accentColor } from '../../config/colors.json';
 
-export default class ShareButton extends Component {
-  onPress = () => {
-    const { callsign } = this.props;
-    const url = Linking.makeUrl(`clients/${callsign}`);
-    const message = `Check out ${callsign} on VATSCAN!\n\n${url}`;
-    Share.share({
-      message,
-      url,
-    });
-  };
-
-  render() {
-    return (
-      <IconButton icon="share" color={accentColor} onPress={this.onPress} />
-    );
-  }
-}
+const ShareButton = ({ callsign }) => (
+  <IconButton
+    icon="share"
+    color={accentColor}
+    onPress={() => {
+      const url = Linking.createURL(`clients/${callsign}`);
+      const message = `Check out ${callsign} on VATSCAN!\n\n${url}`;
+      Share.share({ message, url });
+    }}
+  />
+);
 
 ShareButton.propTypes = {
-  callsign: PropTypes.string.isRequired,
+  callsign: string.isRequired,
 };
+
+export default ShareButton;

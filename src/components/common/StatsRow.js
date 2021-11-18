@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import { number, oneOfType, string } from 'prop-types';
 import React from 'react';
 
 import Text from './Text';
@@ -12,9 +12,9 @@ const StatsRow = ({ label, planned, text }) => (
 );
 
 StatsRow.propTypes = {
-  label: PropTypes.string.isRequired,
-  planned: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  text: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  label: string.isRequired,
+  planned: oneOfType([string, number]),
+  text: oneOfType([string, number]),
 };
 
 StatsRow.defaultProps = {
