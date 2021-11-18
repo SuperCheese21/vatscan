@@ -32,16 +32,6 @@ export function getCityName(icao) {
 }
 
 /**
- * Selects a random element in an array and returns it
- * @param  {String} arr Array of strings (or any data type) to select from
- * @return {String}     Random array element
- */
-export function getRandomElement(arr) {
-  const rand = Math.floor(Math.random() * arr.length);
-  return arr[rand];
-}
-
-/**
  * Converts degrees to radians
  * @param  {Number} deg Degrees value
  * @return {Number}     Radians value
@@ -115,20 +105,6 @@ export function getGCDistance(loc1, loc2) {
     return Math.round(c * EARTH_RADIUS_NM);
   }
   return -1;
-}
-
-/**
- * Checks for duplicate ID in data array before adding new entry
- * @param  {Array} data Data array of pilot or controller objects
- * @param  {String} id  VATSIM CID to check
- * @return {Boolean}    True if id is already in array, false if it isn't
- */
-export function checkID(data, id) {
-  if (data.find(client => client.id === id)) {
-    return true;
-  }
-
-  return false;
 }
 
 export const convertToInteger = val =>

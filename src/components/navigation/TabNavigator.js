@@ -8,11 +8,17 @@ import ListScreen from '../screens/ListScreen';
 import MapScreen from '../screens/MapScreen';
 import { accent, primaryDark } from '../../config/colors.json';
 
-export const TabNavigator = createAppContainer(
+const TabNavigator = createAppContainer(
   createMaterialTopTabNavigator(
     {
-      Map: MapScreen,
-      List: ListScreen,
+      Map: {
+        screen: MapScreen,
+        path: 'map',
+      },
+      List: {
+        screen: ListScreen,
+        path: 'list',
+      },
     },
     {
       tabBarPosition: 'bottom',

@@ -4,7 +4,7 @@ import { fetchData } from './fetchUtils';
 import dataSources from './queries';
 import { useAppContext } from '../context';
 
-export const useClientData = () => {
+const useClientData = () => {
   const { filters, focusedClientId } = useAppContext();
   const results = useQueries(
     dataSources.reduce(

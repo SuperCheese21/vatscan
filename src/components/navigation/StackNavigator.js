@@ -11,13 +11,22 @@ import { accent, primary } from '../../config/colors.json';
 const StackNavigator = createAppContainer(
   createStackNavigator(
     {
-      TabNavigator,
+      TabNavigator: {
+        screen: TabNavigator,
+        path: '',
+      },
       ClientScreen: {
         screen: ClientScreen,
         path: 'client/:callsign',
       },
-      FiltersScreen,
-      SettingsScreen,
+      FiltersScreen: {
+        screen: FiltersScreen,
+        path: 'filters',
+      },
+      SettingsScreen: {
+        screen: SettingsScreen,
+        path: 'settings',
+      },
     },
     {
       defaultNavigationOptions: {
