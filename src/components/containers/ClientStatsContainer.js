@@ -5,7 +5,7 @@ import StatsContainer from './StatsContainer';
 import StatsLabel from '../common/StatsLabel';
 import StatsRow from '../common/StatsRow';
 import Text from '../common/Text';
-import { useClientData } from '../../api/useClientData';
+import useClientData from '../../api/useClientData';
 
 const styles = StyleSheet.create({
   nameContainer: {
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export const ClientStatsContainer = () => {
+const ClientStatsContainer = () => {
   const { focusedClient } = useClientData();
   const {
     elapsedTimeLogon,

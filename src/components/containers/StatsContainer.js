@@ -1,15 +1,8 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Surface } from 'react-native-paper';
 
-const StatsContainer = ({ children }) => (
-  <Surface style={styles.statsContainer}>{children}</Surface>
-);
-
-StatsContainer.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.node).isRequired,
-};
+import { childrenShape } from '../propTypeShapes';
 
 const styles = StyleSheet.create({
   statsContainer: {
@@ -19,5 +12,13 @@ const styles = StyleSheet.create({
     margin: 5,
   },
 });
+
+const StatsContainer = ({ children }) => (
+  <Surface style={styles.statsContainer}>{children}</Surface>
+);
+
+StatsContainer.propTypes = {
+  children: childrenShape.isRequired,
+};
 
 export default StatsContainer;
