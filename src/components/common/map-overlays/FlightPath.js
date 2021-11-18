@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import { bool, object } from 'prop-types';
 import React from 'react';
 import { Polyline } from 'react-native-maps';
 
@@ -6,7 +6,6 @@ const FlightPath = ({
   client: { depCoords, location, arrCoords },
   visible,
 }) => {
-  // Render polylines only if airport coords are present
   if (visible && depCoords && location && arrCoords) {
     return (
       <>
@@ -29,14 +28,12 @@ const FlightPath = ({
       </>
     );
   }
-
-  // Render nothing if polylines can't be rendered
   return null;
 };
 
 FlightPath.propTypes = {
-  client: PropTypes.object.isRequired,
-  visible: PropTypes.bool,
+  client: object.isRequired,
+  visible: bool,
 };
 
 FlightPath.defaultProps = {
