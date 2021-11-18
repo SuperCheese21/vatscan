@@ -6,6 +6,7 @@ import {
   UPDATE_FILTERS,
   UPDATE_FOCUSED_CLIENT_ID,
   UPDATE_FONTS_LOADED,
+  UPDATE_SEARCH_QUERY,
 } from './actionTypes';
 import queries from '../api/queries';
 import { CONTROLLER_TYPES, PANEL_STATES } from '../config/constants';
@@ -28,6 +29,7 @@ export const initialState = {
   },
   panelPosition: new Animated.Value(PANEL_STATES.COLLAPSED),
   panelPositionValue: PANEL_STATES.COLLAPSED,
+  searchQuery: '',
 };
 
 export const immerReducer = (draft, action) => {
@@ -48,6 +50,9 @@ export const immerReducer = (draft, action) => {
       break;
     case UPDATE_FOCUSED_CLIENT_ID:
       draft.focusedClientId = action.payload;
+      break;
+    case UPDATE_SEARCH_QUERY:
+      draft.searchQuery = action.payload;
       break;
     default:
       break;

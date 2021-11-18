@@ -5,6 +5,7 @@ import {
   UPDATE_FILTERS,
   UPDATE_FOCUSED_CLIENT_ID,
   UPDATE_FONTS_LOADED,
+  UPDATE_SEARCH_QUERY,
 } from './actionTypes';
 import { PANEL_STATES, PANEL_TRANSITION_DURATION } from '../config/constants';
 
@@ -15,6 +16,11 @@ const updateFilters = payload => ({
 
 const updateFontsLoaded = payload => ({
   type: UPDATE_FONTS_LOADED,
+  payload,
+});
+
+const updateSearchQuery = payload => ({
+  type: UPDATE_SEARCH_QUERY,
   payload,
 });
 
@@ -47,6 +53,7 @@ const mapDispatchToActions = dispatch => ({
   updateFilters: payload => dispatch(updateFilters(payload)),
   updateFontsLoaded: payload => dispatch(updateFontsLoaded(payload)),
   updateFocusedClientId: payload => dispatch(updateFocusedClientId(payload)),
+  updateSearchQuery: payload => dispatch(updateSearchQuery(payload)),
   collapsePanel: () => dispatch(collapsePanel()),
 });
 

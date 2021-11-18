@@ -24,12 +24,18 @@ const getPanelPositionValue = createSelector(
   ({ panelPositionValue }) => panelPositionValue,
 );
 
+const getSearchQuery = createSelector(
+  [getState],
+  ({ searchQuery }) => searchQuery,
+);
+
 const mapStateToSelectors = state => ({
   filters: getFilters(state),
   fontsLoaded: getFontsLoaded(state),
   focusedClientId: getFocusedClientId(state),
   panelPosition: getPanelPosition(state),
   panelPositionValue: getPanelPositionValue(state),
+  searchQuery: getSearchQuery(state),
 });
 
 export default mapStateToSelectors;
