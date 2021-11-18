@@ -5,7 +5,6 @@ import { TextInput } from 'react-native-paper';
 import ConfigScreen from './ConfigScreen';
 import ChipRow from '../common/ChipRow';
 import ConfigRow from '../common/ConfigRow';
-import { navigationShape } from '../propTypeShapes';
 import { useAppContext } from '../../context';
 
 const styles = StyleSheet.create({
@@ -14,11 +13,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export const FiltersScreen = ({ navigation }) => {
+const FiltersScreen = () => {
   const { filters, setFilters } = useAppContext();
-
   return (
-    <ConfigScreen navigation={navigation}>
+    <ConfigScreen>
       <ConfigRow label="Networks">
         <ChipRow
           currentFilters={filters}
@@ -67,10 +65,6 @@ export const FiltersScreen = ({ navigation }) => {
 
 FiltersScreen.navigationOptions = {
   title: 'Filters',
-};
-
-FiltersScreen.propTypes = {
-  navigation: navigationShape.isRequired,
 };
 
 export default FiltersScreen;

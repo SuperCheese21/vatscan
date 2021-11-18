@@ -1,25 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 
 import ConfigScreen from './ConfigScreen';
 
-import { navigationShape } from '../propTypeShapes';
+const SettingsScreen = () => (
+  <ConfigScreen>
+    <View style={{ flex: 1 }} />
+  </ConfigScreen>
+);
 
-export default class SettingsScreen extends Component {
-  static navigationOptions = {
-    title: 'Settings',
-  };
-
-  render() {
-    const { navigation } = this.props;
-    return (
-      <ConfigScreen navigation={navigation}>
-        <View style={{ flex: 1 }} />
-      </ConfigScreen>
-    );
-  }
-}
-
-SettingsScreen.propTypes = {
-  navigation: navigationShape.isRequired,
+SettingsScreen.navigationOptions = {
+  title: 'Settings',
 };
+
+export default SettingsScreen;

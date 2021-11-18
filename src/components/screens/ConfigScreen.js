@@ -1,56 +1,50 @@
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import {
   BackHandler,
   KeyboardAvoidingView,
   RefreshControl,
   ScrollView,
 } from 'react-native';
+import { withNavigation } from 'react-navigation';
 
 import { childrenShape, navigationShape } from '../propTypeShapes';
+import useClientData from '../../api/useClientData';
 
-export default class ConfigScreen extends Component {
-  componentDidMount() {
-    BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
-  }
+const ConfigScreen = ({ children, navigation }) => {
+  const { isLoading } = useClientData();
 
-  componentWillUnmount() {
-    BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
-  }
-
-  handleBackPress = () => {
-    const { navigation } = this.props;
-    navigation.goBack();
-    return true;
-  };
-
-  render() {
-    const { children, onRefresh, refreshing } = this.props;
-    return (
-      <KeyboardAvoidingView>
-        <ScrollView
-          refreshControl={
-            onRefresh ? (
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            ) : null
-          }
-        >
-          {children}
-        </ScrollView>
-      </KeyboardAvoidingView>
+  useEffect(() => {
+    const handleBackPress = () => {
+      navigation.goBack();
+      return true;
+    };
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      handleBackPress,
     );
-  }
-}
+    return () => backHandler.remove();
+  }, [navigation]);
+
+  return (
+    <KeyboardAvoidingView>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={isLoading} onRefresh={() => {}} />
+        }
+      >
+        {children}
+      </ScrollView>
+    </KeyboardAvoidingView>
+  );
+};
 
 ConfigScreen.propTypes = {
   children: childrenShape,
   navigation: navigationShape.isRequired,
-  onRefresh: PropTypes.func,
-  refreshing: PropTypes.bool,
 };
 
 ConfigScreen.defaultProps = {
   children: null,
-  onRefresh: null,
-  refreshing: false,
 };
+
+export default withNavigation(ConfigScreen);

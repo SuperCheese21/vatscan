@@ -6,7 +6,7 @@ import Map from '../common/Map';
 import { TabBarIcon } from '../common/TabBarIcon';
 import Text from '../common/Text';
 import InfoPanelContainer from '../containers/InfoPanelContainer';
-import { useClientData } from '../../api/useClientData';
+import useClientData from '../../api/useClientData';
 import { accent as accentColor } from '../../config/colors.json';
 import { useAppContext } from '../../context';
 
@@ -25,21 +25,23 @@ const styles = StyleSheet.create({
 });
 
 const MapScreen = () => {
-  const { collapsePanel, focusedClient } = useAppContext();
-  const { clientData, isLoading, setFocusedClient } = useClientData();
+  const { collapsePanel, setFocusedClientId } = useAppContext();
+  const { clientData, focusedClient, isLoading } = useClientData();
 
   useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', collapsePanel);
-    return () =>
-      BackHandler.removeEventListener('hardwareBackPress', collapsePanel);
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      collapsePanel,
+    );
+    return () => backHandler.remove();
   }, [collapsePanel]);
 
   return (
     <View style={{ flex: 1 }}>
       <Map style={{ flex: 1 }} onPress={collapsePanel}>
-        {clientData.map(client => {
-          const isFocusedClient = focusedClient.callsign === client.callsign;
-          return client.getMapOverlay(isFocusedClient, setFocusedClient);
+        {clientData.map(({ callsign, getMapOverlay }) => {
+          const isFocusedClient = focusedClient.callsign === callsign;
+          return getMapOverlay(isFocusedClient, setFocusedClientId);
         })}
       </Map>
       <ActivityIndicator
@@ -50,10 +52,7 @@ const MapScreen = () => {
       <Text style={styles.clientCountText}>
         {`Clients: ${clientData.length}`}
       </Text>
-      <InfoPanelContainer
-        panelPosition={panelPosition}
-        focusedClient={focusedClient}
-      />
+      <InfoPanelContainer />
     </View>
   );
 };
@@ -61,3 +60,5 @@ const MapScreen = () => {
 MapScreen.navigationOptions = {
   tabBarIcon: TabBarIcon,
 };
+
+export default MapScreen;

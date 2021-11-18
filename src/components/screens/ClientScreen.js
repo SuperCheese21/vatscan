@@ -6,29 +6,21 @@ import ClientStatsContainer from '../containers/ClientStatsContainer';
 import ControllerStatsContainer from '../containers/ControllerStatsContainer';
 import FlightPlanContainer from '../containers/FlightPlanContainer';
 import FlightStatsContainer from '../containers/FlightStatsContainer';
-import { navigationShape } from '../propTypeShapes';
-import { useClientData } from '../../api/useClientData';
+import useClientData from '../../api/useClientData';
 
-export const ClientScreen = ({ navigation }) => {
+const ClientScreen = () => {
   const { focusedClient } = useClientData();
-  const getStatsContainer = () => {
-    if (focusedClient.type === 'PILOT') {
-      return (
+  return (
+    <ConfigScreen>
+      <ClientStatsContainer />
+      {focusedClient.type === 'PILOT' ? (
         <>
           <FlightPlanContainer />
           <FlightStatsContainer />
         </>
-      );
-    }
-    if (focusedClient.type === 'ATC') {
-      return <ControllerStatsContainer />;
-    }
-    return null;
-  };
-  return (
-    <ConfigScreen navigation={navigation}>
-      <ClientStatsContainer />
-      {getStatsContainer()}
+      ) : (
+        <ControllerStatsContainer />
+      )}
     </ConfigScreen>
   );
 };
@@ -39,10 +31,6 @@ ClientScreen.navigationOptions = ({ navigation }) => {
     title: callsign,
     headerRight: () => <ShareButton callsign={callsign} />,
   };
-};
-
-ClientScreen.propTypes = {
-  navigation: navigationShape.isRequired,
 };
 
 export default ClientScreen;
